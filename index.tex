@@ -1,0 +1,340 @@
+% ==============
+% PARAMETRAGES
+% à compiler en pdfLaTeX
+% ==============
+
+% GENERAL
+%  type de document rapport, chapitre commence en page impaire ou paire indifféremment
+\documentclass[twoside,a4paper,12pt,frenchb,openany]{report}  
+%  type de document, chapitre commence en page impaire
+%\documentclass[twoside,a4paper,12pt,frenchb,openright]{report} 
+\title{Etat de l'art du projet de recherche}
+\author{Stephane Robin}
+\date{\today}
+
+% IMPORTATION DE LIBRAIRIES
+\usepackage{amssymb}  % symboles
+\usepackage{amsmath}  % symboles mathématiques
+\usepackage{amsfonts}  % polices de caractères
+\usepackage{amscd}
+\usepackage{amsthm}  % symboles mathématiques pour redéfinir les théorèmes
+\usepackage[all,cmtip]{xy}
+\usepackage{array}  % tableaux
+\usepackage[frenchb]{babel}  % langue française
+\usepackage{bm}  % caractères grecs
+\usepackage{calc}
+\usepackage{enumitem} % listes
+\usepackage{eurosym}  % symbole euro
+\usepackage{euscript}
+\usepackage{fancybox}  % boîtes
+\usepackage{float}  % images flottantes
+\usepackage[T1]{fontenc}  % LaTeX modele
+\usepackage[top=3.1cm,bottom=2.7cm,left=2.2cm,right=2.2cm,dvips]{geometry}  % marges
+\usepackage{graphicx}  % insertion images
+\usepackage[utf8]{inputenc}  % accents
+\usepackage{mathrsfs}  % symboles mathématiques
+\usepackage{mathtools}  % outils mathématiques
+\usepackage{mdframed} % box autour des theoremes
+\usepackage{pst-plot, pstricks}
+\usepackage{pstricks-add}
+\usepackage{rotating}
+\usepackage{srcltx}
+\usepackage{textcomp}   % caracteres complementaires
+\usepackage{titlesec}  % sections
+\usepackage{titletoc}  % table de contents
+%\usepackage[nottoc,notlof,notlot]{tocbibind}  % bibliothèque
+\usepackage{verbatim}  % caracteres non interpretes
+\usepackage{wrapfig}  % pour inserer les figures dans du texte
+
+% COULEURS
+\definecolor{couleurTitre}{RGB}{64,128,128}  % doit être défini avant xcolor
+\usepackage{xcolor}  % couleurs
+%\definecolor{amber}{rgb}{1.0,0.49,0.0} % couleur non utilisee
+%\definecolor{greyish}{rgb}{52.0,160.0,157.0} % couleur non utilisee
+%\definecolor{theoremeCouleur}{rgb}{224.0,90.0,67.0} % couleur non utilisee
+	
+% LISTES
+\renewcommand{\labelitemi}{$\bullet$}  % symboles de listes
+\frenchbsetup{StandardLists=true}  % style de bullets
+
+% IMAGES
+\usepackage{caption}  % insertion d'images
+\usepackage[font=footnotesize,labelfont=bf]{caption}  % légendes des images
+\renewcommand{\thefigure}{\arabic{section}.\arabic{figure}}  % numérotation des images
+\usepackage{subcaption}
+
+% HYPERLINKS
+\usepackage{hyperref}
+\hypersetup{
+colorlinks=true,
+linkcolor=cyan,
+citecolor=cyan,
+urlcolor=cyan
+}
+
+% LIGNES
+\usepackage{parskip}
+\setlength\parskip{\baselineskip}
+\setlength{\parindent}{0cm} % supprime l'espace horizontal en debut de ligne
+
+% HEADINGS AND FOOTERS
+\usepackage{fancyhdr}  % entete
+\pagestyle{fancy}  % la page accepte les entetes et pieds de page
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead[L,R,C]{}
+%\fancyhead[LE]{} % pages paires header gauche
+%\fancyhead[CE]{} % pages paires header centre
+%\fancyhead[RE]{Le théorème de Pythagore} % pages paires header droit
+%\fancyhead[LO]{Le théorème de Pythagore} % pages impaires header gauche
+%\fancyhead[CO]{} % pages impaires header centre
+%\fancyhead[RO]{} % pages impaires header droit
+%\fancyfoot[c]{\textcolor{gray}{\thepage}}  % pied de page
+%\fancyfoot[L,R,C]{} % forcing footer empty
+
+% REDEFINITION DU STYLE DE THEOREM
+\newmdtheoremenv[  % definitions
+linewidth=5,
+leftline=true,
+rightline=false,
+bottomline=false,
+topline=false,
+leftmargin=0,
+rightmargin=0,
+backgroundcolor=couleurTitre!20,
+linecolor=orange!70,
+innertopmargin=21pt,
+skipabove=\topskip,
+ntheorem=true]{definition}{Définition}
+
+\newmdtheoremenv[  % theoremes
+linewidth=5,
+leftline=true,
+rightline=false,
+bottomline=false,
+topline=false,
+leftmargin=0,
+rightmargin=0,
+backgroundcolor=couleurTitre!20,
+linecolor=orange!70,
+innertopmargin=10pt,
+skipabove=\topskip,
+ntheorem=true]{theorem}{}
+
+\newmdtheoremenv[  % proprietes
+linewidth=5,
+leftline=true,
+rightline=false,
+bottomline=false,
+topline=false,
+leftmargin=0,
+rightmargin=0,
+backgroundcolor=couleurTitre!20,
+linecolor=orange!70,
+innertopmargin=21pt,
+skipabove=\topskip,
+ntheorem=true]{property}{Propriété}
+
+\newmdtheoremenv[  % propositions
+linewidth=5,
+leftline=true,
+rightline=false,
+bottomline=false,
+topline=false,
+leftmargin=0,
+rightmargin=0,
+backgroundcolor=couleurTitre!20,
+linecolor=couleurTitre!70,
+innertopmargin=21pt,
+skipabove=\topskip,
+ntheorem=true]{proposition}{Proposition}
+
+\newmdtheoremenv[  % corollaires
+linewidth=5,
+leftline=true,
+rightline=false,
+bottomline=false,
+topline=false,
+leftmargin=0,
+rightmargin=0,
+backgroundcolor=couleurTitre!20,
+linecolor=couleurTitre!70,
+innertopmargin=21pt,
+skipabove=\topskip,
+ntheorem=true]{corollary}{Corollaire}
+
+\newmdtheoremenv[  % lemmes
+linewidth=5,
+leftline=true,
+rightline=false,
+bottomline=false,
+topline=false,
+leftmargin=0,
+rightmargin=0,
+backgroundcolor=couleurTitre!20,
+linecolor=couleurTitre!70,
+innertopmargin=21pt,
+skipabove=\topskip,
+ntheorem=true]{lemma}{Lemme}
+
+% NUMEROTATION DES CHAPITRES-SECTIONS
+\renewcommand{\theequation}{\arabic{chapter}.\arabic{equation}}  % equations
+%\renewcommand{\theequation}{\thesection\arabic{equation}}  % equations
+%\numberwithin{equation}{section}  % equations
+
+%\renewcommand{\thepart}{\Alph{part}}  % parties
+\renewcommand{\thechapter}{\arabic{chapter}.}  % chapitres
+\renewcommand{\thesection}{\arabic{section}.}  % sections
+\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}.}  %  sous-sections
+\renewcommand{\thesubsubsection}{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}.}  % sous-sous-sections
+
+\renewcommand{\thedefinition}{\arabic{chapter}.\arabic{definition}}  % definitions
+\renewcommand{\theorem}{}  % theoremes
+\renewcommand{\theproperty}{\arabic{chapter}.\arabic{property}}  % property
+\renewcommand{\theproposition}{\arabic{chapter}.\arabic{proposition}}  % propositions
+\renewcommand{\thecorollary}{\arabic{chapter}.\arabic{corollary}}  % corollaires
+\renewcommand{\thelemma}{\arabic{chapter}.\arabic{lemma}}  % lemmes
+\setcounter{secnumdepth}{4}  % profondeur de numérotation
+
+% FORMAT DES SECTIONS-TITRES
+\titleformat{\section}{\normalfont\normalsize\bfseries}{\textcolor{couleurTitre}{\thesection}}{1em}
+{\normalfont\large\bfseries\scshape\textcolor{couleurTitre}} % format de titre de section
+\titleformat{\subsection}{\normalfont\normalsize\bfseries}{\textcolor{couleurTitre}{\thesubsection}}{1em}
+{\normalfont\normalsize\bfseries\textcolor{couleurTitre}}  % format de titre de sous-section
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries\itshape}{\textcolor{couleurTitre}{\thesubsubsection}}{1em}
+{\normalfont\normalsize\bfseries\itshape\textcolor{couleurTitre}}  % format de titre de sous-sous-section
+
+\makeatletter
+
+%\renewcommand{\@chapapp}{}  % le mot `chapitre'' n'apparait plus en titre de chapitre
+\renewcommand\l@section{\@dottedtocline{1}{0em}{5.0em}}  % espacement dans le titre d'une section
+\renewcommand\l@subsection{\@dottedtocline{1}{2.5em}{1.5em}}  % espacement dans le titre d'une sous-section
+\renewcommand\l@subsubsection{\@dottedtocline{1}{5em}{2.5em}}  % espacement dans le titre d'une sous-sous-section
+
+\makeatother
+
+% ==============
+% DEBUT DU DOCUMENT
+% ==============
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+Le présent document cherche à définir les fondements sur lesquels va reposer le stage et en particulier de connaître l'état actuel des connaissances concernant l'analyse bioinformatique du locus CRISPR-Cas chez \textit{Mycobacterium tuberculosis}.
+
+L'objectif du stage est de comprendre les liens entre les 7 lignées de \textit{tuberculosis} et les alternances de gènes et espaceurs du locus CRISPR-Cas, au moyen d'outils développés au sein de l'équipe AND de l'Université de Franche Comté.
+
+\section{Lexique}
+
+\textit{MTBC} : Mycobacterium Tuberculosis Complex.
+
+\textit{Phylogénie} : étude des liens entre espèces apparentées, permettant de retracer les principales étapes de l'évolution des organismes depuis un ancêtre commun.
+
+\textit{Epidémiologie} : discipline scientifique qui étudie les problèmes de santé dans les populations humaines, leur fréquence, leur géographie ainsi que les facteurs influant.
+
+\textit{NDT Neolithic Demographic Transition} : au néolithique (entre 8500 av. JC et 3000 av. JC), l'apparition de l'agriculture et l'élevage entraîne une augmentation de la population par rapport aux populations de chasseurs-cueilleurs du mésolithique. 
+
+\textit{Annotation des gènes} : processus permettant d'identifier l'emplacement des gènes dans l'ADN, de déterminer leurs fonctions et leurs possibles interactions.
+
+\textit{Génome} : ensemble des gènes portés par les chromosomes d'une cellule ou d'un organisme.
+
+\textit{Séquençage du génome} : consiste à trouver l'ordre des bases de nucleotides au sein du génome.
+
+\textit{bp} : une paire de base est l'appariement de 2 bases nucléiques situées sur 2 brins complémentaires d'ADN, reliées par des ponts d'hydrogène.
+
+\textit{SNP Single Nucleotide Polymorphism} : il s'agit de la variation ou polymorphisme d'une seule paire de bases du génome entre organismes d'une même espèce.
+
+\textit{Mutation non-synonyme} : mutation de nucleotide qui modifie la séquence amino-acide d'une protéine.
+
+\section{Lien géographique}
+
+The origin of human tuberculosis has been associated with the NDT, but recent study point to a much earlier origin.
+
+L'histoire de l'évolution du MTBC a été reconstituée en utilisant 259 séquences complètes d'ADN, tel que décrit dans l'article \textit{Out of Africa migration and Neolithic co-expansion of Mycobacterium tuberculosis with modern humans}. 
+
+La tuberculose est apparue il y a 70 000 ans en Afrique, a accompagné l'homme au cours de ses différentes migrations 
+
+Use of 259 whole-genome sequences to reconstruct the evolutionary history of the MTBC.\\
+Use of a population genomics approach to explore the evolutionary history of human MTBC.\\
+
+"MTBC has been co-evolving with anatomically modern humans for tens of thousands of years. The marked expansion of MTBC during the NTD, but not during earlier human expansion events, suggests that the success of this pathogen was primarily driven by increases in human host density, which is typical of crowd diseases. However, the striking match between the MTBC and human mitochondrial phylogenies supports a much older association between MTBC and its host, and suggest that carriage of MTBC was ubiquitous in hunter-gatherer populations migrating out of Africa well before NDT."
+
+The ongoing analyses of the human microbiota highlight the fuzzy boundaries between commensalism and pathogenecity during health and disease.
+
+A recent study has suggested that co-infection with H. pylori might protect against active tuberculosis disease.
+
+Conversely, whether latent tuberculosis infection protects against gastric ulcers or stomach cancer caused by H. pylori in individuals infected with both bacteria is unknown but an intriguing possibility.
+
+Current epidemiological trends : increased dissemination of the Beijing family of MTBC, decreased rates of disease caused by evolutionarily ancient lineages of MTBC.
+
+It is important to consider the possibility of reciprocal adaptive changes to the human genome as a result of prolonged co-evolution with MTBC.
+
+This study compares MTBC phylogenic diversity to human diversity inferred from mitochondrial genome data.
+
+Future studies should be based on paired human-bacterial whole genome information collected prospectively.
+
+\section{Le locus CRISPR-Cas}
+
+Le locus CRISPR est une famille de séquences répétées dans l'ADN formant un palindrome. Les séries de répétition comprennent entre 21 et 37 bp, régulièrement espacées par des \textit{spacers} de 20 à 40 bp. Cette structure répétée se trouve à l'état naturel dans les cellules et se conserve pour une même espèce. Les locus CRISPR sont généralement adjacents aux gènes Cas, dont ils sont séparés par une séquence de 300 à 500 bp.
+
+CRISPR-Cas est un système naturel utilisé par les bactéries pour se protéger des infections virales. Lorsque la bactérie détecte la présence d'ADN d'un virus, elle produit une protéine appelée Cas9, contenant une séquence qui correspond à celle de l'ADN du virus et qui joue le rôle d'un guide ARN. Cas9 est un type d'enzyme capable de couper l'ADN. Lorsque le guide ARN trouve sa cible parmi le genome du virus, Cas9 sectionne son ADN, désactive le virus, puis insère un fragment de l'ADN du virus dans un \textit{spacer} du génome de la bactérie afin de conserver en mémoire une trace de ce virus.
+
+La méthode CRISPR s'inspire du système du même nom et a d'abord été utilisée pour typer les souches bactériennes, suivant une technique appelée \textit{spoligotyping}. Elle est actuellement principalement utilisée comme ciseau moléculaire afin d'introduire localement des modifications du génome.
+
+L'étude des locus CRISPR-Cas permet de ...
+
+\subsection{Le \textit{spoligotyping}}
+
+\textit{Spacer Oligonucleotide Typing} ou \textit{spoligotypage} une méthode de réaction en chaîne utilisant un polymerase pour la détection et le génotypage du MTBC.
+
+Le spoligotypage est une technique de génotypage permettant d'identifier des séquences DR Direct Repeat au sein d'un locus CRISPR. Cette technique permet notamment d'identifier des sous-espèces de M. tuberculosis.
+
+PCR Polymerase Chain Reaction est une méthode permettant de dupliquer en grand nombre une séquence d'ADN connue à partir d'une faible quantité d'acide nucléique et de \textit{primers}. 
+
+\section{Les 7 lignées de \textit{tuberculosis}}
+
+
+\section{Les outils de travail}
+
+\subsection{Le séquençage traditionnel du génome}
+
+Le génome est 
+
+\subsection{SpolPred: rapid and accurate prediction of MTBC spoligotypes from short genomic sequences}
+
+spoligotyping also called spacer oligonucleotide typing : the use of the polymerase chain reaction to identify pathgens, such as MTBC in laboratory specimens. It relies on the detection of unique spans of repeated DNA sequences found between the active genes of the pathogen.
+
+L'application en ligne SitVit2 permet d'analyser des data au regard des markers Spoligotypes, ETR et MIRU-VNTR afin d'en trouver notamment l'origine.
+
+\subsection{VITI}
+
+spoligotyping also called spacer oligonucleotide typing : the use of the polymerase chain reaction to identify pathgens, such as MTBC in laboratory specimens. It relies on the detection of unique spans of repeated DNA sequences found between the active genes of the pathogen.
+
+L'application en ligne SitVit2 permet d'analyser des data au regard des markers Spoligotypes, ETR et MIRU-VNTR afin d'en trouver notamment l'origine.
+
+Sanger sequencing was a method of DNA sequencing invented in 1977 and based on the selective incorporation of chain-terminating dideoxynucleotides by DNA polymerase.
+
+Polymerase Chain Reaction PCR is a method widely used in molecular biology to make several copies of a specific DNA segment. Using PCR, copies of DNA sequencies are exponentially amplified to generate thousands to millions of more copies of that particular DNA segment. PCR method rely on thermal cycling, which exposes reactants to repeated cycles of heating and cooling to permit different temperature-dependent reactions like DNA melting and enzyme-driven DNA replication. PCR employs 2 main reagents : primers (which are short single strand DNA fracgments that are a complementary sequence to the target DNA region) and a DNA polymerase.
+
+
+% =========
+% BIBLIOTHEQUE
+% =========
+\bibliographystyle{}
+\renewcommand{\bibname}{Références}
+\begin{thebibliography}{10}
+\bibitem{}Comas I, Coscolla M, Luo T, et al. \textit{Out-of-Africa migration and Neolithic coexpansion of Mycobacterium tuberculosis with modern humans}\\ \\
+
+\bibitem{}Coll, F., et al., \textit{SpolPred : rapid and accurate prediction of Mycobacterium tuberculosis spoligotypes from short genomic sequences}\\ \\
+
+\bibitem{}Brynildsrud, O.B., et al., \textit{Global expansion of Mycobacterium tuberculosis lineage 4 shaped by colonial migration and local adaptation}\\ \\
+
+\bibitem{}Biomedical and Biological Sciences channel, \textit{The principle of CRISPR System and CRISPR-Cas9 technique}\\ \\
+
+\bibitem{}McGovern Institute channel, \textit{Genome Editing with CRISPR-Cas9}\\ \\
+
+
+\end{thebibliography}
+\end{document}
