@@ -5,7 +5,7 @@
 
 % GENERAL
 %  type de document rapport, chapitre commence en page impaire ou paire indifféremment
-\documentclass[twoside,a4paper,12pt,frenchb,openany]{report}  
+\documentclass[twoside,a4paper,11pt,frenchb,openany]{report}  
 %  type de document, chapitre commence en page impaire
 %\documentclass[twoside,a4paper,12pt,frenchb,openright]{report} 
 \title{Etat de l'art du projet de recherche}
@@ -48,6 +48,7 @@
 
 % COULEURS
 \definecolor{couleurTitre}{RGB}{64,128,128}  % doit être défini avant xcolor
+\definecolor{couleurUrl}{RGB}{127,62,0}
 \usepackage{xcolor}  % couleurs
 %\definecolor{amber}{rgb}{1.0,0.49,0.0} % couleur non utilisee
 %\definecolor{greyish}{rgb}{52.0,160.0,157.0} % couleur non utilisee
@@ -67,15 +68,15 @@
 \usepackage{hyperref}
 \hypersetup{
 colorlinks=true,
-linkcolor=cyan,
-citecolor=cyan,
-urlcolor=cyan
+linkcolor=couleurUrl,
+citecolor=couleurUrl,
+urlcolor=couleurUrl
 }
 
 % LIGNES
 \usepackage{parskip}
-\setlength\parskip{\baselineskip}
-\setlength{\parindent}{0cm} % supprime l'espace horizontal en debut de ligne
+%\setlength\parskip{\baselineskip} % joint a la suppression de l'espace horizontal
+%\setlength{\parindent}{0cm} % supprime l'espace horizontal en debut de ligne
 
 % HEADINGS AND FOOTERS
 \usepackage{fancyhdr}  % entete
@@ -224,114 +225,210 @@ ntheorem=true]{lemma}{Lemme}
 
 Le présent document cherche à définir les fondements sur lesquels va reposer le stage et en particulier de connaître l'état actuel des connaissances concernant l'analyse bioinformatique du locus CRISPR-Cas chez \textit{Mycobacterium tuberculosis}.
 
-L'objectif du stage est de comprendre les liens entre les 7 lignées de \textit{tuberculosis} et les alternances de gènes et espaceurs du locus CRISPR-Cas, au moyen d'outils développés au sein de l'équipe AND de l'Université de Franche Comté.
+L'objectif du stage est de comprendre les liens entre les sept lignées de \textit{tuberculosis} et les alternances de gènes et espaceurs du locus CRISPR-Cas, au moyen d'outils développés au sein de l'équipe AND de l'Université de Franche Comté.
 
 \section{Lexique}
 
-\textit{MTBC} : Mycobacterium Tuberculosis Complex.
+\textbf{MTBC} : Mycobacterium Tuberculosis Complex.
 
-\textit{Phylogénie} : étude des liens entre espèces apparentées, permettant de retracer les principales étapes de l'évolution des organismes depuis un ancêtre commun.
+\textbf{Phylogénie} : étude des liens entre espèces apparentées, permettant de retracer les principales étapes de l'évolution des organismes depuis un ancêtre commun.
 
-\textit{Epidémiologie} : discipline scientifique qui étudie les problèmes de santé dans les populations humaines, leur fréquence, leur géographie ainsi que les facteurs influant.
+\textbf{Epidémiologie} : discipline scientifique qui étudie les problèmes de santé dans les populations humaines, leur fréquence, leur géographie ainsi que les facteurs influants.
 
-\textit{NDT Neolithic Demographic Transition} : au néolithique (entre 8500 av. JC et 3000 av. JC), l'apparition de l'agriculture et l'élevage entraîne une augmentation de la population par rapport aux populations de chasseurs-cueilleurs du mésolithique. 
+\textbf{Annotation des gènes} : processus permettant d'identifier l'emplacement des gènes dans l'ADN, de déterminer leurs fonctions et leurs possibles interactions.
 
-\textit{Annotation des gènes} : processus permettant d'identifier l'emplacement des gènes dans l'ADN, de déterminer leurs fonctions et leurs possibles interactions.
+\textbf{Génome} : ensemble de l'information génétique d'un organisme. Par extension, le génome se réfère aussi au support physique de cette information génétique, la macromolécule d'ADN.
 
-\textit{Génome} : ensemble des gènes portés par les chromosomes d'une cellule ou d'un organisme.
+\textbf{Séquençage du génome} : consiste, par des méthodes chimiques ou de biologie moléculaire, à déterminer l'ordre des nucléotides de l'ADN.
 
-\textit{Séquençage du génome} : consiste à trouver l'ordre des bases de nucleotides au sein du génome.
+\textbf{bp} : une paire de base est l'appariement de 2 bases nucléiques situées sur 2 brins complémentaires d'ADN, reliées par des ponts d'hydrogène.
 
-\textit{bp} : une paire de base est l'appariement de 2 bases nucléiques situées sur 2 brins complémentaires d'ADN, reliées par des ponts d'hydrogène.
+\textbf{SNP Single Nucleotide Polymorphism} : il s'agit de la variation ou polymorphisme d'une seule paire de bases du génome entre organismes d'une même espèce.
 
-\textit{SNP Single Nucleotide Polymorphism} : il s'agit de la variation ou polymorphisme d'une seule paire de bases du génome entre organismes d'une même espèce.
+\textbf{Haplogroupe} : groupe possédant les mêmes caractères génétiques et partageant un ancêtre commun suivant une mutation SNP.
 
-\textit{Mutation non-synonyme} : mutation de nucleotide qui modifie la séquence amino-acide d'une protéine.
+\textbf{Homologie} : similitude de caractères observée chez deux espères différentes, provenant de l'héritage d'un ancêtre commun. 
 
-\section{Lien géographique}
+\textbf{Homoplasie} : similitude de caractères chez différentes espèces, qui ne provient pas d'un ancêtre commun, mais peut par exemple provenir d'une adaptation à l'environnement.
 
-Les maladies qui se développent auprès des foules dépendent de la densité de la population pour survivre et s'accroître d'autant plus fortement. En particulier, la transition démographique du Néolithique, qui a vu un accroissement de la population accompagné de la domestication animale, a favorisé la naissance de nombreuses maladies.
+\textbf{Mitochondrie} : centrale énergétique des cellules qui contribue à la production d'ATP.
 
-Les maladies humaines plus anciennes, qui se développent auprès de populations moins denses, ont eu une croissance plus faible, laissant place parfois à des périodes où les infections restent latentes.
+\textbf{Polymère} : macromolécule répétant un même motif structural.
 
-La tuberculose conjugue ces deux modèles de maladie. En effet, elle a montré à travers les âges des phases chroniques de latence et de réactivation. Par ailleurs, elle dépend fortement de la densité de population et son mode de transmission aérosol s'est parfaitement adapté aux foules. 
+\textbf{Enzyme de restriction} : protéine capable de couper un fragment d'ADN au niveau d'une séquence de nucléotides caractéristique appelée site de restriction. Chaque enzyme de restriction reconnaît ainsi un site spécifique.
+
+% OUT OF AFRICA MIGRATION ========================================================
+\section{Evolution de la branche humaine de la tuberculose}
+
+Le développement des maladies s'adapte à la densité de population concernée. En effet, auprès d'une foule dense, les infections se répandent plus largement et deviennent plus virulentes, alors qu'auprès d'une population moins importante, elles ont une croissance plus faible, laissant place parfois à des périodes où les infections restent latentes.
+
+Une période charnière dans l'histoire de l'humanité est la transition démographique du Néolithique, qui a vu il y a 10 000 ans, suite à l'apparition de l'agriculture et de l'élevage, un accroissement de la population, favorisant la naissance de nombreuses maladies. Les maladies humaines plus anciennes se développaient auprès de populations moins denses et produisaient des phases chroniques de latence et de réactivation permettant aux populations infectées de survivre.
+
+La tuberculose conjugue ces deux modèles de maladie. En effet, elle a montré à travers les âges des périodes de réactivation, elle dépend fortement de la densité de population et son mode de transmission aérosol s'est parfaitement adapté aux foules.
+
+% The global diversity of human-adapted MTBC
+
+L'analyse phylogénique de Comas et al.\cite{comas} se base exclusivement sur l'étude du génome complet de toutes les lignées connues de tuberculose en utilisant les SNPs pour construire les relations entre les différentes branches. Les résultats obtenus rejoignent de précédentes études effectuées à partir d'autres marqueurs, et confirment l'existence de sept principales lignées de tuberculose. On remarque en particulier que plusieurs branches d'origine animale se sont regroupées avec la lignée 6 d'Afrique de L'Ouest 2, et que les lignées modernes 2, 3 et 4 d'Europe ont des origines proches. Par ailleurs, seuls 1,1 \% des SNPs sont homoplastiques, ce qui suggère que la structure de la tuberculose favorise les clonages plutôt que les recombinaisons entre branches.  
+
+% African origin and co-divergence of MTBC with modern humans
+
+L'étude phylogénique de Comas et al.\cite{comas} corrobore les connaissances actuelles selon lesquelles la tuberculose est originaire d'Afrique. Par ailleurs, s'appuyant sur les origines africaines de l'espèce humaine, elle cherche également à déterminer l'ancienneté de l'association entre la tuberculose et son hôte humain. L'analyse des divergences des génomes de la tuberculose est comparée à celle d'une arborescence génétique déjà établie à partir de mitochondries de l'être humain. 
+
+% Age of the association of MTBC and humans
+
+Les similitude relevées montrent que la tuberculose a infecté les premiers hommes d'Afrique. Pour aller plus loin, l'étude de Comas et al. a tenu compte de 3 dates importantes dans l'évolution de l'être humain qui ont été reportées sur l'analyse phylogénique de la tuberculose des lignées 5 et 6 d'Afrique de l'Ouest :
+
+- l'émergence de l'homo sapiens correspondant au MTBC-185,\\
+- l'émergence du halogroupe mitochondriaque de la lignée 3 chez l'homme correspondant au MTBC-70,\\
+- le début de la transition démographique du Néolithique correspondant au MTBC-10.
+
+La branche MTBC-70 a révélé des corrélations avec l'histoire de l'humanité, telle qu'elle a été décrite par l'archéologie, en montrant l'apparition des sept différentes lignées de tuberculose :
+
+- il y a 73 000 ans, apparition des lignées 5 et 6 correspondant à une 1ère migration humaine importante vers l'Afrique de l'Ouest,\\
+- il y a 67 000 ans, apparition de la lignée 1 correspondant à une migration humaine importante autour de l'Océan Indient,\\
+- il y a 64 000 ans, apparition de la lignée 7 concernant une population qui est restée en Afrique ou est revenue en Afrique après une 1ère migration,\\
+- il y a 46 000 ans, apparition de la lignée 4 correspondant à une migration humaine importante vers l'Europe,\\
+- il y a 42 000 ans, apparition des lignées 2 et 3 correspondant à une migration humaine importante vers l'Asie de l'Est et l'Asie Centrale. 
+
+En revanche, la branche MTBC-185 suggère l'apparition de mutations à partir de lignées africaines il y a 174 000 ans, c'est à dire que la dispersion de la tuberculose précèderait celle de l'homo sapiens.
+
+% Neolithic co-expansion of MTBC and humans
+
+Dans tous les cas, la tuberculose aurait infecté l'espèce humaine et évolué conjointement avec elle depuis 70 000 ans, mais son apparition serait antérieure à la transition démographique du Néolithique.
+
+La base de données de tuberculose étudiée de façon probabiliste par Comas et al. montre que le Néolithique a fortement contribué à l'expansion de la maladie il y a 10 000 ans grâce à l'augmentation de la densité de population, à la probabilité de co-infection avec d'autres maladies dépendantes de la densité de population, et non pas grâce à la possibilité pour la tuberculose de muter d'une variété animale vers une variété humaine. En effet, l'analyse phylogénique de la tuberculose montre que les branches humaines ont divergé des branches animales avant le Néolithique.
+
+Le Néolithique n'était pas la seule période où l'augmentation de la population fut importante, toutefois la concentration de population qui s'en est suivie a permis l'apparition auprès de la tuberculose de caractères fortement dépendants de la densité de population qu'elle affecte. Le Néolithique a donc marqué un tournant dans l'histoire de la tuberculose qui a alors commencé à conjuguer les deux modèles de maladie, dépendant de la densité de population et chronique par périodes de réactivation.
+
+% The evolutionary history of MTBC at a regional scale
+
+ % Conclusion
+
+Il faut donc considérer que la co-existence de la tuberculose avec l'espèce humaine depuis des milliers d'années a conduit la maladie à s'adapter aux changements du génome humain et inversement. Les prochaines études sur la tuberculose devraient donc se concentrer sur des génomes complets de la tuberculose et de l'être humain choisis en rapport à leurs associations.
+
+Par ailleurs, une étude récente de Perry S. et al.\cite{perry1, perry2} suggère que l'infection d'une organisme par l'Helicobacter Pylori pourrait protéger de la tuberculose sous sa forme active. A contrario, nous ne savons pas si la tuberculose latente pourrait protéger contre les ulcers et les cancer de l'estomac causés par l'Helicobacter Pylori.
+
+
+
+%  GLOBAL EXPANSION OF MTBC LINEAGE 4 =============================================
+
+\section{L'expansion de la lignée 4 de tuberculosis}
 
 
 
 
 
-
-
-
-
-
-The origin of human tuberculosis has been associated with the NDT, but recent study point to a much earlier origin.
-
-L'histoire de l'évolution du MTBC a été reconstituée en utilisant 259 séquences complètes d'ADN, tel que décrit dans l'article \textit{Out of Africa migration and Neolithic co-expansion of Mycobacterium tuberculosis with modern humans}. 
-
-La tuberculose est apparue il y a 70 000 ans en Afrique, a accompagné l'homme au cours de ses différentes migrations 
-
-Use of 259 whole-genome sequences to reconstruct the evolutionary history of the MTBC.\\
-Use of a population genomics approach to explore the evolutionary history of human MTBC.\\
-
-"MTBC has been co-evolving with anatomically modern humans for tens of thousands of years. The marked expansion of MTBC during the NTD, but not during earlier human expansion events, suggests that the success of this pathogen was primarily driven by increases in human host density, which is typical of crowd diseases. However, the striking match between the MTBC and human mitochondrial phylogenies supports a much older association between MTBC and its host, and suggest that carriage of MTBC was ubiquitous in hunter-gatherer populations migrating out of Africa well before NDT."
-
-The ongoing analyses of the human microbiota highlight the fuzzy boundaries between commensalism and pathogenecity during health and disease.
-
-A recent study has suggested that co-infection with H. pylori might protect against active tuberculosis disease.
-
-Conversely, whether latent tuberculosis infection protects against gastric ulcers or stomach cancer caused by H. pylori in individuals infected with both bacteria is unknown but an intriguing possibility.
-
-Current epidemiological trends : increased dissemination of the Beijing family of MTBC, decreased rates of disease caused by evolutionarily ancient lineages of MTBC.
-
-It is important to consider the possibility of reciprocal adaptive changes to the human genome as a result of prolonged co-evolution with MTBC.
-
-This study compares MTBC phylogenic diversity to human diversity inferred from mitochondrial genome data.
-
-Future studies should be based on paired human-bacterial whole genome information collected prospectively.
+% SPOLPRED ==========================================================
 
 \section{Le locus CRISPR-Cas}
 
-Le locus CRISPR est une famille de séquences répétées dans l'ADN formant un palindrome. Les séries de répétition comprennent entre 21 et 37 bp, régulièrement espacées par des \textit{spacers} de 20 à 40 bp. Cette structure répétée se trouve à l'état naturel dans les cellules et se conserve pour une même espèce. Les locus CRISPR sont généralement adjacents aux gènes Cas, dont ils sont séparés par une séquence de 300 à 500 bp.
+% Le locus CRISPR Cas
 
-CRISPR-Cas est un système naturel utilisé par les bactéries pour se protéger des infections virales. Lorsque la bactérie détecte la présence d'ADN d'un virus, elle produit une protéine appelée Cas9, contenant une séquence qui correspond à celle de l'ADN du virus et qui joue le rôle d'un guide ARN. Cas9 est un type d'enzyme capable de couper l'ADN. Lorsque le guide ARN trouve sa cible parmi le genome du virus, Cas9 sectionne son ADN, désactive le virus, puis insère un fragment de l'ADN du virus dans un \textit{spacer} du génome de la bactérie afin de conserver en mémoire une trace de ce virus.
+\subsection{Description}
 
-La méthode CRISPR s'inspire du système du même nom et a d'abord été utilisée pour typer les souches bactériennes, suivant une technique appelée \textit{spoligotyping}. Elle est actuellement principalement utilisée comme ciseau moléculaire afin d'introduire localement des modifications du génome.
+Le locus CRISPR \textit{Clusterd Regularly Interspaced Short Palindromic Repeats} est une famille de séquences répétées dans l'ADN formant un palindrome. Chaque série de répétition contient entre 21 et 37 bp, régulièrement espacées par des \textit{spacers} de 20 à 40 bp. Cette structure répétée se trouve à l'état naturel dans les bactéries et les archées. Elle est héritable par transmission aux cellules filles et se conserve donc pour une même espèce. Les locus CRISPR sont généralement adjacents aux gènes Cas, dont ils sont séparés par une séquence de 300 à 500 bp. Ces gènes Cas produisent des enzymes capable de couper l'ADN en vue de leur réparation.
 
-L'étude des locus CRISPR-Cas permet de ...
+Ces séquences incorporent dans les spacers des fragments d'ADN de bactériophages qui ont déjà infecté la bactérie qui sont stockés en vue de détecter et de détruire l'ADN de bactériophages similaires en cas d'infection ultérieure. Par conséquent, CRISPR-Cas est un système immunitaire naturel utilisé par les bactéries pour se protéger des infections virales. 
 
-\subsection{Le \textit{spoligotyping}}
-
-\textit{Spacer Oligonucleotide Typing} ou \textit{spoligotypage} une méthode de réaction en chaîne utilisant un polymerase pour la détection et le génotypage du MTBC.
-
-Le spoligotypage est une technique de génotypage permettant d'identifier des séquences DR Direct Repeat au sein d'un locus CRISPR. Cette technique permet notamment d'identifier des sous-espèces de M. tuberculosis.
-
-PCR Polymerase Chain Reaction est une méthode permettant de dupliquer en grand nombre une séquence d'ADN connue à partir d'une faible quantité d'acide nucléique et de \textit{primers}. 
-
-\section{Les 7 lignées de \textit{tuberculosis}}
+% dessin
 
 
-\section{Les outils de travail}
 
-\subsection{Le séquençage traditionnel du génome}
 
-Le génome est 
+\subsection{Fonctionnement du système CRISPR-Cas}
 
-\subsection{SpolPred: rapid and accurate prediction of MTBC spoligotypes from short genomic sequences}
+Le système CRISPR-Cas fonctionne de la façon suivante : lorsque la bactérie détecte la présence d'ADN ou d'ARN d'un virus, elle produit une protéine appelée Cas9 capable de couper l'ADN, une séquence d'ARN CRISPR notée crARN correspondant à celle de l'ADN du virus et une séquence d'ARN traceur notée trARN qui joue le rôle d'un guide ARN. Lorsque trARN trouve sa cible parmi le genome du virus, Cas9 sectionne son ADN, désactive le virus, puis insère un fragment de l'ADN du virus dans un \textit{spacer} du génome de la bactérie afin de conserver en mémoire une trace de ce virus.
 
-spoligotyping also called spacer oligonucleotide typing : the use of the polymerase chain reaction to identify pathgens, such as MTBC in laboratory specimens. It relies on the detection of unique spans of repeated DNA sequences found between the active genes of the pathogen.
+Les différentes étapes du système CRISPR-Cas sont donc les suivantes :
+
+1. adaptation de l'ADN de la bactérie à l'ADN ou ARN du bactériophage, en incorporant des portions d'ADN du virus dans les spacers de la bactérie,\\
+2. création de crRNA et trRNA à partir de la nouvelle séquence d'ADN légèrement modifiée suite à l'infection virale. Avec l'aide de Cas9, trRNA et crRNA coupent l'ADN cible à un emplacement spécifique.\\
+3. création d'enzymes permettant de lutter contre le bactériophage.
+
+Mécanisme moléculaire :
+
+Les systèmes CRISPR utilisent les gènes cas1 et cas2 qui sont impliqués dans l'intégration, en tant que spacer de fragments de gènes étrangers dans le CRISPR.
+
+Trois types de systèmes CRISPR-Cas sont connus :
+
+les systèmes de types I, utilisent un complexe Cascade pour cliver les transcrits de CRISPR au niveau des épingles. Lorsqu'un complexe Cascade/spacer s'associe à un ADN cible (reconnaissance par hybridations) il recrute la protéine Cas3 qui clive un brin de l'ADN cible ;
+les systèmes de types II, utilisent la RNAse III pour séparer les répétitions des transcrits. La protéine Cas9 s'associent avec un fragment de transcrit et, lors de la reconnaissance d'un ADN cible, Cas9 clive les 2 brins de cet ADN ;
+les systèmes de type III, utilisent la protéine Cas6 pour cliver les transcrits de CRISPR au niveau des épingles, les segments de transcrits obtenus s'associent avec un complexe Cas10. Ce système requiert qu'il y ait transcription de l'ADN cible, le complexe Cas10/spacer clive alors un brin de l'ADN cible (brin non transcrit), ainsi que l'ARN en cours de transcription.
+
+% REVOIR VIDEO POUR COMPARER
+
+La technologie CRISPR-Cas9 s'inspire du système du même nom a d'abord été utilisée pour typer les souches bactériennes, suivant une technique appelée \textit{spoligotyping}. CRISPR-Cas9 est actuellement principalement employé comme ciseau moléculaire afin d'éditer le génome et d'introduire localement des modifications génétiques.
+
+% Spoligotyping
+
+\subsection{Le spoligotyping}
+
+Une PCR \textit{Polymerase Chain Reaction} est une méthode de réaction en chaîne utilisant un polymère pour dupliquer en grand nombre une séquence d'ADN spécifique. La méthode PCR repose sur le cycle thermique, qui expose les séquences à des cycles répétés de chauffage et de refroidissement pour permettre différentes réactions dépendantes de la température comme la fusion de l'ADN et la réplication de l'ADN par les enzymes. La méthode PCR utilise deux agents principaux : les polymères d'ADN et les \textit{primers}.
+
+Le spoligotyping, \textit{Spacer Oligonucleotide Typing}, repose sur la détection de séquences répétitives, ou \textit{Direct Repeat} DR, trouvées entre les gènes d'un agent infectieux au sein d'un locus CRISPR, et permet le génotypage des souches de tuberculosis en utilisant la duplication des séquences d'ADN à l'aide d'une méthode PCR.
+
+Les données obtenues sous forme numérique peuvent être partagées entre laboratoires et corroborent les résultats obtenus à partir d'autres marqueurs génétiques. Elles permettent de bien différencier les souches de tuberculosis et sont de moindre coût comparativement à d'autres méthodes. Cependant, le spoligotyping éprouve des difficultés à bien différencier les souches au sein de grandes familles de souches telles que la branche Beijing.
+
+Le spoligotyping a permis de fournir une image globale de la diversité des souches de tuberculosis.
+
+% Spolpred
+
+\subsection{Quel outil choisir pour le spoligotyping ?}
+
+SpolPred est un logiciel de prédiction rapide et précis des spoligotypes de tuberculosis à partir de séquences génomiques courtes appelées reads, développé par Preston M.
+
+Dans son étude, Coll F. et al.\cite{coll} montre l'utilité de ce logiciel mais aussi les limites de la méthode bioinformatique par assemblage, consistant à aligner ou fusionner des fragments d'ADN issus d'une plus longue séquence afin de reconstruire la séquence originale. Il apparaît que SpolPred offre plus de précision, plus de rapidité et des résultats pratiquement identiques à ceux obtenus par assemblage.
+
+Une problématique de SpolPred en 2020 est que le logiciel n'est plus disponible au public. En effet, une visite sur le site officiel \url{http://www.pathogenseq.org/spolpred} fourni comme référence dans le document \cite{coll} de Coll F. et al. montre que le nom de domaine est à vendre. Preston M., qui a fait partie de l'équipe de rechercher de Coll F. pour le développement de SpolPred, a bien créé un site \url{https://www.mybiosoftware.com/spolpred-predict-the-spoligotype-from-raw-sequence-reads.html} proposant le téléchargement du logiciel, mais le lien est actuellement inactif.
+
+Une alternative à SpolPred est SpoTyping présenté dans l'article \cite{xia} de Xia et al. comme étant 20 à 40 fois plus rapide que SpolPred pour prédire avec précision des spoligotypes de tuberculosis à partir de reads de taille uniforme ou variable. Par ailleurs, SpoTyping produit un rapport résumant les données épidémiologiques associées à l'étude à partir d'une base de données mondiale de tous les isolats ayant le même spoligotype. SpoTyping peut se télécharger gratuitement à l'adresse \url{https://github.com/xiaeryu/SpoTyping-v2.0}.
+% dependancies
+SpoTyping utilise
+
+La base de données SITVITWEB contient 2740 types partagées, appelés SITs, parmis 58180 isolats et 62 branches. 
 
 L'application en ligne SitVit2 permet d'analyser des data au regard des markers Spoligotypes, ETR et MIRU-VNTR afin d'en trouver notamment l'origine.
 
-\subsection{VITI}
 
-spoligotyping also called spacer oligonucleotide typing : the use of the polymerase chain reaction to identify pathgens, such as MTBC in laboratory specimens. It relies on the detection of unique spans of repeated DNA sequences found between the active genes of the pathogen.
+% finir lecture spotyping
 
-L'application en ligne SitVit2 permet d'analyser des data au regard des markers Spoligotypes, ETR et MIRU-VNTR afin d'en trouver notamment l'origine.
 
-Sanger sequencing was a method of DNA sequencing invented in 1977 and based on the selective incorporation of chain-terminating dideoxynucleotides by DNA polymerase.
 
-Polymerase Chain Reaction PCR is a method widely used in molecular biology to make several copies of a specific DNA segment. Using PCR, copies of DNA sequencies are exponentially amplified to generate thousands to millions of more copies of that particular DNA segment. PCR method rely on thermal cycling, which exposes reactants to repeated cycles of heating and cooling to permit different temperature-dependent reactions like DNA melting and enzyme-driven DNA replication. PCR employs 2 main reagents : primers (which are short single strand DNA fracgments that are a complementary sequence to the target DNA region) and a DNA polymerase.
+
+
+
+Une méthode standardisée de description des spoligotypes a été proposée par Dale JW dans son article \cite{dale}. L'adoption de cette méthode pourrait s'avérer utile à la recherche mycobactérienne.
+
+Dale JW et al. explique que la séquence répétée DR au sein du locus CRISPR de tuberculosis mesure 36 bp. Les spacers, quant à eux mesurent de 35 à 41 bp. Le polymorphisme entre les différentes souches résulte des variations et de l'identité des spacers. La région DR d'un isolat devant être testé est agrandi par PCR pour dévoiler un motif de taches correspondant aux spacers. La comparaison de ces motifs permet la différentiation des souches. A l'heure actuelle, il n'existe pas de norme pour décrire ces motifs ou simplement les numéroter. Chaque laboratoire utilise son propre système de numérotation accompagné d'un schéma descriptif du motif. Ce manque de normalisation entrave les possibilités de comparaison des résultats obtenus et le développement d'une vision mondiale de l'évolution de MTBC.
+
+\subsection{Vers une normalisation des spoligotypes}
+
+Une base de données centralisée regroupant les 1362 motifs connus et de leurs numérotation jusqu'à présent associées existe au RIVM Rijksinstituut voor Volksgezondheid en Milieuhygiene, Bilthoven, Netherlands, et peut être consultée au \url{http://www.caontb.rivm.nl}. Les nouveaux motifs devraient alors prendre un unique numéro pour être répertoriés dans cette base de données.
+
+Toutefois, cela nécessite l'interrogation systématique de la base de données et la comparaison avec les éléments déjà existant pour chaque nouveau spoligotype. Pour éviter cette perte de temps, de nombreux laboratoires utilisent des systèmes rationnels avec des codes descriptifs assignés à chaque isolat.
+%finir lecture standard
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% TODO =========================================
+
+% chercher à quoi ressemblent des illumina reads, éventuellement comprendre le fonctionnement de illumina sequencing
+
+
+
+% =============================================
+
 
 
 % =========
@@ -340,15 +437,26 @@ Polymerase Chain Reaction PCR is a method widely used in molecular biology to ma
 \bibliographystyle{}
 \renewcommand{\bibname}{Références}
 \begin{thebibliography}{10}
-\bibitem{}Comas I, Coscolla M, Luo T, et al. \textit{Out-of-Africa migration and Neolithic coexpansion of Mycobacterium tuberculosis with modern humans}\\ \\
+\bibitem{comas}Comas I. et al. \textit{Out-of-Africa migration and Neolithic coexpansion of Mycobacterium tuberculosis with modern humans}\\ \\
 
-\bibitem{}Coll, F., et al., \textit{SpolPred : rapid and accurate prediction of Mycobacterium tuberculosis spoligotypes from short genomic sequences}\\ \\
+\bibitem{coll}Coll F. et al., \textit{SpolPred : rapid and accurate prediction of Mycobacterium tuberculosis spoligotypes from short genomic sequences}\\ \\
 
-\bibitem{}Brynildsrud, O.B., et al., \textit{Global expansion of Mycobacterium tuberculosis lineage 4 shaped by colonial migration and local adaptation}\\ \\
+\bibitem{brynildsrud}Brynildsrud O.B. et al., \textit{Global expansion of Mycobacterium tuberculosis lineage 4 shaped by colonial migration and local adaptation}\\ \\
 
-\bibitem{}Biomedical and Biological Sciences channel, \textit{The principle of CRISPR System and CRISPR-Cas9 technique}\\ \\
+\bibitem{driscoll}Driscoll J. R., \textit{Spoligotyping for molecular epidemiology of the Mycobacterium tuberculosis complex}\\ \\
 
-\bibitem{}McGovern Institute channel, \textit{Genome Editing with CRISPR-Cas9}\\ \\
+\bibitem{jinek}Jinek M. et al, \textit{A programmable dual-RNA-guided DNA endonuclease in adaptive bacterial immunity}\\ \\
+
+\bibitem{gori}Gori A. et al, \textit{Spoligotyping and Mycobacterium tuberculosis}\\ \\
+
+\bibitem{perry1}Perry S. et al., \textit{Infection with Helicobacter pylori is associated with protection against tuberculosis}\\ \\
+
+\bibitem{perry2}Perry S. et al, \textit{The immune response to tuberculosis infection in the setting of Helicobacter pylori and helminth infections}\\ \\
+
+\bibitem{xia}Xia E. et al., \textit{SpoTyping: fast and accurate in silico Mycobacterium spoligotyping from sequence reads}\\ \\ 
+
+\bibitem{dale}Dale JW. et al., \textit{Spacer oligonucleotide typing of bacteria of the Mycobacterium tuberculosis complex: recommendations for standardised nomenclature}\\ \\
+
 
 
 \end{thebibliography}
