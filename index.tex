@@ -70,8 +70,10 @@
 colorlinks=true,
 linkcolor=couleurUrl,
 citecolor=couleurUrl,
-urlcolor=couleurUrl
+urlcolor=couleurUrl,
+breaklinks=true % saute la ligne au milieu d'un href
 }
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
 
 % LIGNES
 \usepackage{parskip}
@@ -239,18 +241,19 @@ La tuberculose conjugue ces deux modèles de maladie. En effet, elle a montré �
 
 % The global diversity of human-adapted MTBC
 
-L'analyse phylogénique\footnote{\textbf{Phylogénie} : étude des liens entre espèces apparentées, permettant de retracer les principales étapes de l'évolution des organismes depuis un ancêtre commun.} de Comas et al.\cite{comas} se base exclusivement sur l'étude du génome complet de toutes les lignées connues de tuberculose en utilisant les SNPs pour construire les relations entre les différentes branches. Les résultats obtenus rejoignent de précédentes études effectuées à partir d'autres marqueurs, et confirment l'existence de sept principales lignées de tuberculose. On remarque en particulier que plusieurs branches d'origine animale se sont regroupées avec la lignée 6 d'Afrique de L'Ouest 2, et que les lignées modernes 2, 3 et 4 d'Europe ont des origines proches. Par ailleurs, seuls 1,1 \% des SNPs sont homoplastiques, ce qui suggère que la structure de la tuberculose favorise les clonages plutôt que les recombinaisons entre branches.  
+L'analyse phylogénique\footnote{\textbf{Phylogénie} : étude des liens entre espèces apparentées, permettant de retracer les principales étapes de l'évolution des organismes depuis un ancêtre commun.} de Comas et al.\cite{comas} se base exclusivement sur l'étude du génome\footnote{\textbf{Génome} : ensemble de l'information génétique d'un organisme. Par extension, le génome se réfère aussi au support physique de cette information génétique, la macromolécule d'ADN.\\ \textbf{Annotation des gènes} : processus permettant d'identifier l'emplacement des gènes dans l'ADN, de déterminer leurs fonctions et leurs possibles interactions.} complet de toutes les lignées connues de tuberculose en utilisant les SNPs\footnote{\textbf{SNP Single Nucleotide Polymorphism} : il s'agit de la variation ou polymorphisme d'une seule paire de bases du génome entre organismes d'une même espèce.} pour construire les relations entre les différentes branches. Les résultats obtenus rejoignent de précédentes études effectuées à partir d'autres marqueurs, et confirment l'existence de sept principales lignées de tuberculose. On remarque en particulier que plusieurs branches d'origine animale se sont regroupées avec la lignée 6 d'Afrique de L'Ouest 2, et que les lignées modernes 2, 3 et 4 d'Europe ont des origines proches. Par ailleurs, seuls 1,1 \% des SNPs sont homoplastiques\footnote{\textbf{Homoplasie} : similitude de caractères chez différentes espèces, qui ne provient pas d'un ancêtre commun, mais peut par exemple provenir d'une adaptation à l'environnement.\\
+\textbf{Homologie} : similitude de caractères observée chez deux espères différentes, provenant de l'héritage d'un ancêtre commun. }, ce qui suggère que la structure de la tuberculose favorise les clonages plutôt que les recombinaisons entre branches.  
 
 % African origin and co-divergence of MTBC with modern humans
 
-L'étude phylogénique de Comas et al.\cite{comas} corrobore les connaissances actuelles selon lesquelles la tuberculose est originaire d'Afrique. Par ailleurs, s'appuyant sur les origines africaines de l'espèce humaine, elle cherche également à déterminer l'ancienneté de l'association entre la tuberculose et son hôte humain. L'analyse des divergences des génomes de la tuberculose est comparée à celle d'une arborescence génétique déjà établie à partir de mitochondries de l'être humain. 
+L'étude phylogénique de Comas et al.\cite{comas} corrobore les connaissances actuelles selon lesquelles la tuberculose est originaire d'Afrique. Par ailleurs, s'appuyant sur les origines africaines de l'espèce humaine, elle cherche également à déterminer l'ancienneté de l'association entre la tuberculose et son hôte humain. L'analyse des divergences des génomes de la tuberculose est comparée à celle d'une arborescence génétique déjà établie à partir de mitochondries\footnote{\textbf{Mitochondrie} : centrale énergétique des cellules qui contribue à la production d'ATP.} de l'être humain. 
 
 % Age of the association of MTBC and humans
 
 Les similitude relevées montrent que la tuberculose a infecté les premiers hommes d'Afrique. Pour aller plus loin, l'étude de Comas et al. a tenu compte de 3 dates importantes dans l'évolution de l'être humain qui ont été reportées sur l'analyse phylogénique de la tuberculose des lignées 5 et 6 d'Afrique de l'Ouest :
 
 - l'émergence de l'homo sapiens correspondant au MTBC-185\footnote{\textbf{MTBC} : Mycobacterium Tuberculosis Complex.},\\
-- l'émergence du halogroupe mitochondriaque de la lignée 3 chez l'homme correspondant au MTBC-70,\\
+- l'émergence du haplogroupe\footnote{\textbf{Haplogroupe} : groupe possédant les mêmes caractères génétiques et partageant un ancêtre commun suivant une mutation SNP.} mitochondriaque de la lignée 3 chez l'homme correspondant au MTBC-70,\\
 - le début de la transition démographique du Néolithique correspondant au MTBC-10.
 
 La branche MTBC-70 a révélé des corrélations avec l'histoire de l'humanité, telle qu'elle a été décrite par l'archéologie, en montrant l'apparition des sept différentes lignées de tuberculose :
@@ -297,7 +300,7 @@ Par ailleurs, une étude récente de Perry S. et al.\cite{perry1, perry2} suggè
 
 \subsection{Description}
 
-Le locus CRISPR \textit{Clusterd Regularly Interspaced Short Palindromic Repeats} est une famille de séquences répétées dans l'ADN formant un palindrome. Chaque série de répétition contient entre 21 et 37 bp, régulièrement espacées par des \textit{spacers} de 20 à 40 bp. Cette structure répétée se trouve à l'état naturel chez 40\% des bactéries (dont le MTBC) et la plupart des archées. Elle est héritable par transmission aux cellules filles et se conserve donc pour une même espèce. Les locus CRISPR sont généralement adjacents aux gènes Cas, dont ils sont séparés par une séquence de 300 à 500 bp, appelée leader qui contrôle à la fois la l'acquisition de l'ADN viral par les spacers et la fabrication de protéines. Les gènes Cas produisent des protéines aux fonctionnalités différentes et notamment les enzymes capable de couper l'ADN en vue de leur réparation.
+Le locus CRISPR \textit{Clusterd Regularly Interspaced Short Palindromic Repeats} est une famille de séquences répétées dans l'ADN formant un palindrome. Chaque série de répétition contient entre 21 et 37 bp\footnote{\textbf{bp} : une paire de base est l'appariement de 2 bases nucléiques situées sur 2 brins complémentaires d'ADN, reliées par des ponts d'hydrogène.}, régulièrement espacées par des \textit{spacers} de 20 à 40 bp. Cette structure répétée se trouve à l'état naturel chez 40\% des bactéries (dont le MTBC) et la plupart des archées. Elle est héritable par transmission aux cellules filles et se conserve donc pour une même espèce. Les locus CRISPR sont généralement adjacents aux gènes Cas, dont ils sont séparés par une séquence de 300 à 500 bp, appelée leader qui contrôle à la fois la l'acquisition de l'ADN viral par les spacers et la fabrication de protéines. Les gènes Cas produisent des protéines aux fonctionnalités différentes et notamment les enzymes\footnote{\textbf{Enzyme de restriction} : protéine capable de couper un fragment d'ADN au niveau d'une séquence de nucléotides caractéristique appelée site de restriction. Chaque enzyme de restriction reconnaît ainsi un site spécifique.} capable de couper l'ADN en vue de leur réparation.
 
 Ces séquences incorporent dans les spacers des fragments d'ADN de bactériophages qui ont déjà infecté la bactérie qui sont stockés en vue de détecter et de détruire l'ADN de bactériophages similaires en cas d'infection ultérieure. Par conséquent, CRISPR-Cas est un système immunitaire naturel utilisé par les bactéries pour se protéger des infections virales. 
 
@@ -336,7 +339,7 @@ La technologie CRISPR-Cas9 s'inspire du système du même nom a d'abord été ut
 
 \subsection{Le spoligotyping}
 
-Le spoligotyping, \textit{Spacer Oligonucleotide Typing}, repose sur la détection de séquences répétitives, ou \textit{Direct Repeat} DR, trouvées entre les gènes d'un agent infectieux au sein d'un locus CRISPR-Cas. Pour ce faire, la région DR d'un isolat à tester subit un traitement PCR ou celui d'une puce à ADN pour dévoiler un motif de taches correspondant aux spacers. La comparaison de ces motifs permet la différentiation des souches. Ainsi, le locus CRISPR-Cas permet le génotypage des souches de tuberculosis.
+Le spoligotyping, \textit{Spacer Oligonucleotide Typing}, repose sur la détection de séquences répétitives, ou \textit{Direct Repeat} DR, trouvées entre les gènes d'un agent infectieux au sein d'un locus CRISPR-Cas. Pour ce faire, la région DR d'un isolat à tester subit un traitement PCR\footnote{\textbf{PCR Polymerase Chain Reaction} : méthode de réaction en chaîne utilisant un polymère\footnote{\textbf{Polymère} : macromolécule répétant un même motif structural.} pour dupliquer en grand nombre une séquence d'ADN spécifique. La méthode PCR repose sur le cycle thermique, qui expose les séquences à des cycles répétés de chauffage et de refroidissement pour permettre différentes réactions dépendantes de la température comme la fusion de l'ADN et la réplication de l'ADN par les enzymes. La méthode PCR utilise deux agents principaux : les polymères d'ADN et les \textit{primers}.} ou celui d'une puce à ADN\footnote{\textbf{Puce à ADN} : ensemble de molécules d'ADN fixées sur une petite surface solide permettant de mesurer le niveau d'expression d'un grand nombre de gènes simultanément, ou de déterminer le génotype de plusieurs régions d'un génome.} pour dévoiler un motif de taches correspondant aux spacers. La comparaison de ces motifs permet la différentiation des souches. Ainsi, le locus CRISPR-Cas permet le génotypage des souches de tuberculosis.
 
 Xia E. et al. et Coll F. et al. expliquent dans leurs articles \cite{xia, coll} que la séquence répétée DR au sein du locus CRISPR de tuberculosis mesure 36 bp. Les spacers, quant à eux mesurent de 34 à 41 bp. Le polymorphisme entre les différentes souches résulte des variations et de l'identité des spacers. La classification de MTBC utilise un groupe de 43 bit représentant la présence ou l'absence d'espaceurs dans le locus CRISPR, qu'on appelle spoligotype.
 
@@ -374,7 +377,7 @@ Toutefois, d'après l'étude de Xia et al.\cite{xia}, la précision de SpolPred 
 
 Une problématique de SpolPred en 2020 est que le logiciel n'est plus disponible au public. En effet, une visite sur le site officiel \url{http://www.pathogenseq.org/spolpred} fourni comme référence dans le document \cite{coll} de Coll F. et al. montre que le nom de domaine est à vendre. Preston M., qui a fait partie de l'équipe de rechercher de Coll F. pour le développement de SpolPred, a bien créé un site \url{https://www.mybiosoftware.com/spolpred-predict-the-spoligotype-from-raw-sequence-reads.html} proposant le téléchargement du logiciel, mais le lien est actuellement inactif.
 
-Une alternative à SpolPred est SpoTyping présenté en 2016 dans l'article \cite{xia} de Xia et al. comme étant 20 à 40 fois plus rapide que SpolPred pour prédire avec précision des spoligotypes de tuberculosis à partir de reads de taille uniforme ou variable. Par ailleurs, SpoTyping lit chaque read dans les deux directions en exploitant complètement les informations fournies. SpoTyping réduit la durée des recherches en intégrant l'algorithme BLAST\footnote{\textit{BLAST Basic Local Alignment Search Tool} : logiciel basé sur l'algorithme du même nom qui détecte des régions similaires entre plusieurs séquences biologiques. Le programme compare les séquences de nucléotides aux séquences contenues dans la base de données BLAST pour fournir des résultats statistiquement significatifs.} dans ses calculs. Il compare les isolats testés avec ceux ayant le même spoligotype dans la base de données mondiale de marqueurs moléculaires de la tuberculose SITVIT\footnote{La base de données SITVIT comprend les spoligotypes de tuberculosis, ainsi que les marqueurs utilisés pour les détecter MIRU12, VNTR, SIT, MIT, VIT, les différentes branches de MTBC, les pays d'origine et l'année de découverte.}, qui regroupe les données épidémiologiques associées à des isolats de même spoligotype.
+Une alternative à SpolPred est SpoTyping présenté en 2016 dans l'article \cite{xia} de Xia et al. comme étant 20 à 40 fois plus rapide que SpolPred pour prédire avec précision des spoligotypes de tuberculosis à partir de reads de taille uniforme ou variable. Par ailleurs, SpoTyping lit chaque read dans les deux directions en exploitant complètement les informations fournies. SpoTyping réduit la durée des recherches en intégrant l'algorithme BLAST\footnote{\textbf{BLAST Basic Local Alignment Search Tool} : logiciel basé sur l'algorithme du même nom qui détecte des régions similaires entre plusieurs séquences biologiques. Le programme compare les séquences de nucléotides aux séquences contenues dans la base de données BLAST pour fournir des résultats statistiquement significatifs.} dans ses calculs. Il compare les isolats testés avec ceux ayant le même spoligotype dans la base de données mondiale de marqueurs moléculaires de la tuberculose SITVIT\footnote{La base de données SITVIT comprend les spoligotypes de tuberculosis, ainsi que les marqueurs utilisés pour les détecter MIRU12, VNTR, SIT, MIT, VIT, les différentes branches de MTBC, les pays d'origine et l'année de découverte.}, qui regroupe les données épidémiologiques\footnote{\textbf{Epidémiologie} : discipline scientifique qui étudie les problèmes de santé dans les populations humaines, leur fréquence, leur géographie ainsi que les facteurs influants.} associées à des isolats de même spoligotype.
 
 SpoTyping utilise des fichiers de séquences de reads simples ou par paires au format FASTQ et des fichiers de séquences complètes de génomes ou de contigs assemblés au format FASTA. Le séquences de reads sont regroupés en une unique séquence continue au format FASTA pour être ensuite soumis à l'algorithme BLAST qui détecte les régions similaires. Finalement la base de données SITVIT permet d'identifier les isolats ayant le même spoligotype. SpoTyping est limité à une lecture de 250 Mbp au sein des séquences de reads testées, lors de l'utilisation du swift mode qui accélère le temps de traitement.
 
@@ -387,7 +390,7 @@ L'étude de Iwai H: et al. \cite{iwai} montre l'intérêt d'une analyse de MTBC 
 \caption{Exemple de fonctionnement de SpoTyping, d'après \textit{SpoTyping:\\ fast and accurate in silico Mycobacterium spoligotyping from sequence reads}}
 \end{figure}
 
-\textit{Spécifications techniques}, d'après \url{https://github.com/xiaeryu/SpoTyping-v2.0/blob/master/SpoTyping-v2.0-commandLine/SpoTyping-README.pdf}
+D'après le repository \url{https://github.com/xiaeryu/SpoTyping-v2.0/blob/master/SpoTyping-v2.0-commandLine/SpoTyping-README.pdf}, les spécifications techniques sont les suivantes :
 
 SpoTyping peut s'exécuter sur les principaux systèmes d'exploitation, contrairement à SpolPred qui utilise exclusivement Linux. Il se présente à la fois sous forme de script et sous forme d'application avec une interface graphique.
 
@@ -398,65 +401,13 @@ Le fichier obtenu propose une prédiction de spoligotype au format de code binai
 Le fichier log obtenu contient de nombre de correspondances positives des résultats de BLAST pour chaque séquence de spacer.\\
 Le fichier xls Excel obtenu fournit le resultat de la recherche de spoligotype auprès de la base de données SITVIT WEB. (actuellement SITVIT2)
 
-Il est recommandé d'utiliser le swift mode paramétré par défaut si le débit de séquençage est inférieur à 135 Mbp.\\
+Il est recommandé d'utiliser le swift mode paramétré par défaut si le débit de séquençage\footnote{\textbf{Séquençage du génome} : consiste, par des méthodes chimiques ou de biologie moléculaire, à déterminer l'ordre des nucléotides de l'ADN.} est inférieur à 135 Mbp.\\
 Pour les débits de séquençage inférieurs à 135 Mbp ou supérieurs à 1260 Mbp, les seuils doivent être réglés entre 0.018 et 0.1486 fois la profondeur de lecture estimée pour les hits sans erreur, et entre 0.018 et 0.1488 fois la profondeur de lecture estimée pour les hits tolérant une erreur. Notons que la profondeur de lecture est définie par le débit de séquençage divisé par 4 500 0000 qui correspond à l'estimation de la longueur d'un génome de MTBC.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 % problème rencontré par Coll à faire ressortir
 
-
-
-
-
-% LEXIQUE =============================================
-
-\section{Lexique}
-
-
-
-\textbf{Epidémiologie} : discipline scientifique qui étudie les problèmes de santé dans les populations humaines, leur fréquence, leur géographie ainsi que les facteurs influants.
-
-\textbf{Annotation des gènes} : processus permettant d'identifier l'emplacement des gènes dans l'ADN, de déterminer leurs fonctions et leurs possibles interactions.
-
-\textbf{Génome} : ensemble de l'information génétique d'un organisme. Par extension, le génome se réfère aussi au support physique de cette information génétique, la macromolécule d'ADN.
-
-\textbf{Séquençage du génome} : consiste, par des méthodes chimiques ou de biologie moléculaire, à déterminer l'ordre des nucléotides de l'ADN.
-
-\textbf{bp} : une paire de base est l'appariement de 2 bases nucléiques situées sur 2 brins complémentaires d'ADN, reliées par des ponts d'hydrogène.
-
-\textbf{SNP Single Nucleotide Polymorphism} : il s'agit de la variation ou polymorphisme d'une seule paire de bases du génome entre organismes d'une même espèce.
-
-\textbf{Haplogroupe} : groupe possédant les mêmes caractères génétiques et partageant un ancêtre commun suivant une mutation SNP.
-
-\textbf{Homologie} : similitude de caractères observée chez deux espères différentes, provenant de l'héritage d'un ancêtre commun. 
-
-\textbf{Homoplasie} : similitude de caractères chez différentes espèces, qui ne provient pas d'un ancêtre commun, mais peut par exemple provenir d'une adaptation à l'environnement.
-
-\textbf{Mitochondrie} : centrale énergétique des cellules qui contribue à la production d'ATP.
-
-\textbf{Polymère} : macromolécule répétant un même motif structural.
-
-\textbf{PCR Polymerase Chain Reaction} : méthode de réaction en chaîne utilisant un polymère pour dupliquer en grand nombre une séquence d'ADN spécifique. La méthode PCR repose sur le cycle thermique, qui expose les séquences à des cycles répétés de chauffage et de refroidissement pour permettre différentes réactions dépendantes de la température comme la fusion de l'ADN et la réplication de l'ADN par les enzymes. La méthode PCR utilise deux agents principaux : les polymères d'ADN et les \textit{primers}.
-
-\textbf{puce à ADN} : ensemble de molécules d'ADN fixées sur une petite surface solide permettant de mesurer le niveau d'expression d'un grand nombre de gènes simultanément, ou de déterminer le génotype de plusieurs régions d'un génome.
-
-\textbf{Enzyme de restriction} : protéine capable de couper un fragment d'ADN au niveau d'une séquence de nucléotides caractéristique appelée site de restriction. Chaque enzyme de restriction reconnaît ainsi un site spécifique.
-
+% travail sur les références
 
 % =========
 % BIBLIOTHEQUE
