@@ -23,6 +23,7 @@
 \usepackage[frenchb]{babel}  % langue française
 \usepackage{bm}  % caractères grecs
 \usepackage{calc}
+\usepackage[justification=centering]{caption} % centralise les légendes des figures
 \usepackage{enumitem} % listes
 \usepackage{eurosym}  % symbole euro
 \usepackage{euscript}
@@ -73,7 +74,7 @@ citecolor=couleurUrl,
 urlcolor=couleurUrl,
 breaklinks=true % saute la ligne au milieu d'un href
 }
-\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref} % pour que url ait les memes propriétés que hyperref
 
 % LIGNES
 \usepackage{parskip}
@@ -185,7 +186,7 @@ ntheorem=true]{lemma}{Lemme}
 %\numberwithin{equation}{section}  % equations
 
 %\renewcommand{\thepart}{\Alph{part}}  % parties
-\renewcommand{\thechapter}{\arabic{chapter}.}  % chapitres
+%\renewcommand{\thechapter}{\arabic{chapter}.}  % chapitres
 \renewcommand{\thesection}{\arabic{section}.}  % sections
 \renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}.}  %  sous-sections
 \renewcommand{\thesubsubsection}{\arabic{section}.\arabic{subsection}.\arabic{subsubsection}.}  % sous-sous-sections
@@ -199,7 +200,7 @@ ntheorem=true]{lemma}{Lemme}
 \setcounter{secnumdepth}{4}  % profondeur de numérotation
 
 % FORMAT DES SECTIONS-TITRES
-\titleformat{\section}{\normalfont\normalsize\bfseries}{\textcolor{couleurTitre}{\thesection}}{1em}
+\titleformat{\section}{\normalfont\normalsize\bfseries}{\textcolor{couleurTitre}{\thesection}}{1.2em}
 {\normalfont\large\bfseries\scshape\textcolor{couleurTitre}} % format de titre de section
 \titleformat{\subsection}{\normalfont\normalsize\bfseries}{\textcolor{couleurTitre}{\thesubsection}}{1em}
 {\normalfont\normalsize\bfseries\textcolor{couleurTitre}}  % format de titre de sous-section
@@ -208,9 +209,10 @@ ntheorem=true]{lemma}{Lemme}
 
 \makeatletter
 
+% CONCERNE LA TABLE DES MATIERES
 %\renewcommand{\@chapapp}{}  % le mot `chapitre'' n'apparait plus en titre de chapitre
-\renewcommand\l@section{\@dottedtocline{1}{0em}{5.0em}}  % espacement dans le titre d'une section
-\renewcommand\l@subsection{\@dottedtocline{1}{2.5em}{1.5em}}  % espacement dans le titre d'une sous-section
+\renewcommand\l@section{\@dottedtocline{1}{0em}{1.5em}}  % espacement dans le titre d'une section
+\renewcommand\l@subsection{\@dottedtocline{1}{2.5em}{2.5em}}  % espacement dans le titre d'une sous-section
 \renewcommand\l@subsubsection{\@dottedtocline{1}{5em}{2.5em}}  % espacement dans le titre d'une sous-sous-section
 
 \makeatother
@@ -218,7 +220,7 @@ ntheorem=true]{lemma}{Lemme}
 % ==============
 % DEBUT DU DOCUMENT
 % ==============
-%%%%% pb polymère à chercher dans le texte %%%%%%%%%%
+
 \begin{document}
 
 \maketitle
@@ -240,7 +242,7 @@ L'objectif du stage est de comprendre les liens entre les sept lignées de \text
 
 \subsection{Diversité génétique de la tuberculose}
 
-Le polymorphisme génétique est à l'origine de la diversité génétique et correspond à des variations de séquences d'ADN entre différentes souches de \textit{M. tuberculosis}. Ces variations sont dues à des mutations successives au cours de l'évolution de la bactérie, et elles permettent l'analyse phylogénique de \textit{M. tuberculosis}. Il existe plusieurs formes de polymorphisme, le polymorphisme chromosomique lié à un changement du nombre de chromosomes ou de leurs structures, le polymorphisme d'insertion, de délétion et d'inversion qui provoquent un changement spécifique de certaines séquences du génome, et le polymorphisme nucléotidique SNP \textit{Single Nucleotide Polymorphism} lié au changement d'une seule paire de bases\footnote{\textbf{Paire de base} : appariement de 2 bases nucléiques situées sur 2 brins complémentaires d'ADN, reliées par des ponts d'hydrogène.} du génome de \textit{M. tuberculosis}. Ce dernier cas est au coeur de notre étude.
+Le polymorphisme génétique est à l'origine de la diversité génétique et correspond à des variations de séquences d'ADN entre différentes souches de \textit{M. tuberculosis}. Ces variations sont dues à des mutations successives au cours de l'évolution de la bactérie, et elles permettent l'analyse phylogénique de \textit{M. tuberculosis}. Il existe plusieurs formes de polymorphisme, le polymorphisme chromosomique lié à un changement du nombre de chromosomes ou de leurs structures, le polymorphisme d'insertion, de délétion et d'inversion qui provoquent un changement spécifique de certaines séquences du génome, et le polymorphisme nucléotidique SNP \textit{Single Nucleotide Polymorphism} lié au changement d'une seule paire de bases\footnote{\textbf{Paire de bases} : appariement de 2 bases nucléiques situées sur 2 brins complémentaires d'ADN, reliées par des ponts d'hydrogène.} du génome de \textit{M. tuberculosis}. Ce dernier cas est au coeur de notre étude.
 
 Certaines mutations n'ont aucun impact évolutif sur \textit{M. tuberculosis}. En revanche, des changements fonctionnels peuvent avoir lieu lorsque ces mutations entraînent des modifications d'acides aminés dans les régions codantes, cela peut-être le cas lors d'une adaptation à l'environnement ou lors d'une nouvelle forme de résistance aux antibiotiques. Les SNPs synonymes ne changent pas la séquence de protéine, ainsi la substitution d'un codon\footnote{\textbf{Codon} : ensemble composé de trois nucléotides consécutifs spécifiant l'incorporation d'un acide aminé déterminé. Le code génétique est ainsi lu trois nucléotides par trois nucléotides.} par un autre codon peut engendrer le même acide aminé. Au contraire, les SNPs non-synonymes changent la séquence de protéine, et engendrent donc l'incorporation d'un acide aminé différent. Les SNPs sont peu sujets à des phénomènes d'homoplasie\footnote{\textbf{Homoplasie} : similitude de caractères chez différentes espèces, qui ne provient pas d'un ancêtre commun, mais peut par exemple provenir d'une adaptation à l'environnement. Diffère de l'homologie qui est une similitude de caractères observée chez deux espères différentes, provenant de l'héritage d'un ancêtre commun.}(seuls 1,1 \% des SNPs sont homoplasiques), ce qui suggère que la structure de \textit{M. tuberculosis} favorise les clonages plutôt que les recombinaisons entre branches. Pour de tels organismes clonaux, l'identification de mutations homoplasiques est un excellent moyen de déterminer les différentes souches bactériennes, et de procéder à des études phylogéniques\footnote{\textbf{Phylogénie} : étude des liens entre espèces apparentées, permettant de retracer les principales étapes de l'évolution des organismes depuis un ancêtre commun.} et de classification.
 
@@ -279,6 +281,7 @@ La branche MTBC-70 a révélé des corrélations avec l'histoire de l'humanité 
 - il y a 42 000 ans, apparition des lignées 2 et 3 correspondant à une migration humaine importante vers l'Asie de l'Est et l'Asie Centrale. 
 
 \begin{figure}[h!]
+\centering
 \includegraphics[scale=0.7]{worldlignee.png}
 \caption{Philogénie du génome complet de MTBC, d'après\\ \textit{Out-of-Africa migration and Neolithic coexpansion of Mycobacterium\\tuberculosis with modern humans}}
 \end{figure}
@@ -299,13 +302,16 @@ Le Néolithique n'était pas la seule période où l'augmentation de la populati
 Il faut donc considérer que la co-existence de la tuberculose avec l'espèce humaine depuis des milliers d'années a conduit la maladie à s'adapter aux changements du génome humain et inversement. Les prochaines études sur la tuberculose devraient donc se concentrer sur des génomes complets de la tuberculose et de l'être humain choisis en rapport à leurs associations.
 
 \begin{figure}
+\centering
 \includegraphics[scale=0.5]{world.png}
 \caption{Distribution géographique des lignées 1 à 6, d'après \textit{Lineage\\ specific histories of Mycobacterium tuberculosis dispersal in Africa and Eurasia}}
 \end{figure}
 
 %  GLOBAL EXPANSION OF MTBC LINEAGE 4 =============================================
 
-\section{L'expansion de la lignée 4 de tuberculosis}
+\section{Le développement de souches résistantes aux antibiotiques}
+
+\subsection{L'expansion de la lignée 4 de tuberculosis}
 
 % global diversity of L4
 
@@ -319,65 +325,26 @@ Brynildsrud O.B. et al. utilisent des méthodes d'analyse discrète et une appro
 
 L'analyse phylogéographique de Brynildsrud O.B. suggère que les premières vagues de migration de la lignée 4 hors d'Europe se sont déroulées au début du 13ème siècle vers l'Asie du Sud-Est. En particulier, il est possible d'établir une correspondance entre la structure des isolats Vietnamiens et l'époque de l'expansion coloniale française en Indochine.
 
-Les vagues suivantes de migration de la lignée 4 se sont dirigées vers l'Afrique de l'Ouest au 15ème siècle, puis vers Afrique de l'Est et du Sud au 17ème siècle. Les échanges continus avec le Portugal au 15ème siècle ont favorisé la dispersion de la maladie, ce qui a été renforcé plus tard par la colonisation française de l'Afrique de l'Ouest  Ces échanges avec les populations européennes ont prévalu à une transmission locale de la tuberculose jusqu'au 19ème siècle. 
+Les vagues suivantes de migration de la lignée 4 se sont dirigées vers l'Afrique de l'Ouest au 15ème siècle, puis vers Afrique de l'Est et du Sud au 17ème siècle. Les échanges continus avec le Portugal au 15ème siècle ont favorisé la dispersion de la maladie, ce qui a été renforcé plus tard par la colonisation française de l'Afrique de l'Ouest.  Ces échanges avec les populations européennes ont prévalu à une transmission locale de la tuberculose jusqu'au 19ème siècle. 
 
 La première migration interne de la maladie en Afrique date de l'Empire Zulu au 19ème siècle et se dirigeait vers le Nord et l'Est africain.
 
-La transmission de la maladie en Amérique date quant à elle du 15ème siècle avec la colonisation du continent, mais il faudra attendre le 17ème siècle pour voir l'explosion de la maladie en Amérique du Sud. Ce retard dans l'évolution de la maladie par rapport à la branche africaine peut s'expliquer par le taux de mortalité élevé des populations aborigènes au contact des européens.
-
-A recent study demonstrated that lldD2 is important for
-M.tb replication within human macrophages
-
-A screen for positive
-selection in a smaller dataset covering M.tb lineages 1 to 6 (26)
-found that the codon 3 mutation had emerged independently in
-lineages 1, 2, and 4, whereas the codon 253 mutation had emerged
-repeatedly in L4 and was present in all but a single L2 isolate.
-In L4, we find that lldD2 mutations started emerging well before
-the age of antibiotics (fig. S9) and have emerged across all continents
-(dataset S3), suggesting parallel local adaptation, most
-likely to broad changes in host ecology
-
-These analyses suggested that there were indeed differences
-between the groups and that strains harboring lldD2
-promoter mutations carry a significant benefit in terms of
-transmissibility.
-
-the MRCA of extant M. tuberculosis seems to have existed as recently as 4,000-6,000 years ago
+La transmission de la maladie en Amérique date, quant à elle, du 15ème siècle avec la colonisation du continent, mais il faudra attendre le 17ème siècle pour voir l'explosion de la maladie en Amérique du Sud. Ce retard dans l'évolution de la maladie par rapport à la branche africaine peut s'expliquer par le taux de mortalité élevé des populations aborigènes au contact des européens.
 
 % antibiotiques
 
-the emergence of multidrug resistance across
-the L4 phylogeny
+\subsection{L'adaptation de la lignée 4 pour devenir résistante aux antibiotiques}
 
-but we demonstrate that migration has played a negligible
-role in shaping global AMR patterns in L4. The geographic
-restriction of resistant strains is indeed striking and suggests that
-the challenge of AMR can still be tackled efficiently at the level
-of individual nations.
+Nous avons déjà vu que la tuberculose a su s'adapter à l'évolution géographique de l'humanité en suivant les différentes migrations humaines pour créer de nouvelles lignées. Il apparaît que la tuberculose est également capable de suivre l'évolution médicale de l'humanité. L'étude de Brynildsrud O.B. et al. \cite{brynildsrud} constate chez \textit{M. tuberculosis} l'émergence croissante d'une résistante à de multiples antibiotiques entre 1960 et 2000 au travers de la phylogénie de la lignée 4. Ils démontrent que, d'un point de vue mondial, la migration humaine a joué un rôle négligeable dans l'élaboration des modèles de résistance aux antimicrobiens AMR. En effet, la migration des souches résistantes s'est avérée marginale. Il s'agit plutôt d'un phénomène local. La restriction géographique de souches résistantes suggère même de lutter contre ce type de mutation de \textit{M. tuberculosis} de façon nationale plutôt que de recourir à une politique globale de traitement antibiotique.
 
-efficient
-adaptive evolution across populations requires the parallel evolution
-of beneficial mutations.
+A l'heure actuelle, les deux antibiotiques les plus puissants contre la tuberculose sont \textit{isoniazid} et \textit{rifampin}. Une souche de \textit{M. tuberculosis} est appelée MDR-TB \textit{Multi-Drug-resistant Tuberculosis} si elle est résistante au moins à \textit{isoniazid} et \textit{rifampin}. Dans ce cas, certaines régions du génome de \textit{M. tuberculosis} sont impliquées dans la résistance à plus d'un médicament. La tuberculose est maintenant considérée comme une maladie résistante aux antibiotiques. Les causes en sont multiples : l'utilisation inappropriée ou incorrecte d'antibiotiques, l'interruption précoce des traitements qui peut produire au sein de \textit{M. tuberculosis} une résistance aux antibiotiques qui sera transmise génétiquement par la suite.
 
-indicates a gradual increase in AMR
-emergence rate from the 1960s until the late 1990s
+Brynildsrud O.B. et al. étudient le gène lldD2 impliqué dans la réplication de \textit{M. tuberculosis} au sein des macrophages\footnote{\textbf{Macrophage} : cellule appartenant aux globules blancs qui infiltre les tissus et est capable de phagocytose.} humains. Ils identifient au niveau des codons 3 et 253 la présence de nombreux promoteurs\footnote{\textbf{Promoteur} : région de l'adn située à proximité d'un gène et indispensable à la transcription de l'ADN.} et mutations non-synonymes qui ont évolué indépendamment.
 
-Multidrug-resistant Tuberculosis (MDR-TB) is caused by an organism that is resistant to at least isoniazid and rifampin, the two most powerful TB drugs
-Inappropriate or incorrect use of antimicrobial medicaments, or untimely treatment interruption can cause drug resistance, which can then be transmitted
+Une recherche au sein d'une base de données recouvrant les lignées 1 à 6 a révélé que la mutation du codon 3 a émergé independamment dans les lignées 1, 2 et 4, alors que la mutation du codon 253 est apparue à plusieurs reprises dans la lignée 4 et était présente dans pratiquement tous les isolats de la lignée 2. Brynildsrud O.B. et al. constatent que les mutations de lldD2 ont commencé à apparaître bien avant l'utilisation des antibiotiques sur tous les continents. Ceci suppose une adaptation locale à de profonds changements chez l'hôte humain, qui s'est opérée en parallèle sur les différents continents. Par ailleurs, les souches hébergeant des mutations du promoteur iidD2 présentent un avantage significatif en terme de transmissibilité
 
-émergence de la résistance antimicrobienne AMR antimicrobal resistance with multidrug-resistant tb (MDR-TB) in recent decades is overwhelmingly
-a local phenomenon, while migration
-of resistant strains seems to have played a marginal role in
-shaping the observed L4 AMR landscape
 
-à l'âge des antibiotiques, des mutations conférant des antimicrobiens
-une résistance écrasante a émergé localement (au niveau des nations), avec une transmission transfrontalière minimale
-de résistance.
-
-some genes and intergenic regions associated with drug resistance may be involved in the resistance to more than one drug.
-
-MTBC est considéré comme étant résistant aux antibiotiques.
+the MRCA of extant M. tuberculosis seems to have existed as recently as 4,000-6,000 years ago
 
 % SPOLPRED ==========================================================
 
@@ -417,12 +384,12 @@ La technologie CRISPR-Cas9 s'inspire du système du même nom a d'abord été ut
 
 \section{Le spoligotypage}
 
-La région DR du locus CRISPR-Cas présente un niveau de polymorphisme suffisant pour pouvoir classer phylogéographiquement les souches du MTBC. Le polymorphisme entre les différentes souches résulte des variations et de l'identité des spacers. C'est ce polymorphisme qui est exploité en 1997 par Kamerbeek et al. et expliqué dans \cite{kamerbeek} comme technique de génotypage spécifique du MTBC. Le \textit{Spacer Oligonucleotide Typing}, repose sur la détection de séquences répétitives trouvées entre les gènes d'un agent infectieux au sein d'un locus CRISPR-Cas. Pour ce faire, la région DR d'un isolat à tester subit un traitement par amplification PCR\footnote{\textbf{PCR Polymerase Chain Reaction} : méthode de réaction en chaîne utilisant un polymère\footnote{\textbf{Polymère} : macromolécule répétant un même motif structural.} pour dupliquer en grand nombre une séquence d'ADN spécifique. La méthode PCR repose sur le cycle thermique, qui expose les séquences à des cycles répétés de chauffage et de refroidissement pour permettre différentes réactions dépendantes de la température comme la fusion de l'ADN et la réplication de l'ADN par les enzymes. La méthode PCR utilise deux agents principaux : les polymères d'ADN et les amorces de séquençage.} ou celui d'une puce à ADN\footnote{\textbf{Puce à ADN} : ensemble de molécules d'ADN fixées sur une petite surface solide permettant de mesurer le niveau d'expression d'un grand nombre de gènes simultanément, ou de déterminer le génotype de plusieurs régions d'un génome.} pour dévoiler un motif de taches correspondant aux spacers. 
+La région DR du locus CRISPR-Cas présente un niveau de polymorphisme suffisant pour pouvoir classer phylogéographiquement les souches du MTBC. Le polymorphisme entre les différentes souches résulte des variations et de l'identité des spacers. C'est ce polymorphisme qui est exploité en 1997 par Kamerbeek et al. et expliqué dans \cite{kamerbeek} comme technique de génotypage spécifique du MTBC. Le \textit{Spacer Oligonucleotide Typing}, repose sur la détection de séquences répétitives trouvées entre les gènes d'un agent infectieux au sein d'un locus CRISPR-Cas. Pour ce faire, la région DR d'un isolat à tester subit un traitement par amplification PCR\footnote{\textbf{PCR Polymerase Chain Reaction} : méthode de réaction en chaîne utilisant un polymère pour dupliquer en grand nombre une séquence d'ADN spécifique. La méthode PCR repose sur le cycle thermique, qui expose les séquences à des cycles répétés de chauffage et de refroidissement pour permettre différentes réactions dépendantes de la température comme la fusion de l'ADN et la réplication de l'ADN par les enzymes. La méthode PCR utilise deux agents principaux : les polymères d'ADN i.e. des macromolécules répétant un même motif structural d'ADN et les amorces de séquençage.} ou celui d'une puce à ADN\footnote{\textbf{Puce à ADN} : ensemble de molécules d'ADN fixées sur une petite surface solide permettant de mesurer le niveau d'expression d'un grand nombre de gènes simultanément, ou de déterminer le génotype de plusieurs régions d'un génome.} pour dévoiler un motif de taches correspondant aux spacers. 
 
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=0.4]{spoligo.png}
-\caption{Les différentes étapes du spoligotypage d'après \textit{Etudes descriptive, épidémiologique, moléculaire et spatiale des souches Mycobacterium tuberculosis circulant à Antananarivo, Madagascar}}
+\caption{Les différentes étapes du spoligotypage d'après \textit{Etudes descriptive, épidémiologique,\\ moléculaire et spatiale des souches Mycobacterium tuberculosis circulant à Antananarivo, Madagascar}}
 \end{figure}
 
 La comparaison de ces motifs permet la différentiation des souches. Quarante-trois espaceurs les plus polymorphes ont été utilisés pour le typage des mycobactéries suivant Kamerbeek et al. La classification classique de MTBC utilise donc un groupe de 43 bit représentant la présence ou l'absence d'espaceurs dans le locus CRISPR, qu'on appelle spoligotype. Des études pour augmenter le niveau de discrimination du spoligotypage ont été faites en 2010 utilisant 68 espaceurs. A l'heure actuelle l'équipe AND de l'université de Franche Comté utilise 98 espaceurs pour ce génotypage.
@@ -430,7 +397,7 @@ La comparaison de ces motifs permet la différentiation des souches. Quarante-tr
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=0.7]{spacer.png}
-\caption{Espaceurs connus chez MBTC, d'après \textit{Etudes descriptive, épidémiologique, moléculaire et spatiale des souches Mycobacterium tuberculosis circulant à Antananarivo, Madagascar}}
+\caption{Espaceurs connus chez MBTC, d'après \textit{Etudes descriptive, épidémiologique, moléculaire\\ et spatiale des souches Mycobacterium tuberculosis circulant à Antananarivo, Madagascar}}
 \end{figure}
 
 La technique ne nécessite pas une importante quantité d'ADN car elle est basée sur une amplification de la région DR par PCR.
@@ -451,6 +418,7 @@ Tout d'abord, une base de données centralisée regroupant tous les motifs connu
 Dale JW et al. dans leur article \cite{dale} proposent d'utiliser exclusivement un système rationnel octal ou hexadécimal, sachant qu'il est aisé de passer de l'un à l'autre et qu'il est également facile de retrouver l'état initial binaire. Ainsi, les motifs de spoligotype comprenant 43 bits seraient réduits dans le système octal en 14 groupes de 3 bits auquel s'ajouterait un unique bit, ce qui donnerait finalement un ensemble de 15 chiffres en écriture octale. En ce qui concerne le système hexadécimal, les motifs de 43 bits seraient réduits en 6 groupes de 8 bits avec un dernier groupe ne comprenant que 3 bits, soit 6 groupes de 2 chiffres hexadécimaux. Notons que un bit symbolise dans ce cas la présence ou l'absence d'une espaceur dans le locus étudié.
 
 \begin{figure}[h!]
+\centering
 \includegraphics[scale=0.6]{hexa.png}
 \caption{Exemple de système rationnel octal et hexadécimal, d'après\\ \url{https://www.mbovis.org/spoligotype-nomenclature.php}}
 \end{figure}
@@ -477,9 +445,10 @@ SpoTyping utilise des fichiers de séquences de reads simples ou par paires au f
 
 SpoTyping propose un rapport statistique permettant de résumer le rapprochement avec les spoligotypes trouvés dans la base de données SITVIT, ainsi qu'une estimation du nombre de correspondances positives pour chaque spacer.
 
-L'étude de Iwai H: et al. \cite{iwai} montre l'intérêt d'une analyse de MTBC à l'aide de serveurs, appelée CASTB, et notamment le spoligotypage. Le Webserver fournit une vue complète des données, mais les performances de chaque outil utilisé ne sont pas décrites dans l'article. Il est probable que le spoligotypage prenne plus de temps en passant par un serveur suite au problème de disponibilité des données et aux lenteurs de téléchargement de ces données. Il semblerait que SpoTyping, de par sa configuration locale, puisse fournir un résultat en une minute.
+L'étude de Iwai H. et al. \cite{iwai} montre l'intérêt d'une analyse de MTBC à l'aide de serveurs, appelée CASTB, et notamment le spoligotypage. Le Webserver fournit une vue complète des données, mais les performances de chaque outil utilisé ne sont pas décrites dans l'article. Il est probable que le spoligotypage prenne plus de temps en passant par un serveur suite au problème de disponibilité des données et aux lenteurs de téléchargement de ces données. Il semblerait que SpoTyping, de par sa configuration locale, puisse fournir un résultat en une minute.
 
-\begin{figure}
+\begin{figure}[h!]
+\centering
 \includegraphics[scale=0.6]{spotyping.png}
 \caption{Exemple de fonctionnement de SpoTyping, d'après \textit{SpoTyping:\\ fast and accurate in silico Mycobacterium spoligotyping from sequence reads}}
 \end{figure}
@@ -498,10 +467,13 @@ Il est recommandé d'utiliser le swift mode paramétré par défaut si le débit
 
 \begin{figure}[h!]
 \includegraphics[scale=0.4]{comparaison.png}
-\caption{Exemple comparatif de 26 spoligotypes correspondant à 4 lignées différentes de M. tuberculosis, d'après \textit{Insight into genetic diversity of Mycobacterium tuberculosis in Kandy, Sri Lanka reveals predominance of the Euro-American lineage}}
+\caption{Exemple comparatif de 26 spoligotypes correspondant à 4 lignées différentes de \textit{M. tuberculosis}, d'après \textit{Insight into genetic diversity of Mycobacterium tuberculosis in Kandy, Sri Lanka reveals predominance of the Euro-American lineage}}
 \end{figure}
 
 % travail sur les références
+% multidrug tuberculosis wiki
+% finir lecture arcticle 3
+% h pylori problème
 
 % =========
 % BIBLIOTHEQUE
