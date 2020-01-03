@@ -39,6 +39,7 @@
 \usepackage{pst-plot, pstricks}
 \usepackage{pstricks-add}
 \usepackage{rotating}
+\usepackage{setspace} % permet de définir l'espace entre les lignes
 \usepackage{srcltx}
 \usepackage{textcomp}   % caracteres complementaires
 \usepackage{titlesec}  % sections
@@ -262,11 +263,11 @@ L'étude phylogénique de Comas et al.\cite{comas} se base exclusivement sur l'�
 
 % African origin and co-divergence of MTBC with modern humans
 
-L'analyse phylogénique de Comas et al.\cite{comas} corrobore la conjecture selon laquelle la tuberculose est originaire d'Afrique. Par ailleurs, s'appuyant sur les origines africaines de l'espèce humaine, cette étude cherche également à déterminer l'ancienneté de l'association entre la tuberculose et son hôte humain. L'analyse des divergences des génomes de la tuberculose est comparée à celle d'une arborescence génétique déjà établie à partir de mitochondries\footnote{\textbf{Mitochondrie} : centrale énergétique des cellules qui contribue à la production d'ATP.} de l'être humain. 
+L'analyse phylogénique de Comas et al. corrobore la conjecture selon laquelle la tuberculose est originaire d'Afrique. Par ailleurs, s'appuyant sur les origines africaines de l'espèce humaine, cette étude cherche également à déterminer l'ancienneté de l'association entre la tuberculose et son hôte humain. L'analyse des divergences des génomes de la tuberculose est comparée à celle d'une arborescence génétique déjà établie à partir de mitochondries\footnote{\textbf{Mitochondrie} : centrale énergétique des cellules qui contribue à la production d'ATP.} de l'être humain. 
 
 % Age of the association of MTBC and humans
 
-Les similitudes relevées montrent que la tuberculose a infecté les premiers hommes d'Afrique. Pour aller plus loin, l'étude de Comas et al.\cite{comas} a tenu compte de trois dates importantes dans l'évolution de l'être humain qui ont été reportées sur l'analyse phylogénique de \textit{M. tuberculosis} des lignées 5 et 6 d'Afrique de l'Ouest :
+Les similitudes relevées montrent que la tuberculose a infecté les premiers hommes d'Afrique. Pour aller plus loin, l'étude de Comas et al. a tenu compte de trois dates importantes dans l'évolution de l'être humain qui ont été reportées sur l'analyse phylogénique de \textit{M. tuberculosis} des lignées 5 et 6 d'Afrique de l'Ouest :
 
 - l'émergence de l'homo sapiens correspondant au MTBC-185\footnote{\textbf{MTBC} : Mycobacterium Tuberculosis Complex.},\\
 - l'émergence du haplogroupe\footnote{\textbf{Haplogroupe} : groupe possédant les mêmes caractères génétiques et partageant un ancêtre commun suivant une mutation SNP.} mitochondriaque de la lignée 3 chez l'homme correspondant au MTBC-70,\\
@@ -301,6 +302,8 @@ Le Néolithique n'était pas la seule période où l'augmentation de la populati
 
 Il faut donc considérer que la co-existence de la tuberculose avec l'espèce humaine depuis des milliers d'années a conduit la maladie à s'adapter aux changements du génome humain et inversement. Les prochaines études sur la tuberculose devraient donc se concentrer sur des génomes complets de la tuberculose et de l'être humain choisis en rapport à leurs associations.
 
+En particulier, la tuberculose a dû s'adapter aux autres infections ayant touché l'espèce humaine, avec plus ou moins de succès. Dans cet ordre d'idée, une étude récente de Perry S. et al.\cite{perry1, perry2} suggère que l'infection d'un organisme par \textit{Helicobacter Pylori} pourrait protéger de la tuberculose sous sa forme active. A contrario, nous ne savons pas si la tuberculose latente pourrait protéger contre les ulcers et les cancer de l'estomac causés par \textit{Helicobacter Pylori}.
+
 \begin{figure}
 \centering
 \includegraphics[scale=0.5]{world.png}
@@ -311,7 +314,7 @@ Il faut donc considérer que la co-existence de la tuberculose avec l'espèce hu
 
 \section{Le développement de souches résistantes aux antibiotiques}
 
-\subsection{L'expansion de la lignée 4 de tuberculosis}
+\subsection{L'expansion de la lignée 4 de \textit{M. tuberculosis}}
 
 % global diversity of L4
 
@@ -335,28 +338,25 @@ La transmission de la maladie en Amérique date, quant à elle, du 15ème siècl
 
 \subsection{L'adaptation de la lignée 4 pour devenir résistante aux antibiotiques}
 
-Nous avons déjà vu que la tuberculose a su s'adapter à l'évolution géographique de l'humanité en suivant les différentes migrations humaines pour créer de nouvelles lignées. Il apparaît que la tuberculose est également capable de suivre l'évolution médicale de l'humanité. L'étude de Brynildsrud O.B. et al. \cite{brynildsrud} constate chez \textit{M. tuberculosis} l'émergence croissante d'une résistante à de multiples antibiotiques entre 1960 et 2000 au travers de la phylogénie de la lignée 4. Ils démontrent que, d'un point de vue mondial, la migration humaine a joué un rôle négligeable dans l'élaboration des modèles de résistance aux antimicrobiens AMR. En effet, la migration des souches résistantes s'est avérée marginale. Il s'agit plutôt d'un phénomène local. La restriction géographique de souches résistantes suggère même de lutter contre ce type de mutation de \textit{M. tuberculosis} de façon nationale plutôt que de recourir à une politique globale de traitement antibiotique.
+Nous avons déjà vu que la tuberculose a su s'adapter à l'évolution géographique de l'humanité en suivant les différentes migrations humaines pour créer de nouvelles lignées. Il apparaît que la tuberculose est également capable de suivre l'évolution médicale de l'humanité. L'étude de Brynildsrud O.B. et al. \cite{brynildsrud} constate chez \textit{M. tuberculosis} l'émergence croissante d'une résistance à de multiples antibiotiques entre 1960 et 2000 au travers de la phylogénie de la lignée 4. Des mutations spontanées dans le génome de la tuberculose peuvent altérer les protéines qui sont la cible des médicaments, ce qui rend les bactéries résistantes à ces médicaments. Prenons comme exemple une mutation du gène rpoB de \textit{M. tuberculosis}, qui code pour la sous-unité $\beta$\footnote{\textbf{Sous-unité $\beta$} : élément de l'ARN polymérase des bactéries qui est composé de la structure suivante $\alpha_2 \beta \beta' \omega$} de l'ARN polymérase\footnote{\textbf{ARN polymérase} : complexe enzymatique responsable de la synthèse de l'ARN à partir d'ADN.} de la bactérie. Dans la tuberculose non résistante, la rifampicine se lie à cette sous-unité $\beta$ et perturbe l'élongation de la transcription de l'ARN. La mutation dans le gène rpoB modifie la séquence des acides aminés et donc de la sous-unité $\beta$. Dans ce cas, la rifampicine ne peut plus se lier à l'ARN et empêcher la transcription. La bactérie est devenue résistante. C'est bien le cas de la tuberculose, qui est considérée aujourd'hui comme une maladie résistante aux antibiotiques. Les causes en sont multiples : l'utilisation inappropriée ou incorrecte d'antibiotiques, l'interruption précoce des traitements qui peut produire au sein de \textit{M. tuberculosis} une résistance aux antibiotiques qui sera transmise génétiquement par la suite.
 
-A l'heure actuelle, les deux antibiotiques les plus puissants contre la tuberculose sont \textit{isoniazid} et \textit{rifampin}. Une souche de \textit{M. tuberculosis} est appelée MDR-TB \textit{Multi-Drug-resistant Tuberculosis} si elle est résistante au moins à \textit{isoniazid} et \textit{rifampin}. Dans ce cas, certaines régions du génome de \textit{M. tuberculosis} sont impliquées dans la résistance à plus d'un médicament. La tuberculose est maintenant considérée comme une maladie résistante aux antibiotiques. Les causes en sont multiples : l'utilisation inappropriée ou incorrecte d'antibiotiques, l'interruption précoce des traitements qui peut produire au sein de \textit{M. tuberculosis} une résistance aux antibiotiques qui sera transmise génétiquement par la suite.
+A l'heure actuelle, les deux antibiotiques les plus puissants contre la tuberculose sont l'isoniazide et le rifampicine. Une souche de \textit{M. tuberculosis} est appelée MDR-TB \textit{Multi-Drug-resistant Tuberculosis} si elle est résistante au moins à l'isoniazide et au rifampicine. Dans ce cas, certaines régions du génome de \textit{M. tuberculosis} sont impliquées dans la résistance à plus d'un médicament. La découverte de nouvelles cibles moléculaires est maintenant essentielle pour lutter contre ce développement de la résistance chez \textit{M. tuberculosis}.
 
 Brynildsrud O.B. et al. étudient le gène lldD2 impliqué dans la réplication de \textit{M. tuberculosis} au sein des macrophages\footnote{\textbf{Macrophage} : cellule appartenant aux globules blancs qui infiltre les tissus et est capable de phagocytose.} humains. Ils identifient au niveau des codons 3 et 253 la présence de nombreux promoteurs\footnote{\textbf{Promoteur} : région de l'adn située à proximité d'un gène et indispensable à la transcription de l'ADN.} et mutations non-synonymes qui ont évolué indépendamment.
 
-Une recherche au sein d'une base de données recouvrant les lignées 1 à 6 a révélé que la mutation du codon 3 a émergé independamment dans les lignées 1, 2 et 4, alors que la mutation du codon 253 est apparue à plusieurs reprises dans la lignée 4 et était présente dans pratiquement tous les isolats de la lignée 2. Brynildsrud O.B. et al. constatent que les mutations de lldD2 ont commencé à apparaître bien avant l'utilisation des antibiotiques sur tous les continents. Ceci suppose une adaptation locale à de profonds changements chez l'hôte humain, qui s'est opérée en parallèle sur les différents continents. Par ailleurs, les souches hébergeant des mutations du promoteur iidD2 présentent un avantage significatif en terme de transmissibilité
+Une recherche au sein d'une base de données recouvrant les lignées 1 à 6 a révélé que la mutation du codon 3 a émergé independamment dans les lignées 1, 2 et 4, alors que la mutation du codon 253 est apparue à plusieurs reprises dans la lignée 4 et était présente dans pratiquement tous les isolats de la lignée 2. Brynildsrud O.B. et al. constatent que les mutations de lldD2 ont commencé à apparaître bien avant l'utilisation des antibiotiques sur tous les continents. Ceci suppose une adaptation locale à de profonds changements chez l'hôte humain, qui s'est opérée en parallèle sur les différents continents. Par ailleurs, les souches hébergeant des mutations du promoteur iidD2 présentent un avantage significatif en terme de transmissibilité.
 
-
-the MRCA of extant M. tuberculosis seems to have existed as recently as 4,000-6,000 years ago
+Brynildsrud O.B. et al. démontrent que, d'un point de vue mondial, la migration humaine a joué un rôle négligeable dans l'élaboration des modèles de résistance aux antimicrobiens AMR. En effet, la migration des souches résistantes s'est avérée marginale. Il s'agit plutôt d'un phénomène local. La restriction géographique de souches résistantes suggère même de lutter contre ce type de mutation de \textit{M. tuberculosis} de façon nationale plutôt que de recourir à une politique globale de traitement antibiotique.
 
 % SPOLPRED ==========================================================
 
 \section{Le locus CRISPR-Cas}
 
-\subsection{Quelques caractéristiques du génome de M. tuberculosis}
+\subsection{Quelques caractéristiques du génome de \textit{M. tuberculosis}}
 
 La souche H37Rv de \textit{M. tuberculosis} est la souche de tuberculose la plus étudiée en laboratoire, depuis sa découverte en 1905. Elle sert aujourd'hui de référence pour le séquençage et l'annotation du génome de \textit{M. tuberculosis}. Constitué d'environ 4 millions de paires de base et 3959 gènes, ce génome se caractérise par un taux élevé de guanine G et de cytosine C (65,6\%), et un codon GTG qui sert de codon d'initiation dans 35\% des gènes. 
 
 Parmi les marqueurs génétiques utilisés pour des études phylogéniques ou d'épidémiologie moléculaire, on retrouve les SNPs, les loci CRISPR, les MIRU\footnote{\textbf{Marqueurs MIRU} : séquences nucléotidiques courtes répétitives en tandem entrecoupées de mycobactéries. La méthode MIRU actuellement utilisée sur \textit{M. tuberculosis} est composée de 12 loci MIRU différents. Un mirutype est un modèle à 12 chiffres représentant le nombre de répétitions de chacun de ces 12 loci spécifiques.}, et les VNTR\footnote{\textbf{Marqueurs VNTR} : séquences nucléotidiques courtes en tandem à nombre variable. Cinq répétitions en tandem exactes ( locus ETR) sont utilisées pour l'analyse VNTR du complexe \textit{M. tuberculosis}.}. L'association des résultats obtenus par ces marqueurs génère un profil allélique utile pour l'étude du complexe \textit{M tuberculosis}. La base de données mondiale de marqueurs moléculaires de la tuberculose SITVIT\footnote{\textbf{Base de données SITVIT} : base de données consultable en ligne \url{http://www.pasteur-guadeloupe.fr:8081/SITVIT_ONLINE/query}, permettant n'analyser des data liées au MTBC. Elle comprend les spoligotypes de \textit{M. tuberculosis}, ainsi que les marqueurs utilisés pour les détecter MIRU12, VNTR, SIT, MIT, VIT, les différentes branches de MTBC, les pays d'origine et l'année de découverte.} présentée par Demay C. et al.\cite{demay} contient les génotypes de \textit{M. tuberculosis} obtenus à partir des trois marqueurs moléculaires spoligotypes, MIRU et VNTR.
-
-Une étude récente de Perry S. et al.\cite{perry1, perry2} suggère que l'infection d'un organisme par \textit{Helicobacter Pylori} pourrait protéger de la tuberculose sous sa forme active. A contrario, nous ne savons pas si la tuberculose latente pourrait protéger contre les ulcers et les cancer de l'estomac causés par \textit{Helicobacter Pylori}.
 
 % Le locus CRISPR Cas
 
@@ -401,7 +401,7 @@ La comparaison de ces motifs permet la différentiation des souches. Quarante-tr
 \end{figure}
 
 La technique ne nécessite pas une importante quantité d'ADN car elle est basée sur une amplification de la région DR par PCR.
-Les spoligotypes ainsi obtenus peuvent être partagées entre laboratoires et corroborent les résultats obtenus à partir d'autres marqueurs génétiques. Ces données numériques permettent de bien différencier les souches de tuberculosis et sont de moindre coût comparativement à d'autres méthodes. Cependant, le spoligotypage éprouve des difficultés à bien différencier les souches au sein de grandes familles de souches telles que la branche Beijing.
+Les spoligotypes ainsi obtenus peuvent être partagées entre laboratoires et corroborent les résultats obtenus à partir d'autres marqueurs génétiques. Ces données numériques permettent de bien différencier les souches de tuberculosis et sont de moindre coût comparativement à d'autres méthodes. Cependant, le spoligotypage éprouve des difficultés à bien différencier les souches au sein de grandes familles de souches telles que la lignée 2 par exemple.
 
 Le spoligotypage a permis de fournir une image globale de la diversité des souches de tuberculosis.
 
@@ -432,6 +432,12 @@ Le site Mbovis.org, \url{https://www.mbovis.org/database.php}, bien que dédié 
 Les technologies PCR de génotypage utilisent toujours différents marqueurs tels que les SNPs pour obtenir en laboratoire des résultats fiables. Des logiciels informatique de prédiction du génotype ont également fait leur apparition pour optimiser les coûts et le gain de temps. Ils offrent un outil de comparaison des résultats obtenus expérimentalement et in silico.
 
 SpolPred est un logiciel de prédiction rapide et précis des spoligotypes de tuberculosis à partir de séquences génomiques courtes appelées reads\footnote{\textbf{Read} : mélange de courtes séquences oligonocléotidiques de 20 à 200 pb généré par des séquenceurs}. Cet outil développé par Preston M. fonctionne efficacement avec des reads provenant de plateformes telles que Illumina GAII ou HiSeq. SpolPred utilise des fichiers de séquences de reads simples ou par paires au format FASTQ, pour produire une prédiction de spoligotype au format octal qui est comparée au spoligotype correspondant dans la base SITVIT.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.44]{spol.png}
+\caption{Exemple de recherche effectuée sur SITVIT2 à partir du spoligotype 777777777720771 dont le résultat est exploitable au format Excel}
+\end{figure}
 
 Dans leur étude, Coll F. et al.\cite{coll} montrent en 2012 l'utilité de SpolPred en comparant les spoligotypes obtenus par le logiciel avec les résultats de laboratoire. Ils dévoilent ainsi les limites de la méthode expérimentale qui a répertorié cinq faux spoligotypes, alors que SpolPred a su éviter une erreur de classification du génotype. Par ailleurs, il apparaît que SpolPred offre plus de rapidité et des résultats pratiquement identiques à ceux obtenus avec la méthode bioinformatique par assemblage, consistant à fusionner des fragments d'ADN issus d'une plus longue séquence afin de reconstruire la séquence originale, à l'aide du logiciel Velvet développé en 2008.
 
@@ -465,58 +471,72 @@ Il est recommandé d'utiliser le swift mode paramétré par défaut si le débit
 
 \subsection{Comparaison de spoligotypes}
 
+Une fois les spoligotypes de différentes lignées obtenus, il est nécessaire de les comparer pour chercher à faire ressortir les points communs ou certains traits pouvant être liés à une muttion particulière. Il existe à l'heure actuelle un premier outil en ligne de comparaison du nom de SpolSimilaritySearch, accessible à l'adresse \url{http://www.pasteur-guadeloupe.fr:8081/SpolSimilaritySearch/index.jsp}, et présenté par Couvin D. et al. \cite{couvin}, utilisant la base de données SIVIT2 pour rechercher des similitudes entre spoligotypes.
+
+Cet outil pourrait donc s'avérer utile pour commencer à chercher des liens entre les sept lignées de \textit{M. tuberculosis} et les spoligotypes de différentes souches.
+
 \begin{figure}[h!]
+\centering
 \includegraphics[scale=0.4]{comparaison.png}
 \caption{Exemple comparatif de 26 spoligotypes correspondant à 4 lignées différentes de \textit{M. tuberculosis}, d'après \textit{Insight into genetic diversity of Mycobacterium tuberculosis in Kandy, Sri Lanka reveals predominance of the Euro-American lineage}}
 \end{figure}
 
-% travail sur les références
-% multidrug tuberculosis wiki
+Par exemple, dans le tableau ci-dessus, si on sélectionne le spoligotype 777777777720771 appartenant à la lignée H3, et qu'on interroge la base SpolSimilaritySearch, on obtient les rapprochements suivants :
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.37]{spolsimilarity.png}
+\caption{Recherche effectuée sur le site SpolSimilaritySearch}
+\end{figure}
+
+%the MRCA of extant M. tuberculosis seems to have existed as recently as 4,000-6,000 years ago
 % finir lecture arcticle 3
-% h pylori problème
 
 % =========
 % BIBLIOTHEQUE
 % =========
+\begin{spacing}{0.5}
 \bibliographystyle{}
 \renewcommand{\bibname}{Références}
 \begin{thebibliography}{10}
-\bibitem{comas}Comas I. et al. \textit{Out-of-Africa migration and Neolithic coexpansion of Mycobacterium tuberculosis with modern humans}\\ \\
+\bibitem{comas}Comas I. et al. \textit{Out-of-Africa migration and Neolithic coexpansion of Mycobacterium tuberculosis with modern humans}, Nat Genet. 45(10): 1176–1182. doi:10.1038/ng.2744\\ \\
 
-\bibitem{coll}Coll F. et al., \textit{SpolPred : rapid and accurate prediction of Mycobacterium tuberculosis spoligotypes from short genomic sequences. Bioinformatics. 2012;28(22):2991–3}\\ \\
+\bibitem{coll}Coll F. et al., \textit{SpolPred : rapid and accurate prediction of Mycobacterium tuberculosis spoligotypes from short genomic sequences}, Bioinformatics. 28(22):2991–3\\ \\
 
-\bibitem{brynildsrud}Brynildsrud O.B. et al., \textit{Global expansion of Mycobacterium tuberculosis lineage 4 shaped by colonial migration and local adaptation}\\ \\
+\bibitem{brynildsrud}Brynildsrud O.B. et al., \textit{Global expansion of Mycobacterium tuberculosis lineage 4 shaped by colonial migration and local adaptation}, 4(10): eaat5869. doi: 10.1126/sciadv.aat5869\\ \\
 
-\bibitem{driscoll}Driscoll J. R., \textit{Spoligotyping for molecular epidemiology of the Mycobacterium tuberculosis complex}\\ \\
+\bibitem{driscoll}Driscoll J. R., \textit{Spoligotyping for molecular epidemiology of the Mycobacterium tuberculosis complex}, 551:117-28. doi: 10.1007/978-1-60327-999-4 10\\ \\
 
-\bibitem{jinek}Jinek M. et al, \textit{A programmable dual-RNA-guided DNA endonuclease in adaptive bacterial immunity}\\ \\
+\bibitem{jinek}Jinek M. et al, \textit{A programmable dual-RNA-guided DNA endonuclease in adaptive bacterial immunity}, 337(6096):816-21. doi: 10.1126/science.1225829\\ \\
 
-\bibitem{gori}Gori A. et al, \textit{Spoligotyping and Mycobacterium tuberculosis}\\ \\
+\bibitem{gori}Gori A. et al, \textit{Spoligotyping and Mycobacterium tuberculosis}, 11(8): 1242–1248. doi: 10.3201/1108.040982\\ \\
 
-\bibitem{perry1}Perry S. et al., \textit{Infection with Helicobacter pylori is associated with protection against tuberculosis}\\ \\
+\bibitem{perry1}Perry S. et al., \textit{Infection with Helicobacter pylori is associated with protection against tuberculosis}, 5(1):e8804. doi: 10.1371/journal.pone.0008804\\ \\
 
-\bibitem{perry2}Perry S. et al, \textit{The immune response to tuberculosis infection in the setting of Helicobacter pylori and helminth infections}\\ \\
+\bibitem{perry2}Perry S. et al, \textit{The immune response to tuberculosis infection in the setting of Helicobacter pylori and helminth infections}, 141(6): 1232–1243. doi: 10.1017/S0950268812001823\\ \\
 
-\bibitem{xia}Xia E. et al., \textit{SpoTyping: fast and accurate in silico Mycobacterium spoligotyping from sequence reads}\\ \\ 
+\bibitem{xia}Xia E. et al., \textit{SpoTyping: fast and accurate in silico Mycobacterium spoligotyping from sequence reads}, 8:19. doi 10.1186/s13073-016-0270-7\\ \\ 
 
-\bibitem{dale}Dale JW. et al., \textit{Spacer oligonucleotide typing of bacteria of the Mycobacterium tuberculosis complex: recommendations for standardised nomenclature. Int J Tuberc Lung Dis. 2001;5(3):216–9}\\ \\
+\bibitem{dale}Dale JW. et al., \textit{Spacer oligonucleotide typing of bacteria of the Mycobacterium tuberculosis complex: recommendations for standardised nomenclature.}, 5(3):216–9\\ \\
 
-\bibitem{iwai}Iwai H et al., \textit{CASTB (the comprehensive analysis server for the Mycobacterium tuberculosis complex): A publicly accessible web server for epidemiological analyses, drug-resistance prediction and phylogenetic comparison of clinical isolates. Tuberculosis. 2015;95(6):843–4}\\ \\
+\bibitem{iwai}Iwai H et al., \textit{CASTB (the comprehensive analysis server for the Mycobacterium tuberculosis complex): A publicly accessible web server for epidemiological analyses, drug-resistance prediction and phylogenetic comparison of clinical isolates. Tuberculosis.}, 95(6):843–4\\ \\
 
-\bibitem{demay}Demay C. et al., \textit{SITVITWEB - A publicly available international multimarker database for studying Mycobacterium tuberculosis genetic diversity and molecular epidemiology. Infect Genet Evol. 2012;12:755–66}\\ \\
+\bibitem{demay}Demay C. et al., \textit{SITVITWEB - A publicly available international multimarker database for studying Mycobacterium tuberculosis genetic diversity and molecular epidemiology.}, Infect Genet Evol. 12:755–66\\ \\
 
-\bibitem{}McGovern Institute Channel, \textit{Genome Editing with CRISPR-Cas9}\\ \\
+\bibitem{}McGovern Institute Channel, \textit{Genome Editing with CRISPR-Cas9}, \url{https://www.youtube.com/watch?v=2pp17E4E-O8}\\ \\
 
-\bibitem{oneil}O'Neil M.B. et al., \textit{Lineage specific histories of Mycobacterium tuberculosis dispersal in Africa and Eurasia}
-bioRxiv 10.1101/210161\\ \\
+\bibitem{oneil}O'Neil M.B. et al., \textit{Lineage specific histories of Mycobacterium tuberculosis dispersal in Africa and Eurasia}, bioRxiv. 10.1101/210161\\ \\
 
-\bibitem{ratovonirina}Ratovonirina N. H. \textit{Etudes descriptive, épidémiologique, moléculaire et spatiale des souches Mycobacterium tuberculosis circulant à Antananarivo, Madagascar}\\ \\
+\bibitem{ratovonirina}Ratovonirina N. H., \textit{Etudes descriptive, épidémiologique, moléculaire et spatiale des souches Mycobacterium tuberculosis circulant à Antananarivo, Madagascar}, Thèse de Doctorat de l'Université Paris-Saclay\\ \\
 
-\bibitem{kamerbeek}Kamerbeek et al., \textit{Simultaneous detection and strain differentiation of Mycobacterium tuberculosis for diagnosis and epidemiology}\\ \\
+\bibitem{kamerbeek}Kamerbeek et al., \textit{Simultaneous detection and strain differentiation of Mycobacterium tuberculosis for diagnosis and epidemiology}, 35(4): 907–914\\ \\
 
-\bibitem{Mendis C. et al.}, \textit{Insight into genetic diversity of Mycobacterium tuberculosis in Kandy, Sri Lanka reveals predominance of the Euro-American lineage}\\ \\
+\bibitem{mendis}Mendis C. et al., \textit{Insight into genetic diversity of Mycobacterium tuberculosis in Kandy, Sri Lanka reveals predominance of the Euro-American lineage}, International Journal of Infectious Diseases 87 84-91\\ \\
 
-\bibitem{gomgnimbou},Gomgnimbou M. K. et al., \textit{Tuberculosis-Spoligo-Rifampin-Isoniazid Typing: an All-in-One Assay Technique for Surveillance and Control of Multidrug-Resistant Tuberculosis on Luminex Devices}
+\bibitem{gomgnimbou},Gomgnimbou M. K. et al., \textit{Tuberculosis-Spoligo-Rifampin-Isoniazid Typing: an All-in-One Assay Technique for Surveillance and Control of Multidrug-Resistant Tuberculosis on Luminex Devices}, 51(11):3527-34. doi: 10.1128/JCM.01523-13\\ \\
+
+\bibitem{couvin}Couvin D. et al., \textit{SpolSimilaritySearch - A web tool to compare and search similarities between spoligotypes of Mycobacterium tuberculosis complex}, 105:49-52. doi: 10.1016/j.tube.2017.04.007
 
 \end{thebibliography}
+\end{spacing}
 \end{document}
