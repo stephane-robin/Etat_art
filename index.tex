@@ -63,7 +63,8 @@
 % IMAGES
 \usepackage{caption}  % insertion d'images
 \usepackage[font=footnotesize,labelfont=bf]{caption}  % légendes des images
-\renewcommand{\thefigure}{\arabic{section}.\arabic{figure}}  % numérotation des images
+\renewcommand{\thefigure}{\arabic{figure}}  % numérotation des images
+%\renewcommand{\thefigure}{\arabic{section}.\arabic{figure}}  % autre possibilité numérotation des images
 \usepackage{subcaption}
 
 % HYPERLINKS
@@ -230,7 +231,7 @@ ntheorem=true]{lemma}{Lemme}
 
 \section{Introduction}
 
-Le présent document cherche à définir les fondements sur lesquels va reposer le stage et en particulier de connaître l'état actuel des connaissances concernant l'analyse bio-informatique du locus CRISPR-Cas chez \textit{Mycobacterium tuberculosis}.
+Le présent document cherche à définir les fondements sur lesquels va reposer le stage et en particulier à connaître l'état actuel des connaissances concernant l'analyse bio-informatique du locus CRISPR-Cas chez \textit{Mycobacterium tuberculosis}.
 
 L'objectif du stage est de comprendre les liens entre les sept lignées de \textit{M. tuberculosis} et les alternances de gènes et espaceurs du locus CRISPR-Cas, au moyen d'outils développés au sein de l'équipe AND de l'Université de Franche Comté.
 
@@ -245,7 +246,7 @@ L'objectif du stage est de comprendre les liens entre les sept lignées de \text
 
 Une bactérie survit d'autant mieux qu'elle est capable de s'adapter à son environnement au travers de mutations génétiques. Le polymorphisme génétique est à l'origine de la diversité génétique et correspond, dans le cas de notre étude, à des variations de séquences d'ADN entre différentes souches de \textit{M. tuberculosis}. Ces variations sont dues à des mutations successives au cours de l'évolution de la bactérie, et elles permettent l'analyse phylogénique de \textit{M. tuberculosis}. Il existe plusieurs formes de polymorphisme, le polymorphisme chromosomique lié à un changement du nombre de chromosomes ou de leurs structures, le polymorphisme d'insertion, de délétion et d'inversion qui provoquent un changement spécifique de certaines séquences du génome, et le polymorphisme nucléotidique SNP \textit{Single Nucleotide Polymorphism} lié au changement d'une seule paire de bases\footnote{\textbf{Paire de bases} : appariement de 2 bases nucléiques situées sur 2 brins complémentaires d'ADN, reliées par des ponts d'hydrogène.} du génome de \textit{M. tuberculosis}. Nous allons détailler plus particulièrement ce dernier cas.
 
-Certaines mutations n'ont aucun impact évolutif sur \textit{M. tuberculosis}. En revanche, des changements fonctionnels peuvent avoir lieu lorsque ces mutations entraînent des modifications d'acides aminés dans les régions codantes, cela peut-être le cas lors d'une adaptation à l'environnement ou lors d'une nouvelle forme de résistance aux antibiotiques. Les SNPs synonymes ne changent pas la séquence de protéine, ainsi la substitution d'un codon\footnote{\textbf{Codon} : ensemble composé de trois nucléotides consécutifs spécifiant l'incorporation d'un acide aminé déterminé. Le code génétique est ainsi lu trois nucléotides par trois nucléotides.} par un autre codon peut engendrer le même acide aminé. Au contraire, les SNPs non-synonymes changent la séquence de protéine, et engendrent donc l'incorporation d'un acide aminé différent. Chez \textit{M. tuberculosis}, les SNPs sont peu sujets à des phénomènes d'homoplasie\footnote{\textbf{Homoplasie} : similitude de caractères chez différentes espèces, qui ne provient pas d'un ancêtre commun, mais peut par exemple provenir d'une adaptation à l'environnement. Diffère de l'homologie qui est une similitude de caractères observée chez deux espères différentes, provenant de l'héritage d'un ancêtre commun.}(seuls 1,1 \% des SNPs sont homoplasiques), ce qui suggère que la structure de \textit{M. tuberculosis} favorise les clonages plutôt que les recombinaisons entre branches. Pour de tels organismes clonaux, l'identification de mutations homoplasiques est un excellent moyen de déterminer les différentes souches bactériennes, et ainsi de procéder à des études phylogéniques\footnote{\textbf{Phylogénie} : étude des liens entre espèces apparentées, permettant de retracer les principales étapes de l'évolution des organismes depuis un ancêtre commun.} et de classification.
+Certaines mutations n'ont aucun impact évolutif sur \textit{M. tuberculosis}. En revanche, des changements fonctionnels peuvent avoir lieu lorsque ces mutations entraînent des modifications d'acides aminés dans les régions codantes, cela peut-être le cas lors d'une adaptation à l'environnement ou lors d'une nouvelle forme de résistance aux antibiotiques. Les SNPs synonymes ne changent pas la séquence de protéine, ainsi la substitution d'un codon\footnote{\textbf{Codon} : ensemble composé de trois nucléotides consécutifs spécifiant l'incorporation d'un acide aminé déterminé. Le code génétique est ainsi lu trois nucléotides par trois nucléotides.} par un autre codon peut engendrer le même acide aminé. Au contraire, les SNPs non-synonymes changent la séquence de protéine, et engendrent donc l'incorporation d'un acide aminé différent. Chez \textit{M. tuberculosis}, les SNPs sont peu sujets à des phénomènes d'homoplasie\footnote{\textbf{Homoplasie} : similitude de caractères chez différentes espèces, qui ne provient pas d'un ancêtre commun, mais peut par exemple provenir d'une adaptation à l'environnement. Diffère de l'homologie qui est une similitude de caractères observée chez deux espèces différentes, provenant de l'héritage d'un ancêtre commun.}(seuls 1,1 \% des SNPs sont homoplasiques), ce qui suggère que la structure de \textit{M. tuberculosis} favorise les clonages plutôt que les recombinaisons entre branches. Pour de tels organismes clonaux, l'identification de mutations homoplasiques est un excellent moyen de déterminer les différentes souches bactériennes, et ainsi de procéder à des études phylogéniques\footnote{\textbf{Phylogénie} : étude des liens entre espèces apparentées, permettant de retracer les principales étapes de l'évolution des organismes depuis un ancêtre commun.} et de classification.
 
 % Co-évolution de la tuberculose avec l'homme moderne
 
@@ -267,7 +268,7 @@ L'analyse phylogénique de Comas et al. corrobore la conjecture selon laquelle l
 
 % Age of the association of MTBC and humans
 
-Les similitudes relevées montrent que la tuberculose a infecté les premiers hommes d'Afrique. Pour aller plus loin, l'étude de Comas et al. a tenu compte de trois dates importantes dans l'évolution biologique de l'être humain qui ont été reportées sur l'analyse phylogénique de \textit{M. tuberculosis} des lignées 5 et 6 d'Afrique de l'Ouest : l'émergence de l'homo sapiens correspondant au MTBC-185\footnote{\textbf{MTBC} : Mycobacterium Tuberculosis Complex.}, l'émergence du haplogroupe\footnote{\textbf{Haplogroupe} : groupe possédant les mêmes caractères génétiques et partageant un ancêtre commun suivant une mutation SNP.} mitochondrial de la lignée 3 chez l'homme correspondant au MTBC-70, et le début de la transition démographique du Néolithique correspondant au MTBC-10.
+Les similitudes relevées montrent que la tuberculose a infecté les premiers hommes d'Afrique. Pour aller plus loin, l'étude de Comas et al. a tenu compte de trois dates importantes dans l'évolution biologique de l'être humain qui ont été reportées sur l'analyse phylogénique de \textit{M. tuberculosis} des lignées 5 et 6 d'Afrique de l'Ouest : l'émergence de l'homo sapiens correspondant au MTBC-185\footnote{\textbf{MTBC} : Mycobacterium Tuberculosis Complex.}, l'émergence de l'haplogroupe\footnote{\textbf{Haplogroupe} : groupe possédant les mêmes caractères génétiques et partageant un ancêtre commun suivant une mutation SNP.} mitochondrial de la lignée 3 chez l'homme correspondant au MTBC-70, et le début de la transition démographique du Néolithique correspondant au MTBC-10.
 
 La branche MTBC-185 suggère l'apparition de mutations à partir de lignées africaines il y a 174 000 ans, c'est à dire que la dispersion de la tuberculose précèderait celle de l'homo sapiens.
 
@@ -315,11 +316,11 @@ En particulier, la tuberculose a dû s'adapter aux autres infections ayant touch
 % global diversity of L4
 % phylogeographic inference
 
-La lignée 4 de \textit{M. tuberculosis} est la plus répandue de par le monde et pour cette raison a fait l'objet de nombreuses publications. Brynildsrud O.B. et al.\cite{brynildsrud} utilisent des méthodes d'analyse discrète et une approche bayésienne\footnote{\textbf{Approche bayésienne} : méthode probabiliste basée sur le calcul des probabilités postérieures des arbres phylogéniques par la combinaison d'une probabilité antérieure avec la fonction de vraisemblance} en phylogénie moléculaire pour obtenir de manière formelle l'évolution phylogéographique de la lignée 4 de \textit{M. tuberculosis}. Ils estiment que le plus récent ancêtre commun MRCA de la lignée 4 est apparu en Europe en 1096 après JC. Si on considère l'Europe en tant que continent au sens large, cela ne contredit pas les résultats de O'Neil M.B. et al.\cite{oneil} qui estiment l'origine de la lignée 4 autour de la méditerranée.
+La lignée 4 de \textit{M. tuberculosis} est la plus répandue de par le monde et pour cette raison a fait l'objet de nombreuses publications. Brynildsrud O.B. et al.\cite{brynildsrud} utilisent des méthodes d'analyse discrète et une approche bayésienne\footnote{\textbf{Approche bayésienne} : méthode probabiliste basée sur le calcul des probabilités postérieures des arbres phylogéniques par la combinaison d'une probabilité antérieure avec la fonction de vraisemblance} en phylogénie moléculaire pour obtenir de manière formelle l'évolution phylogéographique de la lignée 4 de \textit{M. tuberculosis}. Ils estiment que le plus récent ancêtre commun de la lignée 4 est apparu en Europe en 1096 après JC. Si on considère l'Europe en tant que continent au sens large, cela ne contredit pas les résultats de O'Neil M.B. et al.\cite{oneil} qui estiment l'origine de la lignée 4 autour de la méditerranée.
 
 % Patterns of L4 migration through time
 
-L'analyse phylogéographique de Brynildsrud O.B. suggère que les premières vagues de migration de la lignée 4 hors d'Europe se sont déroulées au début du 13ème siècle vers l'Asie du Sud-Est. En particulier, il est possible d'établir une correspondance entre la structure des isolats\footnote{\textbf{Isolat} : fragment d'organisme qu'on a isolé à des fins d'examen histo-pathologiques ou pour être cultivé in vitro.} Vietnamiens et l'époque de l'expansion coloniale française en Indochine.
+L'analyse phylogéographique de Brynildsrud O.B. suggère que les premières vagues de migration de la lignée 4 hors d'Europe se sont déroulées au début du 13ème siècle vers l'Asie du Sud-Est. Il est également possible d'établir une correspondance entre la structure des isolats\footnote{\textbf{Isolat} : fragment d'organisme qu'on a isolé à des fins d'examen histo-pathologiques ou pour être cultivé in vitro.} Vietnamiens et l'époque de l'expansion coloniale française en Indochine au 19ème siècle.
 
 Les vagues suivantes de migration de la lignée 4 se sont dirigées vers l'Afrique de l'Ouest au 15ème siècle, puis vers Afrique de l'Est et du Sud au 17ème siècle. Les échanges continus avec le Portugal dès le 15ème siècle ont favorisé la dispersion de la maladie, ce qui a été renforcé plus tard par la colonisation française de l'Afrique de l'Ouest.  Ces échanges avec les populations européennes ont prévalu à une transmission locale de la tuberculose jusqu'au 19ème siècle. 
 
@@ -335,7 +336,7 @@ Ainsi, Brynildsrud O.B. et al. montrent que la dispersion de la lignée 4 est es
 
 Nous avons déjà vu que la tuberculose a su s'adapter à l'évolution géographique de l'humanité en suivant les différentes migrations humaines pour créer de nouvelles lignées ou de nouvelles souches. Il apparaît que la tuberculose est également capable de suivre l'évolution médicale de l'humanité. L'étude de Brynildsrud O.B. et al.\cite{brynildsrud} constate chez \textit{M. tuberculosis} l'émergence croissante d'une résistance à de multiples antibiotiques entre 1960 et 2000 au travers de la phylogénie de la lignée 4.
 
-Des mutations spontanées dans le génome de la tuberculose peuvent altérer les protéines qui sont la cible des médicaments, ce qui rend les bactéries résistantes à ces médicaments. Prenons comme exemple une mutation du gène rpoB de \textit{M. tuberculosis}, qui code pour la sous-unité $\beta$\footnote{\textbf{Sous-unité $\beta$} : élément de l'ARN polymérase des bactéries qui est composé de la structure suivante $\alpha_2 \beta \beta' \omega$} de l'ARN polymérase\footnote{\textbf{ARN polymérase} : complexe enzymatique responsable de la synthèse de l'ARN à partir d'ADN.} de la bactérie. Dans la tuberculose non résistante, la rifampicine se lie à cette sous-unité $\beta$ et perturbe l'élongation de la transcription de l'ARN. La mutation dans le gène rpoB modifie la séquence des acides aminés et donc de la sous-unité $\beta$. Dans ce cas, la rifampicine ne peut plus se lier à l'ARN et empêcher la transcription. La bactérie est devenue résistante. C'est bien le cas de la tuberculose, qui est considérée aujourd'hui comme une maladie résistante aux antibiotiques. 
+Des mutations spontanées dans le génome de la tuberculose peuvent altérer les protéines qui sont la cible des médicaments, ce qui rend les bactéries résistantes à ces médicaments. Prenons comme exemple une mutation du gène rpoB de \textit{M. tuberculosis}, qui code pour la sous-unité $\beta$\footnote{\textbf{Sous-unité $\beta$} : élément de l'ARN polymérase des bactéries qui est composé de la structure suivante $\alpha_2 \beta \beta' \omega$} de l'ARN polymérase\footnote{\textbf{ARN polymérase} : complexe enzymatique responsable de la synthèse de l'ARN à partir d'ADN.} de la bactérie. Dans la tuberculose non résistante, la rifampicine se lie à cette sous-unité $\beta$ et perturbe l'élongation de la transcription de l'ARN. La mutation dans le gène rpoB modifie la séquence des acides aminés et donc de la sous-unité $\beta$. Dans ce cas, la rifampicine ne peut plus se lier à la sous-unité $\beta$ de l'ARN et empêcher la transcription. La bactérie est devenue résistante. C'est bien le cas de la tuberculose, qui est considérée aujourd'hui comme une maladie résistante aux antibiotiques. 
 
 Une souche de \textit{M. tuberculosis} est appelée MDR-TB \textit{Multi-Drug-Resistant Tuberculosis} si elle est résistante au deux anti-tuberculeux de première intention les plus puissants, l'isoniazide et le rifampicine. Dans ce cas, certaines régions du génome de \textit{M. tuberculosis} sont impliquées dans la résistance à plus d'un médicament. La découverte de nouvelles cibles moléculaires s'avère essentielle pour lutter contre ce développement de la résistance chez \textit{M. tuberculosis}. Une souche de \textit{M. tuberculosis} est appelée XDR-TB si elle est de surcroît résistante aux anti-tuberculeux de seconde intention tels que le fluoroquinolone et l'aminoglycoside.
 
@@ -459,7 +460,7 @@ SpoTyping propose un rapport statistique permettant de résumer le rapprochement
 
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=0.6]{spotyping.png}
+\includegraphics[scale=0.65]{spotyping.png}
 \caption{Exemple de fonctionnement de SpoTyping, d'après \textit{SpoTyping:\\ fast and accurate in silico Mycobacterium spoligotyping from sequence reads}}
 \end{figure}
 
@@ -487,13 +488,19 @@ Par exemple, si on sélectionne le spoligotype 777777777720771 appartenant à la
 \end{figure}
 
 Cet outil pourrait donc s'avérer utile pour commencer à chercher des liens entre les sept lignées de \textit{M. tuberculosis} et les spoligotypes de différentes souches.
-Un tableau comparatif de différents spoligotypes en fonction des lignées de \textit{M. tuberculosis} pourrait ressembler à celui-ci :
+Un tableau comparatif de différents spoligotypes en fonction des lignées de \textit{M. tuberculosis} pourrait ressembler à celui de la figure 11.
 
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=0.4]{comparaison.png}
 \caption{Exemple comparatif de 26 spoligotypes correspondant à 4 lignées différentes de \textit{M. tuberculosis}, d'après \textit{Insight into genetic diversity of Mycobacterium tuberculosis in Kandy, Sri Lanka reveals predominance of the Euro-American lineage}}
 \end{figure}
+
+\section{Conclusion}
+
+Nous avons brièvement vu que la tuberculose a su évoluer avec l'humanité tout en profitant des changements importants qui l'ont affectée. Sept lignées de \textit{M. tuberculosis} ont pu se développer suite à des mutations, différentes infections ont été mémorisées dans l'ADN de la bactérie et des souches résistantes aux antibiotiques sont récemment apparues. Etudier les liens entre les mutations successives de la bactérie et les diverses lignées géographiques, chercher à mieux comprendre les mécanismes d'évolution de son génome lui permettant de développer des résistances aux antibiotiques, sont autant de questions ouvertes qui permettraient de faire avancer la lutte contre cette maladie. Pour cela, plusieurs marqueurs ont été utilisés jusqu'à présent permettant le génotypage de \textit{M. tuberculosis}, que se soit en laboratoire ou in silico. La structure du locus CRISPR-Cas constitue un marqueur privilégié, permettant le spoligotypage de la tuberculose. Son étude prometteuse devrait permettre de mieux interpréter les sept lignées de \textit{M. tuberculosis}.
+
+
 
 % =========
 % BIBLIOTHEQUE

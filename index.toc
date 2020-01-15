@@ -14,4 +14,5 @@
 \contentsline {subsection}{\numberline {5.1.}Vers une normalisation des spoligotypes}{12}{subsection.0.5.1}
 \contentsline {subsection}{\numberline {5.2.}Quel outil informatique pour le spoligotypage ?}{13}{subsection.0.5.2}
 \contentsline {subsection}{\numberline {5.3.}Comparaison de spoligotypes}{16}{subsection.0.5.3}
+\contentsline {section}{\numberline {6.}Conclusion}{16}{section.0.6}
 \contentsfinish 
