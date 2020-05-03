@@ -1,0 +1,14 @@
+\babel@toc {french}{}
+\contentsline {section}{\numberline {1.}Remerciements}{2}{section.0.1}
+\contentsline {section}{\numberline {2.}Introduction}{2}{section.0.2}
+\contentsline {section}{\numberline {3.}Le choix des outils}{2}{section.0.3}
+\contentsline {subsection}{\numberline {3.1.}Choix de l'environnement de d\IeC {\'e}veloppement}{2}{subsection.0.3.1}
+\contentsline {subsection}{\numberline {3.2.}Choix de l'outil d'empaquetage}{3}{subsection.0.3.2}
+\contentsline {section}{\numberline {4.}La composition du package}{4}{section.0.4}
+\contentsline {subsection}{\numberline {4.1.}Composition d'un package standard}{4}{subsection.0.4.1}
+\contentsline {subsection}{\numberline {4.2.}Composition du package pymtc}{5}{subsection.0.4.2}
+\contentsline {subsection}{\numberline {4.3.}Les diff\IeC {\'e}rents modules utilis\IeC {\'e}s par le package pyMTC}{5}{subsection.0.4.3}
+\contentsline {section}{\numberline {5.}La cr\IeC {\'e}ation de la librairie}{5}{section.0.5}
+\contentsline {section}{\numberline {6.}Quelle licence choisir ?}{5}{section.0.6}
+\contentsline {section}{\numberline {7.}Les principaux \IeC {\'e}l\IeC {\'e}ments du code}{5}{section.0.7}
+\contentsfinish 
