@@ -238,31 +238,43 @@ ntheorem=true]{lemma}{Lemme}
 	% INTRODUCTION --------------------------------
 	
 	\section{Introduction}
+	Les objectifs du projet. Le caractère hands-on et complet.
+
+
+	% ETAT DE L'ART -------------------------------------
+	\section{Etat de l'art}
+
+
 	
 
 % CHOIX DES OUTILS -----------------------------
 \section{Le choix des outils}
 
+Définissons tout d'abord le vocabulaire que nous allons utiliser dans ce rapport de stage :
+\begin{itemize}
+\item module : un fichier contenant du code Python,
+\item package : un répertoire contenant des modules Python,
+\item distribution : une archive de modules ou packages (au format tar, whl, ...)
+\end{itemize}
+
+
 % CHOIX DE L'ENVIRONNEMENT DE TRAVAIL -----------------------------
 
 \subsection{Choix de l'environnement de développement}
 
-Pour tester les codes du projet, nous avons créé un environnement de développement avec l'outil de création d'environnement virtuel \textit{venv}. Ce dernier crée un dossier contenant tous les exécutables nécessaires pour utiliser les modules d'un projet Python. Nous avons défini Python3.6.5 comme version locale de travail dans cet environnement grâce au module \textit{pyenv}. Nous avons également installé les dépendances dans cet environnement à l'aide de l'outil \textit{pip3}. Notre environnement de développement contenait donc :
+Afin de tester les codes de ce projet, l'outil de création d'environnement virtuel \textit{venv} nous permet de créer un environnement de développement. \textit{venv} constitue en fait un dossier contenant tous les exécutables nécessaires pour utiliser les modules d'un projet Python.
+
+Par ailleurs, le module \textit{pyenv} nous permet de définir une version de Python comme version locale de travail dans cet environnement. Nous choisissons Python 3.6.5.
+
+Finalement, nous installons dans cet environnement les dépendances nécessaires à l'aide de l'outil \textit{pip} :
 \begin{itemize}
 \item pkg-resources==0.0.0 (installé automatiquement)
-\item xmltodict==0.12.0\\
-Le module xmltodict permet de lire du code XML comme si il s'agissait de code JSON. Il permet une lecture rapide des fichiers.s
+\item pip install xmltodict : le module xmltodict permet de lire du code XML comme si il s'agissait de code JSON. Il permet donc une lecture plus rapide des fichiers.
 \item subprocess.run==0.0.8\\
 Le module subprocess permet de gérer de nouveaux processus, de se connecter à leurs flux d'input/output/erreurs. Il remplace plusieurs modules dépréciés : os. system, os.spawn*, os.popen*, popen2.*, commands.* 
-\item openpyxl==3.0.3\\
-Le package openpyxl permet de lire et d'écrire dans des fichiers Excel de type xlsx, xlsm, xltx, xltm.
-\item et-xmlfile==1.0.1 (installé avec le module openpyxl)
-\item jdcal==1.4.1 (installé avec le module openpyxl)
-\item xlrd==1.2.0\\
-Le module xlrd extrait des données d'un tableur Excel à partir de la version 2.0 et les formatter.
-\item biopython==1.76\\
-Le package biopython regroupe un ensemble d'outils Python pour le traitement informatique de la biologie moléculaire et comprend le module numpy.
-\item numpy==1.18.2 (installé avec le package biopython)
+\item pip install openpyxl : le package openpyxl permet de lire et d'écrire dans des fichiers Excel de type xlsx, xlsm, xltx, xltm. Il comprend les modules et-xmlfile et jdcal.
+\item pip install xlrd : le module xlrd extrait des données d'un tableur Excel à partir de la version 2.0 et avant de les formatte.
+\item pip install biopython : le package biopython regroupe un ensemble d'outils Python pour le traitement informatique de la biologie moléculaire et comprend le module numpy.
 \item DateTime==4.3\\
 Le module datetime permet de manipuler des dates et heures en gérant des objets de type DateTime. 
 \item pytz==2019.3 (installé avec le module datetime)
@@ -280,14 +292,52 @@ En outre, certains modules sont déjà présents dans le package standard Python
 Notre package, une fois créé, devrait proposer le même environnement de travail et donc contenir ces mêmes modules.
  
 
+% COMPOSITION D'UN PACKAGE STANDARD ------------------
+	
+\subsection{Composition d'un package standard}
+
+Un package standard comporte obligatoirement un fichier \_\_init\_\_.py qui va définir la version du projet et le nom du module de lancement du programme (souvent \_\_main\_\_.py).
+
+Les fichiers setup.py,  requirements.txt, LICENSE et README.md sont également nécessaires.  
+\begin{itemize}
+\item setup.py est le script de construction destiné à setuptools. Il définit le nom et la version du package, ainsi que les fichiers qu'il contient. 
+\item requirements.txt permet l'installation des dépendances à l'aide d'un unique fichier contenant un module à installer par ligne. Il nécessite l'instruction pour commencer ces installations.
+\item LICENSE définit 
+\item README.md décrit l'installation du package, la nature de ses dépendances et les principales fonctionnalités.
+\end{itemize}
+
+Avec la PEP-518, le PyPA a proposé un nouveau standard au format package.toml, qui remplace les fichiers setup.py, requirements.txt, setup.cfg, MANIFEST.in et Pipfile. C'est ce nouveau standard qui est utilisé lors de la création d'un package avec Poetry.
+
+La commande poetry new nomPaquet permet de générer le squelette de l'application, comprenant les tests unitaires, le fichier pyproject.toml, le fichier README.rst que nous changeons au format markdown README.md, le répertoire du projet et le fichier init.py. Nous rajoutons un fichier LICENSE, les composants principaux de la librairie, le présent rapport de stage et un fichier .gitignore pour la gestion des versions.
+	
+\includegraphics[width=5cm]{package_tree.png}
+
+	La plupart des systèmes d'exploitation incorporent Python2.7 par défaut. L'environnement de travail devra donc expressément définir Python3 comme version pour le projet. Nous avons choisi la version 3.6.5 de Python dans le fichier package\_mymtc.toml.
+
+Les paquets construits pour des systèmes Unix (Linux et MacOS) nécessitent l'incorporation de fichiers build.sh et meta.yaml. Les paquets construits pour les systèmes Windows nécessitent l'incorporation des fichiers bld.bat et meta.yaml. A VERIFIER DANS LE CAS DE POETRY
+
+
+% QUELLE LICENCE CHOISIR ------------------
+\subsection{Quelle licence choisir ?}
+	
+Trois licences retiennent notre attention. En voici les principales caractéristiques :
+\begin{itemize}
+\item	la licence MIT, courte et permissive, préserve exclusivement le copyright et les avis de licence. Toute modification ultérieure peut être distribuée suivant une licence différente et notamment utilisée à des fins personnelles ou commerciales, sans obligation de publication des codes source,
+\item	la licence Apache (2.0) est également permissive et sensiblement similaire dans ses conditions à la licence MIT. Toutefois, elle requiert de préciser les modifications effectuées lors de nouvelles distributions,
+\item	la licence GNU (GPL v3.0) préserve également le copyright et les avis de licence. Elle peut être utilisée à des fins personnelles et commerciales. Elle impose en outre, en cas de modification, la publication complète des codes et l'utilisation de la licence GNU pour les nouvelles distributions.
+\end{itemize}
+
+Nous choisissons la licence MIT qui semble répondre aux besoins de ce projet.
+
+	
 
 	% CHOIX DE L'OUTIL D'EMPAQUETAGE --------------------
 	
 	\subsection{Choix de l'outil d'empaquetage}
 	
-	Le Python Packaging User Guide PyPA recommande l'utilisation de :
+	Le PyPA \textit{Python Packaging User Guide} recommande l'utilisation de :
 \begin{itemize}
-\item \textit{pip} pour l'installation de librairies à partir de Python Package Index PyPI,
+\item \textit{pip} pour l'installation de librairies à partir de PyPI \textit{Python Package Index},
 \item \textit{setuptools} pour définir des projets et créer des sources de distribution,
 \item \textit{pipenv} pour la gestion des dépendances de librairies lors de développement d'applications Python,
 \item \textit{venv} pour isoler les dépendances particulières d'une application,
@@ -305,32 +355,23 @@ Nous avons naturellement cherché à construire le package manuellement, à part
 Nous avons donc décidé de construire notre package en utilisant \textit{poetry}, qui est un outil complet autour duquel la communauté Python reste très active. Il propose à la fois la gestion des dépendances, l'empaquetage (création d'une structure pour un projet et la génération de fichiers de configuration et de manifestes) et la publication.
 
 	
-	% LA COMPOSITION DE LA LIBRAIRIE ------------------------
-	
-	\section{La composition du package}
-	
-\subsection{Composition d'un package standard}
 
-	Un package comporte traditionnellement les fichiers \_\_init\_\_.py, setup.py, LICENSE et README.md. 
-	
-	setup.py est le script de construction destiné à setuptools. Il définit le nom et la version du package, ainsi que les fichiers qu'il contient. Avec la PEP-518, la Python Packaging Authority a proposé un nouveau standard au format package.toml, qui remplace les fichiers setup.py, requirements.txt, setup.cfg, MANIFEST.in et Pipfile. C'est ce standard qui est utilisé lors de la création d'un package avec Poetry.
 
-La commande poetry new nomPaquet permet de générer le squelette de l'application, comprenant les tests unitaires, le fichier pyproject.toml, le fichier README.rst que nous changeons au format markdown README.md, le répertoire du projet et le fichier init.py. Nous rajoutons un fichier LICENSE, les composants principaux de la librairie, le présent rapport de stage et un fichier .gitignore pour la gestion des versions.
-	
-\includegraphics[width=5cm]{package_tree.png}
 
-	La plupart des systèmes d'exploitation incorporent Python2.7 par défaut. L'environnement de travail devra donc expressément définir Python3 comme version pour le projet. Nous avons choisi la version 3.6.5 de Python dans le fichier package\_mymtc.toml.
+% LA STRUCTURE D'UN PACKAGE SOUS POETRY
 
-Les paquets construits pour des systèmes Unix (Linux et MacOS) nécessitent l'incorporation de fichiers build.sh et meta.yaml. Les paquets construits pour les systèmes Windows nécessitent l'incorporation des fichiers bld.bat et meta.yaml. A VERIFIER DANS LE CAS DE POETRY
-
-\subsection{Composition du package pymtc}
+\subsection{La structure d'un package sous Poetry}
 
 
  
-\subsection{Les différents modules utilisés par le package pyMTC}
+\subsection{L'outil de création de package et gestion des dépendances \textit{Poetry}}
 
 
+	% LA COMPOSITION DU PACKAGE ------------------------
+	
+	\section{La composition du package}
 
+Le package est décrit dans le document .md
 
 
 
@@ -365,18 +406,7 @@ Les trois premiers fichiers se créent avec la commande conda skeleton.
 
 	
 	
-	% QUELLE LICENCE CHOISIR --------------------------
-	
-	\section{Quelle licence choisir ?}
-	
-Trois licences retiennent notre attention. En voici les principales caractéristiques :
-\begin{itemize}
-\item	la licence MIT, courte et permissive, préserve exclusivement le copyright et les avis de licence. Toute modification ultérieure peut être distribuée suivant une licence différente et notamment utilisée à des fins personnelles ou commerciales, sans obligation de publication des codes source,
-\item	la licence Apache (2.0) est également permissive et sensiblement similaire dans ses conditions à la licence MIT. Toutefois, elle requiert de préciser les modifications effectuées lors de nouvelles distributions,
-\item	la licence GNU (GPL v3.0) préserve également le copyright et les avis de licence. Elle peut être utilisée à des fins personnelles et commerciales. Elle impose en outre, en cas de modification, la publication complète des codes et l'utilisation de la licence GNU pour les nouvelles distributions.
-\end{itemize}
 
-Nous choisissons la licence MIT qui semble répondre aux besoins de ce projet.
 	
 
 % LES ELEMENTS DU CODE ------------------------------------------
