@@ -1,15 +1,16 @@
 \babel@toc {french}{}
-\contentsline {section}{\numberline {1.}Remerciements}{2}{section.0.1}
-\contentsline {section}{\numberline {2.}Introduction}{2}{section.0.2}
-\contentsline {section}{\numberline {3.}Etat de l'art}{2}{section.0.3}
-\contentsline {section}{\numberline {4.}Le choix des outils}{2}{section.0.4}
-\contentsline {subsection}{\numberline {4.1.}Choix de l'environnement de d\IeC {\'e}veloppement}{2}{subsection.0.4.1}
-\contentsline {subsection}{\numberline {4.2.}Composition d'un package standard}{3}{subsection.0.4.2}
-\contentsline {subsection}{\numberline {4.3.}Quelle licence choisir ?}{4}{subsection.0.4.3}
-\contentsline {subsection}{\numberline {4.4.}Choix de l'outil d'empaquetage}{5}{subsection.0.4.4}
-\contentsline {subsection}{\numberline {4.5.}La structure d'un package sous Poetry}{5}{subsection.0.4.5}
-\contentsline {subsection}{\numberline {4.6.}L'outil de cr\IeC {\'e}ation de package et gestion des d\IeC {\'e}pendances \textit {Poetry}}{5}{subsection.0.4.6}
-\contentsline {section}{\numberline {5.}La composition du package}{5}{section.0.5}
-\contentsline {section}{\numberline {6.}La cr\IeC {\'e}ation de la librairie}{6}{section.0.6}
-\contentsline {section}{\numberline {7.}Les principaux \IeC {\'e}l\IeC {\'e}ments du code}{6}{section.0.7}
+\contentsline {section}{\numberline {1.}Pr\IeC {\'e}sentation du projet}{4}{section.0.1}
+\contentsline {section}{\numberline {2.}Notations}{4}{section.0.2}
+\contentsline {chapter}{\numberline {1}Etat de l'art}{5}{chapter.1}
+\contentsline {chapter}{\numberline {2}Le choix des outils}{6}{chapter.2}
+\contentsline {section}{\numberline {1.}Choix de l'environnement de d\IeC {\'e}veloppement}{6}{section.2.1}
+\contentsline {section}{\numberline {2.}Composition d'un package standard}{7}{section.2.2}
+\contentsline {section}{\numberline {3.}Quelle licence choisir ?}{8}{section.2.3}
+\contentsline {subsection}{\numberline {3.1.}Choix de l'outil d'empaquetage}{8}{subsection.2.3.1}
+\contentsline {chapter}{\numberline {3}Poetry}{10}{chapter.3}
+\contentsline {section}{\numberline {1.}La structure d'un package sous Poetry}{10}{section.3.1}
+\contentsline {section}{\numberline {2.}L'outil de cr\IeC {\'e}ation de package et gestion des d\IeC {\'e}pendances \textit {Poetry}}{10}{section.3.2}
+\contentsline {section}{\numberline {3.}La composition du package}{10}{section.3.3}
+\contentsline {section}{\numberline {4.}La cr\IeC {\'e}ation de la librairie}{10}{section.3.4}
+\contentsline {section}{\numberline {5.}Les principaux \IeC {\'e}l\IeC {\'e}ments du code}{11}{section.3.5}
 \contentsfinish 

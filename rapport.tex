@@ -8,8 +8,8 @@
 \documentclass[twoside,a4paper,11pt,frenchb,openany]{report}  
 %  type de document, chapitre commence en page impaire
 %\documentclass[twoside,a4paper,12pt,frenchb,openright]{report} 
-\title{Rapport de stage}
-\author{Stephane Robin}
+\title{\textbf{Rapport de stage \\ Publication du package crisprbuilder\_tb}}
+\author{Stephane Robin sous la direction de Christophe Guyeux et Jean-Claude Charr}
 \date{\today}
 
 % IMPORTATION DE LIBRAIRIES
@@ -32,6 +32,7 @@
 \usepackage[T1]{fontenc}  % LaTeX modele
 \usepackage[top=3.1cm,bottom=2.7cm,left=2.2cm,right=2.2cm,dvips]{geometry}  % marges
 \usepackage{graphicx}  % insertion images
+\usepackage{imakeidx} % make index
 \usepackage[utf8]{inputenc}  % accents
 \usepackage{mathrsfs}  % symboles mathématiques
 \usepackage{mathtools}  % outils mathématiques
@@ -41,6 +42,7 @@
 \usepackage{rotating}
 \usepackage{setspace} % permet de définir l'espace entre les lignes
 \usepackage{srcltx}
+\usepackage[most]{tcolorbox}
 \usepackage{textcomp}   % caracteres complementaires
 \usepackage{titlesec}  % sections
 \usepackage{titletoc}  % table de contents
@@ -182,6 +184,23 @@ innertopmargin=21pt,
 skipabove=\topskip,
 ntheorem=true]{lemma}{Lemme}
 
+% BOXES
+\tcbset{
+    frame code={}
+    center title,
+    left=0pt,
+    right=0pt,
+    top=0pt,
+    bottom=0pt,
+    colback=gray!40,
+    colframe=white,
+    width=\dimexpr\textwidth\relax,
+    enlarge left by=0mm,
+    boxsep=5pt,
+    arc=0pt,outer arc=0pt,
+    }
+
+
 % NUMEROTATION DES CHAPITRES-SECTIONS
 \renewcommand{\theequation}{\arabic{chapter}.\arabic{equation}}  % equations
 %\renewcommand{\theequation}{\thesection\arabic{equation}}  % equations
@@ -218,6 +237,7 @@ ntheorem=true]{lemma}{Lemme}
 \renewcommand\l@subsubsection{\@dottedtocline{1}{5em}{2.5em}}  % espacement dans le titre d'une sous-sous-section
 
 \makeatother
+\makeindex
 
 % ==============
 % DEBUT DU DOCUMENT
@@ -225,30 +245,42 @@ ntheorem=true]{lemma}{Lemme}
 
 \begin{document}
 	
-	\maketitle
-	
-	\tableofcontents
-	
-	
-	% REMERCIEMENTS ----------------------------
-	
-	\section{Remerciements}
-	
-	
-	% INTRODUCTION --------------------------------
-	
-	\section{Introduction}
-	Les objectifs du projet. Le caractère hands-on et complet.
-
-
-	% ETAT DE L'ART -------------------------------------
-	\section{Etat de l'art}
-
-
+\maketitle
 	
 
-% CHOIX DES OUTILS -----------------------------
-\section{Le choix des outils}
+	
+% REMERCIEMENTS ----------------------------
+	
+\chapter*{Remerciements}
+	
+Je tiens à exprimer mes plus sincères remerciements à Messieurs Christophe Guyeux et Jean-Claude Charr, professeurs à l'université de Franche Comté pour m'avoir guidé, conseillé et soutenu durant le déroulement de ce stage. Leurs explcations et leur disponibilité malgré un emploi du temps chargé ont largement contribué à ma compréhension du sujet.
+
+Je voudrais également souligner la patience dont ils ont fait preuve pour m'expliquer les notions de bioinformatique que j'ai été amené à découvrir durant ce projet. Il en ressort que j'ai particulièrement apprécié de travailler sous leur direction.
+
+
+
+\tableofcontents
+
+
+
+% PREAMBULE --------------------------
+\chapter*{Préambule}
+
+
+
+% PRESENTATION DU PROJET --------------------------------	
+\section{Présentation du projet}
+
+Christophe Guyeux, Jean-Claude Charr, ... ont créé du code "brut" leur permettant à la fois d'afficher et de stocker des données relatives à un SRA particulier. Ce code doit être rassemblé, réorganisé, nettoyé pour être conforme aux critères PEP. Il doit être rendu plus efficace si possible, et testé. Il doit s'exécuter en utilisant un CLI, et doit finalement être empaqueté pour qu'un utilisateur puisse l'utiliser quelque soit sa plateforme (Linux, MacOS ou Windows) une fois installé. Pour cela, il est nécessaire de publier ce package sur PyPI et de le documenter clairement en anglais pour en faciliter l'utilisation.
+
+Notons qu'à terme, l'objectif du package sera de proposer une reconstitution du crispr.
+
+Lorsque nous avons défini les objectifs du stage, il est immédiatement ressorti l'importance de lui donner un caractère pratique, qui pourrait être transposable dans le milieu professionnel. La reconstruction du programme à partir d'éléments de code, la nécessité de créer localement un environnement spécifique de travail et d'installer automatiquement cet environnement sur les ordinateurs des utilisateurs, la possibilité de faire fonctionner le package sur différentes plateformes, les différents tests effectués, la création et publication du package sont autant de compétences pratiques utiles, auxquelles il faut se confronter pour bien en comprendre les difficultés.
+
+
+
+% NOTATIONS -------------------------
+\section{Notations}
 
 Définissons tout d'abord le vocabulaire que nous allons utiliser dans ce rapport de stage :
 \begin{itemize}
@@ -258,43 +290,57 @@ Définissons tout d'abord le vocabulaire que nous allons utiliser dans ce rappor
 \end{itemize}
 
 
+
+% ETAT DE L'ART -------------------------------------
+\chapter{Etat de l'art}
+
+
+	
+
+% CHOIX DES OUTILS -----------------------------
+\chapter{Le choix des outils}
+
+
+
+
 % CHOIX DE L'ENVIRONNEMENT DE TRAVAIL -----------------------------
+\section{Choix de l'environnement de développement}
 
-\subsection{Choix de l'environnement de développement}
+Afin de tester les codes de ce projet, l'outil de création d'environnement virtuel \textit{venv} \index{venv} nous permet de créer un environnement de développement. \textit{venv} commence par constituer un dossier contenant tous les exécutables nécessaires à l'utilisation des modules d'un projet Python.
 
-Afin de tester les codes de ce projet, l'outil de création d'environnement virtuel \textit{venv} nous permet de créer un environnement de développement. \textit{venv} constitue en fait un dossier contenant tous les exécutables nécessaires pour utiliser les modules d'un projet Python.
+Il convient de définir la version de Python utilisée dans cet environnement de développement. Pour cela, le module \textit{pyenv} \index{pyenv} nous permet de définir une version de Python comme version locale de travail dans l'environnement. Nous choisissons pour les besoins du test Python 3.6.5.
 
-Par ailleurs, le module \textit{pyenv} nous permet de définir une version de Python comme version locale de travail dans cet environnement. Nous choisissons Python 3.6.5.
-
-Finalement, nous installons dans cet environnement les dépendances nécessaires à l'aide de l'outil \textit{pip} :
+Finalement, nous installons dans cet environnement les dépendances nécessaires à l'aide de l'outil \textit{pip} \index{pip} :
 \begin{itemize}
 \item pkg-resources==0.0.0 (installé automatiquement)
-\item pip install xmltodict : le module xmltodict permet de lire du code XML comme si il s'agissait de code JSON. Il permet donc une lecture plus rapide des fichiers.
-\item subprocess.run==0.0.8\\
-Le module subprocess permet de gérer de nouveaux processus, de se connecter à leurs flux d'input/output/erreurs. Il remplace plusieurs modules dépréciés : os. system, os.spawn*, os.popen*, popen2.*, commands.* 
-\item pip install openpyxl : le package openpyxl permet de lire et d'écrire dans des fichiers Excel de type xlsx, xlsm, xltx, xltm. Il comprend les modules et-xmlfile et jdcal.
-\item pip install xlrd : le module xlrd extrait des données d'un tableur Excel à partir de la version 2.0 et avant de les formatte.
-\item pip install biopython : le package biopython regroupe un ensemble d'outils Python pour le traitement informatique de la biologie moléculaire et comprend le module numpy.
+\item \begin{tcolorbox}\texttt{pip install xmltodict}\end{tcolorbox}
+le module xmltodict permet de lire du code XML comme si il s'agissait de code JSON. Il permet donc une lecture plus rapide des fichiers.
+\item  \begin{tcolorbox}\texttt{pip install openpyxl}\end{tcolorbox}
+le package openpyxl permet de lire et d'écrire dans des fichiers Excel de type xlsx, xlsm, xltx, xltm. Il comprend les modules et-xmlfile et jdcal.
+\item  \begin{tcolorbox}\texttt{pip install xlrd}\end{tcolorbox}
+le module xlrd extrait des données d'un tableur Excel à partir de la version 2.0 et avant de les formatte.
+\item  \begin{tcolorbox}\texttt{pip install biopython}\end{tcolorbox}
+le package biopython regroupe un ensemble d'outils Python pour le traitement informatique de la biologie moléculaire et comprend le module numpy.
 \item DateTime==4.3\\
 Le module datetime permet de manipuler des dates et heures en gérant des objets de type DateTime. 
 \item pytz==2019.3 (installé avec le module datetime)
 \item zope.interface==5.0.1 (installé avec le module datetime)
 \end{itemize}
 
-En outre, certains modules sont déjà présents dans le package standard Python3 :
+Notons que certains modules utilisés dans ce package sont nativement présents dans Python3. C'est le cas par exemple de :
 \begin{itemize}
 \item le module os fournit une manière portable d'utiliser les fonctionnalités dépendantes du système d'exploitation,
 \item le module pickle permet de sérialiser et désérialiser une structure d'objet Python. Il remplace le module primitif marshal. pickle se trouve déjà dans la librairie standard Python3,
 \item le module csv implémente des classes pour lire et écrire des données liées à des feuilles de calcul ou des bases de données au format csv,
 \item le module shutil propose des opérations sur les fichiers et collections de fichiers, notamment la copie et suppression de fichiers.
+Le module subprocess.run permet de gérer de nouveaux processus, de se connecter à leurs flux d'input/output/erreurs. Il remplace plusieurs modules dépréciés : os. system, os.spawn*, os.popen*, popen2.*, commands.* 
 \end{itemize}
 
-Notre package, une fois créé, devrait proposer le même environnement de travail et donc contenir ces mêmes modules.
+Le package, une fois installé par l'utilisateur, devra fournir automatiquement un environnement de travail similaire, afin que son exécution soit rendue possible. On devra donc retrouver les modules installés via \textit{pip} dans un fichier tel que requirements.txt.
  
 
 % COMPOSITION D'UN PACKAGE STANDARD ------------------
-	
-\subsection{Composition d'un package standard}
+\section{Composition d'un package standard}
 
 Un package standard comporte obligatoirement un fichier \_\_init\_\_.py qui va définir la version du projet et le nom du module de lancement du programme (souvent \_\_main\_\_.py).
 
@@ -318,7 +364,7 @@ Les paquets construits pour des systèmes Unix (Linux et MacOS) nécessitent l'i
 
 
 % QUELLE LICENCE CHOISIR ------------------
-\subsection{Quelle licence choisir ?}
+\section{Quelle licence choisir ?}
 	
 Trois licences retiennent notre attention. En voici les principales caractéristiques :
 \begin{itemize}
@@ -331,9 +377,8 @@ Nous choisissons la licence MIT qui semble répondre aux besoins de ce projet.
 
 	
 
-	% CHOIX DE L'OUTIL D'EMPAQUETAGE --------------------
-	
-	\subsection{Choix de l'outil d'empaquetage}
+% CHOIX DE L'OUTIL D'EMPAQUETAGE --------------------
+\subsection{Choix de l'outil d'empaquetage}
 	
 	Le PyPA \textit{Python Packaging User Guide} recommande l'utilisation de :
 \begin{itemize}
@@ -353,28 +398,34 @@ Nous choisissons la licence MIT qui semble répondre aux besoins de ce projet.
 Nous avons naturellement cherché à construire le package manuellement, à partir de pipenv puis de conda. Cet effort s'est avéré laborieux et a révélé des incompatibilités qui n'ont pas permis de valider les exigences de la plateforme testPyPI.
 
 Nous avons donc décidé de construire notre package en utilisant \textit{poetry}, qui est un outil complet autour duquel la communauté Python reste très active. Il propose à la fois la gestion des dépendances, l'empaquetage (création d'une structure pour un projet et la génération de fichiers de configuration et de manifestes) et la publication.
-
 	
+
+% POETRY ---------------
+\chapter{Poetry}
 
 
 
 % LA STRUCTURE D'UN PACKAGE SOUS POETRY
+\section{La structure d'un package sous Poetry}
 
-\subsection{La structure d'un package sous Poetry}
+Lors de l'exécution de l'instruction poetry new crisprbuilder\_tb s'est créé le package crisprbuilder\_tb disposant de la structure suivante :
 
+photo structure
+
+Le répertoire crisprbuilder\_tb contient les fichiers \_\_init\_\_.py et \_\_main\_\_.py
 
  
-\subsection{L'outil de création de package et gestion des dépendances \textit{Poetry}}
+\section{L'outil de création de package et gestion des dépendances \textit{Poetry}}
 
 
 	% LA COMPOSITION DU PACKAGE ------------------------
 	
 	\section{La composition du package}
 
-Le package est décrit dans le document .md
+Le package est décrit en détail dans le document crisprbuilder\_tb.md
 
 
-
+Ainsi, une recherche effectuée à partir de ERR2704808 permet d'obtenir le résultat suivant :
 
 
 
@@ -403,6 +454,10 @@ Les trois premiers fichiers se créent avec la commande conda skeleton.
 
 
 
+% CONCLUSION ----------------------
+\chapter*{Conclusion}
+
+Ce stage m'a ouvert l'esprit vers le domaine de la bioinformatique et m'a permis de réfléchir à 
 
 	
 	
@@ -432,4 +487,13 @@ pickle permet aux objets d'être sérialisés en fichiers sur disque et déséri
 			
 		\end{thebibliography}
 	\end{spacing}
+
+
+
+% INDEX ------------------
+\printindex
+
+
+
+
 \end{document}
