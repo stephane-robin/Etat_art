@@ -304,7 +304,7 @@ Définissons tout d'abord le vocabulaire que nous allons utiliser dans ce rappor
 
 
 % CHOIX DE L'ENVIRONNEMENT DE TRAVAIL -----------------------------
-\section{Choix de l'environnement de développement}
+\section{L'environnement de développement}
 
 Afin de tester les codes de ce projet, l'outil de création d'environnement virtuel \textit{venv} \index{venv} nous permet de créer un environnement de développement. \textit{venv} commence par constituer un dossier contenant tous les exécutables nécessaires à l'utilisation des modules d'un projet Python.
 
@@ -342,14 +342,16 @@ Le package, une fois installé par l'utilisateur, devra fournir automatiquement 
 % COMPOSITION D'UN PACKAGE STANDARD ------------------
 \section{Composition d'un package standard}
 
-Un package standard comporte obligatoirement un fichier \_\_init\_\_.py qui va définir la version du projet et le nom du module de lancement du programme (souvent \_\_main\_\_.py).
+Un package standard comporte obligatoirement un fichier \textit{\_\_init\_\_.py} qui va définir la version du projet et le nom du module de lancement du programme (souvent \textit{\_\_main\_\_.py}). Il est toutefois acceptable et parfois même recommandé de conserver un fichier \textit{\_\_init\_\_.py} vide. 
 
-Les fichiers setup.py,  requirements.txt, LICENSE et README.md sont également nécessaires.  
+Les fichiers \textit{setup.py},  \textit{requirements.txt}, \textit{LICENSE} et \textit{README.md} sont également nécessaires.  
 \begin{itemize}
-\item setup.py est le script de construction destiné à setuptools. Il définit le nom et la version du package, ainsi que les fichiers qu'il contient. 
-\item requirements.txt permet l'installation des dépendances à l'aide d'un unique fichier contenant un module à installer par ligne. Il nécessite l'instruction pour commencer ces installations.
-\item LICENSE définit 
-\item README.md décrit l'installation du package, la nature de ses dépendances et les principales fonctionnalités.
+\item \textit{setup.py} est le script de construction destiné à \textit{setuptools}. Il définit le nom et la version du package, ainsi que les fichiers qu'il contient. 
+\item \textit{requirements.txt} permet l'installation des dépendances à l'aide d'un unique fichier contenant un module à installer par ligne. Il nécessite l'instruction 
+\begin{tcolorbox}\texttt{pip install -r requirements.txt}\end{tcolorbox}
+pour commencer ces installations.
+\item \textit{LICENSE} définit 
+\item \textit{README.md} décrit l'installation du package, la nature de ses dépendances et les principales fonctionnalités.
 \end{itemize}
 
 Avec la PEP-518, le PyPA a proposé un nouveau standard au format package.toml, qui remplace les fichiers setup.py, requirements.txt, setup.cfg, MANIFEST.in et Pipfile. C'est ce nouveau standard qui est utilisé lors de la création d'un package avec Poetry.
@@ -364,7 +366,7 @@ Les paquets construits pour des systèmes Unix (Linux et MacOS) nécessitent l'i
 
 
 % QUELLE LICENCE CHOISIR ------------------
-\section{Quelle licence choisir ?}
+\subsection{Quelle licence choisir ?}
 	
 Trois licences retiennent notre attention. En voici les principales caractéristiques :
 \begin{itemize}
@@ -382,40 +384,76 @@ Nous choisissons la licence MIT qui semble répondre aux besoins de ce projet.
 	
 	Le PyPA \textit{Python Packaging User Guide} recommande l'utilisation de :
 \begin{itemize}
-\item \textit{pip} pour l'installation de librairies à partir de PyPI \textit{Python Package Index},
 \item \textit{setuptools} pour définir des projets et créer des sources de distribution,
-\item \textit{pipenv} pour la gestion des dépendances de librairies lors de développement d'applications Python,
-\item \textit{venv} pour isoler les dépendances particulières d'une application,
-\item \textit{conda} pour les projets scientifiques.
+\item \textit{pipenv} pour la gestion des dépendances de packages lors du développement d'applications,
+\item \textit{venv} pour isoler les dépendances particulières d'une application et créer un environnement de travail,
+\item \textit{conda} permettant de fournir un environnement de travail favorable aux projets scientifiques, avec notamment tous les modules essentiels pré-installés,
 \item \textit{buildout} pour les projets de développement Web,
-\item \textit{poetry} pour un besoin particulier non couvert par Pipenv.
+\item \textit{poetry} pour un besoin particulier non couvert par \textit{pipenv},
+\item \textit{pip} pour l'installation de librairies à partir de PyPI \textit{Python Package Index}.
 \end{itemize}
-	
+
+Nous avons testé ces différents outils dans le but de définir un environnement de développement et de construire un package incorporant les dépendances requises.
+
 \textit{pipenv} est un gestionnaire de haut niveau pour les environnements, les dépendances et les packages Python. Contrairement à \textit{virtualenv}, \textit{pipenv} distingue les dépendances du projet et les dépendances des dépendances du projet. Par ailleurs, \textit{pipenv} différencie le mode développement du mode production. Il offre l'avantage de bien fonctionner sur Windows. Toutefois, la communauté Python l'a peu mis à jour depuis 2018.
 
-\textit{Anaconda} est une distribution de logiciels multiplateformes (Windows, Linux, MacOS) qui facilite l'installation des librairies scientifiques \textit{Numpy} et \textit{Scipy}, ce qui est particulièrement intéressant dans le cas des plateformes Windows où ce processus est plus complexe. Elle incorpore une librairie open-source appelée conda permettant la gestion des dépendances, de l'environnement de travail ainsi que la création de packages. \textit{Anaconda} semble être approprié au projet, mais c'est une distribution trop lourde pour être intégrée à notre package et \textit{Miniconda}, qui ne comporte que Python, conda et pip, ne répond pas au besoin du projet.
+\textit{Anaconda} est une distribution de logiciels multiplateformes (Windows, Linux, MacOS) qui facilite l'installation des librairies scientifiques \textit{Numpy} et \textit{Scipy}, ce qui est particulièrement intéressant dans le cas des plateformes Windows où ce processus est plus complexe. Elle incorpore une librairie open-source appelée \textit{conda} permettant la gestion des dépendances, de l'environnement de travail ainsi que la création de packages. \textit{Anaconda} semble être approprié au projet, mais c'est une distribution trop lourde pour être intégrée à notre package et \textit{Miniconda}, qui ne comporte que Python, \textit{conda} et \textit{pip}, ne répond pas aux besoins du projet.
 
-Nous avons naturellement cherché à construire le package manuellement, à partir de pipenv puis de conda. Cet effort s'est avéré laborieux et a révélé des incompatibilités qui n'ont pas permis de valider les exigences de la plateforme testPyPI.
+Nous avons tout d'abord cherché à construire le package manuellement, à partir de \textit{pipenv} puis de \textit{conda} ou \textit{pip}. Cet effort s'est avéré laborieux et a révélé des incompatibilités qui n'ont pas permis de valider les exigences de la plateforme testPyPI.
 
-Nous avons donc décidé de construire notre package en utilisant \textit{poetry}, qui est un outil complet autour duquel la communauté Python reste très active. Il propose à la fois la gestion des dépendances, l'empaquetage (création d'une structure pour un projet et la génération de fichiers de configuration et de manifestes) et la publication.
+Nous avons donc décidé de construire notre package en utilisant \textit{Poetry}, qui est un outil complet multiplateformes autour duquel la communauté Python reste très active. Il propose à la fois la gestion des dépendances, l'empaquetage (création d'une structure pour un projet et la génération de fichiers de configuration et de manifestes) et la publication. \textit{Poetry} automatise ces différents procédés et facilite grandement le travail. 
 	
 
 % POETRY ---------------
-\chapter{Poetry}
+\section{Poetry}
 
 
+% CREATION DU PACKAGE ---------------
+\subsection{Création d'un package et gestion des dépendances}
 
-% LA STRUCTURE D'UN PACKAGE SOUS POETRY
-\section{La structure d'un package sous Poetry}
+La création d'un projet se fait à l'aide de la commande
+\begin{tcolorbox}\texttt{poetry new nom\_package}\end{tcolorbox}
+qui va créer un répertoire \textit{nom\_package} contenant les éléments suivants :
 
-Lors de l'exécution de l'instruction poetry new crisprbuilder\_tb s'est créé le package crisprbuilder\_tb disposant de la structure suivante :
+\includegraphics[width=6cm]{nom_package_tree.png}
 
-photo structure
+Le fichier \textit{nom\_package.toml} remplace les anciens standards de définition de packages : \textit{setup.exe} et \textit{requirements.txt}. Il précise notamment le nom du package, la version du package, sa description, l’emplacement de son dépôt (par exemple sur GitHub), l’adresse email de l’auteur du package, et la version des dépendances.
 
-Le répertoire crisprbuilder\_tb contient les fichiers \_\_init\_\_.py et \_\_main\_\_.py
+En ce qui concerne la version des dépendances, il est souhaitable d’utiliser l’instruction
+\begin{tcolorbox}\texttt{poetry add nom\_dependance}\end{tcolorbox}  
+qui assure la compatibilité de la dépendance \textit{nom\_dependance} avec le package \textit{nom\_package}. Il est également possible d’imposer certaines contraintes sur les versions des dépendances ou encore de rentrer manuellement les dépendances dans le fichier \textit{nom\_package.toml}, mais l’instruction 
+\begin{tcolorbox}\texttt{poetry add nom\_dependance}\end{tcolorbox}  
+offre l’avantage de chercher automatiquement une version compatible de la dépendance, puis de l’inscrire dans \textit{nom\_package.toml}.
 
- 
-\section{L'outil de création de package et gestion des dépendances \textit{Poetry}}
+Pour installer ensuite les dépendances du projet, il est nécessaire d’utiliser l’instruction
+\begin{tcolorbox}\texttt{poetry install}\end{tcolorbox}
+qui crée le fichier \textit{mon\_package.lock}. Ce fichier empêche les dépendances de télécharger la dernière version au moment de l’installation, en fixant la version utilisable par le package.
+
+
+% CONSTRUCTION DU PACKAGE -------------------
+\subsection{Construction du package et publication}
+
+Pour empaqueter le projet, il faut utiliser l’instruction
+\begin{tcolorbox}\texttt{poetry build}\end{tcolorbox}
+qui va permettre de créer un fichier source au format \textit{sdist} et une distribution compilée au format \textit{wheel}.
+
+On peut vérifier la conformité du package avec l’instruction
+\begin{tcolorbox}\texttt{poetry check}\end{tcolorbox}
+qui renvoie
+\begin{tcolorbox}\texttt{All set !}\end{tcolorbox}
+si le package ne comporte aucune discordance et peut être publié.
+
+Le package est maintenant prêt pour être publié sur PyPi avec l’instruction
+\begin{tcolorbox}\texttt{poetry publish}\end{tcolorbox}
+L'auteur du package doit pour cela être enregistré sur PyPI avec un identifiant et un mot de passe.
+A partir de ce moment-là, le package est rendu disponible publiquement.
+
+L’installation du package par un utilisateur quelconque se fait grâce à l’instruction
+\begin{tcolorbox}\texttt{python3 -m pip install nom\_package}\end{tcolorbox}
+
+Les explications relatives à l’utilisation pratique de \textit{Poetry} sont reprises dans le tutoriel suivant que nous venons de publier sur YouTube : adresse YuouTube
+
+
 
 
 	% LA COMPOSITION DU PACKAGE ------------------------
@@ -428,11 +466,32 @@ Le package est décrit en détail dans le document crisprbuilder\_tb.md
 Ainsi, une recherche effectuée à partir de ERR2704808 permet d'obtenir le résultat suivant :
 
 
+% LA STRUCTURE D'UN PACKAGE SOUS POETRY
+\section{La structure d'un package sous Poetry}
+
+Lors de l'exécution de l'instruction poetry new crisprbuilder\_tb s'est créé le package crisprbuilder\_tb disposant de la structure suivante :
+
+photo structure
+
+Le répertoire crisprbuilder\_tb contient les fichiers \_\_init\_\_.py et \_\_main\_\_.py
 
 
+% PYLINT --------------
+\section{Améliorer le code avec pylint}
+
+\textit{pylint} fournit une note entre 0 et 10 qui reflète le respect des règles du PEP8, notamment en ce qui concerne la lisibilité du code. Il reprend également certaines exigences relatives à ...
+
+Le fichier \textit{\_\_main\_\_.py} est noté 9, / 10 avec les commentaires suivants :
+XXX
+
+et le fichier \textit{support.py} est noté 9, / 10 avec les commentaires suivants :
+XXX
+
+S'agissant d'un test statique, le code n'est pas exécuté et la performance du code n'est pas prise en compte lors de l'évaluation faite par \textit{pylint}. Ainsi, \textit{pylint} peut reprocher l'utilisation injustifiée de listes compréhensives, sans tenir compte de l'efficacité d'un tel traitement.
 
 
-
+% DESCRIPTION DU PACKAGE ---------------------------
+\section{Description du package avec le fichier crisprbuilder\_tb.md}
 
 
 
@@ -452,6 +511,17 @@ Pour créer une librairie à partir de conda, il est nécessaire d'installer con
 Les trois premiers fichiers se créent avec la commande conda skeleton.
 ===FIN CHANGEMENT===
 
+
+
+% LES TESTS DU PACKAGE -----------------------
+\chapter{Les tests du package}
+
+
+
+
+
+% AMELIORATION DES PERFORMANCES -----------------------
+\chapter{Amélioration des performances}
 
 
 % CONCLUSION ----------------------
