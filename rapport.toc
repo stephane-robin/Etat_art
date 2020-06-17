@@ -6,16 +6,16 @@
 \contentsline {section}{\numberline {1.}L'environnement de d\IeC {\'e}veloppement}{6}{section.2.1}
 \contentsline {section}{\numberline {2.}Composition d'un package standard}{7}{section.2.2}
 \contentsline {subsection}{\numberline {2.1.}Quelle licence choisir ?}{8}{subsection.2.2.1}
-\contentsline {subsection}{\numberline {2.2.}Choix de l'outil d'empaquetage}{8}{subsection.2.2.2}
-\contentsline {section}{\numberline {3.}Poetry}{9}{section.2.3}
-\contentsline {subsection}{\numberline {3.1.}Cr\IeC {\'e}ation d'un package et gestion des d\IeC {\'e}pendances}{9}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.2.}Choix de l'outil d'empaquetage}{9}{subsection.2.2.2}
+\contentsline {section}{\numberline {3.}Poetry}{10}{section.2.3}
+\contentsline {subsection}{\numberline {3.1.}Cr\IeC {\'e}ation d'un package et gestion des d\IeC {\'e}pendances}{10}{subsection.2.3.1}
 \contentsline {subsection}{\numberline {3.2.}Construction du package et publication}{10}{subsection.2.3.2}
 \contentsline {section}{\numberline {4.}La composition du package}{11}{section.2.4}
 \contentsline {section}{\numberline {5.}La structure d'un package sous Poetry}{11}{section.2.5}
 \contentsline {section}{\numberline {6.}Am\IeC {\'e}liorer le code avec pylint}{11}{section.2.6}
-\contentsline {section}{\numberline {7.}Description du package avec le fichier crisprbuilder\_tb.md}{11}{section.2.7}
-\contentsline {section}{\numberline {8.}La cr\IeC {\'e}ation de la librairie}{11}{section.2.8}
-\contentsline {chapter}{\numberline {3}Les tests du package}{12}{chapter.3}
-\contentsline {chapter}{\numberline {4}Am\IeC {\'e}lioration des performances}{13}{chapter.4}
-\contentsline {section}{\numberline {1.}Les principaux \IeC {\'e}l\IeC {\'e}ments du code}{14}{section.4.1}
+\contentsline {section}{\numberline {7.}Description du package avec le fichier crisprbuilder\_tb.md}{12}{section.2.7}
+\contentsline {section}{\numberline {8.}La cr\IeC {\'e}ation de la librairie}{12}{section.2.8}
+\contentsline {chapter}{\numberline {3}Les tests du package}{13}{chapter.3}
+\contentsline {chapter}{\numberline {4}Am\IeC {\'e}lioration des performances}{14}{chapter.4}
+\contentsline {section}{\numberline {1.}Les principaux \IeC {\'e}l\IeC {\'e}ments du code}{15}{section.4.1}
 \contentsfinish 

@@ -306,6 +306,8 @@ Définissons tout d'abord le vocabulaire que nous allons utiliser dans ce rappor
 % CHOIX DE L'ENVIRONNEMENT DE TRAVAIL -----------------------------
 \section{L'environnement de développement}
 
+ XXX -> CONSTRUCTION D'UN ENVIRONNEMENT DE TRAVAIL
+
 Afin de tester les codes de ce projet, l'outil de création d'environnement virtuel \textit{venv} \index{venv} nous permet de créer un environnement de développement. \textit{venv} commence par constituer un dossier contenant tous les exécutables nécessaires à l'utilisation des modules d'un projet Python.
 
 Il convient de définir la version de Python utilisée dans cet environnement de développement. Pour cela, le module \textit{pyenv} \index{pyenv} nous permet de définir une version de Python comme version locale de travail dans l'environnement. Nous choisissons pour les besoins du test Python 3.6.5.
@@ -344,21 +346,24 @@ Le package, une fois installé par l'utilisateur, devra fournir automatiquement 
 
 Un package standard comporte obligatoirement un fichier \textit{\_\_init\_\_.py} qui va définir la version du projet et le nom du module de lancement du programme (souvent \textit{\_\_main\_\_.py}). Il est toutefois acceptable et parfois même recommandé de conserver un fichier \textit{\_\_init\_\_.py} vide. 
 
-Les fichiers \textit{setup.py},  \textit{requirements.txt}, \textit{LICENSE} et \textit{README.md} sont également nécessaires.  
+Les fichiers \textit{setup.py},  \textit{requirements.txt}, \textit{LICENSE},  \textit{README.md} ET \textit{MANIFEST.in} sont également nécessaires.  
 \begin{itemize}
-\item \textit{setup.py} est le script de construction destiné à \textit{setuptools}. Il définit le nom et la version du package, ainsi que les fichiers qu'il contient. 
+\item \textit{setup.py} est le script de construction et configuration destiné au \textit{setuptools}. Il définit notamment le nom et la version du package, ainsi que les fichiers qu'il contient. Il sert également d'interface en ligne de commande relative aux différentes fonctionnalités du package. \textit{setup.cfg} est un fichier d'initialisation qui contient les options par défaut des commandes du \textit{setup.py}.
 \item \textit{requirements.txt} permet l'installation des dépendances à l'aide d'un unique fichier contenant un module à installer par ligne. Il nécessite l'instruction 
 \begin{tcolorbox}\texttt{pip install -r requirements.txt}\end{tcolorbox}
 pour commencer ces installations.
-\item \textit{LICENSE} définit 
-\item \textit{README.md} décrit l'installation du package, la nature de ses dépendances et les principales fonctionnalités.
+\item \textit{LICENSE} définit les termes légaux de la distribution. De nombreux pays n'autorisent pas l'utilisation ou la distribution de packages qui ne disposent pas de licence.
+\item \textit{README.md} décrit l'objectif du package, son installation, la nature de ses dépendances et les principales fonctionnalités.
+\item \textit{MANIFEST.in} permet d'inclure dans le package certains fichiers qui ne sont pas automatiquement intégrés. 
 \end{itemize}
+
+L'ensemble des modules nécessaires au fonctionnement du package sont regroupés dans un répertoire portant le même nom que le package avec le fichier \textit{\_\_init\_\_.py}.
 
 Avec la PEP-518, le PyPA a proposé un nouveau standard au format package.toml, qui remplace les fichiers setup.py, requirements.txt, setup.cfg, MANIFEST.in et Pipfile. C'est ce nouveau standard qui est utilisé lors de la création d'un package avec Poetry.
 
 La commande poetry new nomPaquet permet de générer le squelette de l'application, comprenant les tests unitaires, le fichier pyproject.toml, le fichier README.rst que nous changeons au format markdown README.md, le répertoire du projet et le fichier init.py. Nous rajoutons un fichier LICENSE, les composants principaux de la librairie, le présent rapport de stage et un fichier .gitignore pour la gestion des versions.
 	
-\includegraphics[width=5cm]{package_tree.png}
+\includegraphics[width=9cm]{package_tree.png}
 
 	La plupart des systèmes d'exploitation incorporent Python2.7 par défaut. L'environnement de travail devra donc expressément définir Python3 comme version pour le projet. Nous avons choisi la version 3.6.5 de Python dans le fichier package\_mymtc.toml.
 
@@ -419,7 +424,7 @@ qui va créer un répertoire \textit{nom\_package} contenant les éléments suiv
 
 Le fichier \textit{nom\_package.toml} remplace les anciens standards de définition de packages : \textit{setup.exe} et \textit{requirements.txt}. Il précise notamment le nom du package, la version du package, sa description, l’emplacement de son dépôt (par exemple sur GitHub), l’adresse email de l’auteur du package, et la version des dépendances.
 
-En ce qui concerne la version des dépendances, il est souhaitable d’utiliser l’instruction
+En ce qui concerne la version des dépendances, il faut tout d'abord se placer dans le répertoire \textit{nom\_package} puis utiliser l’instruction
 \begin{tcolorbox}\texttt{poetry add nom\_dependance}\end{tcolorbox}  
 qui assure la compatibilité de la dépendance \textit{nom\_dependance} avec le package \textit{nom\_package}. Il est également possible d’imposer certaines contraintes sur les versions des dépendances ou encore de rentrer manuellement les dépendances dans le fichier \textit{nom\_package.toml}, mais l’instruction 
 \begin{tcolorbox}\texttt{poetry add nom\_dependance}\end{tcolorbox}  
@@ -474,6 +479,14 @@ Lors de l'exécution de l'instruction poetry new crisprbuilder\_tb s'est créé 
 photo structure
 
 Le répertoire crisprbuilder\_tb contient les fichiers \_\_init\_\_.py et \_\_main\_\_.py
+
+
+poetry new crisprbuilder\_tb
+cd crisprbuilder\_tb
+poetry add python3
+poetry add xlrd
+poetry add xmltodict
+poetry add biopython
 
 
 % PYLINT --------------
