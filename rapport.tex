@@ -380,7 +380,7 @@ Trois licences retiennent notre attention. En voici les principales caractérist
 \item	la licence GNU (GPL v3.0) préserve également le copyright et les avis de licence. Elle peut être utilisée à des fins personnelles et commerciales. Elle impose en outre, en cas de modification, la publication complète des codes et l'utilisation de la licence GNU pour les nouvelles distributions.
 \end{itemize}
 
-Nous choisissons la licence MIT qui semble répondre aux besoins de ce projet.
+Dans le cadre de ce projet, aucune spécification restrictive n'étant requise, nous avons choisi la licence MIT qui est simple et peu contraignante.
 
 	
 
@@ -398,15 +398,15 @@ Nous choisissons la licence MIT qui semble répondre aux besoins de ce projet.
 \item \textit{pip} pour l'installation de librairies à partir de PyPI \textit{Python Package Index}.
 \end{itemize}
 
-Nous avons testé ces différents outils dans le but de définir un environnement de développement et de construire un package incorporant les dépendances requises.
+Au regard de ces recommandations, nous avons testé les outils suivants dans le but de définir un environnement de développement et de construire un package incorporant les dépendances requises.
 
 \textit{pipenv} est un gestionnaire de haut niveau pour les environnements, les dépendances et les packages Python. Contrairement à \textit{virtualenv}, \textit{pipenv} distingue les dépendances du projet et les dépendances des dépendances du projet. Par ailleurs, \textit{pipenv} différencie le mode développement du mode production. Il offre l'avantage de bien fonctionner sur Windows. Toutefois, la communauté Python l'a peu mis à jour depuis 2018.
 
 \textit{Anaconda} est une distribution de logiciels multiplateformes (Windows, Linux, MacOS) qui facilite l'installation des librairies scientifiques \textit{Numpy} et \textit{Scipy}, ce qui est particulièrement intéressant dans le cas des plateformes Windows où ce processus est plus complexe. Elle incorpore une librairie open-source appelée \textit{conda} permettant la gestion des dépendances, de l'environnement de travail ainsi que la création de packages. \textit{Anaconda} semble être approprié au projet, mais c'est une distribution trop lourde pour être intégrée à notre package et \textit{Miniconda}, qui ne comporte que Python, \textit{conda} et \textit{pip}, ne répond pas aux besoins du projet.
 
-Nous avons tout d'abord cherché à construire le package manuellement, à partir de \textit{pipenv} puis de \textit{conda} ou \textit{pip}. Cet effort s'est avéré laborieux et a révélé des incompatibilités qui n'ont pas permis de valider les exigences de la plateforme testPyPI.
+Nous avons tout d'abord cherché à construire le package manuellement, à partir de \textit{pipenv} associé à \textit{pip}, puis de \textit{conda} qui dispose d'une riche bibliothèque. Cet effort s'est avéré laborieux et a révélé des incompatibilités lors du \textit{build} qui n'ont pas permis de valider les exigences de la plateforme \textit{testPyPI}.
 
-Nous avons donc décidé de construire notre package en utilisant \textit{Poetry}, qui est un outil complet multiplateformes autour duquel la communauté Python reste très active. Il propose à la fois la gestion des dépendances, l'empaquetage (création d'une structure pour un projet et la génération de fichiers de configuration et de manifestes) et la publication. \textit{Poetry} automatise ces différents procédés et facilite grandement le travail. 
+Nous avons donc décidé de construire notre package en utilisant \textit{Poetry}, qui est un outil complet multiplateformes autour duquel la communauté Python reste très active. Il propose à la fois la gestion des dépendances, l'empaquetage (création d'une structure pour un projet et la génération de fichiers de configuration et de manifestes) et la publication. \textit{Poetry} automatise ces différents procédés et facilite grandement le travail. Nous étudions en détail l'utilisation de cet outil dans la section suivante.
 	
 
 % POETRY ---------------
@@ -422,7 +422,7 @@ qui va créer un répertoire \textit{nom\_package} contenant les éléments suiv
 
 \includegraphics[width=6cm]{nom_package_tree.png}
 
-Le fichier \textit{nom\_package.toml} remplace les anciens standards de définition de packages : \textit{setup.exe} et \textit{requirements.txt}. Il précise notamment le nom du package, la version du package, sa description, l’emplacement de son dépôt (par exemple sur GitHub), l’adresse email de l’auteur du package, et la version des dépendances.
+Le fichier \textit{nom\_package.toml} remplace les anciens standards de définition de packages : \textit{setup.exe} et \textit{requirements.txt}. Il précise notamment le nom du package, sa version, sa description, l’emplacement de son dépôt (par exemple sur GitHub), l’adresse email de l’auteur du package, et la version des dépendances.
 
 En ce qui concerne la version des dépendances, il faut tout d'abord se placer dans le répertoire \textit{nom\_package} puis utiliser l’instruction
 \begin{tcolorbox}\texttt{poetry add nom\_dependance}\end{tcolorbox}  
@@ -448,12 +448,17 @@ qui renvoie
 \begin{tcolorbox}\texttt{All set !}\end{tcolorbox}
 si le package ne comporte aucune discordance et peut être publié.
 
-Le package est maintenant prêt pour être publié sur PyPi avec l’instruction
-\begin{tcolorbox}\texttt{poetry publish}\end{tcolorbox}
-L'auteur du package doit pour cela être enregistré sur PyPI avec un identifiant et un mot de passe.
-A partir de ce moment-là, le package est rendu disponible publiquement.
+Avant de publier le package, il peut être bon de tester son comportement à l'installation. Pour cela, il est possible de le publier officieusement sur la plateforme de test \textit{testPyPI}. Il faut alors se placer à la racine du package et lancer en ligne de commande l'instruction
+\begin{tcolorbox}\texttt{twine upload --repository testpypi dist/*}\end{tcolorbox}
 
-L’installation du package par un utilisateur quelconque se fait grâce à l’instruction
+L'installation du package à partir de \textit{testPyPI} se fait à l'aide de l'instruction
+\begin{tcolorbox}\texttt{pip3 install --index-url https://test.pypi.org/simple/ nom\_package}\end{tcolorbox}
+
+Lorsque le package est finalement prêt pour être publié sur PyPI, on utilise l’instruction
+\begin{tcolorbox}\texttt{poetry publish}\end{tcolorbox}
+L'auteur du package doit pour cela être enregistré sur PyPI avec un identifiant et un mot de passe. A partir de ce moment-là, le package est rendu disponible publiquement.
+
+L’installation du package par un utilisateur quelconque se fait maintenant grâce à l’instruction
 \begin{tcolorbox}\texttt{python3 -m pip install nom\_package}\end{tcolorbox}
 
 Les explications relatives à l’utilisation pratique de \textit{Poetry} sont reprises dans le tutoriel suivant que nous venons de publier sur YouTube : adresse YuouTube
