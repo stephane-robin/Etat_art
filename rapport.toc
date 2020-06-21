@@ -9,13 +9,14 @@
 \contentsline {subsection}{\numberline {2.2.}Choix de l'outil d'empaquetage}{9}{subsection.2.2.2}
 \contentsline {section}{\numberline {3.}Poetry}{10}{section.2.3}
 \contentsline {subsection}{\numberline {3.1.}Cr\IeC {\'e}ation d'un package et gestion des d\IeC {\'e}pendances}{10}{subsection.2.3.1}
-\contentsline {subsection}{\numberline {3.2.}Construction du package et publication}{10}{subsection.2.3.2}
-\contentsline {section}{\numberline {4.}La composition du package}{11}{section.2.4}
-\contentsline {section}{\numberline {5.}La structure d'un package sous Poetry}{11}{section.2.5}
+\contentsline {subsection}{\numberline {3.2.}Construction d'un package et publication}{10}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {3.3.}La construction du package crisprbuilder\_tb}{11}{subsection.2.3.3}
+\contentsline {section}{\numberline {4.}La composition du package}{12}{section.2.4}
+\contentsline {section}{\numberline {5.}La structure d'un package sous Poetry}{12}{section.2.5}
 \contentsline {section}{\numberline {6.}Am\IeC {\'e}liorer le code avec pylint}{12}{section.2.6}
 \contentsline {section}{\numberline {7.}Description du package avec le fichier crisprbuilder\_tb.md}{12}{section.2.7}
 \contentsline {section}{\numberline {8.}La cr\IeC {\'e}ation de la librairie}{12}{section.2.8}
-\contentsline {chapter}{\numberline {3}Les tests du package}{13}{chapter.3}
-\contentsline {chapter}{\numberline {4}Am\IeC {\'e}lioration des performances}{14}{chapter.4}
-\contentsline {section}{\numberline {1.}Les principaux \IeC {\'e}l\IeC {\'e}ments du code}{15}{section.4.1}
+\contentsline {chapter}{\numberline {3}Les tests du package}{14}{chapter.3}
+\contentsline {chapter}{\numberline {4}Am\IeC {\'e}lioration des performances}{15}{chapter.4}
+\contentsline {section}{\numberline {1.}Les principaux \IeC {\'e}l\IeC {\'e}ments du code}{16}{section.4.1}
 \contentsfinish 

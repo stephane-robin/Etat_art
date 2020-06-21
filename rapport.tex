@@ -435,8 +435,8 @@ Pour installer ensuite les dépendances du projet, il est nécessaire d’utilis
 qui crée le fichier \textit{mon\_package.lock}. Ce fichier empêche les dépendances de télécharger la dernière version au moment de l’installation, en fixant la version utilisable par le package.
 
 
-% CONSTRUCTION DU PACKAGE -------------------
-\subsection{Construction du package et publication}
+% CONSTRUCTION D'UN PACKAGE -------------------
+\subsection{Construction d'un package et publication}
 
 Pour empaqueter le projet, il faut utiliser l’instruction
 \begin{tcolorbox}\texttt{poetry build}\end{tcolorbox}
@@ -452,7 +452,8 @@ Avant de publier le package, il peut être bon de tester son comportement à l'i
 \begin{tcolorbox}\texttt{twine upload --repository testpypi dist/*}\end{tcolorbox}
 
 L'installation du package à partir de \textit{testPyPI} se fait à l'aide de l'instruction
-\begin{tcolorbox}\texttt{pip3 install --index-url https://test.pypi.org/simple/ nom\_package}\end{tcolorbox}
+\begin{tcolorbox}\texttt{pip3 install -i https://test.pypi.org/simple/ nom\_package}\end{tcolorbox} ou si on précise la version du package
+\begin{tcolorbox}\texttt{pip3 install -i https://test.pypi.org/simple/ nom\_package==nmr\_version}\end{tcolorbox} A noter qu'il ne faut utiliser de guillemets autour de la version du package.
 
 Lorsque le package est finalement prêt pour être publié sur PyPI, on utilise l’instruction
 \begin{tcolorbox}\texttt{poetry publish}\end{tcolorbox}
@@ -464,6 +465,22 @@ L’installation du package par un utilisateur quelconque se fait maintenant gr�
 Les explications relatives à l’utilisation pratique de \textit{Poetry} sont reprises dans le tutoriel suivant que nous venons de publier sur YouTube : adresse YuouTube
 
 
+
+% CONSTRUCTION DU PACKAGE CRISPR -----------------
+\subsection{La construction du package crisprbuilder\_tb}
+
+Par exemple pour construire le package \textit{crisprbuilder\_tb} à l'aide de \textit{Poetry}, les instructions suivantes sont nécessaires en ligne de commande :
+
+\begin{tcolorbox}\texttt{poetry new crisprbuilder\_tb
+cd crisprbuilder\_tb \\
+poetry add python3 \\
+poetry add xlrd \\
+poetry add xmltodict \\
+poetry add biopython \\
+poetry install \\
+poetry build \\
+poetry check \\
+poetry publish}\end{tcolorbox}
 
 
 	% LA COMPOSITION DU PACKAGE ------------------------
@@ -486,12 +503,7 @@ photo structure
 Le répertoire crisprbuilder\_tb contient les fichiers \_\_init\_\_.py et \_\_main\_\_.py
 
 
-poetry new crisprbuilder\_tb
-cd crisprbuilder\_tb
-poetry add python3
-poetry add xlrd
-poetry add xmltodict
-poetry add biopython
+
 
 
 % PYLINT --------------
