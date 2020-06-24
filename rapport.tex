@@ -271,11 +271,11 @@ Je voudrais également souligner la patience dont ils ont fait preuve pour m'exp
 % PRESENTATION DU PROJET --------------------------------	
 \section{Présentation du projet}
 
-Christophe Guyeux, Jean-Claude Charr, ... ont créé du code "brut" leur permettant à la fois d'afficher et de stocker des données relatives à un SRA particulier. Ce code doit être rassemblé, réorganisé, nettoyé pour être conforme aux critères PEP. Il doit être rendu plus efficace si possible, et testé. Il doit s'exécuter en utilisant un CLI, et doit finalement être empaqueté pour qu'un utilisateur puisse l'utiliser quelque soit sa plateforme (Linux, MacOS ou Windows) une fois installé. Pour cela, il est nécessaire de publier ce package sur PyPI et de le documenter clairement en anglais pour en faciliter l'utilisation.
+Dans le cadre d'un travail de recherche en bio-informatique, Christophe Guyeux, Jean-Claude Charr, ... ont créé du code "brut" leur permettant à la fois d'afficher et de stocker des données relatives à une \textit{Sequence Read Archive} particulière. Ce code doit être rassemblé, réorganisé, nettoyé pour être conforme aux critères PEP. Il doit être rendu fonctionnel puis plus efficace si possible. Il doit s'exécuter en utilisant un CLI, et doit finalement être empaqueté pour qu'un utilisateur puisse l'utiliser quelque soit sa plateforme (Linux, MacOS ou Windows) une fois installé. Pour cela, il est nécessaire de publier ce package sur PyPI et de le documenter clairement en anglais pour en faciliter l'utilisation.
 
-Notons qu'à terme, l'objectif du package sera de proposer une reconstitution du crispr.
+Notons qu'à terme, l'objectif du package sera de proposer une reconstitution du \textit{CRISPR}.
 
-Lorsque nous avons défini les objectifs du stage, il est immédiatement ressorti l'importance de lui donner un caractère pratique, qui pourrait être transposable dans le milieu professionnel. La reconstruction du programme à partir d'éléments de code, la nécessité de créer localement un environnement spécifique de travail et d'installer automatiquement cet environnement sur les ordinateurs des utilisateurs, la possibilité de faire fonctionner le package sur différentes plateformes, les différents tests effectués, la création et publication du package sont autant de compétences pratiques utiles, auxquelles il faut se confronter pour bien en comprendre les difficultés.
+Lorsque nous avons défini les objectifs du stage, il est immédiatement ressorti l'importance de lui donner un caractère pratique, qui pourrait être transposable dans le milieu professionnel. La reconstruction du programme à partir d'éléments de code, la nécessité de créer localement un environnement spécifique de travail et d'installer automatiquement cet environnement sur les ordinateurs des utilisateurs, la possibilité de faire fonctionner le package sur différentes plateformes, les différents tests effectués, la création et publication du package sont autant de compétences pratiques utiles, auxquelles il faut se confronter pour bien en comprendre les difficultés. Par ailleurs, la construction de ce package a nécessité de comprendre le fonctionnement de termes clés en bio-informatique afin de pouvoir travailler dans ce cadre métier particulier. Ceci a conduit à une synthèse de l'état de l'art fortement orientée vers la biologie et plus particulièrement le \textit{CRISPR}.
 
 
 
@@ -432,7 +432,7 @@ offre l’avantage de chercher automatiquement une version compatible de la dép
 
 Pour installer ensuite les dépendances du projet, il est nécessaire d’utiliser l’instruction
 \begin{tcolorbox}\texttt{poetry install}\end{tcolorbox}
-qui crée le fichier \textit{mon\_package.lock}. Ce fichier empêche les dépendances de télécharger la dernière version au moment de l’installation, en fixant la version utilisable par le package.
+qui crée les fichiers \textit{mon\_package.lock} et \textit{setup.py}. Ce fichier empêche les dépendances de télécharger la dernière version au moment de l’installation, en fixant la version utilisable par le package. Par ailleurs, la commande \textbf{install} permet la création d'un fichier \textit{nom\_package.egg-info} comprenant le code, les ressources et les métadonnées du projet. Ce format facilite la désinstallation et la mise à niveau du code, car le projet est essentiellement autonome dans un unique répertoire. Il autorise également l'installation de plusieurs versions d'un même projet simultanément. Il s'agit d'un format adapté à la distribution de plugins pour des applications extensibles et des frameworks, similaire au format \textit{.jar} en Java. Il permet finalement de distribuer les gros packages en entités séparées.
 
 
 % CONSTRUCTION D'UN PACKAGE -------------------
@@ -506,18 +506,7 @@ Le répertoire crisprbuilder\_tb contient les fichiers \_\_init\_\_.py et \_\_ma
 
 
 
-% PYLINT --------------
-\section{Améliorer le code avec pylint}
 
-\textit{pylint} fournit une note entre 0 et 10 qui reflète le respect des règles du PEP8, notamment en ce qui concerne la lisibilité du code. Il reprend également certaines exigences relatives à ...
-
-Le fichier \textit{\_\_main\_\_.py} est noté 9, / 10 avec les commentaires suivants :
-XXX
-
-et le fichier \textit{support.py} est noté 9, / 10 avec les commentaires suivants :
-XXX
-
-S'agissant d'un test statique, le code n'est pas exécuté et la performance du code n'est pas prise en compte lors de l'évaluation faite par \textit{pylint}. Ainsi, \textit{pylint} peut reprocher l'utilisation injustifiée de listes compréhensives, sans tenir compte de l'efficacité d'un tel traitement.
 
 
 % DESCRIPTION DU PACKAGE ---------------------------
@@ -547,6 +536,24 @@ Les trois premiers fichiers se créent avec la commande conda skeleton.
 \chapter{Les tests du package}
 
 
+% LES PROBLEMES LIES AUX CHEMINS D'ACCES ----------------------
+\section{Les problèmes liés aux chemins d'accès}
+
+
+
+
+% PYLINT --------------
+\section{Améliorer le code avec pylint}
+
+\textit{pylint} fournit une note entre 0 et 10 qui reflète le respect des règles du PEP8, notamment en ce qui concerne la lisibilité du code. Il reprend également certaines exigences relatives à ...
+
+Le fichier \textit{\_\_main\_\_.py} est noté 9, / 10 avec les commentaires suivants :
+XXX
+
+et le fichier \textit{support.py} est noté 9, / 10 avec les commentaires suivants :
+XXX
+
+S'agissant d'un test statique, le code n'est pas exécuté et la performance du code n'est pas prise en compte lors de l'évaluation faite par \textit{pylint}. Ainsi, \textit{pylint} peut reprocher l'utilisation injustifiée de listes compréhensives, sans tenir compte de l'efficacité d'un tel traitement.
 
 
 
