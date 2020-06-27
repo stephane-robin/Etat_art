@@ -192,7 +192,7 @@ ntheorem=true]{lemma}{Lemme}
     right=0pt,
     top=0pt,
     bottom=0pt,
-    colback=gray!40,
+    colback=gray!20,
     colframe=white,
     width=\dimexpr\textwidth\relax,
     enlarge left by=0mm,
@@ -271,16 +271,16 @@ Je voudrais également souligner la patience dont ils ont fait preuve pour m'exp
 % PRESENTATION DU PROJET --------------------------------	
 \section{Présentation du projet}
 
-Dans le cadre d'un travail de recherche en bio-informatique, Christophe Guyeux, Jean-Claude Charr, ... ont créé du code "brut" leur permettant à la fois d'afficher et de stocker des données relatives à une \textit{Sequence Read Archive} particulière. Ce code doit être rassemblé, réorganisé, nettoyé pour être conforme aux critères PEP. Il doit être rendu fonctionnel puis plus efficace si possible. Il doit s'exécuter en utilisant un CLI, et doit finalement être empaqueté pour qu'un utilisateur puisse l'utiliser quelque soit sa plateforme (Linux, MacOS ou Windows) une fois installé. Pour cela, il est nécessaire de publier ce package sur PyPI et de le documenter clairement en anglais pour en faciliter l'utilisation.
+Dans le cadre d'un travail de recherche en bio-informatique, Christophe Guyeux, Jean-Claude Charr, ... ont créé du code "brut" leur permettant d'afficher et de stocker des données relatives à une \textit{SRA Sequence Read Archive} particulière. Ce code doit être rassemblé, réorganisé, nettoyé pour être conforme aux critères PEP. Il doit être rendu fonctionnel puis plus efficace si possible. Il doit s'exécuter en utilisant un \textit{CLI Command Line Interface}, et doit finalement être empaqueté pour qu'un utilisateur puisse l'utiliser quelque soit sa plateforme (Linux, MacOS ou Windows) une fois installé. Pour cela, il est nécessaire de publier ce package sur PyPI et de le documenter clairement en anglais pour en faciliter l'utilisation.
 
 Notons qu'à terme, l'objectif du package sera de proposer une reconstitution du \textit{CRISPR}.
 
-Lorsque nous avons défini les objectifs du stage, il est immédiatement ressorti l'importance de lui donner un caractère pratique, qui pourrait être transposable dans le milieu professionnel. La reconstruction du programme à partir d'éléments de code, la nécessité de créer localement un environnement spécifique de travail et d'installer automatiquement cet environnement sur les ordinateurs des utilisateurs, la possibilité de faire fonctionner le package sur différentes plateformes, les différents tests effectués, la création et publication du package sont autant de compétences pratiques utiles, auxquelles il faut se confronter pour bien en comprendre les difficultés. Par ailleurs, la construction de ce package a nécessité de comprendre le fonctionnement de termes clés en bio-informatique afin de pouvoir travailler dans ce cadre métier particulier. Ceci a conduit à une synthèse de l'état de l'art fortement orientée vers la biologie et plus particulièrement le \textit{CRISPR}.
+Lorsque nous avons défini les objectifs du stage, il est immédiatement ressorti l'importance de lui donner un caractère pratique, qui pourrait éventuellement être transposable dans le milieu professionnel. La reconstruction du programme à partir d'éléments de code, la nécessité de créer localement un environnement spécifique de travail et d'installer automatiquement cet environnement sur les ordinateurs des utilisateurs, la possibilité de faire fonctionner le package sur différentes plateformes, les différents tests effectués, la création et publication du package sont autant de compétences pratiques utiles, auxquelles il faut se confronter pour bien en comprendre les difficultés. Par ailleurs, la construction de ce package a nécessité de comprendre le fonctionnement de termes clés en bio-informatique afin de pouvoir travailler dans ce cadre métier particulier. Ceci a conduit à une synthèse de l'état de l'art fortement orientée vers la biologie et plus particulièrement le \textit{CRISPR}.
 
 
 
 % NOTATIONS -------------------------
-\section{Notations}
+\section{La notion de package}
 
 Définissons tout d'abord le vocabulaire que nous allons utiliser dans ce rapport de stage :
 \begin{itemize}
@@ -295,6 +295,265 @@ Définissons tout d'abord le vocabulaire que nous allons utiliser dans ce rappor
 \chapter{Etat de l'art}
 
 
+% OUT OF AFRICA MIGRATION ========================================================
+
+\section{Evolution de la branche humaine de la tuberculose}
+
+% Diversité génétique de la tuberculose
+
+\subsection{Diversité génétique de la tuberculose}
+
+Une bactérie survit d'autant mieux qu'elle est capable de s'adapter à son environnement au travers de mutations génétiques. Le polymorphisme génétique est à l'origine de la diversité génétique et correspond, dans le cas de notre étude, à des variations de séquences d'ADN entre différentes souches de \textit{M. tuberculosis}. Ces variations sont dues à des mutations successives au cours de l'évolution de la bactérie, et elles permettent l'analyse phylogénique de \textit{M. tuberculosis}. Il existe plusieurs formes de polymorphisme, le polymorphisme chromosomique lié à un changement du nombre de chromosomes ou de leurs structures, le polymorphisme d'insertion, de délétion et d'inversion qui provoquent un changement spécifique de certaines séquences du génome, et le polymorphisme nucléotidique SNP \textit{Single Nucleotide Polymorphism} lié au changement d'une seule paire de bases\footnote{\textbf{Paire de bases} : appariement de 2 bases nucléiques situées sur 2 brins complémentaires d'ADN, reliées par des ponts d'hydrogène.} du génome de \textit{M. tuberculosis}. Nous allons détailler plus particulièrement ce dernier cas.
+
+Certaines mutations n'ont aucun impact évolutif sur \textit{M. tuberculosis}. En revanche, des changements fonctionnels peuvent avoir lieu lorsque ces mutations entraînent des modifications d'acides aminés dans les régions codantes, cela peut-être le cas lors d'une adaptation à l'environnement ou lors d'une nouvelle forme de résistance aux antibiotiques. Les SNPs synonymes ne changent pas la séquence de protéine, ainsi la substitution d'un codon\footnote{\textbf{Codon} : ensemble composé de trois nucléotides consécutifs spécifiant l'incorporation d'un acide aminé déterminé. Le code génétique est ainsi lu trois nucléotides par trois nucléotides.} par un autre codon peut engendrer le même acide aminé. Au contraire, les SNPs non-synonymes changent la séquence de protéine, et engendrent donc l'incorporation d'un acide aminé différent. Chez \textit{M. tuberculosis}, les SNPs sont peu sujets à des phénomènes d'homoplasie\footnote{\textbf{Homoplasie} : similitude de caractères chez différentes espèces, qui ne provient pas d'un ancêtre commun, mais peut par exemple provenir d'une adaptation à l'environnement. Diffère de l'homologie qui est une similitude de caractères observée chez deux espèces différentes, provenant de l'héritage d'un ancêtre commun.}(seuls 1,1 \% des SNPs sont homoplasiques), ce qui suggère que la structure de \textit{M. tuberculosis} favorise les clonages plutôt que les recombinaisons entre branches. Pour de tels organismes clonaux, l'identification de mutations homoplasiques est un excellent moyen de déterminer les différentes souches bactériennes, et ainsi de procéder à des études phylogéniques\footnote{\textbf{Phylogénie} : étude des liens entre espèces apparentées, permettant de retracer les principales étapes de l'évolution des organismes depuis un ancêtre commun.} et de classification.
+
+% Co-évolution de la tuberculose avec l'homme moderne
+
+\subsection{Co-évolution de la tuberculose avec l'homme moderne}
+
+Le développement des maladies s'adapte à la densité de population concernée. En effet, auprès d'une foule dense, les infections se répandent plus largement et deviennent plus virulentes, alors qu'auprès d'une population moins importante, elles ont une croissance plus faible, laissant parfois place à des périodes où les infections restent latentes.
+
+Une période charnière dans l'histoire de l'humanité est la transition démographique du Néolithique, qui a vu il y a 10 000 ans, suite à l'apparition de l'agriculture et de l'élevage, un accroissement de la population, favorisant la naissance de nombreuses maladies. Les maladies humaines plus anciennes se développaient auprès de populations moins denses et produisaient des phases chroniques de latence et de réactivation permettant aux populations infectées de survivre.
+
+Nous allons voir que la tuberculose conjugue ces deux modèles de maladie.
+
+% The global diversity of human-adapted MTBC
+
+L'étude phylogénique de Comas et al.\cite{comas} se base exclusivement sur l'étude du génome\footnote{\textbf{Génome} : ensemble de l'information génétique d'un organisme. Par extension, le génome se réfère aussi au support physique de cette information génétique, la macromolécule d'ADN. L'annotation des gènes est le processus permettant d'identifier l'emplacement des gènes dans l'ADN, de déterminer leurs fonctions et leurs possibles interactions.} complet de toutes les lignées connues de \textit{M. tuberculosis} en utilisant les SNPs comme marqueurs pour construire les relations entre les différentes branches. Les résultats obtenus rejoignent de précédentes études effectuées à partir d'autres marqueurs, et confirment l'existence de sept principales lignées de tuberculose. On remarque en particulier que plusieurs branches d'origine animale se sont regroupées avec la lignée 6 d'Afrique de l'Ouest, et que les lignées modernes 2 d'Asie de l'Est, 3 d'Asie Centrale et 4 d'Europe ont des origines proches. 
+
+% African origin and co-divergence of MTBC with modern humans
+
+L'analyse phylogénique de Comas et al. corrobore la conjecture selon laquelle la tuberculose est originaire d'Afrique. Par ailleurs, s'appuyant sur les origines africaines de l'espèce humaine, cette étude cherche également à déterminer l'ancienneté de l'association entre la tuberculose et son hôte humain. Pour cela, l'analyse des divergences des génomes de la tuberculose est comparée à celle d'une arborescence génétique déjà établie à partir de mitochondries\footnote{\textbf{Mitochondrie} : centrale énergétique des cellules qui contribue à la production d'ATP.} de l'être humain. 
+
+% Age of the association of MTBC and humans
+
+Les similitudes relevées montrent que la tuberculose a infecté les premiers hommes d'Afrique. Pour aller plus loin, l'étude de Comas et al. a tenu compte de trois dates importantes dans l'évolution biologique de l'être humain qui ont été reportées sur l'analyse phylogénique de \textit{M. tuberculosis} des lignées 5 et 6 d'Afrique de l'Ouest : l'émergence de l'homo sapiens correspondant au MTBC-185\footnote{\textbf{MTBC} : Mycobacterium Tuberculosis Complex.}, l'émergence de l'haplogroupe\footnote{\textbf{Haplogroupe} : groupe possédant les mêmes caractères génétiques et partageant un ancêtre commun suivant une mutation SNP.} mitochondrial de la lignée 3 chez l'homme correspondant au MTBC-70, et le début de la transition démographique du Néolithique correspondant au MTBC-10.
+
+La branche MTBC-185 suggère l'apparition de mutations à partir de lignées africaines il y a 174 000 ans, c'est à dire que la dispersion de la tuberculose précèderait celle de l'homo sapiens.
+
+La branche MTBC-70 révèle des corrélations avec l'histoire de l'humanité telle qu'elle a pu être décrite par l'archéologie, en montrant l'apparition des sept différentes lignées de tuberculose :
+
+- il y a 73 000 ans, apparition des lignées 5 et 6 correspondant à une première migration humaine importante vers l'Afrique de l'Ouest,\\
+- il y a 67 000 ans, apparition de la lignée 1 correspondant à une migration humaine importante autour de l'Océan Indien,\\
+- il y a 64 000 ans, apparition de la lignée 7 concernant une population qui est restée en Afrique ou est revenue en Afrique après une première migration,\\
+- il y a 46 000 ans, apparition de la lignée 4 correspondant à une migration humaine importante vers l'Europe,\\
+- il y a 42 000 ans, apparition des lignées 2 et 3 correspondant à une migration humaine importante vers l'Asie de l'Est et l'Asie Centrale. 
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{worldlignee.png}
+\caption{Phylogénie du génome complet de MTBC, d'après\\ \textit{Out-of-Africa migration and Neolithic coexpansion of Mycobacterium\\tuberculosis with modern humans}}
+\end{figure}
+
+% Neolithic co-expansion of MTBC and humans
+
+Dans tous les cas, la tuberculose aurait infecté l'espèce humaine et évolué conjointement avec elle depuis 70 000 ans, mais son apparition serait antérieure à la transition démographique du Néolithique.
+
+La base de données de tuberculose étudiée de façon probabiliste par Comas et al.\cite{comas} montre que le Néolithique a fortement contribué à l'expansion de la maladie il y a 10 000 ans grâce à l'augmentation de la densité de population et à la probabilité de co-infection avec d'autres maladies également dépendantes de la densité de population. La possibilité pour la tuberculose de muter d'une variété animale vers une variété humaine n'est en revanche pas retenue par Comas et al. En effet, l'analyse phylogénique de la tuberculose montre que les branches humaines ont divergé des branches animales avant le Néolithique.
+
+Le Néolithique n'était pas la seule période où l'augmentation de la population fut importante, toutefois la concentration de population qui s'en est suivie a permis l'apparition, auprès de la tuberculose, de caractères fortement dépendants de la densité de population qu'elle affecte. Le Néolithique a donc marqué un tournant dans l'histoire de la tuberculose, qui a alors commencé à conjuguer les deux principaux modèles de maladie, d'une part dépendant de la densité de population et d'autre part s'apparentant à une infection chronique. En effet, le mode de transmission aérosol de la tuberculose s'est parfaitement adapté aux foules, et elle a montré à travers les âges des périodes de latence et de réactivation.
+
+% The evolutionary history of MTBC at a regional scale
+% Conclusion
+
+Il faut donc considérer que la co-existence de la tuberculose avec l'espèce humaine depuis des milliers d'années a conduit la maladie à s'adapter aux changements du génome humain et inversement. Les prochaines études sur la tuberculose devraient donc se concentrer sur des génomes complets de la tuberculose et de l'être humain choisis en rapport à leurs associations.
+
+En particulier, la tuberculose a dû s'adapter aux autres infections ayant touché l'espèce humaine, avec plus ou moins de succès. Dans cet ordre d'idée, une étude récente de Perry S. et al.\cite{perry1, perry2} suggère que l'infection d'un organisme par \textit{Helicobacter Pylori} pourrait protéger de la tuberculose sous sa forme active. A contrario, nous ne savons pas si la tuberculose latente pourrait protéger contre les ulcères et les cancers de l'estomac causés par \textit{Helicobacter Pylori}.
+
+\begin{figure}
+\centering
+\includegraphics[scale=0.5]{world.png}
+\caption{Distribution géographique des lignées 1 à 6, d'après \textit{Lineage\\ specific histories of Mycobacterium tuberculosis dispersal in Africa and Eurasia}}
+\end{figure}
+
+%  GLOBAL EXPANSION OF MTBC LINEAGE 4 =============================================
+
+\section{Le développement de souches résistantes aux antibiotiques}
+
+\subsection{L'expansion de la lignée 4 de \textit{M. tuberculosis}}
+
+% global diversity of L4
+% phylogeographic inference
+
+La lignée 4 de \textit{M. tuberculosis} est la plus répandue de par le monde et pour cette raison a fait l'objet de nombreuses publications. Brynildsrud O.B. et al.\cite{brynildsrud} utilisent des méthodes d'analyse discrète et une approche bayésienne\footnote{\textbf{Approche bayésienne} : méthode probabiliste basée sur le calcul des probabilités postérieures des arbres phylogéniques par la combinaison d'une probabilité antérieure avec la fonction de vraisemblance} en phylogénie moléculaire pour obtenir de manière formelle l'évolution phylogéographique de la lignée 4 de \textit{M. tuberculosis}. Ils estiment que le plus récent ancêtre commun de la lignée 4 est apparu en Europe en 1096 après JC. Si on considère l'Europe en tant que continent au sens large, cela ne contredit pas les résultats de O'Neil M.B. et al.\cite{oneil} qui estiment l'origine de la lignée 4 autour de la méditerranée.
+
+% Patterns of L4 migration through time
+
+L'analyse phylogéographique de Brynildsrud O.B. suggère que les premières vagues de migration de la lignée 4 hors d'Europe se sont déroulées au début du 13ème siècle vers l'Asie du Sud-Est. Il est également possible d'établir une correspondance entre la structure des isolats\footnote{\textbf{Isolat} : fragment d'organisme qu'on a isolé à des fins d'examen histo-pathologiques ou pour être cultivé in vitro.} Vietnamiens et l'époque de l'expansion coloniale française en Indochine au 19ème siècle.
+
+Les vagues suivantes de migration de la lignée 4 se sont dirigées vers l'Afrique de l'Ouest au 15ème siècle, puis vers Afrique de l'Est et du Sud au 17ème siècle. Les échanges continus avec le Portugal dès le 15ème siècle ont favorisé la dispersion de la maladie, ce qui a été renforcé plus tard par la colonisation française de l'Afrique de l'Ouest.  Ces échanges avec les populations européennes ont prévalu à une transmission locale de la tuberculose jusqu'au 19ème siècle. 
+
+La transmission de la maladie en Amérique date, elle aussi, du 15ème siècle avec la colonisation du continent, mais il faudra attendre le 17ème siècle pour voir l'explosion de la maladie en Amérique du Sud. Ce retard dans l'évolution de la maladie par rapport à la branche africaine peut s'expliquer par le taux de mortalité élevé des populations aborigènes au contact des européens.
+
+La première migration interne de la maladie en Afrique date de l'Empire Zulu au 19ème siècle et se dirigeait vers le Nord et l'Est africain.
+
+Ainsi, Brynildsrud O.B. et al. montrent que la dispersion de la lignée 4 est essentiellement liée à l'expansion coloniale européenne en Afrique et en Amérique entre le 17ème et le 19ème siècle.
+
+% antibiotiques
+
+\subsection{L'adaptation de la lignée 4 pour devenir résistante aux antibiotiques}
+
+Nous avons déjà vu que la tuberculose a su s'adapter à l'évolution géographique de l'humanité en suivant les différentes migrations humaines pour créer de nouvelles lignées ou de nouvelles souches. Il apparaît que la tuberculose est également capable de suivre l'évolution médicale de l'humanité. L'étude de Brynildsrud O.B. et al.\cite{brynildsrud} constate chez \textit{M. tuberculosis} l'émergence croissante d'une résistance à de multiples antibiotiques entre 1960 et 2000 au travers de la phylogénie de la lignée 4.
+
+Des mutations spontanées dans le génome de la tuberculose peuvent altérer les protéines qui sont la cible des médicaments, ce qui rend les bactéries résistantes à ces médicaments. Prenons comme exemple une mutation du gène rpoB de \textit{M. tuberculosis}, qui code pour la sous-unité $\beta$\footnote{\textbf{Sous-unité $\beta$} : élément de l'ARN polymérase des bactéries qui est composé de la structure suivante $\alpha_2 \beta \beta' \omega$} de l'ARN polymérase\footnote{\textbf{ARN polymérase} : complexe enzymatique responsable de la synthèse de l'ARN à partir d'ADN.} de la bactérie. Dans la tuberculose non résistante, la rifampicine se lie à cette sous-unité $\beta$ et perturbe l'élongation de la transcription de l'ARN. La mutation dans le gène rpoB modifie la séquence des acides aminés et donc de la sous-unité $\beta$. Dans ce cas, la rifampicine ne peut plus se lier à la sous-unité $\beta$ de l'ARN et empêcher la transcription. La bactérie est devenue résistante. C'est bien le cas de la tuberculose, qui est considérée aujourd'hui comme une maladie résistante aux antibiotiques. 
+
+Une souche de \textit{M. tuberculosis} est appelée MDR-TB \textit{Multi-Drug-Resistant Tuberculosis} si elle est résistante au deux anti-tuberculeux de première intention les plus puissants, l'isoniazide et le rifampicine. Dans ce cas, certaines régions du génome de \textit{M. tuberculosis} sont impliquées dans la résistance à plus d'un médicament. La découverte de nouvelles cibles moléculaires s'avère essentielle pour lutter contre ce développement de la résistance chez \textit{M. tuberculosis}. Une souche de \textit{M. tuberculosis} est appelée XDR-TB si elle est de surcroît résistante aux anti-tuberculeux de seconde intention tels que le fluoroquinolone et l'aminoglycoside.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.6]{amr.png}
+\caption{Transmission de la résistance ces dernières années à l'échelle mondiale, d'après\\ \textit{Global expansion of Mycobacterium tuberculosis lineage 4 shaped by colonial migration and local\\ adaptation}. FLQ=fluoroquinolone, INH=isoniazide, KAN=aminoglycoside, RIF=rifampicine}
+\end{figure}
+
+Les causes de la résistance de \textit{M. tuberculosis} aux antibiotiques sont multiples, mais il s'agit principalement de l'utilisation inappropriée ou incorrecte d'antibiotiques, et de l'interruption précoce des traitements. Dans ce cas, les souches résistantes se transmettent génétiquement de générations en générations. Toutefois, ces souches résistantes de \textit{M. tuberculosis} peuvent aussi se transmettre directement à une personne saine, qui dans ce cas, se retrouve infectée avec une souche MDR-TB sans avoir pris de traitement inapproprié contre la tuberculose.
+
+Brynildsrud O.B. et al. étudient également le gène lldD2 impliqué dans la réplication de \textit{M. tuberculosis} au sein des macrophages\footnote{\textbf{Macrophage} : cellule appartenant aux globules blancs qui infiltre les tissus et est capable de phagocytose.} humains. Ils identifient au niveau des codons 3 et 253 la présence de nombreux promoteurs\footnote{\textbf{Promoteur} : région de l'ADN située à proximité d'un gène et indispensable à la transcription de l'ADN.} et mutations non-synonymes qui ont évolué indépendamment.
+
+Une recherche au sein d'une base de données recouvrant les lignées 1 à 6 a révélé que la mutation du codon 3 a émergé indépendamment dans les lignées 1, 2 et 4, alors que la mutation du codon 253 est apparue à plusieurs reprises dans la lignée 4 et est présente dans pratiquement tous les isolats de la lignée 2. Brynildsrud O.B. et al. constatent que les mutations de lldD2 ont commencé à apparaître bien avant l'utilisation des antibiotiques sur tous les continents. Ceci suppose une adaptation locale de \textit{M. tuberculosis} à de profonds changements chez l'hôte humain, qui s'est opérée en parallèle sur les différents continents. Par ailleurs, les souches hébergeant des mutations du promoteur lldD2 présentent un avantage significatif en terme de transmissibilité.
+
+Il ne fait aucun doute que des souches MDR-TB peuvent traverser les frontières, comme cela a déjà été observé avec la lignée 2 entre l'Europe de l'Est et l'Europe de l'Ouest. Toutefois, le jeune âge relatif des souches résistantes pourrait expliquer le manque de migrations observées de ces souches. Brynildsrud O.B. et al. démontrent que, d'un point de vue mondial, la migration humaine a joué un rôle négligeable dans l'élaboration des modèles de résistance aux antimicrobiens. En effet, la migration des souches résistantes s'est avérée marginale. Il s'agit plutôt d'un phénomène local. La restriction géographique de souches résistantes suggère même de lutter contre ce type de mutation de \textit{M. tuberculosis} de façon nationale plutôt que de recourir à une politique globale de traitement antibiotique.
+
+% SPOLPRED ==========================================================
+
+\section{Le locus CRISPR-Cas}
+
+\subsection{Quelques caractéristiques du génome de \textit{M. tuberculosis}}
+
+La souche H37Rv de \textit{M. tuberculosis} est la souche de tuberculose la plus étudiée en laboratoire, depuis sa découverte en 1905. Elle sert aujourd'hui de référence pour le séquençage et l'annotation du génome de \textit{M. tuberculosis}. Constitué d'environ 4 millions de paires de base et 3959 gènes, ce génome se caractérise par un taux élevé de guanine G et de cytosine C (65,6\%), et un codon GTG qui sert de codon d'initiation dans 35\% des gènes. 
+
+Parmi les marqueurs génétiques utilisés pour des études phylogéniques ou d'épidémiologie moléculaire, on retrouve les SNPs, les loci CRISPR, les MIRU\footnote{\textbf{Marqueur MIRU Mycobacterial Interspaced Repetitive Units} : séquences nucléotidiques courtes répétitives en tandem entrecoupées de mycobactéries. La méthode MIRU actuellement utilisée sur \textit{M. tuberculosis} est composée de 12 loci MIRU différents. Un mirutype est un modèle à 12 chiffres représentant le nombre de répétitions de chacun de ces 12 loci spécifiques.}, et les VNTR\footnote{\textbf{Marqueur VNTR Variable Number of Tandem DNA Repeats} : séquences nucléotidiques courtes en tandem à nombre variable. Cinq répétitions en tandem exactes ( locus ETR) sont utilisées pour l'analyse VNTR du complexe \textit{M. tuberculosis}.}. L'association des résultats obtenus par ces marqueurs génère un profil allélique\footnote{\textbf{Allèle} : version variable d'un même gène.} utile pour l'étude du complexe \textit{M. tuberculosis}. La base de données mondiale de marqueurs moléculaires de la tuberculose SITVIT\footnote{\textbf{Base de données SITVIT} : base de données de l'Institut Pasteur de Guadeloupe consultable en ligne \url{http://www.pasteur-guadeloupe.fr:8081/SITVIT_ONLINE/query}, permettant n'analyser des data liées au MTBC. Elle comprend les spoligotypes de \textit{M. tuberculosis}, ainsi que les marqueurs utilisés pour les détecter MIRU12, VNTR, SIT, MIT, VIT, les différentes branches de MTBC, les pays d'origine et l'année de découverte.} présentée par Demay C. et al.\cite{demay} contient les génotypes de \textit{M. tuberculosis} obtenus à partir des marqueurs moléculaires MIRU et VNTR.
+
+% Le locus CRISPR Cas
+
+\subsection{Description du locus CRISPR-Cas}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.6]{crispr.png}
+\caption{Structure du locus CRISPR-Cas, d'après\\ \url{https://www.sinobiological.com/crispr-locus.html}}
+\end{figure}
+
+Le locus CRISPR \textit{Clustered Regularly Interspaced Short Palindromic Repeats} est une famille de séquences répétées (DR pour \textit{Direct Repeat}) dans l'ADN formant un palindrome, qui se trouve à l'état naturel chez 40\% des bactéries (dont le \textit{M. tuberculosis}) et la plupart des archées. CRISPR est héritable par transmission aux cellules filles et se conserve donc pour une même espèce. Chez \textit{M. tuberculosis}, chaque série de répétitions contient 36 bp\footnote{\textbf{bp} : une paire de base.}; les répétitions étant régulièrement espacées par des espaceurs de 34 à 41 bp. A l'heure actuelle, 104 espaceurs ont été identifiés dans toutes les souches de \textit{M. tuberculosis}. Les loci CRISPR sont généralement adjacents aux gènes Cas, dont ils sont séparés par une séquence de 300 à 500 bp, appelée leader qui contrôle à la fois l'acquisition de l'ADN viral par les espaceurs et la fabrication des protéines. Les gènes Cas produisent des protéines aux fonctionnalités multiples et notamment les enzymes\footnote{\textbf{Enzyme de restriction} : protéine capable de couper un fragment d'ADN au niveau d'une séquence de nucléotides caractéristique appelée site de restriction. Chaque enzyme de restriction reconnaît ainsi un site spécifique.} capables de couper l'ADN en vue de sa réparation.
+
+Ces séquences CRISPR incorporent dans les espaceurs des fragments d'ADN de bactériophages qui ont déjà infecté la bactérie, et sont stockés pour détecter et détruire l'ADN de bactériophages similaires en cas de nouvelle infection. Par conséquent, CRISPR-Cas est un système immunitaire naturel utilisé par les bactéries pour se protéger des infections virales. 
+
+% Fonctionnement du système CRISPR-Cas 
+
+\subsection{Fonctionnement du système CRISPR-Cas}
+
+Les systèmes CRISPR-Cas sont de trois types et utilisent les différents gènes Cas pour intégrer des fragments de gènes étrangers dans les espaceurs de CRISPR. Par exemple, dans le cas d'une bactérie qui détecte la présence d'ADN ou d'ARN d'un virus, elle produit une enzyme nucléase appelée Cas9 capable de couper l'ADN viral, puis une séquence d'ARN CRISPR notée crARN correspondant à celle de l'ADN du virus et servant de guide ARN, et finalement une séquence d'ARN traceur notée trARN. Lorsque trARN trouve sa cible parmi le génome du virus, Cas9 sectionne l'ADN viral puis en incorpore un fragment dans un espaceur du génome de la bactérie, conservant ainsi en mémoire une trace de ce virus en vue d'une éventuelle infection future. Les espaceurs servent donc de banque de mémoire en conservant l'ADN des virus qui ont attaqué la bactérie. Cette fonctionnalité va être exploitée de différentes manières par les biologistes.
+
+La technologie CRISPR-Cas9, s'inspirant du système du même nom, a d'abord été utilisée pour typer les souches bactériennes, suivant une technique appelée spoligotypage. CRISPR-Cas9 est actuellement principalement employé comme ciseau moléculaire afin d'éditer le génome et d'introduire localement des modifications génétiques.
+
+% Spoligotyping
+
+\section{Le spoligotypage}
+
+La région DR du locus CRISPR-Cas présente un niveau de polymorphisme suffisant pour pouvoir classer phylogéographiquement les souches de \textit{M. tuberculosis}. Le polymorphisme entre les différentes souches résulte des variations et de l'identité des espaceurs. C'est ce polymorphisme qui est exploité en 1997 par Kamerbeek et al. et expliqué dans \cite{kamerbeek} comme technique de génotypage spécifique de \textit{M. tuberculosis}. Le \textit{Spacer Oligonucleotide Typing}, repose sur la détection de séquences répétitives trouvées entre les gènes d'un agent infectieux au sein d'un locus CRISPR-Cas. Pour ce faire, la région DR d'un isolat à tester subit un traitement par amplification PCR\footnote{\textbf{PCR Polymerase Chain Reaction} : méthode de réaction en chaîne utilisant un polymère pour dupliquer en grand nombre une séquence d'ADN spécifique. La méthode PCR repose sur le cycle thermique, qui expose les séquences à des cycles répétés de chauffage et de refroidissement pour permettre différentes réactions dépendantes de la température comme la fusion de l'ADN et la réplication de l'ADN par les enzymes. La méthode PCR utilise deux agents principaux : les polymères d'ADN i.e. des macromolécules répétant un même motif structural d'ADN et les amorces de séquençage.} ou celui d'une puce à ADN\footnote{\textbf{Puce à ADN} : ensemble de molécules d'ADN fixées sur une petite surface solide permettant de mesurer le niveau d'expression d'un grand nombre de gènes simultanément, ou de déterminer le génotype de plusieurs régions d'un génome.}, pour dévoiler un motif de taches correspondant aux espaceurs. 
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.4]{spoligo.png}
+\caption{Les différentes étapes du spoligotypage d'après \textit{Etudes descriptive, épidémiologique,\\ moléculaire et spatiale des souches Mycobacterium tuberculosis circulant à Antananarivo, Madagascar}}
+\end{figure}
+
+La comparaison de ces motifs permet la différentiation des souches. Quarante-trois espaceurs les plus polymorphes ont été utilisés pour le typage des mycobactéries suivant Kamerbeek et al. La classification classique de MTBC utilise donc un groupe de 43 bits représentant la présence ou l'absence d'espaceurs dans le locus CRISPR, qu'on appelle spoligotype. Des études pour augmenter le niveau de discrimination du spoligotypage ont été faites en 2010 utilisant 68 espaceurs. A l'heure actuelle l'équipe AND de l'université de Franche Comté utilise 98 espaceurs pour ce génotypage.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{spacer.png}
+\caption{Espaceurs connus chez MTBC, d'après \textit{Etudes descriptive, épidémiologique, moléculaire\\ et spatiale des souches Mycobacterium tuberculosis circulant à Antananarivo, Madagascar}}
+\end{figure}
+
+La technique ne nécessite pas une importante quantité d'ADN car elle est basée sur une amplification de la région DR par PCR. Les spoligotypes ainsi obtenus peuvent être partagées entre laboratoires et corroborent les résultats recueillis à partir d'autres marqueurs génétiques. Ces données numériques permettent de bien différencier les souches de \textit{M. tuberculosis} et sont de moindre coût comparativement à d'autres méthodes. Cependant, le spoligotypage éprouve des difficultés à bien différencier les souches au sein de grandes familles de \textit{M. tuberculosis} telles que la lignée 2 par exemple.
+
+Jusqu'à présent, le spoligotypage a permis de fournir une image globale de la diversité des souches de \textit{M. tuberculosis}.
+
+Une nouvelle technologie permettant de combiner le spoligotypage avec des tests moléculaires de sensibilité aux anti-tuberculeux, appelée spoligoriftypage, a été développée pour aboutir à la version TB-SPRINT qui a été décrite en 2013 par Gomgnimbou et al. dans leur article \cite{gomgnimbou}. Elle consiste au typage tuberculose-spoligo-rifampicine-isoniazide fonctionnant sur des systèmes à base de microbilles, à partir notamment de 43 espaceurs, 11 SNPs présents sur rpoB aux positions 516, 526 et 531. Cette nouvelle génération de spoligotypage fournit donc, en plus des données classiques de génotypage, une prédiction basée sur la mutation des profils de résistance aux médicaments.
+
+% Normalisation
+
+\subsection{Vers une normalisation des spoligotypes}
+
+Au début du spoligotypage, il n'existait pas de norme pour décrire les motifs formés par les espaceurs ou simplement les numéroter. Chaque laboratoire utilisait son propre système de numérotation accompagné d'un schéma descriptif du motif. Ce manque de normalisation entravait les possibilités de comparaison des résultats obtenus et le développement d'une vision mondiale de l'évolution de \textit{M. tuberculosis}. Une méthode standardisée de description des spoligotypes a été proposée en 2001 par Dale JW dans son article \cite{dale}. 
+
+Tout d'abord, une base de données centralisée regroupant tous les motifs connus et de leurs numérotations associées existe au RIVM Rijksinstituut voor Volksgezondheid en Milieuhygiene, Bilthoven, Netherlands. Elle peut être consultée au \url{http://www.caontb.rivm.nl}. A partir de 2001, les nouveaux motifs doivent prendre un unique format de numérotation pour être répertoriés dans cette base de données. Toutefois, cela nécessite l'interrogation systématique de la base de données et la comparaison avec les éléments déjà existants pour chaque nouveau spoligotype. Pour éviter cette perte de temps, de nombreux laboratoires utilisent des systèmes rationnels avec des codes descriptifs assignés à chaque isolat. 
+
+Dale JW et al.\cite{dale} proposent d'utiliser exclusivement un système rationnel octal ou hexadécimal, sachant qu'il est aisé de passer de l'un à l'autre et qu'il est également facile de retrouver l'état initial binaire. Ainsi, les motifs de spoligotype comprenant 43 bits seraient réduits dans le système octal en 14 groupes de 3 bits auquel s'ajouterait un unique bit, ce qui donnerait finalement un ensemble de 15 chiffres en écriture octale. En ce qui concerne le système hexadécimal, les motifs de 43 bits seraient réduits en 6 groupes de 8 bits avec un dernier groupe ne comprenant que 3 bits, soit 6 groupes de 2 chiffres hexadécimaux. Notons qu'un bit symbolise dans ce cas la présence ou l'absence d'une espaceur dans le locus étudié.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.6]{hexa.png}
+\caption{Exemple de système rationnel octal et hexadécimal, d'après\\ \url{https://www.mbovis.org/spoligotype-nomenclature.php}}
+\end{figure}
+
+Le site Mbovis.org, \url{https://www.mbovis.org/database.php}, bien que dédié aux souches animales de MTBC, fournit une application pratique permettant de transformer rapidement les spoligotypes binaires en système octal ou hexadécimal.
+
+% Spolpred et SpoTyping
+
+\subsection{Quel outil informatique pour le spoligotypage ?}
+
+Les technologies PCR de génotypage utilisent toujours différents marqueurs tels que les SNPs pour obtenir en laboratoire des résultats fiables. Des logiciels informatiques de prédiction du génotype ont également fait leur apparition pour optimiser les coûts et le gain de temps. Ils offrent un outil de comparaison des résultats obtenus expérimentalement et in silico.
+
+SpolPred est un logiciel de prédiction rapide et précis des spoligotypes de \textit{M. tuberculosis} à partir de séquences génomiques courtes appelées reads\footnote{\textbf{Reads} : mélange de courtes séquences oligonocléotidiques de 20 à 200 bp générées par des séquenceurs}. Cet outil développé par Coll F. et al. fonctionne efficacement avec des reads provenant de plateformes telles que Illumina GAII ou HiSeq. SpolPred utilise des fichiers de séquences de reads simples ou par paires au format FASTQ, afin de produire une prédiction de spoligotype au format octal, qui est ensuite comparée au spoligotype correspondant dans la base SITVIT.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.44]{spol.png}
+\caption{Exemple de recherche effectuée sur SITVIT2 à partir du spoligotype 777777777720771 dont le résultat est exploitable au format Excel}
+\end{figure}
+
+Dans leur étude \cite{coll}, Coll F. et al. montrent en 2012 l'utilité de SpolPred en comparant les spoligotypes obtenus par le logiciel avec les résultats de laboratoire. Ils dévoilent ainsi les limites de la méthode expérimentale qui a répertorié cinq faux spoligotypes, alors que SpolPred a su éviter ces erreurs de classification du génotype. Par ailleurs, il apparaît que SpolPred offre plus de rapidité avec des résultats pratiquement identiques à ceux obtenus avec la méthode bio-informatique par assemblage. Cette dernière, développée en 2008 à l'aide du logiciel Velvet, consiste à fusionner des fragments d'ADN issus d'une plus longue séquence afin d'en reconstruire la séquence originale.
+
+Toutefois, d'après l'étude de Xia et al.\cite{xia}, la précision de SpolPred est fortement réduite lorsque les reads n'ont pas une taille uniforme, comme par exemple lorsqu'ils proviennent de séquençages Ion Torrent ou de la plateforme de diagnostique clinique Illumina MiSeq. Ainsi, lorsque les reads ne sont pas uniformes, la précision des résultats dépend fortement de leurs tailles et donc du choix initial fait par l'opérateur. Par ailleurs, SpolPred demande à l'utilisateur de spécifier la direction de lecture des reads, et le logiciel n'utilise donc qu'une partie des informations fournies par les reads.
+
+Une problématique de SpolPred en 2020 est que le logiciel n'est plus disponible au téléchargement en ligne. En effet, une visite sur le site officiel \url{http://www.pathogenseq.org/spolpred}, fourni comme référence dans le document \cite{coll} de Coll F. et al., montre que le nom du domaine est à vendre. Preston M., qui a fait partie de l'équipe de recherche de Coll F. pour le développement de SpolPred, a bien créé un site proposant le téléchargement du logiciel \url{https://www.mybiosoftware.com/spolpred-predict-the-spoligotype-from-raw-sequence-reads.html}, mais le lien est inactif en janvier 2020.
+
+Une alternative à SpolPred est SpoTyping présenté en 2016 dans l'article \cite{xia} de Xia et al. comme étant 20 à 40 fois plus rapide que SpolPred pour prédire avec précision des spoligotypes de \textit{M. tuberculosis} à partir de reads de taille uniforme ou variable. Par ailleurs, SpoTyping lit chaque read dans les deux directions en exploitant complètement les informations fournies. SpoTyping réduit la durée des recherches en intégrant l'algorithme BLAST\footnote{\textbf{BLAST Basic Local Alignment Search Tool} : logiciel basé sur l'algorithme du même nom qui détecte des régions similaires entre plusieurs séquences biologiques. Le programme compare les séquences de nucléotides aux séquences contenues dans la base de données BLAST pour fournir des résultats statistiquement significatifs.} dans ses calculs. Il compare les isolats testés avec ceux ayant le même spoligotype dans la base de données mondiale SITVIT, qui regroupe les données épidémiologiques\footnote{\textbf{Epidémiologie} : discipline scientifique qui étudie les problèmes de santé dans les populations humaines, leur fréquence, leur géographie ainsi que les facteurs influents.} associées à des isolats de même spoligotype.
+
+L'intérêt d'un outil tel que SpolPred ou Spotyping est qu'il est capable de combiner le spoligotypage avec d'autres méthodes telles que MIRU (unités répétitives entrecoupées de mycobactéries) et VNTR nombre variable de répétitions d'ADN en tandem) en utilisant la base de données SITVIT.
+
+SpoTyping utilise des fichiers de séquences de reads simples ou par paires au format FASTQ et des fichiers de séquences complètes de génomes ou de contigs\footnote{\textbf{Contig} : séquence génomique continue et ordonnée, générée par l'assemblage des clones d'une bibliothèque génomique qui se chevauchent.} assemblés au format FASTA. Les séquences de reads sont regroupées en une unique séquence continue au format FASTA pour être ensuite soumise à l'algorithme BLAST qui détecte les régions similaires. Finalement la base de données SITVIT permet d'identifier les isolats ayant le même spoligotype. SpoTyping est limité à une lecture de 250 Mbp au sein des séquences de reads testées, lors de l'utilisation du swift mode qui accélère le temps de traitement.
+
+SpoTyping propose un rapport statistique permettant de résumer le rapprochement avec les spoligotypes trouvés dans la base de données SITVIT, ainsi qu'une estimation du nombre de correspondances positives pour chaque espaceur.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.65]{spotyping.png}
+\caption{Exemple de fonctionnement de SpoTyping, d'après \textit{SpoTyping:\\ fast and accurate in silico Mycobacterium spoligotyping from sequence reads}}
+\end{figure}
+
+D'après le repository \url{https://github.com/xiaeryu/SpoTyping-v2.0/blob/master/SpoTyping-v2.0-commandLine/SpoTyping-README.pdf}, les spécifications techniques de SpoTyping sont les suivantes :\\
+- SpoTyping peut s'exécuter sur les principaux systèmes d'exploitation, contrairement à SpolPred qui utilise exclusivement Linux. Il se présente à la fois sous forme de script et sous forme d'application avec une interface graphique.\\
+- SpoTyping est un logiciel open-source qui peut se télécharger gratuitement à l'adresse \url{https://github.com/xiaeryu/SpoTyping-v2.0}. SpoTyping nécessite l'utilisation de Python2.7 et BLAST.\\
+- il est recommandé d'utiliser le swift mode paramétré par défaut si le débit de séquençage\footnote{\textbf{Séquençage du génome} : consiste, par des méthodes chimiques ou de biologie moléculaire, à déterminer l'ordre des nucléotides de l'ADN.} est inférieur à 135 Mbp. Pour les débits de séquençage inférieurs à 135 Mbp ou supérieurs à 1260 Mbp, les seuils doivent être réglés entre 0.018 et 0.1486 fois la profondeur de lecture estimée pour les hits sans erreur, et entre 0.018 et 0.1488 fois la profondeur de lecture estimée pour les hits tolérant une erreur. Notons que la profondeur de lecture est définie par le débit de séquençage divisé par 4 500 0000 qui correspond à l'estimation de la longueur d'un génome de \textit{M. tuberculosis}.
+
+Le fichier obtenu propose une prédiction de spoligotype au format de code binaire et octal. Le fichier log obtenu contient le nombre de correspondances positives des résultats de BLAST pour chaque séquence d'espaceurs. Le fichier xls Excel obtenu fournit le résultat de la recherche de spoligotype auprès de la base de données SITVIT2\footnote{\textbf{Base de données SITVIT2} : mise à jour de la base de données SITVIT, consultable en ligne \url{http://www.pasteur-guadeloupe.fr:8081/SITVIT2/index.jsp}}.
+
+L'étude de Iwai H. et al.\cite{iwai} envisage une autre possibilité de travail et montre l'intérêt d'une analyse de \textit{M. tuberculosis} à l'aide de serveurs, appelée CASTB, et notamment le spoligotypage. Le Webserver fournit une vue complète des données, mais les performances de chaque outil utilisé ne sont pas décrites dans l'article. Il est probable que le spoligotypage prenne plus de temps en passant par un serveur suite au problème de disponibilité des données et aux lenteurs de téléchargement de ces données. Il semblerait que SpoTyping, de par sa configuration locale, puisse fournir un résultat en une minute.
+
+% Comparaison de spoligotypes
+
+\subsection{Comparaison de spoligotypes}
+
+Une fois les spoligotypes de différentes lignées obtenus, il est nécessaire de les comparer pour chercher à faire ressortir les points communs ou certains traits pouvant être liés à une mutation particulière. Il existe à l'heure actuelle un premier outil en ligne de comparaison du nom de SpolSimilaritySearch, accessible à l'adresse \url{http://www.pasteur-guadeloupe.fr:8081/SpolSimilaritySearch/index.jsp}, et présenté par Couvin D. et al.\cite{couvin}. SpolSimilaritySearch incorpore un algorithme de recherche de similitudes entre spoligotypes dans la base de données SITVIT2. Cet outil permet d'analyser les modèles de propagation et d'évolution de \textit{M. tuberculosis} en comparant des modèles de spoligotypes similaires, de distinguer les modèles répandus, confinés ou spécifiques, d'identifier les modèles ayant de grands blocs supprimés ou encore de fournir les modèles de distribution par pays pour chaque spoligotype interrogé.
+
+Par exemple, si on sélectionne le spoligotype 777777777720771 appartenant à la lignée H3, et qu'on interroge la base SpolSimilaritySearch, on obtient les rapprochements suivants :
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.37]{spolsimilarity.png}
+\caption{Recherche effectuée sur le site de SpolSimilaritySearch}
+\end{figure}
+
+Cet outil pourrait donc s'avérer utile pour commencer à chercher des liens entre les sept lignées de \textit{M. tuberculosis} et les spoligotypes de différentes souches.
+Un tableau comparatif de différents spoligotypes en fonction des lignées de \textit{M. tuberculosis} pourrait ressembler à celui de la figure 11.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.4]{comparaison.png}
+\caption{Exemple comparatif de 26 spoligotypes correspondant à 4 lignées différentes de \textit{M. tuberculosis}, d'après \textit{Insight into genetic diversity of Mycobacterium tuberculosis in Kandy, Sri Lanka reveals predominance of the Euro-American lineage}}
+\end{figure}
 	
 
 % CHOIX DES OUTILS -----------------------------
@@ -306,22 +565,57 @@ Définissons tout d'abord le vocabulaire que nous allons utiliser dans ce rappor
 % CHOIX DE L'ENVIRONNEMENT DE TRAVAIL -----------------------------
 \section{L'environnement de développement}
 
- XXX -> CONSTRUCTION D'UN ENVIRONNEMENT DE TRAVAIL
+Le package devra installer automatiquement les dépendances nécessaires à son bon fonctionnement. Ce processus doit rester transparent pour l'utilisateur. Mais au préalable, l'outil de création d'environnement virtuel \textit{venv} \index{venv} va nous permettre de créer un environnement de développement afin de tester les codes du projet. \textit{venv} commence par constituer un dossier contenant tous les exécutables nécessaires à l'utilisation des modules d'un projet Python. Par exemple, dans le cadre de notre projet, nous créons un répertoire \textit{biologie}, et une fois dedans nous créons un environnement de développement \textbf{env\_bio} que nous activons avant de nous placer dedans pour pouvoir l'utiliser 
+ \begin{tcolorbox}\texttt{\$ cd biologie\\
+\$ python3 -m venv env\_bio\\
+\$ source env\_bio/bin/activate\\
+(env\_bio)\$ cd env\_bio}\end{tcolorbox}
 
-Afin de tester les codes de ce projet, l'outil de création d'environnement virtuel \textit{venv} \index{venv} nous permet de créer un environnement de développement. \textit{venv} commence par constituer un dossier contenant tous les exécutables nécessaires à l'utilisation des modules d'un projet Python.
+Il est possible de confirmer que l'interpréteur Python se situe bien dans l'environnement de développement grâce à l'instruction
+\begin{tcolorbox}\texttt{\$ which python}\end{tcolorbox}
+qui va renvoyer \textbf{.../env\_bio/bin/python} au lieu de \textbf{/usr/bin/python}
 
-Il convient de définir la version de Python utilisée dans cet environnement de développement. Pour cela, le module \textit{pyenv} \index{pyenv} nous permet de définir une version de Python comme version locale de travail dans l'environnement. Nous choisissons pour les besoins du test Python 3.6.5.
+Il convient de définir la version de Python utilisée dans cet environnement de développement. Pour cela, le module \textit{pyenv} \index{pyenv} nous permet de définir une version de Python comme version locale de travail dans l'environnement. 
+
+Une fois \textit{pyenv} installé, on peut choisir parmi les versions disponibles, grâce à l'instruction
+\begin{tcolorbox}\texttt{\$ pyenv install --list}\end{tcolorbox}
+Comme la liste est particulièrement longue, on peut éventuellement être plus spécifique en demandant les versions allant de 3.6 à 3.8 avec l'instruction
+\begin{tcolorbox}\texttt{\$ pyenv install --list | grep " 3\.[678]"}\end{tcolorbox}
+
+L'installation de la version 3.7.0 par exemple se fait grâce à l'instruction
+\begin{tcolorbox}\texttt{\$ pyenv install -v 3.7.0}\end{tcolorbox}
+
+La version 3.7.0 de Python se trouve ainsi installée dans \textbf{~/.pyenv/versions/} sur Linux.
+
+Pour connaître toutes les versions de Python installées par \textit{pyenv}, il suffit d'écrire l'instruction suivante qui fournit une liste de résultats
+\begin{tcolorbox}\texttt{\$ pyenv versions\\
+* system\\
+   2.7.10\\
+   3.6.2\\
+   3.8.0}\end{tcolorbox}
+où le caractère '*' indique la version active dans le répertoire courant.
+
+Pour définir la version 3.6.2 dans notre environnement de travail, il suffit de se placer dans cet environnement et d'écrire l'instruction
+\begin{tcolorbox}\texttt{\$ pyenv local 3.6.2}\end{tcolorbox}
+
+Dans un cadre plus général, l'instruction
+\begin{tcolorbox}\texttt{\$ python --version}\end{tcolorbox}
+permet de connaître quelle version de Python est utilisée dans le répertoire courant, qu'on se trouve dans un environnement de développement ou non.
+
+En revanche, l'instruction
+\begin{tcolorbox}\texttt{\$ which python}\end{tcolorbox}
+fournit l'emplacement de cette version au lieu du nom de la version. Celui-ci devrait être sur Linux \textbf{/usr/bin/python}.
 
 Finalement, nous installons dans cet environnement les dépendances nécessaires à l'aide de l'outil \textit{pip} \index{pip} :
 \begin{itemize}
 \item pkg-resources==0.0.0 (installé automatiquement)
-\item \begin{tcolorbox}\texttt{pip install xmltodict}\end{tcolorbox}
+\item \begin{tcolorbox}\texttt{\$ pip install xmltodict}\end{tcolorbox}
 le module xmltodict permet de lire du code XML comme si il s'agissait de code JSON. Il permet donc une lecture plus rapide des fichiers.
-\item  \begin{tcolorbox}\texttt{pip install openpyxl}\end{tcolorbox}
+\item  \begin{tcolorbox}\texttt{\$ pip install openpyxl}\end{tcolorbox}
 le package openpyxl permet de lire et d'écrire dans des fichiers Excel de type xlsx, xlsm, xltx, xltm. Il comprend les modules et-xmlfile et jdcal.
-\item  \begin{tcolorbox}\texttt{pip install xlrd}\end{tcolorbox}
+\item  \begin{tcolorbox}\texttt{\$ pip install xlrd}\end{tcolorbox}
 le module xlrd extrait des données d'un tableur Excel à partir de la version 2.0 et avant de les formatte.
-\item  \begin{tcolorbox}\texttt{pip install biopython}\end{tcolorbox}
+\item  \begin{tcolorbox}\texttt{\$ pip install biopython}\end{tcolorbox}
 le package biopython regroupe un ensemble d'outils Python pour le traitement informatique de la biologie moléculaire et comprend le module numpy.
 \item DateTime==4.3\\
 Le module datetime permet de manipuler des dates et heures en gérant des objets de type DateTime. 
@@ -338,20 +632,23 @@ Notons que certains modules utilisés dans ce package sont nativement présents 
 Le module subprocess.run permet de gérer de nouveaux processus, de se connecter à leurs flux d'input/output/erreurs. Il remplace plusieurs modules dépréciés : os. system, os.spawn*, os.popen*, popen2.*, commands.* 
 \end{itemize}
 
-Le package, une fois installé par l'utilisateur, devra fournir automatiquement un environnement de travail similaire, afin que son exécution soit rendue possible. On devra donc retrouver les modules installés via \textit{pip} dans un fichier tel que requirements.txt.
+Le package, une fois installé par l'utilisateur, devra fournir automatiquement un environnement de travail similaire, afin que son exécution soit rendue possible. On devra donc retrouver les modules installés via \textit{pip} dans un fichier \textit{requirements.txt} ou similaire. Sous Poetry cette fonctionnalité est prise en charge par le fichier \textit{nom\_package.toml}.
  
+
+
+
 
 % COMPOSITION D'UN PACKAGE STANDARD ------------------
 \section{Composition d'un package standard}
 
-Un package standard comporte obligatoirement un fichier \textit{\_\_init\_\_.py} qui va définir la version du projet et le nom du module de lancement du programme (souvent \textit{\_\_main\_\_.py}). Il est toutefois acceptable et parfois même recommandé de conserver un fichier \textit{\_\_init\_\_.py} vide. 
+Un package standard comporte obligatoirement un fichier \textit{\_\_init\_\_.py} qui va définir la version du projet et le nom du module de lancement du programme (souvent \textit{\_\_main\_\_.py}). Il est toutefois acceptable et parfois même recommandé de conserver un fichier \textit{\_\_init\_\_.py} vide. Par ailleurs, chaque sous dossier contenant des modules Python devra également contenir un fichier \textit{\_\_init\_\_.py}
 
 Les fichiers \textit{setup.py},  \textit{requirements.txt}, \textit{LICENSE},  \textit{README.md} ET \textit{MANIFEST.in} sont également nécessaires.  
 \begin{itemize}
 \item \textit{setup.py} est le script de construction et configuration destiné au \textit{setuptools}. Il définit notamment le nom et la version du package, ainsi que les fichiers qu'il contient. Il sert également d'interface en ligne de commande relative aux différentes fonctionnalités du package. \textit{setup.cfg} est un fichier d'initialisation qui contient les options par défaut des commandes du \textit{setup.py}.
 \item \textit{requirements.txt} permet l'installation des dépendances à l'aide d'un unique fichier contenant un module à installer par ligne. Il nécessite l'instruction 
 \begin{tcolorbox}\texttt{pip install -r requirements.txt}\end{tcolorbox}
-pour commencer ces installations.
+pour commencer ces installations. pip freeze
 \item \textit{LICENSE} définit les termes légaux de la distribution. De nombreux pays n'autorisent pas l'utilisation ou la distribution de packages qui ne disposent pas de licence.
 \item \textit{README.md} décrit l'objectif du package, son installation, la nature de ses dépendances et les principales fonctionnalités.
 \item \textit{MANIFEST.in} permet d'inclure dans le package certains fichiers qui ne sont pas automatiquement intégrés. 
@@ -364,6 +661,14 @@ Avec la PEP-518, le PyPA a proposé un nouveau standard au format package.toml, 
 La commande poetry new nomPaquet permet de générer le squelette de l'application, comprenant les tests unitaires, le fichier pyproject.toml, le fichier README.rst que nous changeons au format markdown README.md, le répertoire du projet et le fichier init.py. Nous rajoutons un fichier LICENSE, les composants principaux de la librairie, le présent rapport de stage et un fichier .gitignore pour la gestion des versions.
 	
 \includegraphics[width=9cm]{package_tree.png}
+
+
+
+
+
+
+
+
 
 	La plupart des systèmes d'exploitation incorporent Python2.7 par défaut. L'environnement de travail devra donc expressément définir Python3 comme version pour le projet. Nous avons choisi la version 3.6.5 de Python dans le fichier package\_mymtc.toml.
 
@@ -414,99 +719,156 @@ Nous avons donc décidé de construire notre package en utilisant \textit{Poetry
 
 
 % CREATION DU PACKAGE ---------------
-\subsection{Création d'un package et gestion des dépendances}
+\subsection{Création du package et gestion des dépendances}
 
-La création d'un projet se fait à l'aide de la commande
-\begin{tcolorbox}\texttt{poetry new nom\_package}\end{tcolorbox}
-qui va créer un répertoire \textit{nom\_package} contenant les éléments suivants :
+Pour créer notre package, il ne faut pas commencer par définir un dossier du nom du package, car cela sera automatiquement fait par Poetry. En revanche, il faut s'assurer que Python utilise bien la version 3 pour tout le travail de construction, ce qui se traduit par exemple par une variable d'environnement du type \textbf{~/.poetry/\_vendor/py3.6} en réponse à l'instruction 
+\begin{tcolorbox}\texttt{poetry build}\end{tcolorbox}
+Pour parvenir à un tel résultat, et comme expliqué précédemment, on commence par choisir une version appropriée de Python dans le répertoire parent dans lequel on souhaite créer notre package (ici la version 3.6.2)
+ \begin{tcolorbox}\texttt{\$ cd biologie\\
+\$ pyenv versions\\
+* system\\
+2.7.10\\
+3.6.2\\
+3.8.0\\
+\$ pyenv local 3.6.2\\
+\$ python - -version}\end{tcolorbox}
+
+Puis la création du projet se fait à l'aide de la commande
+\begin{tcolorbox}\texttt{poetry new crisprbuilder\_tb}\end{tcolorbox}
+qui va créer un répertoire \textit{crisprbuilder\_tb} contenant les éléments suivants :
 
 \includegraphics[width=6cm]{nom_package_tree.png}
 
-Le fichier \textit{nom\_package.toml} remplace les anciens standards de définition de packages : \textit{setup.exe} et \textit{requirements.txt}. Il précise notamment le nom du package, sa version, sa description, l’emplacement de son dépôt (par exemple sur GitHub), l’adresse email de l’auteur du package, et la version des dépendances.
+Notons qu'il est préférable de choisir un nom de package en minuscules pour éviter toute confusion car, bien que les majuscules soient conservées sur PyPI, l'appel du package en ligne de commande devra s'effectuer en minuscules. En outre, par convention il faut éviter le symbole '-' qui est automatiquement remplacé par '\_' lors de la création du package.
 
-En ce qui concerne la version des dépendances, il faut tout d'abord se placer dans le répertoire \textit{nom\_package} puis utiliser l’instruction
-\begin{tcolorbox}\texttt{poetry add nom\_dependance}\end{tcolorbox}  
-qui assure la compatibilité de la dépendance \textit{nom\_dependance} avec le package \textit{nom\_package}. Il est également possible d’imposer certaines contraintes sur les versions des dépendances ou encore de rentrer manuellement les dépendances dans le fichier \textit{nom\_package.toml}, mais l’instruction 
-\begin{tcolorbox}\texttt{poetry add nom\_dependance}\end{tcolorbox}  
-offre l’avantage de chercher automatiquement une version compatible de la dépendance, puis de l’inscrire dans \textit{nom\_package.toml}.
+Le fichier \textit{pyproject.toml} remplace les anciens standards de définition de packages : \textit{setup.exe} et \textit{requirements.txt}. Il précise notamment le nom du package, sa version, sa description, l’emplacement de son dépôt (par exemple sur GitHub), l’adresse email de l’auteur du package, et la version des dépendances.
 
-Pour installer ensuite les dépendances du projet, il est nécessaire d’utiliser l’instruction
-\begin{tcolorbox}\texttt{poetry install}\end{tcolorbox}
-qui crée les fichiers \textit{mon\_package.lock} et \textit{setup.py}. Ce fichier empêche les dépendances de télécharger la dernière version au moment de l’installation, en fixant la version utilisable par le package. Par ailleurs, la commande \textbf{install} permet la création d'un fichier \textit{nom\_package.egg-info} comprenant le code, les ressources et les métadonnées du projet. Ce format facilite la désinstallation et la mise à niveau du code, car le projet est essentiellement autonome dans un unique répertoire. Il autorise également l'installation de plusieurs versions d'un même projet simultanément. Il s'agit d'un format adapté à la distribution de plugins pour des applications extensibles et des frameworks, similaire au format \textit{.jar} en Java. Il permet finalement de distribuer les gros packages en entités séparées.
+En ce qui concerne la version des dépendances, il faut tout d'abord se placer dans le répertoire \textbf{crisprbuilder\_tb} puis utiliser l’instruction
+\begin{tcolorbox}\texttt{\$ poetry add nom\_dependance}\end{tcolorbox}  
+qui assure la compatibilité de la dépendance \textit{nom\_dependance} avec le package \textit{crisprbuilder\_tb}. Il est également possible d’imposer certaines contraintes sur les versions des dépendances ou encore de rentrer manuellement les dépendances dans le fichier \textit{crisprbuilder\_tb.toml}, mais l’instruction 
+\begin{tcolorbox}\texttt{\$ poetry add nom\_dependance}\end{tcolorbox}  
+offre l’avantage de chercher automatiquement une version compatible de la dépendance, puis de l’inscrire dans \textit{pyproject.toml}.
+
+Il faut donc ajouter les dépendances suivantes au projet :
+\begin{tcolorbox}\texttt{\$ cd crisprbuilder\_tb \\
+\$ poetry add python3 \\
+\$ poetry add xlrd \\
+\$ poetry add xmltodict \\
+\$ poetry add biopython \\
+\$ poetry install \\
+\$ poetry build \\
+\$ poetry check \\
+\$ poetry publish}\end{tcolorbox}
+
+Pour installer ensuite les dépendances du projet au sein du package, il est nécessaire d’utiliser l’instruction
+\begin{tcolorbox}\texttt{\$ poetry install}\end{tcolorbox}
+qui crée les fichiers \textit{poetry.lock} et \textit{setup.py}, ainsi que le répertoire \textbf{crisprbuilder\_tb.egg-info} comprenant le code, les ressources et les métadonnées du projet. Ce format facilite la désinstallation et la mise à niveau du code, car le projet est essentiellement autonome dans un unique répertoire. Il autorise ainsi l'installation de plusieurs versions d'un même projet simultanément. Il s'agit d'un format adapté à la distribution de plugins pour des applications extensibles et des frameworks, similaire au format \textit{.jar} en Java. Il permet également de distribuer les gros packages en entités séparées. De son côté, \textit{poetry.lock} empêche les dépendances de télécharger la dernière version au moment de l’installation, en fixant la version utilisable par le package. Finalement, \textit{setup.py} n'est qu'un fichier temporaire servant à la construction de \textbf{crisprbuilder\_tb.egg-info}. 
 
 
-% CONSTRUCTION D'UN PACKAGE -------------------
-\subsection{Construction d'un package et publication}
+% CONSTRUCTION DU PACKAGE ET PUBLICATION -------------------
+\subsection{Construction du package et publication}
 
 Pour empaqueter le projet, il faut utiliser l’instruction
-\begin{tcolorbox}\texttt{poetry build}\end{tcolorbox}
-qui va permettre de créer un fichier source au format \textit{sdist} et une distribution compilée au format \textit{wheel}.
+\begin{tcolorbox}\texttt{\$ poetry build}\end{tcolorbox}
+qui va permettre de créer un répertoire source \textbf{dist} contenant une archive \textit{crisprbuilder\_tb-0.1.2.tar.gz} et une distribution compilée \textit{crisprbuilder\_tb-0.1.2-py3-none-any.whl}. Attention, si la distribution comporte la mention "py2" au lieu de "py3", cela signifie que la construction sous Poetry a été réalisée à partir de Python2. Il faut donc bien s'assurer de choisir une version de Python3 avant la création du package.
 
 On peut vérifier la conformité du package avec l’instruction
-\begin{tcolorbox}\texttt{poetry check}\end{tcolorbox}
+\begin{tcolorbox}\texttt{\$ poetry check}\end{tcolorbox}
 qui renvoie
 \begin{tcolorbox}\texttt{All set !}\end{tcolorbox}
 si le package ne comporte aucune discordance et peut être publié.
 
-Avant de publier le package, il peut être bon de tester son comportement à l'installation. Pour cela, il est possible de le publier officieusement sur la plateforme de test \textit{testPyPI}. Il faut alors se placer à la racine du package et lancer en ligne de commande l'instruction
-\begin{tcolorbox}\texttt{twine upload --repository testpypi dist/*}\end{tcolorbox}
+A ce stade, la structure du package est alors la suivante
 
-L'installation du package à partir de \textit{testPyPI} se fait à l'aide de l'instruction
-\begin{tcolorbox}\texttt{pip3 install -i https://test.pypi.org/simple/ nom\_package}\end{tcolorbox} ou si on précise la version du package
-\begin{tcolorbox}\texttt{pip3 install -i https://test.pypi.org/simple/ nom\_package==nmr\_version}\end{tcolorbox} A noter qu'il ne faut utiliser de guillemets autour de la version du package.
+\includegraphics[width=6cm]{tree_level1.png}
+
+Avant de publier le package, il est bon de tester son comportement à l'installation. Pour cela, il est possible de le publier officieusement sur la plateforme de test \textit{testPyPI}. Il faut alors se placer à la racine du package et lancer en ligne de commande l'instruction
+\begin{tcolorbox}\texttt{\$ twine upload --repository testpypi dist/*}\end{tcolorbox}
+
+Il est donc possible de télécharger un package provenant d'index différents de PyPI. Par exemple, l'installation de \textit{crisprbuilder\_tb} à partir de \textit{testPyPI} se fait à l'aide de l'instruction
+\begin{tcolorbox}\texttt{\$ pip3 install -i https://test.pypi.org/simple/ crisprbuilder\_tb}\end{tcolorbox} ou si on précise la version du package
+\begin{tcolorbox}\texttt{\$ pip3 install -i https://test.pypi.org/simple/ crisprbuilder\_tb==0.1.2}\end{tcolorbox} A noter qu'il ne faut utiliser de guillemets autour de la version du package.
 
 Lorsque le package est finalement prêt pour être publié sur PyPI, on utilise l’instruction
-\begin{tcolorbox}\texttt{poetry publish}\end{tcolorbox}
-L'auteur du package doit pour cela être enregistré sur PyPI avec un identifiant et un mot de passe. A partir de ce moment-là, le package est rendu disponible publiquement.
+\begin{tcolorbox}\texttt{\$ poetry publish}\end{tcolorbox}
+Pour cela, l'auteur du package doit être enregistré sur PyPI avec un identifiant et un mot de passe. A partir de ce moment-là, le package est rendu disponible publiquement.
 
 L’installation du package par un utilisateur quelconque se fait maintenant grâce à l’instruction
-\begin{tcolorbox}\texttt{python3 -m pip install nom\_package}\end{tcolorbox}
+\begin{tcolorbox}\texttt{\$ python3 -m pip install nom\_package}\end{tcolorbox}
 
 Les explications relatives à l’utilisation pratique de \textit{Poetry} sont reprises dans le tutoriel suivant que nous venons de publier sur YouTube : adresse YuouTube
 
 
 
-% CONSTRUCTION DU PACKAGE CRISPR -----------------
-\subsection{La construction du package crisprbuilder\_tb}
 
-Par exemple pour construire le package \textit{crisprbuilder\_tb} à l'aide de \textit{Poetry}, les instructions suivantes sont nécessaires en ligne de commande :
+% INSTALLATION DU PACKAGE --------------------------
+\subsection{Installation du package}
 
-\begin{tcolorbox}\texttt{poetry new crisprbuilder\_tb
-cd crisprbuilder\_tb \\
-poetry add python3 \\
-poetry add xlrd \\
-poetry add xmltodict \\
-poetry add biopython \\
-poetry install \\
-poetry build \\
-poetry check \\
-poetry publish}\end{tcolorbox}
+Au moment de l'installation, que ce soit à partir de \textit{PyPI} ou d'un autre index tel que
+\textit{testPyPI}, l'utilisateur ne choisit pas l'emplacement d'installation. Celui-ci est définit automatiquement par le système en fonction des variables d'environnement. Par exemple, si on utilise une version particulière de Python avec \textit{pyenv}, alors le package pourra se trouver dans \textbf{~/.pyenv/versions/3.6.5/lib/python3.6/}. Il est également fréquent de le retrouver dans \textbf{~/.local/lib/python3.6/site-packages/} avec la plupart des différentes packages. Comme on ne connaît pas avec certitude l'emplacement dans lequel le package va s'installer, il convient de définir une variable d'environnement qui pointe vers l'emplacement d'installation.
+
+Lors de l'exécution du package, il est nécessaire de l'appeler par son nom en utilisant l'indice "-m" signifiant "module". Il n'est pas utile de préciser l'utilisation de Python3 si le répertoire courant travaille déjà avec cette version. En revanche, les chemins relatifs dans les modules du package ne devront pas utiliser le nom crisprbuilder\_tb car celui-ci ne sera pas reconnu, une fois à la racine du package. EXPLICATIONS A CHANGER
+
+Par défaut, Python cherche ses modules et packages dans la variable d'environnement \$PYTHONPATH. On peut alors consulter les différents chemins connus par cette variable d'environnement en exécutant l'instruction
+\begin{tcolorbox}\texttt{\$ python
+>>> import sys\\
+>>> print(sys.path)}\end{tcolorbox}
+PROBLEME AVEC LES 3 CHEVRONS
+
+afin d'obtenir une réponse sous forme de liste du type
+\begin{tcolorbox}\texttt{['',\\ '\~/.pyenv/versions/3.6.5/lib/python36.zip',\\ '~/.pyenv/versions/3.6.5/lib/python3.6',\\ '~/.pyenv/versions/3.6.5/lib/python3.6/lib-dynload',\\ '~/.local/lib/python3.6/site-packages',\\ '~/.pyenv/versions/3.6.5/lib/python3.6/site-packages']}\end{tcolorbox}
+PROBLEME AVEC LES ESPACES CI DESSUS
 
 
-	% LA COMPOSITION DU PACKAGE ------------------------
+
+
+
+
+% LA COMPOSITION DU PACKAGE ------------------------
 	
-	\section{La composition du package}
-
-Le package est décrit en détail dans le document crisprbuilder\_tb.md
-
-
-Ainsi, une recherche effectuée à partir de ERR2704808 permet d'obtenir le résultat suivant :
-
-
-% LA STRUCTURE D'UN PACKAGE SOUS POETRY
-\section{La structure d'un package sous Poetry}
-
-Lors de l'exécution de l'instruction poetry new crisprbuilder\_tb s'est créé le package crisprbuilder\_tb disposant de la structure suivante :
-
-photo structure
-
-Le répertoire crisprbuilder\_tb contient les fichiers \_\_init\_\_.py et \_\_main\_\_.py
+\section{Description détaillée du package}
 
 
 
+% LA STRUCTURE D'UN PACKAGE SOUS POETRY -------------------------
+\subsection{La structure du package construit par Poetry}
+
+Le répertoire \textbf{crisprbuilder\_tb} contient obligatoirement à la racine les fichiers \textit{\_\_init\_\_.py} et \textit{\_\_main\_\_.py}
+
+Par ailleurs, tous les répertoires comprenant des modules Python doivent contenir un fichier
+ \textit{\_\_init\_\_.py}.
+
+Lors de l'exécution de l'instruction 
+\begin{tcolorbox}\texttt{\$ poetry new crisprbuilder\_tb}\end{tcolorbox}
+s'est créé le package \textit{crisprbuilder\_tb} disposant de la structure suivante :
+
+\begin{itemize}
+\item un répertoire \textbf{doc} comprenant la documentation nécessaire pour comprendre et utiliser convenablement le package,
+\item un répertoire \textbf{\_\_pycache\_\_} comprenant des fichiers compilés et un fichier \textit{\_\_init\_\_.py},
+\item un répertoire \textbf{data} comprenant les bases de données utiles au programme, sans aucun module et donc aucun fichier \textit{\_\_init\_\_.py},
+\item un répertoire \textbf{REP} comprenant un répertoire séquences qui contient les résultats de recherche au sujet de différents SRA,
+\item un répertoire \textbf{tmp} comprenant un fichier nb.txt qui change pour chaque SRA
+à la racine du package, les fichiers \textit{\_\_init\_\_.py}, \textit{\_\_main\_\_.py}, \textit{fonctions.py} et \textit{bdd.py}.
+\end{itemize}
 
 
 
+
+
+% FONCTIONNEMENT DU PACKAGE
+\subsection{Fonctionnement du package crisprbuilder\_tb}
+
+Le package est décrit en détail dans le document \textit{crisprbuilder\_tb.md} présent dans le répertoire \textbf{doc} du package. Nous reprenons ci-dessous les principaux éléments aprés les avoir traduits en français.
+
+
+DOC
+
+
+
+
+
+
+ 
 
 
 % DESCRIPTION DU PACKAGE ---------------------------
@@ -514,21 +876,13 @@ Le répertoire crisprbuilder\_tb contient les fichiers \_\_init\_\_.py et \_\_ma
 
 
 
-% CREATION DE LA LIBRAIRIE --------------------------------
+% COMPRENDRE LE FONCTIONNEMENT D'UN PACKAGE --------------------------------
+\chapter{Comprendre le fonctionnement d'un package}
 
-\section{La création de la librairie}
 
-=== A CHANGER ===
-Pour créer une librairie à partir de conda, il est nécessaire d'installer conda-build puis de construire un recipe composé de :
-\begin{itemize}
-\item un fichier meta.yaml contenant toutes les métadata du recipe
-\item un script build.sh qui installe les fichiers de la librairie sur Linux et macOS, exécuté avec une commande bash
-\item un script bld.bat qui installe les fichiers de la librairie sur Windows, exécuté avec une commande cmd
-\item un fichier optionnel $run_test.py$, qui s'exécute automatiquement pour effectuer des tests
-\item un fichier readme et des icônes si nécessaire.  
-\end{itemize}
-Les trois premiers fichiers se créent avec la commande conda skeleton.
-===FIN CHANGEMENT===
+
+
+
 
 
 
@@ -585,19 +939,63 @@ Un fichier pkl tel que dico\_africanum.pkl est créé par pickle et contient un 
 
 pickle permet aux objets d'être sérialisés en fichiers sur disque et désérialisés dans le programme au moment de l'exécution.
 	
-	% =========
-	% BIBLIOTHEQUE
-	% =========
-	\begin{spacing}{0.5}
-		\bibliographystyle{}
-		\renewcommand{\bibname}{Références}
-		\begin{thebibliography}{10}
+
+% =========
+% BIBLIOTHEQUE
+% =========
+\begin{spacing}{0.5}
+\bibliographystyle{}
+\renewcommand{\bibname}{Références}
+\begin{thebibliography}{10}
+\bibitem{comas}Comas I. et al. \textit{Out-of-Africa migration and Neolithic coexpansion of Mycobacterium tuberculosis with modern humans}, Nat Genet. 45(10): 1176–1182. doi:10.1038/ng.2744\\ \\
+
+\bibitem{coll}Coll F. et al., \textit{SpolPred : rapid and accurate prediction of Mycobacterium tuberculosis spoligotypes from short genomic sequences}, Bioinformatics. 28(22):2991–3\\ \\
+
+\bibitem{brynildsrud}Brynildsrud O.B. et al., \textit{Global expansion of Mycobacterium tuberculosis lineage 4 shaped by colonial migration and local adaptation}, 4(10): eaat5869. doi: 10.1126/sciadv.aat5869\\ \\
+
+\bibitem{driscoll}Driscoll J. R., \textit{Spoligotyping for molecular epidemiology of the Mycobacterium tuberculosis complex}, 551:117-28. doi: 10.1007/978-1-60327-999-4 10\\ \\
+
+\bibitem{jinek}Jinek M. et al, \textit{A programmable dual-RNA-guided DNA endonuclease in adaptive bacterial immunity}, 337(6096):816-21. doi: 10.1126/science.1225829\\ \\
+
+\bibitem{gori}Gori A. et al, \textit{Spoligotyping and Mycobacterium tuberculosis}, 11(8): 1242–1248. doi: 10.3201/1108.040982\\ \\
+
+\bibitem{perry1}Perry S. et al., \textit{Infection with Helicobacter pylori is associated with protection against tuberculosis}, 5(1):e8804. doi: 10.1371/journal.pone.0008804\\ \\
+
+\bibitem{perry2}Perry S. et al, \textit{The immune response to tuberculosis infection in the setting of Helicobacter pylori and helminth infections}, 141(6): 1232–1243. doi: 10.1017/S0950268812001823\\ \\
+
+\bibitem{xia}Xia E. et al., \textit{SpoTyping: fast and accurate in silico Mycobacterium spoligotyping from sequence reads}, 8:19. doi 10.1186/s13073-016-0270-7\\ \\ 
+
+\bibitem{dale}Dale JW. et al., \textit{Spacer oligonucleotide typing of bacteria of the Mycobacterium tuberculosis complex: recommendations for standardised nomenclature.}, 5(3):216–9\\ \\
+
+\bibitem{iwai}Iwai H et al., \textit{CASTB (the comprehensive analysis server for the Mycobacterium tuberculosis complex): A publicly accessible web server for epidemiological analyses, drug-resistance prediction and phylogenetic comparison of clinical isolates. Tuberculosis.}, 95(6):843–4\\ \\
+
+\bibitem{demay}Demay C. et al., \textit{SITVITWEB - A publicly available international multimarker database for studying Mycobacterium tuberculosis genetic diversity and molecular epidemiology.}, Infect Genet Evol. 12:755–66\\ \\
+
+\bibitem{}McGovern Institute Channel, \textit{Genome Editing with CRISPR-Cas9}, \url{https://www.youtube.com/watch?v=2pp17E4E-O8}\\ \\
+
+\bibitem{oneil}O'Neil M.B. et al., \textit{Lineage specific histories of Mycobacterium tuberculosis dispersal in Africa and Eurasia}, bioRxiv. 10.1101/210161\\ \\
+
+\bibitem{ratovonirina}Ratovonirina N. H., \textit{Etudes descriptive, épidémiologique, moléculaire et spatiale des souches Mycobacterium tuberculosis circulant à Antananarivo, Madagascar}, Thèse de Doctorat de l'Université Paris-Saclay\\ \\
+
+\bibitem{kamerbeek}Kamerbeek et al., \textit{Simultaneous detection and strain differentiation of Mycobacterium tuberculosis for diagnosis and epidemiology}, 35(4): 907–914\\ \\
+
+\bibitem{mendis}Mendis C. et al., \textit{Insight into genetic diversity of Mycobacterium tuberculosis in Kandy, Sri Lanka reveals predominance of the Euro-American lineage}, International Journal of Infectious Diseases 87 84-91\\ \\
+
+\bibitem{gomgnimbou},Gomgnimbou M. K. et al., \textit{Tuberculosis-Spoligo-Rifampin-Isoniazid Typing: an All-in-One Assay Technique for Surveillance and Control of Multidrug-Resistant Tuberculosis on Luminex Devices}, 51(11):3527-34. doi: 10.1128/JCM.01523-13\\ \\
+
+\bibitem{couvin}Couvin D. et al., \textit{SpolSimilaritySearch - A web tool to compare and search similarities between spoligotypes of Mycobacterium tuberculosis complex}, 105:49-52. doi: 10.1016/j.tube.2017.04.007
+
 			\href{https://packaging.python.org/guides/}{https://packaging.python.org/guides/}\\
 
 \href{https://realpython.com/pypi-publish-python-package/}{https://realpython.com/pypi-publish-python-package/}
-			
-		\end{thebibliography}
-	\end{spacing}
+
+\end{thebibliography}
+\end{spacing}
+
+
+
+
+		
 
 
 
