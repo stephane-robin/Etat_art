@@ -559,13 +559,17 @@ Un tableau comparatif de différents spoligotypes en fonction des lignées de \t
 % CHOIX DES OUTILS -----------------------------
 \chapter{Le choix des outils}
 
+Note préalable : toutes les explications données dans ce chapitre concernent les plateformes Linux et sont transposables d'une moindre mesure sur MacOS.
+
 
 
 
 % CHOIX DE L'ENVIRONNEMENT DE TRAVAIL -----------------------------
 \section{L'environnement de développement}
 
-Le package devra installer automatiquement les dépendances nécessaires à son bon fonctionnement. Ce processus doit rester transparent pour l'utilisateur. Mais au préalable, l'outil de création d'environnement virtuel \textit{venv} \index{venv} va nous permettre de créer un environnement de développement afin de tester les codes du projet. \textit{venv} commence par constituer un dossier contenant tous les exécutables nécessaires à l'utilisation des modules d'un projet Python. Par exemple, dans le cadre de notre projet, nous créons un répertoire \textit{biologie}, et une fois dedans nous créons un environnement de développement \textbf{env\_bio} que nous activons avant de nous placer dedans pour pouvoir l'utiliser 
+Avant de créer le package, il faut commencer par construire localement le programme. Pour ce faire, nous définissons un environnement de développement, qui nous servira par ailleurs pour procéder à certains tests.
+ 
+L'outil de création d'environnement virtuel \textit{venv} \index{venv} nous permet de créer un environnement de développement afin de tester les codes du projet. \textit{venv} commence par constituer un dossier contenant tous les exécutables nécessaires à l'utilisation des modules d'un projet Python. Par exemple, dans le cadre de notre étude, nous créons un répertoire \textbf{biologie}, et une fois dedans nous créons à l'aide de \textit{venv} un environnement de développement \textbf{env\_bio} que nous activons avant de nous placer dedans pour l'utiliser. 
  \begin{tcolorbox}\texttt{\$ cd biologie\\
 \$ python3 -m venv env\_bio\\
 \$ source env\_bio/bin/activate\\
@@ -577,63 +581,62 @@ qui va renvoyer \textbf{.../env\_bio/bin/python} au lieu de \textbf{/usr/bin/pyt
 
 Il convient de définir la version de Python utilisée dans cet environnement de développement. Pour cela, le module \textit{pyenv} \index{pyenv} nous permet de définir une version de Python comme version locale de travail dans l'environnement. 
 
-Une fois \textit{pyenv} installé, on peut choisir parmi les versions disponibles, grâce à l'instruction
+On peut ainsi choisir parmi les versions disponibles, grâce à l'instruction
 \begin{tcolorbox}\texttt{\$ pyenv install --list}\end{tcolorbox}
-Comme la liste est particulièrement longue, on peut éventuellement être plus spécifique en demandant les versions allant de 3.6 à 3.8 avec l'instruction
+La liste étant particulièrement longue, on peut éventuellement être plus spécifique en demandant les versions allant de 3.6 à 3.8 avec l'instruction
 \begin{tcolorbox}\texttt{\$ pyenv install --list | grep " 3\.[678]"}\end{tcolorbox}
 
-L'installation de la version 3.7.0 par exemple se fait grâce à l'instruction
-\begin{tcolorbox}\texttt{\$ pyenv install -v 3.7.0}\end{tcolorbox}
+L'installation de la version 3.6.2 par exemple se fait grâce à l'instruction
+\begin{tcolorbox}\texttt{\$ pyenv install -v 3.6.2}\end{tcolorbox}
 
-La version 3.7.0 de Python se trouve ainsi installée dans \textbf{~/.pyenv/versions/} sur Linux.
+La version 3.6.2 de Python se trouve maintenant installée dans \textbf{TILDE/.pyenv/versions/}
 
-Pour connaître toutes les versions de Python installées par \textit{pyenv}, il suffit d'écrire l'instruction suivante qui fournit une liste de résultats
+Pour connaître toutes les versions de Python installées par \textit{pyenv}, il suffit d'exécuter l'instruction suivante qui fournit une liste de résultats
 \begin{tcolorbox}\texttt{\$ pyenv versions\\
 * system\\
    2.7.10\\
    3.6.2\\
    3.8.0}\end{tcolorbox}
-où le caractère '*' indique la version active dans le répertoire courant.
+où le caractère "*" indique la version active dans le répertoire courant.
 
-Pour définir la version 3.6.2 dans notre environnement de travail, il suffit de se placer dans cet environnement et d'écrire l'instruction
+On peut alors choisir la version 3.6.2 pour notre environnement de travail. Il suffit de se placer dans cet environnement et d'exécuter l'instruction
 \begin{tcolorbox}\texttt{\$ pyenv local 3.6.2}\end{tcolorbox}
 
-Dans un cadre plus général, l'instruction
+A noter que dans un cadre plus général, l'instruction
 \begin{tcolorbox}\texttt{\$ python --version}\end{tcolorbox}
 permet de connaître quelle version de Python est utilisée dans le répertoire courant, qu'on se trouve dans un environnement de développement ou non.
-
-En revanche, l'instruction
-\begin{tcolorbox}\texttt{\$ which python}\end{tcolorbox}
-fournit l'emplacement de cette version au lieu du nom de la version. Celui-ci devrait être sur Linux \textbf{/usr/bin/python}.
 
 Finalement, nous installons dans cet environnement les dépendances nécessaires à l'aide de l'outil \textit{pip} \index{pip} :
 \begin{itemize}
 \item pkg-resources==0.0.0 (installé automatiquement)
 \item \begin{tcolorbox}\texttt{\$ pip install xmltodict}\end{tcolorbox}
-le module xmltodict permet de lire du code XML comme si il s'agissait de code JSON. Il permet donc une lecture plus rapide des fichiers.
+le module \textit{xmltodict} permet de lire du code XML comme si il s'agissait de code JSON. Il permet donc une lecture plus rapide des fichiers.
 \item  \begin{tcolorbox}\texttt{\$ pip install openpyxl}\end{tcolorbox}
-le package openpyxl permet de lire et d'écrire dans des fichiers Excel de type xlsx, xlsm, xltx, xltm. Il comprend les modules et-xmlfile et jdcal.
+le package \textit{openpyxl} permet de lire et d'écrire dans des fichiers Excel au format \textit{xlsx, xlsm, xltx} ou \textit{xltm}. Il comprend les modules \textit{et-xmlfile} et \textit{jdcal}.
 \item  \begin{tcolorbox}\texttt{\$ pip install xlrd}\end{tcolorbox}
-le module xlrd extrait des données d'un tableur Excel à partir de la version 2.0 et avant de les formatte.
+le module \textit{xlrd} extrait des données d'un tableur Excel à partir de la version 2.0 et avant de les formatter.
 \item  \begin{tcolorbox}\texttt{\$ pip install biopython}\end{tcolorbox}
-le package biopython regroupe un ensemble d'outils Python pour le traitement informatique de la biologie moléculaire et comprend le module numpy.
+le package \textit{biopython} regroupe un ensemble d'outils Python pour le traitement informatique de la biologie moléculaire et comprend le module numpy.
 \item DateTime==4.3\\
 Le module datetime permet de manipuler des dates et heures en gérant des objets de type DateTime. 
 \item pytz==2019.3 (installé avec le module datetime)
 \item zope.interface==5.0.1 (installé avec le module datetime)
 \end{itemize}
 
-Notons que certains modules utilisés dans ce package sont nativement présents dans Python3. C'est le cas par exemple de :
+Notons que certains modules utilisés dans ce package sont nativement présents dans la librairie standard Python3. C'est le cas par exemple :
 \begin{itemize}
-\item le module os fournit une manière portable d'utiliser les fonctionnalités dépendantes du système d'exploitation,
-\item le module pickle permet de sérialiser et désérialiser une structure d'objet Python. Il remplace le module primitif marshal. pickle se trouve déjà dans la librairie standard Python3,
-\item le module csv implémente des classes pour lire et écrire des données liées à des feuilles de calcul ou des bases de données au format csv,
-\item le module shutil propose des opérations sur les fichiers et collections de fichiers, notamment la copie et suppression de fichiers.
-Le module subprocess.run permet de gérer de nouveaux processus, de se connecter à leurs flux d'input/output/erreurs. Il remplace plusieurs modules dépréciés : os. system, os.spawn*, os.popen*, popen2.*, commands.* 
+\item du module \textit{os} qui fournit une manière portable d'utiliser les fonctionnalités dépendantes du système d'exploitation,
+\item du module \textit{pickle} qui permet de sérialiser et désérialiser une structure d'objet Python. Il remplace le module primitif \textit{marshal},
+\item le module \textit{csv} implémente des classes pour lire et écrire des données liées à des feuilles de calcul ou des bases de données au format \textit{csv},
+\item le module \textit{shutil} propose des opérations sur les fichiers et collections de fichiers, notamment la copie et suppression de fichiers.
+\item Le module \textit{subprocess.run} permet de gérer de nouveaux processus, de se connecter à leurs flux d'input/output/erreurs. Il remplace plusieurs modules dépréciés : \textit{os.system, os.spawn*, os.popen*, popen2.*, commands.* }
 \end{itemize}
 
-Le package, une fois installé par l'utilisateur, devra fournir automatiquement un environnement de travail similaire, afin que son exécution soit rendue possible. On devra donc retrouver les modules installés via \textit{pip} dans un fichier \textit{requirements.txt} ou similaire. Sous Poetry cette fonctionnalité est prise en charge par le fichier \textit{nom\_package.toml}.
- 
+Le package, une fois installé par l'utilisateur, devra fournir un environnement de travail similaire à celui que nous venons de construire, c'est à dire qu'il devra installer automatiquement les dépendances nécessaires à son bon fonctionnement. Ce processus devra rester transparent pour l'utilisateur. 
+
+On pourra retrouver les modules installés via \textit{pip} dans un fichier \textit{requirements.txt} ou similaire qu'on pourra fabriquer en gelant l'état de l'environnement à un moment précis grâce à une instruction du type
+\begin{tcolorbox}\texttt{\$ pip freeze > requirements.txt}\end{tcolorbox}
+ Notons que l'outil Poetry quant à lui, regroupe ces modules dans un fichier appelé \textit{pyproject.toml}.
 
 
 
@@ -641,33 +644,26 @@ Le package, une fois installé par l'utilisateur, devra fournir automatiquement 
 % COMPOSITION D'UN PACKAGE STANDARD ------------------
 \section{Composition d'un package standard}
 
-Un package standard comporte obligatoirement un fichier \textit{\_\_init\_\_.py} qui va définir la version du projet et le nom du module de lancement du programme (souvent \textit{\_\_main\_\_.py}). Il est toutefois acceptable et parfois même recommandé de conserver un fichier \textit{\_\_init\_\_.py} vide. Par ailleurs, chaque sous dossier contenant des modules Python devra également contenir un fichier \textit{\_\_init\_\_.py}
+Un package standard comporte obligatoirement un fichier \textit{\_\_init\_\_.py} qui va définir la version du projet et le nom du module de lancement du programme (souvent \textit{\_\_main\_\_.py}). Il est toutefois acceptable et parfois même recommandé de conserver un fichier \textit{\_\_init\_\_.py} vide. Par ailleurs, chaque sous dossier vide ou contenant des modules Python devra également contenir un fichier \textit{\_\_init\_\_.py}
 
-Les fichiers \textit{setup.py},  \textit{requirements.txt}, \textit{LICENSE},  \textit{README.md} ET \textit{MANIFEST.in} sont également nécessaires.  
+Les fichiers \textit{setup.py},  \textit{requirements.txt}, \textit{LICENSE},  \textit{README.md} et \textit{MANIFEST.in} sont également nécessaires.  
 \begin{itemize}
 \item \textit{setup.py} est le script de construction et configuration destiné au \textit{setuptools}. Il définit notamment le nom et la version du package, ainsi que les fichiers qu'il contient. Il sert également d'interface en ligne de commande relative aux différentes fonctionnalités du package. \textit{setup.cfg} est un fichier d'initialisation qui contient les options par défaut des commandes du \textit{setup.py}.
 \item \textit{requirements.txt} permet l'installation des dépendances à l'aide d'un unique fichier contenant un module à installer par ligne. Il nécessite l'instruction 
 \begin{tcolorbox}\texttt{pip install -r requirements.txt}\end{tcolorbox}
-pour commencer ces installations. pip freeze
-\item \textit{LICENSE} définit les termes légaux de la distribution. De nombreux pays n'autorisent pas l'utilisation ou la distribution de packages qui ne disposent pas de licence.
+pour commencer ces installations.
+\item \textit{LICENSE} définit les termes légaux de la distribution. De nombreux pays n'autorisent pas l'utilisation ou la distribution d'un package qui ne dispose pas de licence.
 \item \textit{README.md} décrit l'objectif du package, son installation, la nature de ses dépendances et les principales fonctionnalités.
 \item \textit{MANIFEST.in} permet d'inclure dans le package certains fichiers qui ne sont pas automatiquement intégrés. 
 \end{itemize}
 
-L'ensemble des modules nécessaires au fonctionnement du package sont regroupés dans un répertoire portant le même nom que le package avec le fichier \textit{\_\_init\_\_.py}.
+Il est important de regrouper l'ensemble des modules nécessaires au fonctionnement du package dans un répertoire portant le même nom que ce package, accompagné d'un fichier \textit{\_\_init\_\_.py}, sinon l'archive et la distribution du package se construiront à vide. L'installation à partir de PyPI fonctionnera mais l'exécution du package restera inactive.
 
-Avec la PEP-518, le PyPA a proposé un nouveau standard au format package.toml, qui remplace les fichiers setup.py, requirements.txt, setup.cfg, MANIFEST.in et Pipfile. C'est ce nouveau standard qui est utilisé lors de la création d'un package avec Poetry.
+Avec la PEP-518\footnote{\textbf{PEP-518:} specifying minimum build system requirements for Python projects}, le PyPA\footnote{\textbf{PyPA:} Python Packaging Authority} a proposé un nouveau standard au format \textit{pyproject.toml}, qui remplace les fichiers setup.py, requirements.txt, setup.cfg, MANIFEST.in et Pipfile. C'est ce nouveau standard qui est utilisé lors de la création d'un package avec Poetry.
 
 La commande poetry new nomPaquet permet de générer le squelette de l'application, comprenant les tests unitaires, le fichier pyproject.toml, le fichier README.rst que nous changeons au format markdown README.md, le répertoire du projet et le fichier init.py. Nous rajoutons un fichier LICENSE, les composants principaux de la librairie, le présent rapport de stage et un fichier .gitignore pour la gestion des versions.
 	
 \includegraphics[width=9cm]{package_tree.png}
-
-
-
-
-
-
-
 
 
 	La plupart des systèmes d'exploitation incorporent Python2.7 par défaut. L'environnement de travail devra donc expressément définir Python3 comme version pour le projet. Nous avons choisi la version 3.6.5 de Python dans le fichier package\_mymtc.toml.
@@ -824,13 +820,11 @@ PROBLEME AVEC LES ESPACES CI DESSUS
 
 
 
-% LA COMPOSITION DU PACKAGE ------------------------
-	
-\section{Description détaillée du package}
 
 
 
-% LA STRUCTURE D'UN PACKAGE SOUS POETRY -------------------------
+
+% LA STRUCTURE DU PACKAGE CONSTRUIT PAR POETRY -------------------------
 \subsection{La structure du package construit par Poetry}
 
 Le répertoire \textbf{crisprbuilder\_tb} contient obligatoirement à la racine les fichiers \textit{\_\_init\_\_.py} et \textit{\_\_main\_\_.py}
@@ -855,13 +849,9 @@ s'est créé le package \textit{crisprbuilder\_tb} disposant de la structure sui
 
 
 
-% FONCTIONNEMENT DU PACKAGE
-\subsection{Fonctionnement du package crisprbuilder\_tb}
-
-Le package est décrit en détail dans le document \textit{crisprbuilder\_tb.md} présent dans le répertoire \textbf{doc} du package. Nous reprenons ci-dessous les principaux éléments aprés les avoir traduits en français.
 
 
-DOC
+
 
 
 
@@ -871,18 +861,22 @@ DOC
  
 
 
+
+
+% LE PACKAGE CRISPRBUILDER --------------------------------
+\chapter{Le package crisprbuilder\_tb}
+
+% FONCTIONNEMENT DU PACKAGE -----------------------
+\section{Fonctionnement du package crisprbuilder\_tb}
+
+
 % DESCRIPTION DU PACKAGE ---------------------------
-\section{Description du package avec le fichier crisprbuilder\_tb.md}
+\section{Description détaillée du package}
+
+Le package est décrit en détail dans le document \textit{crisprbuilder\_tb.md} présent dans le répertoire \textbf{doc} du package. Nous reprenons ci-dessous les principaux éléments aprés les avoir traduits en français.
 
 
-
-% COMPRENDRE LE FONCTIONNEMENT D'UN PACKAGE --------------------------------
-\chapter{Comprendre le fonctionnement d'un package}
-
-
-
-
-
+DOC
 
 
 
@@ -894,12 +888,12 @@ DOC
 \section{Les problèmes liés aux chemins d'accès}
 
 
-
+PEP-257: docstring conventions
 
 % PYLINT --------------
 \section{Améliorer le code avec pylint}
 
-\textit{pylint} fournit une note entre 0 et 10 qui reflète le respect des règles du PEP8, notamment en ce qui concerne la lisibilité du code. Il reprend également certaines exigences relatives à ...
+\textit{pylint} fournit une note entre 0 et 10 qui reflète le respect des règles du PEP-8\footnote{\textbf{PEP-8:} style guide for Python code}, notamment en ce qui concerne la lisibilité du code. Il reprend également certaines exigences relatives à ...
 
 Le fichier \textit{\_\_main\_\_.py} est noté 9, / 10 avec les commentaires suivants :
 XXX
