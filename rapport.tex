@@ -280,8 +280,10 @@ Nous allons voir en détail dans ce document que l'élaboration de ce package m'
 \item création et définition d'un environnement de développement
 \item création et publication d'un package
 \item travail sur le code
+\item cli
 \item utilisation de l'outil de versionnement \textit{Git}
-\item test
+\item test pylint
+\item documenter le package PEP-257 docstring conventions
 \end{itemize}
 
 
@@ -587,17 +589,17 @@ Cette activation ne peut se faire qu'à partir du répertoire parent \textbf{bio
  \begin{tcolorbox}\texttt{\$ source env\_bio/bin/activate\\
 (env\_bio)\$ cd env\_bio}\end{tcolorbox}
 
-Il convient de définir la version de Python utilisée dans cet environnement de développement. Pour cela, le module \textit{pyenv} \index{pyenv} nous permet de définir une version de Python comme version locale de travail dans l'environnement. 
+La plupart des systèmes d'exploitation incorporent Python2.7 par défaut. Il convient donc de définir une version 3 de Python dans cet environnement de développement, et plus précisément une version 3.6 ou supérieure. Pour cela, le module \textit{pyenv} \index{pyenv} nous permet de définir une version de Python comme version locale de travail dans l'environnement. 
 
 On peut ainsi choisir parmi les versions disponibles, grâce à l'instruction
-\begin{tcolorbox}\texttt{\$ pyenv install --list}\end{tcolorbox}
+\begin{tcolorbox}\texttt{\$ pyenv install \textemdash-list}\end{tcolorbox}
 La liste étant particulièrement longue, on peut éventuellement être plus spécifique en demandant les versions allant de 3.6 à 3.8 avec l'instruction
-\begin{tcolorbox}\texttt{\$ pyenv install --list | grep " 3\.[678]"}\end{tcolorbox}
+\begin{tcolorbox}\texttt{\$ pyenv install \textemdash-list | grep " 3\.[678]"}\end{tcolorbox}
 
 L'installation de la version 3.6.2 par exemple se fait grâce à l'instruction
 \begin{tcolorbox}\texttt{\$ pyenv install -v 3.6.2}\end{tcolorbox}
 
-La version 3.6.2 de Python se trouve maintenant installée dans \textbf{TILDE/.pyenv/versions/}
+La version 3.6.2 de Python se trouve maintenant installée dans \textbf{\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/}
 
 Pour connaître toutes les versions de Python installées par \textit{pyenv}, il suffit d'exécuter l'instruction suivante qui fournit une liste de résultats
 \begin{tcolorbox}\texttt{\$ pyenv versions\\
@@ -612,15 +614,15 @@ On peut alors choisir la version 3.6.2 pour notre environnement de travail. Il s
 
 En fait, \textit{pyenv} s'insère dans la variable d'environnement PATH et devient l'exécutable appelé par le système d'exploitation. On peut voir que l'interpréteur Python utilise bien cet environnement \textit{pyenv} pour appeler Python grâce à l'instruction
 \begin{tcolorbox}\texttt{\$ which python}\end{tcolorbox}
-qui renvoie \textbf{TILDE/.pyenv/shims/python} au lieu de \textbf{/usr/bin/python}.
+qui renvoie \textbf{\raisebox{-1ex}{\textasciitilde}/.pyenv/shims/python} au lieu de \textbf{/usr/bin/python}.
 
 A noter que dans un cadre plus général, l'instruction
-\begin{tcolorbox}\texttt{\$ python --version}\end{tcolorbox}
+\begin{tcolorbox}\texttt{\$ python \textemdash-version}\end{tcolorbox}
 permet de connaître quelle version de Python est utilisée dans le répertoire courant, qu'on se trouve dans un environnement de développement ou non.
 
 Finalement, nous installons dans notre environnement de développement les dépendances nécessaires à l'aide de l'outil \textit{pip} \index{pip} :
 \begin{itemize}
-\item pkg-resources==0.0.0 (installé automatiquement)
+%\item pkg-resources==0.0.0 (installé automatiquement)
 \item \begin{tcolorbox}\texttt{\$ pip install xmltodict}\end{tcolorbox}
 le module \textit{xmltodict} permet de lire du code XML comme si il s'agissait de code JSON. Il permet donc une lecture plus rapide des fichiers.
 \item  \begin{tcolorbox}\texttt{\$ pip install openpyxl}\end{tcolorbox}
@@ -629,19 +631,21 @@ le package \textit{openpyxl} permet de lire et d'écrire dans des fichiers Excel
 le module \textit{xlrd} extrait des données d'un tableur Excel à partir de la version 2.0 et avant de les formatter.
 \item  \begin{tcolorbox}\texttt{\$ pip install biopython}\end{tcolorbox}
 le package \textit{biopython} regroupe un ensemble d'outils Python pour le traitement informatique de la biologie moléculaire et comprend le module numpy.
-\item DateTime==4.3\\
-Le module datetime permet de manipuler des dates et heures en gérant des objets de type DateTime. 
-\item pytz==2019.3 (installé avec le module datetime)
-\item zope.interface==5.0.1 (installé avec le module datetime)
+%\item DateTime==4.3\\
+%Le module datetime permet de manipuler des dates et heures en gérant des objets de type DateTime. 
+%\item pytz==2019.3 (installé avec le module datetime)
+%\item zope.interface==5.0.1 (installé avec le module datetime)
 \end{itemize}
 
 Notons que certains modules utilisés dans ce package sont nativement présents dans la librairie standard Python3. C'est le cas par exemple :
 \begin{itemize}
 \item du module \textit{os} qui fournit une manière portable d'utiliser les fonctionnalités dépendantes du système d'exploitation,
 \item du module \textit{pickle} qui permet de sérialiser et désérialiser une structure d'objet Python. Il remplace le module primitif \textit{marshal},
-\item le module \textit{csv} implémente des classes pour lire et écrire des données liées à des feuilles de calcul ou des bases de données au format \textit{csv},
-\item le module \textit{shutil} propose des opérations sur les fichiers et collections de fichiers, notamment la copie et suppression de fichiers.
-\item Le module \textit{subprocess.run} permet de gérer de nouveaux processus, de se connecter à leurs flux d'input/output/erreurs. Il remplace plusieurs modules dépréciés : \textit{os.system, os.spawn*, os.popen*, popen2.*, commands.* }
+\item du module \textit{csv} qui implémente des classes pour lire et écrire des données liées à des feuilles de calcul ou des bases de données au format \textit{csv},
+\item du module \textit{shutil} qui propose des opérations sur les fichiers et collections de fichiers, notamment la copie et suppression de fichiers,
+\item du module \textit{subprocess.run} qui permet de gérer de nouveaux processus, de se connecter à leurs flux d'input/output/erreurs. Il remplace plusieurs modules dépréciés : \textit{os.system, os.spawn*, os.popen*, popen2.*, commands.* },
+\item du module \textit{pathlib} qui
+\item du module \textit{argparse} qui
 \end{itemize}
 
 Le package, une fois installé par l'utilisateur, devra fournir un environnement de travail similaire à celui que nous venons de construire, c'est à dire qu'il devra installer automatiquement les dépendances nécessaires à son bon fonctionnement. Ce processus devra rester transparent pour l'utilisateur. 
@@ -673,8 +677,6 @@ Il est important de regrouper l'ensemble des modules nécessaires au fonctionnem
 
 Avec la PEP-518\footnote{\textbf{PEP-518:} specifying minimum build system requirements for Python projects}, le PyPA\footnote{\textbf{PyPA:} Python Packaging Authority} a proposé un nouveau standard au format \textit{pyproject.toml}, qui remplace les fichiers \textit{setup.py, requirements.txt, setup.cfg}, et \textit{MANIFEST.in}. C'est ce nouveau standard qui est utilisé lors de la création d'un package avec Poetry.
 
-	La plupart des systèmes d'exploitation incorporent Python2.7 par défaut. L'environnement de travail devra donc expressément définir Python3 comme version pour le projet. Nous avons choisi la version 3.6.5 de Python dans le fichier package\_mymtc.toml.
-
 Les paquets construits pour des systèmes Unix (Linux et MacOS) nécessitent l'incorporation de fichiers build.sh et meta.yaml. Les paquets construits pour les systèmes Windows nécessitent l'incorporation des fichiers bld.bat et meta.yaml. A VERIFIER DANS LE CAS DE POETRY
 
 
@@ -695,7 +697,7 @@ Dans le cadre de ce projet, aucune spécification restrictive n'étant requise, 
 % CHOIX DE L'OUTIL D'EMPAQUETAGE --------------------
 \subsection{Choix de l'outil d'empaquetage}
 	
-	Le PyPA \textit{Python Packaging User Guide} recommande l'utilisation de :
+	Le PyPA recommande l'utilisation de :
 \begin{itemize}
 \item \textit{setuptools} pour définir des projets et créer des sources de distribution,
 \item \textit{pipenv} pour la gestion des dépendances de packages lors du développement d'applications,
@@ -724,7 +726,7 @@ Nous avons donc décidé de construire notre package en utilisant \textit{Poetry
 % CREATION DU PACKAGE ---------------
 \subsection{Création du package et gestion des dépendances}
 
-Pour créer notre package, il ne faut pas commencer par définir un dossier du nom du package, car cela sera automatiquement fait par Poetry. En revanche, il faut s'assurer que Python utilise bien la version 3 pour tout le travail de construction, ce qui se traduit par exemple par une variable d'environnement du type \textbf{~/.poetry/\_vendor/py3.6} en réponse à l'instruction 
+Pour créer notre package, il ne faut pas commencer par définir un dossier du nom du package, car cela sera automatiquement fait par Poetry. En revanche, il faut s'assurer que Python utilise bien la version 3 pour tout le travail de construction, ce qui se traduit par exemple par une variable d'environnement du type \textbf{\raisebox{-1ex}{\textasciitilde}/.poetry/\_vendor/py3.6} en réponse à l'instruction 
 \begin{tcolorbox}\texttt{poetry build}\end{tcolorbox}
 Pour parvenir à un tel résultat, et comme expliqué précédemment, on commence par choisir une version appropriée de Python dans le répertoire parent dans lequel on souhaite créer notre package (ici la version 3.6.2)
  \begin{tcolorbox}\texttt{\$ cd biologie\\
@@ -734,7 +736,7 @@ Pour parvenir à un tel résultat, et comme expliqué précédemment, on commenc
 3.6.2\\
 3.8.0\\
 \$ pyenv local 3.6.2\\
-\$ python - -version}\end{tcolorbox}
+\$ python \textemdash-version}\end{tcolorbox}
 
 Puis la création du projet se fait à l'aide de la commande
 \begin{tcolorbox}\texttt{poetry new crisprbuilder\_tb}\end{tcolorbox}
@@ -744,7 +746,7 @@ qui permet de générer le squelette de l'application contenant les éléments s
 
 \begin{itemize}
 \item le répertoire \textbf{crisprbuilder\_tb} contient initialement le fichier \textit{\_\_init\_\_.py} et c'est dans ce répertoire que nous allons rajouter tous les composants principaux du code  \textit{\_\_main\_\_.py, fonctions.py, bdd.py} et les répertoires \textbf{data}, \textbf{doc}, \textbf{REP} et \textbf{tmp} avec leurs contenus. En effet, la création de l'archive va compresser ce répertoire \textbf{crisprbuilder\_tb} afin de le publier. Il devra contenir tout ce qui est nécessaire au fonctionnement de l'application. Lors de sa création, le fichier \textit{\_\_init\_\_.py} contenait uniquement la version du package. Pour éviter tout conflit de version avec le fichier \textit{pyproject.toml}, nous vidons le fichier \textit{\_\_init\_\_.py} du répertoire \textit{crisprbuilder\_tb}
-\item le répertoire \textbf{tests} contient les tests unitaires
+\item le répertoire \textbf{tests} contient les tests unitaires relatifs au bon fonctionnement du package
 \item le fichier \textit{README.rst} fournit une brève description du package, et nous le modifions au format markdown \textit{README.md} à l'usage plus répandu
 \item le fichier \textit{pyproject.toml} remplace les anciens standards de définition de packages : \textit{setup.exe} et \textit{requirements.txt}. Il précise notamment le nom du package, sa version, sa description, l’emplacement de son dépôt (par exemple sur GitHub), l’adresse email de l’auteur du package, et la version des dépendances
 \item nous rajoutons à la racine du package un fichier \textit{LICENSE}, un fichier \textit{.gitignore} pour la gestion des versions. 
@@ -761,17 +763,41 @@ offre l’avantage de chercher automatiquement une version compatible de la dép
 Il faut donc ajouter les dépendances suivantes au projet :
 \begin{tcolorbox}\texttt{\$ cd crisprbuilder\_tb \\
 \$ poetry add python3 \\
-\$ poetry add xlrd \\
 \$ poetry add xmltodict \\
-\$ poetry add biopython \\
-\$ poetry install \\
-\$ poetry build \\
-\$ poetry check \\
-\$ poetry publish}\end{tcolorbox}
+\$ poetry add openpyxl \\
+\$ poetry add xlrd \\
+\$ poetry add biopython}\end{tcolorbox}
+
+Le fichier \textit{pyproject.toml} comporte maintenant les versions suivantes
+
+\begin{tcolorbox}\texttt{[tool.poetry.dependencies]\\
+xlrd = "1.2.0"\\
+xmltodict = "0.12.0"\\
+biopython = "1.76"}\end{tcolorbox}
+
+MANQUE OPENPYXL ET PYTHON
+
+On peut ensuite compléter manuellement ce fichier pour fournir des informations d'ordre général du type
+
+\begin{tcolorbox}\texttt{[tool.poetry]\\
+name = "crisprbuilder\_tb"\\
+version = "0.1.2"\\
+description = "Collect and annotate Mycobacterium tuberculosis WGS data for CRISPR investigations."\\
+authors = ["stephane-robin <robin.stephane@outlook.com>"]\\
+license = "MIT"\\
+readme = "README.md"\\
+homepage = "https://github.com/stephane-robin/crisprbuilder\_tb.git"\\
+repository = "https://github.com/stephane-robin/crisprbuilder\_tb.git"\\
+keywords = ["tuberculosis", "CRISPR"]}\end{tcolorbox}
+
+La rubrique [tool.poetry.dev-dependencies] définit le module qui procèdera aux tests unitaires concernant le fonctionnement du package.
+
+La rubrique [build-system] définit les versions de \textit{Poetry} et \textit{poetry.masonry.api} nécessaires à la construction du package.
 
 Pour installer ensuite les dépendances du projet au sein du package, il est nécessaire d’utiliser l’instruction
 \begin{tcolorbox}\texttt{\$ poetry install}\end{tcolorbox}
 qui crée les fichiers \textit{poetry.lock} et \textit{setup.py}, ainsi que le répertoire \textbf{crisprbuilder\_tb.egg-info} comprenant le code, les ressources et les métadonnées du projet. Ce format facilite la désinstallation et la mise à niveau du code, car le projet est essentiellement autonome dans un unique répertoire. Il autorise ainsi l'installation de plusieurs versions d'un même projet simultanément. Il s'agit d'un format adapté à la distribution de plugins pour des applications extensibles et des frameworks, similaire au format \textit{.jar} en Java. Il permet également de distribuer les gros packages en entités séparées. De son côté, \textit{poetry.lock} empêche les dépendances de télécharger la dernière version au moment de l’installation, en fixant la version utilisable par le package. Finalement, \textit{setup.py} n'est qu'un fichier temporaire servant à la construction de \textbf{crisprbuilder\_tb.egg-info}. 
+
 
 
 % CONSTRUCTION DU PACKAGE ET PUBLICATION -------------------
@@ -805,8 +831,8 @@ Le dossier \textbf{dist} contient les éléments suivants
 
 C'est le fichier \textit{README.md} qui est utilisé pour la description du projet par PyPI sur le site ou encore testPyPI sur le site test.pypi.org/project/crisprbuilder\_tb
 
-Avant de publier le package, il est bon de tester son comportement à l'installation. Pour cela, il est possible de le publier officieusement sur la plateforme de test \textit{testPyPI}. Il faut alors se placer à la racine du package et lancer en ligne de commande l'instruction
-\begin{tcolorbox}\texttt{\$ twine upload --repository testpypi dist/*}\end{tcolorbox}
+Avant de publier le package, il faut tester son comportement à l'installation en dehors de l'environnement de développement. Pour cela, il est possible de le publier officieusement sur la plateforme de test \textit{testPyPI}. Il faut alors se placer à la racine du package et lancer en ligne de commande l'instruction
+\begin{tcolorbox}\texttt{\$ twine upload \textemdash-repository testpypi dist/*}\end{tcolorbox}
 
 Il est donc possible de télécharger un package provenant d'index différents de PyPI. Par exemple, l'installation de \textit{crisprbuilder\_tb} à partir de \textit{testPyPI} se fait à l'aide de l'instruction
 \begin{tcolorbox}\texttt{\$ pip3 install -i https://test.pypi.org/simple/ crisprbuilder\_tb}\end{tcolorbox} ou si on précise la version du package
@@ -828,26 +854,17 @@ Les explications relatives à l’utilisation pratique de \textit{Poetry} sont r
 \subsection{Installation du package}
 
 Au moment de l'installation, que ce soit à partir de \textit{PyPI} ou d'un autre index tel que
-\textit{testPyPI}, l'utilisateur ne choisit pas l'emplacement d'installation. Celui-ci est définit automatiquement par le système en fonction des variables d'environnement. Par exemple, si on utilise une version particulière de Python avec \textit{pyenv}, alors le package pourra se trouver dans \textbf{~/.pyenv/versions/3.6.5/lib/python3.6/}. Il est également fréquent de le retrouver dans \textbf{~/.local/lib/python3.6/site-packages/} avec la plupart des différentes packages. Comme on ne connaît pas avec certitude l'emplacement dans lequel le package va s'installer, il convient de définir une variable d'environnement qui pointe vers l'emplacement d'installation.
+\textit{testPyPI}, l'utilisateur ne choisit pas l'emplacement d'installation. Celui-ci est définit automatiquement par le système en fonction des variables d'environnement. Par exemple, si on utilise une version particulière de Python avec \textit{pyenv}, alors le package pourra se trouver dans \textbf{\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6/}. Il est également fréquent de le retrouver dans \textbf{\raisebox{-1ex}{\textasciitilde}/.local/lib/python3.6/site-packages/} avec la plupart des différentes packages. Comme on ne connaît pas avec certitude l'emplacement dans lequel le package va s'installer, il convient de définir une variable d'environnement qui pointe vers l'emplacement d'installation.
 
 Lors de l'exécution du package, il est nécessaire de l'appeler par son nom en utilisant l'indice "-m" signifiant "module". Il n'est pas utile de préciser l'utilisation de Python3 si le répertoire courant travaille déjà avec cette version. En revanche, les chemins relatifs dans les modules du package ne devront pas utiliser le nom crisprbuilder\_tb car celui-ci ne sera pas reconnu, une fois à la racine du package. EXPLICATIONS A CHANGER
 
 Par défaut, Python cherche ses modules et packages dans la variable d'environnement \$PYTHONPATH. On peut alors consulter les différents chemins connus par cette variable d'environnement en exécutant l'instruction
-\begin{tcolorbox}\texttt{\$ python
->>> import sys\\
->>> print(sys.path)}\end{tcolorbox}
-PROBLEME AVEC LES 3 CHEVRONS
+\begin{tcolorbox}\texttt{\$ python\\
+$\ggg$ import sys\\
+$\ggg$ print(sys.path)}\end{tcolorbox}
 
 afin d'obtenir une réponse sous forme de liste du type
-\begin{tcolorbox}\texttt{['',\\ '\~/.pyenv/versions/3.6.5/lib/python36.zip',\\ '~/.pyenv/versions/3.6.5/lib/python3.6',\\ '~/.pyenv/versions/3.6.5/lib/python3.6/lib-dynload',\\ '~/.local/lib/python3.6/site-packages',\\ '~/.pyenv/versions/3.6.5/lib/python3.6/site-packages']}\end{tcolorbox}
-PROBLEME AVEC LES ESPACES CI DESSUS
-
-
-
-
-
-
-
+\begin{tcolorbox}\texttt{['',\\ '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python36.zip',\\ '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6',\\ '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6/lib-dynload',\\ '\raisebox{-1ex}{\textasciitilde}/.local/lib/python3.6/site-packages',\\ '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6/site-packages']}\end{tcolorbox}
 
 
 
@@ -876,20 +893,6 @@ s'est créé le package \textit{crisprbuilder\_tb} disposant de la structure sui
 
 
 
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
 % LE PACKAGE CRISPRBUILDER --------------------------------
 \chapter{Le package crisprbuilder\_tb}
 
@@ -910,30 +913,138 @@ DOC
 % LES TESTS DU PACKAGE -----------------------
 \chapter{Les tests du package}
 
-
-% LES PROBLEMES LIES AUX CHEMINS D'ACCES ----------------------
-\section{Les problèmes liés aux chemins d'accès}
+Plusieurs niveaux de tests ont sû être effectués pour valider le package avant publication.
 
 
-PEP-257: docstring conventions
+% TESTS UNITAIRES ---------
+\section{Les tests unitaires}
+
+Les tests unitaires consistent à évaluer individuellement les composants de l'application (parties de code autonomes, fonctions), en terme de qualité et validation des résultats attendus.
+
+Il a fallu comprendre le fonctionnement, puis tester chaque portion de code et chaque fonction individuellement avec des paramètres choisis avant de l'incorporer dans le module \textit{\_\_main\_\_.py}. Il a donc été nécessaire d'adapter au reste du code les fonctions déjà écrites, les documenter en anglais en vue d'une utilisation ultérieure, les rendre performantes en utilisant des compréhensions de listes, éviter les erreurs potentielles en rajoutant des blocs \textbf{try ... except} et des méthodes \textbf{.setdefault} et \textbf{.get}. il a fallu également créer de nouvelles fonctions pour éviter la répétition de code.
+
+Les premières difficultés sont apparues avec la lenteur de l'exécution du code. En effet, après avoir transformé en fonctions Python les lignes de commande sous Linux appelées via une instruction Python \textbf{subprocess.run} ou \textbf{os.system} ont été transformées en fonctions Python. Il s'est avéré que ce procédé conduisait à ralentir fortement le code lors des premiers tests de fonctionnement global de l'application, au vu de la taille importante des fichiers à lire par l'interpréteur. Nous avons donc décidé de revenir à l'utilisation de \textbf{subprocess.run} et \textbf{os.system}. Si cette démarche n'a aucune incidence pour la plateforme MacOS, elle imposerait en revanche un changement de code pour la plateforme Windows. Or, en fonction des versions du systéme Windows, l'utilisateur dispose d'une invite de commandes ou d'un PowerShell dont les instructions diffèrent. Nous avons donc choisi de conserver les appels aux instructions en lignes de commande pour les système Posix et d'utiliser des fonctions Python pour les systèmes Windows. Cela entraîne une relative lenteur de traitement pour ces derniers. 
+
+
+
+
+EXEMPLE DE LENTEUR
 
 % PYLINT --------------
-\section{Améliorer le code avec pylint}
+\subsection{Amélioration du code avec pylint}
 
-\textit{pylint} fournit une note entre 0 et 10 qui reflète le respect des règles du PEP-8\footnote{\textbf{PEP-8:} style guide for Python code}, notamment en ce qui concerne la lisibilité du code. Il reprend également certaines exigences relatives à ...
+\textit{pylint} fournit une note entre 0 et 10 qui reflète le respect des règles du PEP-8\footnote{\textbf{PEP-8:} style guide for Python code} et du PEP-257\footnote{\textbf{PEP-257:} docstring conventions}, notamment en ce qui concerne la lisibilité du code en terme d'espaces entre les signes, de longueur maximale chaque ligne (80 caractères) et d'indentation pour assurer la compréhension lors d'un retour à la ligne. \textit{pylint} reprend également les erreurs de structure de code, les manques de définition de variables ou les ambiguïtés dans l'utilisation de variables locales portant le même nom. Toutefois, il ne comprend pas bien l'utilisation des compréhensions de listes et des méthodes telles que \textit{.setdefault} pour récupérer la valeur d'une variable dans un dictionnaire. Par ailleurs, \textit{pylint} considère que les modules ne devraient pas excéder 1000 lignes. De ce fait, nous avons développé notre module initial \textit{\_\_main\_\_.py} en trois modules \textit{\_\_main\_\_.py, fonctions.py} et \textit{bdd.py} et nous nous sommes astreints aux règles du PEP-8 pour obtenir une note de 9, / 10 pour le module \textit{\_\_main\_\_.py} avec les commentaires suivants :
 
-Le fichier \textit{\_\_main\_\_.py} est noté 9, / 10 avec les commentaires suivants :
 XXX
 
-et le fichier \textit{support.py} est noté 9, / 10 avec les commentaires suivants :
+et une note de 9, / 10 pour le module \textit{fonctions.py} avec les commentaires suivants :
+
 XXX
 
-S'agissant d'un test statique, le code n'est pas exécuté et la performance du code n'est pas prise en compte lors de l'évaluation faite par \textit{pylint}. Ainsi, \textit{pylint} peut reprocher l'utilisation injustifiée de listes compréhensives, sans tenir compte de l'efficacité d'un tel traitement.
+Le module \textit{bdd.py} ne contenant que le dictionnaire \textit{Origines} n'a pas été évalué par \textit{pylint}.
+
+L'exécution de \textit{pylint} se fait directement en ligne de commande en se plaçant dans le dossier parent du fichier à tester (par exemple ici \textit{\_\_main\_\_.py}) avec l'instruction
+
+\begin{tcolorbox}\texttt{\$ pylint \_\_main\_\_.py}\end{tcolorbox}
+
+S'agissant d'un test statique, le code n'est pas exécuté et la performance du code n'est pas prise en compte lors de l'évaluation faite par \textit{pylint}. Ceci explique que \textit{pylint} peut reprocher l'utilisation injustifiée de listes compréhensives, sans tenir compte de l'efficacité d'un tel traitement.
+
+
+
+% LES TESTS D'INTEGRATION -----------------------------
+\section{les tests d'intégration}
+
+Les tests d'intégration permettent de valider l'inter-utilisabilité des différents modules entre eux dans leur environnement d'exploitation définitif.
+
+Pour cela, nous avons créé le package, nous nous sommes placés à la racine de l'application et avons exécuté le code du module \textit{\_\_main\_\_.py} directement.
+
+Dans le module \textit{\_\_main\_\_.py}, il faut d'abord importer le package \textit{crisprbuilder\_tb}, puis importer les modules \textit{crisprbuilder\_tb.fonctions.py} et \textit{crisprbuilder\_tb.bdd.py} sans oublier le nom du package sans quoi l'interpréteur ne parviendra pas à trouver ces modules même s'ils se situent à la racine du package.  
+
+
+
+% LES PROBLEMES LIES AUX CHEMINS D'ACCES ----------------------
+\subsection{Les problèmes liés aux chemins d'accès}
+
+L'incompatibilité des chemins d'accès entre les systèmes Posix et Windows a nécessité l'utilisation du module PurePath permettant de construire des chemins sans recourir aux caractères "/" ou "\textbackslash".
+
+
+
+% LES TESTS FONCTIONNELS ------------------------------------
+\section{Les tests fonctionnels}
+
+Les tests fonctionnels permettent de vérifier la conformité du package développé par rapport à l'objectif et aux fonctionnalités initiales.
+
+
+
+
+
+
+
+
+
+% LES TESTS CLI --------------------------------------------
+\section{Les tests CLI}
+
+L'objectif des tests CLI est de vérifier que les lignes de commandes prévues pour l'exécution du code fournissent bien le résultat escompté. Pour cela, nous testons ...
+
+
+
+
+
+% LES TESTS DE CONFIGURATION --------------------------------
+\section{Les tests de configuration}
+
+Les tests de configuration cherchent à évaluer l'impact des différents systèmes d'exploitations et environnements matériels sur le fonctionnement d'une application.
+
+Nous cherchons donc à définir la configuration matériele minimale afin que le package fonctionne correctement, ainsi que l'utilisabilité des différents systèmes d'exploitation.
+
+CONFIG MINI
+
+
+
+% LES TESTS DE PERFORMANCE ------------------------------------
+\section{Les tests de performance}
+
+
+L'objectif des tests de performance serait de valider la capacité des serveurs et réseaux pour supporter les charges d'accès importantes. Ceci ne s'applique pas vraiment à notre package, qui n'utilise, lors de ses requêtes fastq et blast, que les serveurs de NCBI.
+
+Ne s'agissant pas d'une application Web, l'utilisation simultanée de plusieurs ordinateurs exécutant le package n'a pas d'incidence sur celui-ci. Si les serveurs de NCBI sont occupés, les réponses obtenues n'en seront que différées.
+
+En revanche, augmentation des performances
 
 
 
 % AMELIORATION DES PERFORMANCES -----------------------
-\chapter{Amélioration des performances}
+\subsection{Amélioration des performances}
+
+
+
+
+% LES TESTS D'INSTALLATION -----------------------------
+\section{Les tests d'installation}
+
+Une fois que l'application a été validée et publiée sur testPyPI, nous avons contrôlé la documentation au sein des modules et des fonctions, dans le fichier \textit{README.md} et surtout dans le fichier \textit{crisprbuilder\_tb.md}. 
+
+Nous avons également vérifié le bon fonctionnement de l'installation sur un système Ubuntu 18.04 LTS, un MacOS Sierra et un Windows Vista. Les ordinateurs utilisés ne disposaient pas de l'environnement de travail nécessaire à l'application avant l'installation de celle-ci. Les installations ont été testées de bout en bout avec les commandes
+
+COMMANDES D'INSTALLATION
+
+Le même procédé a finalement été appliqué au package publié sur PyPI.
+
+
+
+
+
+
+
+% LES TESTS DE NON REGRESSION ---------------------------------
+\section{Les tests de non-régression}
+
+Ce type de tests permet de vérifier que les modifications apportées au programme durant l'ensemble de la phase de test n'ont pas altérées le fonctionnement du package.
+
+
+
+
 
 
 % CONCLUSION ----------------------
