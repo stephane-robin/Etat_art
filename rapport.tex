@@ -271,11 +271,18 @@ Je voudrais également souligner la patience dont ils ont fait preuve pour m'exp
 % PRESENTATION DU PROJET --------------------------------	
 \section{Présentation du projet}
 
-Dans le cadre d'un travail de recherche en bio-informatique, Christophe Guyeux, Jean-Claude Charr, ... ont créé du code "brut" leur permettant d'afficher et de stocker des données relatives à une \textit{SRA Sequence Read Archive} particulière. Ce code doit être rassemblé, réorganisé, nettoyé pour être conforme aux critères PEP. Il doit être rendu fonctionnel puis plus efficace si possible. Il doit s'exécuter en utilisant un \textit{CLI Command Line Interface}, et doit finalement être empaqueté pour qu'un utilisateur puisse l'utiliser quelque soit sa plateforme (Linux, MacOS ou Windows) une fois installé. Pour cela, il est nécessaire de publier ce package sur PyPI et de le documenter clairement en anglais pour en faciliter l'utilisation.
-
-Notons qu'à terme, l'objectif du package sera de proposer une reconstitution du \textit{CRISPR}.
+Dans le cadre d'un travail de recherche en bio-informatique, Christophe Guyeux, Jean-Claude Charr, Christophe Sola et Guislaine Refrégier ont créé du code "brut" leur permettant d'afficher et de stocker des données relatives à une SRA\footnote{\textbf{SRA:} Sequence Read Archive} particulière. Ce code doit être rassemblé, réorganisé, nettoyé pour être conforme aux critères PEP\footnote{\textbf{PEP:} Python Enhancement Proposals}. Il doit être rendu fonctionnel puis plus efficace si possible. Il doit s'exécuter en utilisant un \textit{Command Line Interface}, et doit finalement être empaqueté pour qu'un utilisateur puisse l'utiliser quelque soit sa plateforme (Linux, MacOS ou Windows) une fois installé. Pour cela, il est nécessaire de publier ce package sur PyPI\footnote{\textbf{PyPI:} Python Package Index} et de le documenter clairement en anglais pour en faciliter l'utilisation.
 
 Lorsque nous avons défini les objectifs du stage, il est immédiatement ressorti l'importance de lui donner un caractère pratique, qui pourrait éventuellement être transposable dans le milieu professionnel. La reconstruction du programme à partir d'éléments de code, la nécessité de créer localement un environnement spécifique de travail et d'installer automatiquement cet environnement sur les ordinateurs des utilisateurs, la possibilité de faire fonctionner le package sur différentes plateformes, les différents tests effectués, la création et publication du package sont autant de compétences pratiques utiles, auxquelles il faut se confronter pour bien en comprendre les difficultés. Par ailleurs, la construction de ce package a nécessité de comprendre le fonctionnement de termes clés en bio-informatique afin de pouvoir travailler dans ce cadre métier particulier. Ceci a conduit à une synthèse de l'état de l'art fortement orientée vers la biologie et plus particulièrement le \textit{CRISPR}.
+
+Nous allons voir en détail dans ce document que l'élaboration de ce package m'a permis de développer les compétences suivantes :
+\begin{itemize}
+\item création et définition d'un environnement de développement
+\item création et publication d'un package
+\item travail sur le code
+\item utilisation de l'outil de versionnement \textit{Git}
+\item test
+\end{itemize}
 
 
 
@@ -559,25 +566,26 @@ Un tableau comparatif de différents spoligotypes en fonction des lignées de \t
 % CHOIX DES OUTILS -----------------------------
 \chapter{Le choix des outils}
 
-Note préalable : toutes les explications données dans ce chapitre concernent les plateformes Linux et sont transposables d'une moindre mesure sur MacOS.
+Note préalable : toutes les explications données dans ce chapitre concernent les plateformes Linux et sont transposables en une moindre mesure sur MacOS.
 
 
 
 
-% CHOIX DE L'ENVIRONNEMENT DE TRAVAIL -----------------------------
+% L'ENVIRONNEMENT DE DEVELOPPEMENT -----------------------------
 \section{L'environnement de développement}
 
-Avant de créer le package, il faut commencer par construire localement le programme. Pour ce faire, nous définissons un environnement de développement, qui nous servira par ailleurs pour procéder à certains tests.
+Avant de créer le package, il faut commencer par construire localement le programme. Pour ce faire, nous définissons un environnement de développement, qui nous servira également à effectuer des tests.
  
-L'outil de création d'environnement virtuel \textit{venv} \index{venv} nous permet de créer un environnement de développement afin de tester les codes du projet. \textit{venv} commence par constituer un dossier contenant tous les exécutables nécessaires à l'utilisation des modules d'un projet Python. Par exemple, dans le cadre de notre étude, nous créons un répertoire \textbf{biologie}, et une fois dedans nous créons à l'aide de \textit{venv} un environnement de développement \textbf{env\_bio} que nous activons avant de nous placer dedans pour l'utiliser. 
- \begin{tcolorbox}\texttt{\$ cd biologie\\
-\$ python3 -m venv env\_bio\\
-\$ source env\_bio/bin/activate\\
-(env\_bio)\$ cd env\_bio}\end{tcolorbox}
+L'outil de création d'environnement virtuel \textit{venv} \index{venv} nous permet de créer un environnement de développement afin de tester les codes du projet. \textit{venv} commence par constituer un dossier contenant tous les exécutables nécessaires à l'utilisation des modules d'un projet Python. 
 
-Il est possible de confirmer que l'interpréteur Python se situe bien dans l'environnement de développement grâce à l'instruction
-\begin{tcolorbox}\texttt{\$ which python}\end{tcolorbox}
-qui va renvoyer \textbf{.../env\_bio/bin/python} au lieu de \textbf{/usr/bin/python}
+Dans le cadre de notre étude, nous créons un répertoire \textbf{biologie}, nous nous plaçons dedans puis nous créons, à l'aide de \textit{venv}, un environnement de développement \textbf{env\_bio}. 
+\begin{tcolorbox}\texttt{\$ cd biologie\\
+\$ python3 -m venv env\_bio}\end{tcolorbox}
+
+Dans cet environnement vient d'être créé le répertoire \textbf{bin} comprenant notamment le fichier \textit{activate}, qui permet d'activer les fonctionnalités de notre environnement.
+Cette activation ne peut se faire qu'à partir du répertoire parent \textbf{biologie}. Il faut ensuite se placer à l'intérieur de \textbf{env\_bio} pour définir les modules utiles à l'environnement. 
+ \begin{tcolorbox}\texttt{\$ source env\_bio/bin/activate\\
+(env\_bio)\$ cd env\_bio}\end{tcolorbox}
 
 Il convient de définir la version de Python utilisée dans cet environnement de développement. Pour cela, le module \textit{pyenv} \index{pyenv} nous permet de définir une version de Python comme version locale de travail dans l'environnement. 
 
@@ -602,11 +610,15 @@ où le caractère "*" indique la version active dans le répertoire courant.
 On peut alors choisir la version 3.6.2 pour notre environnement de travail. Il suffit de se placer dans cet environnement et d'exécuter l'instruction
 \begin{tcolorbox}\texttt{\$ pyenv local 3.6.2}\end{tcolorbox}
 
+En fait, \textit{pyenv} s'insère dans la variable d'environnement PATH et devient l'exécutable appelé par le système d'exploitation. On peut voir que l'interpréteur Python utilise bien cet environnement \textit{pyenv} pour appeler Python grâce à l'instruction
+\begin{tcolorbox}\texttt{\$ which python}\end{tcolorbox}
+qui renvoie \textbf{TILDE/.pyenv/shims/python} au lieu de \textbf{/usr/bin/python}.
+
 A noter que dans un cadre plus général, l'instruction
 \begin{tcolorbox}\texttt{\$ python --version}\end{tcolorbox}
 permet de connaître quelle version de Python est utilisée dans le répertoire courant, qu'on se trouve dans un environnement de développement ou non.
 
-Finalement, nous installons dans cet environnement les dépendances nécessaires à l'aide de l'outil \textit{pip} \index{pip} :
+Finalement, nous installons dans notre environnement de développement les dépendances nécessaires à l'aide de l'outil \textit{pip} \index{pip} :
 \begin{itemize}
 \item pkg-resources==0.0.0 (installé automatiquement)
 \item \begin{tcolorbox}\texttt{\$ pip install xmltodict}\end{tcolorbox}
@@ -659,12 +671,7 @@ pour commencer ces installations.
 
 Il est important de regrouper l'ensemble des modules nécessaires au fonctionnement du package dans un répertoire portant le même nom que ce package, accompagné d'un fichier \textit{\_\_init\_\_.py}, sinon l'archive et la distribution du package se construiront à vide. L'installation à partir de PyPI fonctionnera mais l'exécution du package restera inactive.
 
-Avec la PEP-518\footnote{\textbf{PEP-518:} specifying minimum build system requirements for Python projects}, le PyPA\footnote{\textbf{PyPA:} Python Packaging Authority} a proposé un nouveau standard au format \textit{pyproject.toml}, qui remplace les fichiers setup.py, requirements.txt, setup.cfg, MANIFEST.in et Pipfile. C'est ce nouveau standard qui est utilisé lors de la création d'un package avec Poetry.
-
-La commande poetry new nomPaquet permet de générer le squelette de l'application, comprenant les tests unitaires, le fichier pyproject.toml, le fichier README.rst que nous changeons au format markdown README.md, le répertoire du projet et le fichier init.py. Nous rajoutons un fichier LICENSE, les composants principaux de la librairie, le présent rapport de stage et un fichier .gitignore pour la gestion des versions.
-	
-\includegraphics[width=9cm]{package_tree.png}
-
+Avec la PEP-518\footnote{\textbf{PEP-518:} specifying minimum build system requirements for Python projects}, le PyPA\footnote{\textbf{PyPA:} Python Packaging Authority} a proposé un nouveau standard au format \textit{pyproject.toml}, qui remplace les fichiers \textit{setup.py, requirements.txt, setup.cfg}, et \textit{MANIFEST.in}. C'est ce nouveau standard qui est utilisé lors de la création d'un package avec Poetry.
 
 	La plupart des systèmes d'exploitation incorporent Python2.7 par défaut. L'environnement de travail devra donc expressément définir Python3 comme version pour le projet. Nous avons choisi la version 3.6.5 de Python dans le fichier package\_mymtc.toml.
 
@@ -731,17 +738,23 @@ Pour parvenir à un tel résultat, et comme expliqué précédemment, on commenc
 
 Puis la création du projet se fait à l'aide de la commande
 \begin{tcolorbox}\texttt{poetry new crisprbuilder\_tb}\end{tcolorbox}
-qui va créer un répertoire \textit{crisprbuilder\_tb} contenant les éléments suivants :
+qui permet de générer le squelette de l'application contenant les éléments suivants
 
 \includegraphics[width=6cm]{nom_package_tree.png}
 
+\begin{itemize}
+\item le répertoire \textbf{crisprbuilder\_tb} contient initialement le fichier \textit{\_\_init\_\_.py} et c'est dans ce répertoire que nous allons rajouter tous les composants principaux du code  \textit{\_\_main\_\_.py, fonctions.py, bdd.py} et les répertoires \textbf{data}, \textbf{doc}, \textbf{REP} et \textbf{tmp} avec leurs contenus. En effet, la création de l'archive va compresser ce répertoire \textbf{crisprbuilder\_tb} afin de le publier. Il devra contenir tout ce qui est nécessaire au fonctionnement de l'application. Lors de sa création, le fichier \textit{\_\_init\_\_.py} contenait uniquement la version du package. Pour éviter tout conflit de version avec le fichier \textit{pyproject.toml}, nous vidons le fichier \textit{\_\_init\_\_.py} du répertoire \textit{crisprbuilder\_tb}
+\item le répertoire \textbf{tests} contient les tests unitaires
+\item le fichier \textit{README.rst} fournit une brève description du package, et nous le modifions au format markdown \textit{README.md} à l'usage plus répandu
+\item le fichier \textit{pyproject.toml} remplace les anciens standards de définition de packages : \textit{setup.exe} et \textit{requirements.txt}. Il précise notamment le nom du package, sa version, sa description, l’emplacement de son dépôt (par exemple sur GitHub), l’adresse email de l’auteur du package, et la version des dépendances
+\item nous rajoutons à la racine du package un fichier \textit{LICENSE}, un fichier \textit{.gitignore} pour la gestion des versions. 
+\end{itemize}
+
 Notons qu'il est préférable de choisir un nom de package en minuscules pour éviter toute confusion car, bien que les majuscules soient conservées sur PyPI, l'appel du package en ligne de commande devra s'effectuer en minuscules. En outre, par convention il faut éviter le symbole '-' qui est automatiquement remplacé par '\_' lors de la création du package.
 
-Le fichier \textit{pyproject.toml} remplace les anciens standards de définition de packages : \textit{setup.exe} et \textit{requirements.txt}. Il précise notamment le nom du package, sa version, sa description, l’emplacement de son dépôt (par exemple sur GitHub), l’adresse email de l’auteur du package, et la version des dépendances.
-
-En ce qui concerne la version des dépendances, il faut tout d'abord se placer dans le répertoire \textbf{crisprbuilder\_tb} puis utiliser l’instruction
+En ce qui concerne la gestion des versions de dépendances, il faut tout d'abord se placer dans le répertoire \textbf{crisprbuilder\_tb} puis utiliser l’instruction
 \begin{tcolorbox}\texttt{\$ poetry add nom\_dependance}\end{tcolorbox}  
-qui assure la compatibilité de la dépendance \textit{nom\_dependance} avec le package \textit{crisprbuilder\_tb}. Il est également possible d’imposer certaines contraintes sur les versions des dépendances ou encore de rentrer manuellement les dépendances dans le fichier \textit{crisprbuilder\_tb.toml}, mais l’instruction 
+qui assure la compatibilité de la dépendance \textit{nom\_dependance} avec le package \textit{crisprbuilder\_tb}. Il est également possible d’imposer certaines contraintes sur les versions des dépendances ou encore de rentrer manuellement les dépendances dans le fichier \textit{pyproject.toml}, mais l’instruction 
 \begin{tcolorbox}\texttt{\$ poetry add nom\_dependance}\end{tcolorbox}  
 offre l’avantage de chercher automatiquement une version compatible de la dépendance, puis de l’inscrire dans \textit{pyproject.toml}.
 
@@ -774,9 +787,23 @@ qui renvoie
 \begin{tcolorbox}\texttt{All set !}\end{tcolorbox}
 si le package ne comporte aucune discordance et peut être publié.
 
-A ce stade, la structure du package est alors la suivante
+Avant d'être publié, la structure du package est alors la suivante
 
 \includegraphics[width=6cm]{tree_level1.png}
+
+Le dossier \textbf{crisprbuilder\_tb} contient les éléments suivants
+
+\includegraphics[width=8cm]{rep_crispr.png}
+
+Le dossier \textbf{crisprbuilder\_tb.egg-info} contient les éléments suivants
+
+\includegraphics[width=5cm]{rep_crispr_egg.png}
+
+Le dossier \textbf{dist} contient les éléments suivants
+
+\includegraphics[width=9cm]{rep_dist.png}
+
+C'est le fichier \textit{README.md} qui est utilisé pour la description du projet par PyPI sur le site ou encore testPyPI sur le site test.pypi.org/project/crisprbuilder\_tb
 
 Avant de publier le package, il est bon de tester son comportement à l'installation. Pour cela, il est possible de le publier officieusement sur la plateforme de test \textit{testPyPI}. Il faut alors se placer à la racine du package et lancer en ligne de commande l'instruction
 \begin{tcolorbox}\texttt{\$ twine upload --repository testpypi dist/*}\end{tcolorbox}
@@ -914,6 +941,7 @@ S'agissant d'un test statique, le code n'est pas exécuté et la performance du 
 
 Ce stage m'a ouvert l'esprit vers le domaine de la bioinformatique et m'a permis de réfléchir à 
 
+Notons qu'à terme, l'objectif du package sera de proposer une reconstitution du \textit{CRISPR}.
 	
 	
 PROBLEME
