@@ -288,16 +288,6 @@ Nous allons voir en détail dans ce document que l'élaboration de ce package m'
 
 
 
-% NOTATIONS -------------------------
-\section{La notion de package}
-
-Définissons tout d'abord le vocabulaire que nous allons utiliser dans ce rapport de stage :
-\begin{itemize}
-\item module : un fichier contenant du code Python,
-\item package : un répertoire contenant des modules Python,
-\item distribution : une archive de modules ou packages (au format tar, whl, ...)
-\end{itemize}
-
 
 
 % ETAT DE L'ART -------------------------------------
@@ -565,6 +555,60 @@ Un tableau comparatif de différents spoligotypes en fonction des lignées de \t
 \end{figure}
 	
 
+
+% LA NOTION DE PACKAGE ---------------------------
+\chapter{La notion de package}
+
+
+% VOCABULAIRE -------------------------
+\section{Vocabulaire}
+
+Définissons tout d'abord le vocabulaire que nous allons utiliser dans ce rapport de stage :
+\begin{itemize}
+\item module : un fichier contenant du code Python,
+\item package : un répertoire contenant des modules Python,
+\item distribution : une archive de modules ou packages (au format tar, whl, ...)
+\end{itemize}
+
+
+% COMPOSITION D'UN PACKAGE STANDARD ------------------
+\section{Composition d'un package standard}
+
+Un package standard comporte obligatoirement un fichier \textit{\_\_init\_\_.py} qui va définir la version du projet et le nom du module de lancement du programme (souvent \textit{\_\_main\_\_.py}). Il est toutefois acceptable et parfois même recommandé de conserver un fichier \textit{\_\_init\_\_.py} vide. Par ailleurs, chaque sous dossier vide ou contenant des modules Python devra également contenir un fichier \textit{\_\_init\_\_.py}
+
+Les fichiers \textit{setup.py},  \textit{requirements.txt}, \textit{LICENSE},  \textit{README.md} et \textit{MANIFEST.in} sont également nécessaires.  
+\begin{itemize}
+\item \textit{setup.py} est le script de construction et configuration destiné au \textit{setuptools}. Il définit notamment le nom et la version du package, ainsi que les fichiers qu'il contient. Il sert également d'interface en ligne de commande relative aux différentes fonctionnalités du package. \textit{setup.cfg} est un fichier d'initialisation qui contient les options par défaut des commandes du \textit{setup.py}.
+\item \textit{requirements.txt} permet l'installation des dépendances à l'aide d'un unique fichier contenant un module à installer par ligne. Il nécessite l'instruction 
+\begin{tcolorbox}\texttt{pip install -r requirements.txt}\end{tcolorbox}
+pour commencer ces installations.
+\item \textit{LICENSE} définit les termes légaux de la distribution. De nombreux pays n'autorisent pas l'utilisation ou la distribution d'un package qui ne dispose pas de licence.
+\item \textit{README.md} décrit l'objectif du package, son installation, la nature de ses dépendances et les principales fonctionnalités.
+\item \textit{MANIFEST.in} permet d'inclure dans le package certains fichiers qui ne sont pas automatiquement intégrés. 
+\end{itemize}
+
+Il est important de regrouper l'ensemble des modules nécessaires au fonctionnement du package dans un répertoire portant le même nom que ce package, accompagné d'un fichier \textit{\_\_init\_\_.py}, sinon l'archive et la distribution du package se construiront à vide. L'installation à partir de PyPI fonctionnera mais l'exécution du package restera inactive.
+
+Avec la PEP-518\footnote{\textbf{PEP-518:} specifying minimum build system requirements for Python projects}, le PyPA\footnote{\textbf{PyPA:} Python Packaging Authority} a proposé un nouveau standard au format \textit{pyproject.toml}, qui remplace les fichiers \textit{setup.py, requirements.txt, setup.cfg}, et \textit{MANIFEST.in}. C'est ce nouveau standard qui est utilisé lors de la création d'un package avec Poetry.
+
+Les paquets construits pour des systèmes Unix (Linux et MacOS) nécessitent l'incorporation de fichiers build.sh et meta.yaml. Les paquets construits pour les systèmes Windows nécessitent l'incorporation des fichiers bld.bat et meta.yaml. A VERIFIER DANS LE CAS DE POETRY
+
+
+% QUELLE LICENCE CHOISIR ------------------
+\section{Quelle licence choisir ?}
+	
+Trois licences retiennent notre attention. En voici les principales caractéristiques :
+\begin{itemize}
+\item	la licence MIT, courte et permissive, préserve exclusivement le copyright et les avis de licence. Toute modification ultérieure peut être distribuée suivant une licence différente et notamment utilisée à des fins personnelles ou commerciales, sans obligation de publication des codes source,
+\item	la licence Apache (2.0) est également permissive et sensiblement similaire dans ses conditions à la licence MIT. Toutefois, elle requiert de préciser les modifications effectuées lors de nouvelles distributions,
+\item	la licence GNU (GPL v3.0) préserve également le copyright et les avis de licence. Elle peut être utilisée à des fins personnelles et commerciales. Elle impose en outre, en cas de modification, la publication complète des codes et l'utilisation de la licence GNU pour les nouvelles distributions.
+\end{itemize}
+
+Dans le cadre de ce projet, aucune spécification restrictive n'étant requise, nous avons choisi la licence MIT qui est simple et peu contraignante.
+
+
+
+
 % CHOIX DES OUTILS -----------------------------
 \chapter{Le choix des outils}
 
@@ -655,47 +699,16 @@ On pourra retrouver les modules installés via \textit{pip} dans un fichier \tex
  Notons que l'outil Poetry quant à lui, regroupe ces modules dans un fichier appelé \textit{pyproject.toml}.
 
 
+% L'ENVIRONNEMENT DE TEST ----------------------
+\section{L'environnement de test}
 
 
-% COMPOSITION D'UN PACKAGE STANDARD ------------------
-\section{Composition d'un package standard}
 
-Un package standard comporte obligatoirement un fichier \textit{\_\_init\_\_.py} qui va définir la version du projet et le nom du module de lancement du programme (souvent \textit{\_\_main\_\_.py}). Il est toutefois acceptable et parfois même recommandé de conserver un fichier \textit{\_\_init\_\_.py} vide. Par ailleurs, chaque sous dossier vide ou contenant des modules Python devra également contenir un fichier \textit{\_\_init\_\_.py}
-
-Les fichiers \textit{setup.py},  \textit{requirements.txt}, \textit{LICENSE},  \textit{README.md} et \textit{MANIFEST.in} sont également nécessaires.  
-\begin{itemize}
-\item \textit{setup.py} est le script de construction et configuration destiné au \textit{setuptools}. Il définit notamment le nom et la version du package, ainsi que les fichiers qu'il contient. Il sert également d'interface en ligne de commande relative aux différentes fonctionnalités du package. \textit{setup.cfg} est un fichier d'initialisation qui contient les options par défaut des commandes du \textit{setup.py}.
-\item \textit{requirements.txt} permet l'installation des dépendances à l'aide d'un unique fichier contenant un module à installer par ligne. Il nécessite l'instruction 
-\begin{tcolorbox}\texttt{pip install -r requirements.txt}\end{tcolorbox}
-pour commencer ces installations.
-\item \textit{LICENSE} définit les termes légaux de la distribution. De nombreux pays n'autorisent pas l'utilisation ou la distribution d'un package qui ne dispose pas de licence.
-\item \textit{README.md} décrit l'objectif du package, son installation, la nature de ses dépendances et les principales fonctionnalités.
-\item \textit{MANIFEST.in} permet d'inclure dans le package certains fichiers qui ne sont pas automatiquement intégrés. 
-\end{itemize}
-
-Il est important de regrouper l'ensemble des modules nécessaires au fonctionnement du package dans un répertoire portant le même nom que ce package, accompagné d'un fichier \textit{\_\_init\_\_.py}, sinon l'archive et la distribution du package se construiront à vide. L'installation à partir de PyPI fonctionnera mais l'exécution du package restera inactive.
-
-Avec la PEP-518\footnote{\textbf{PEP-518:} specifying minimum build system requirements for Python projects}, le PyPA\footnote{\textbf{PyPA:} Python Packaging Authority} a proposé un nouveau standard au format \textit{pyproject.toml}, qui remplace les fichiers \textit{setup.py, requirements.txt, setup.cfg}, et \textit{MANIFEST.in}. C'est ce nouveau standard qui est utilisé lors de la création d'un package avec Poetry.
-
-Les paquets construits pour des systèmes Unix (Linux et MacOS) nécessitent l'incorporation de fichiers build.sh et meta.yaml. Les paquets construits pour les systèmes Windows nécessitent l'incorporation des fichiers bld.bat et meta.yaml. A VERIFIER DANS LE CAS DE POETRY
-
-
-% QUELLE LICENCE CHOISIR ------------------
-\subsection{Quelle licence choisir ?}
-	
-Trois licences retiennent notre attention. En voici les principales caractéristiques :
-\begin{itemize}
-\item	la licence MIT, courte et permissive, préserve exclusivement le copyright et les avis de licence. Toute modification ultérieure peut être distribuée suivant une licence différente et notamment utilisée à des fins personnelles ou commerciales, sans obligation de publication des codes source,
-\item	la licence Apache (2.0) est également permissive et sensiblement similaire dans ses conditions à la licence MIT. Toutefois, elle requiert de préciser les modifications effectuées lors de nouvelles distributions,
-\item	la licence GNU (GPL v3.0) préserve également le copyright et les avis de licence. Elle peut être utilisée à des fins personnelles et commerciales. Elle impose en outre, en cas de modification, la publication complète des codes et l'utilisation de la licence GNU pour les nouvelles distributions.
-\end{itemize}
-
-Dans le cadre de ce projet, aucune spécification restrictive n'étant requise, nous avons choisi la licence MIT qui est simple et peu contraignante.
 
 	
 
-% CHOIX DE L'OUTIL D'EMPAQUETAGE --------------------
-\subsection{Choix de l'outil d'empaquetage}
+% L'OUTIL D'EMPAQUETAGE --------------------
+\section{L'outil d'empaquetage}
 	
 	Le PyPA recommande l'utilisation de :
 \begin{itemize}
@@ -720,11 +733,11 @@ Nous avons donc décidé de construire notre package en utilisant \textit{Poetry
 	
 
 % POETRY ---------------
-\section{Poetry}
+\chapter{Construction du package avec Poetry}
 
 
 % CREATION DU PACKAGE ---------------
-\subsection{Création du package et gestion des dépendances}
+\section{Création du package et gestion des dépendances}
 
 Pour créer notre package, il ne faut pas commencer par définir un dossier du nom du package, car cela sera automatiquement fait par Poetry. En revanche, il faut s'assurer que Python utilise bien la version 3 pour tout le travail de construction, ce qui se traduit par exemple par une variable d'environnement du type \textbf{\raisebox{-1ex}{\textasciitilde}/.poetry/\_vendor/py3.6} en réponse à l'instruction 
 \begin{tcolorbox}\texttt{poetry build}\end{tcolorbox}
@@ -801,7 +814,7 @@ qui crée les fichiers \textit{poetry.lock} et \textit{setup.py}, ainsi que le r
 
 
 % CONSTRUCTION DU PACKAGE ET PUBLICATION -------------------
-\subsection{Construction du package et publication}
+\section{Construction du package et publication}
 
 Pour empaqueter le projet, il faut utiliser l’instruction
 \begin{tcolorbox}\texttt{\$ poetry build}\end{tcolorbox}
@@ -851,7 +864,7 @@ Les explications relatives à l’utilisation pratique de \textit{Poetry} sont r
 
 
 % INSTALLATION DU PACKAGE --------------------------
-\subsection{Installation du package}
+\section{Installation du package}
 
 Au moment de l'installation, que ce soit à partir de \textit{PyPI} ou d'un autre index tel que
 \textit{testPyPI}, l'utilisateur ne choisit pas l'emplacement d'installation. Celui-ci est définit automatiquement par le système en fonction des variables d'environnement. Par exemple, si on utilise une version particulière de Python avec \textit{pyenv}, alors le package pourra se trouver dans \textbf{\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6/}. Il est également fréquent de le retrouver dans \textbf{\raisebox{-1ex}{\textasciitilde}/.local/lib/python3.6/site-packages/} avec la plupart des différentes packages. Comme on ne connaît pas avec certitude l'emplacement dans lequel le package va s'installer, il convient de définir une variable d'environnement qui pointe vers l'emplacement d'installation.
@@ -869,7 +882,7 @@ afin d'obtenir une réponse sous forme de liste du type
 
 
 % LA STRUCTURE DU PACKAGE CONSTRUIT PAR POETRY -------------------------
-\subsection{La structure du package construit par Poetry}
+\section{La structure du package construit par Poetry}
 
 Le répertoire \textbf{crisprbuilder\_tb} contient obligatoirement à la racine les fichiers \textit{\_\_init\_\_.py} et \textit{\_\_main\_\_.py}
 
@@ -899,6 +912,19 @@ s'est créé le package \textit{crisprbuilder\_tb} disposant de la structure sui
 % FONCTIONNEMENT DU PACKAGE -----------------------
 \section{Fonctionnement du package crisprbuilder\_tb}
 
+La compréhension des chemins d'accès est au coeur du fonctionnement d'un package
+
+Le package \textit{crisprbuilder\_tb} ne fonctionne pas comme un module qu'on importerait en début de code Python afin d'en utiliser les différentes méthodes.
+
+Par ailleurs, il n'est pas prévu que l'utilisateur se place dans le package pour exécuter directement le module \textit{\_\_main\_\_.py} en écrivant en ligne de commande
+\begin{tcolorbox}\texttt{\$ python crisprbuilder\_tb \textemdash \textemdash collect ERR2704808}\end{tcolorbox}
+sans le "-m", car dans ce cas l'exécution entraînerait la levée d'une exception due aux différents chemins d'accès qui seraient erronés. (explications des chemins d'accès ci-dessous)
+
+L'exécution du package est réalisée en ligne de commande, et une fois que l'utilisateur a écrit 
+\begin{tcolorbox}\texttt{\$ python -m crisprbuilder\_tb \textemdash \textemdash collect ERR2704808}\end{tcolorbox}
+
+l'interpréteur va chercher le package à son emplacement de stockage XXX et l'exécute comme si ce dernier se trouvait dans le répertoire courant. Pourtant, le package ne se trouve pas dans le répertoire courant et tous les chemins d'accès aux bases de données et modules du package doivent tenir compte de la variable d'environnement placée au début de chaque chemin d'accès.
+
 
 % DESCRIPTION DU PACKAGE ---------------------------
 \section{Description détaillée du package}
@@ -913,13 +939,18 @@ DOC
 % LES TESTS DU PACKAGE -----------------------
 \chapter{Les tests du package}
 
-Plusieurs niveaux de tests ont sû être effectués pour valider le package avant publication.
+Plusieurs niveaux de tests ont dû être effectués pour valider le package avant publication.
+\begin{itemize}
+\item l'environnement de développement nous a servi pour effectuer les tests unitaires, les tests d'intégration, les tests de performance et les tests de non-régression,
+\item l'environnement d'évaluation nous a servi pour effectuer les tests fonctionnels, les tests CLI, les tests de configuration et les tests d'installation
+\end{itemize}
+
 
 
 % TESTS UNITAIRES ---------
 \section{Les tests unitaires}
 
-Les tests unitaires consistent à évaluer individuellement les composants de l'application (parties de code autonomes, fonctions), en terme de qualité et validation des résultats attendus.
+Les tests unitaires consistent à évaluer individuellement les composants de l'application (parties de code autonomes, fonctions), en terme de qualité et validation des résultats attendus. Nous réalisons les tests unitaire dans l'environnement de développement dans lequel nous avons construit notre application.
 
 Il a fallu comprendre le fonctionnement, puis tester chaque portion de code et chaque fonction individuellement avec des paramètres choisis avant de l'incorporer dans le module \textit{\_\_main\_\_.py}. Il a donc été nécessaire d'adapter au reste du code les fonctions déjà écrites, les documenter en anglais en vue d'une utilisation ultérieure, les rendre performantes en utilisant des compréhensions de listes, éviter les erreurs potentielles en rajoutant des blocs \textbf{try ... except} et des méthodes \textbf{.setdefault} et \textbf{.get}. il a fallu également créer de nouvelles fonctions pour éviter la répétition de code.
 
@@ -954,7 +985,7 @@ S'agissant d'un test statique, le code n'est pas exécuté et la performance du 
 % LES TESTS D'INTEGRATION -----------------------------
 \section{les tests d'intégration}
 
-Les tests d'intégration permettent de valider l'inter-utilisabilité des différents modules entre eux dans leur environnement d'exploitation définitif.
+Les tests d'intégration permettent de valider l'inter-utilisabilité des différents modules entre eux dans leur environnement d'exploitation définitif. Nous réalisons également les tests d'intégration dans l'environnement de développement que nous avons construit.
 
 Pour cela, nous avons créé le package, nous nous sommes placés à la racine de l'application et avons exécuté le code du module \textit{\_\_main\_\_.py} directement.
 
@@ -972,9 +1003,11 @@ L'incompatibilité des chemins d'accès entre les systèmes Posix et Windows a n
 % LES TESTS FONCTIONNELS ------------------------------------
 \section{Les tests fonctionnels}
 
-Les tests fonctionnels permettent de vérifier la conformité du package développé par rapport à l'objectif et aux fonctionnalités initiales.
+Les tests fonctionnels permettent de vérifier la conformité du package développé par rapport à l'objectif et aux fonctionnalités initiales. A partir des tests fonctionnels, nous n'utilisons plus l'environnement de développement, mais un environnement de test qui peut être soit une machine virtuelle, soit un environnement neutre dénué de toute spécification, mais capable d'installer le package.
 
+L'objectif initial était de fournir un package qui fournit des informations au \textit{SRA} dont la référence serait saisie en ligne de commande par un utilisateur. Ce dernier pourrait également fournir une liste de \textit{SRA} dans un fichier texte avec un \textit{SRA} par ligne. Il pourrait également consulter et modifier la base de données \textit{lineage.csv}.
 
+Nous fournissons au package un fichier au format \textit{.txt} comprenant plus qu'un \textit{SRA} par ligne. RESULTATS  
 
 
 
@@ -985,7 +1018,22 @@ Les tests fonctionnels permettent de vérifier la conformité du package dévelo
 % LES TESTS CLI --------------------------------------------
 \section{Les tests CLI}
 
-L'objectif des tests CLI est de vérifier que les lignes de commandes prévues pour l'exécution du code fournissent bien le résultat escompté. Pour cela, nous testons ...
+L'objectif des tests CLI est de vérifier que les lignes de commandes prévues pour l'exécution du code fournissent bien le résultat escompté. Pour cela, nous testons les commandes
+
+\begin{tcolorbox}\texttt{\$ python -m crisprbuilder\_tb \textemdash \textemdash help}\end{tcolorbox}
+
+fournit bien les informations relatives aux options du package, à savoir
+A COMPLETER ???
+
+\begin{tcolorbox}\texttt{\$ python -m crisprbuilder\_tb \textemdash \textemdash change 0}\end{tcolorbox}
+
+\begin{tcolorbox}\texttt{\$ python -m crisprbuilder\_tb \textemdash \textemdash remove 0}\end{tcolorbox}
+
+\begin{tcolorbox}\texttt{\$ python -m crisprbuilder\_tb \textemdash \textemdash add 0}\end{tcolorbox}
+
+\begin{tcolorbox}\texttt{\$ python -m crisprbuilder\_tb \textemdash \textemdash print 0}\end{tcolorbox}
+
+La fonctionnalité \textit{\textemdash \textemdash collect} a déjà été testée précédemment.
 
 
 
@@ -1041,6 +1089,24 @@ Le même procédé a finalement été appliqué au package publié sur PyPI.
 \section{Les tests de non-régression}
 
 Ce type de tests permet de vérifier que les modifications apportées au programme durant l'ensemble de la phase de test n'ont pas altérées le fonctionnement du package.
+
+Pour cela, lorsqu'un changement est effectué, les résultats obtenus doivent être comparés aux résultats pécédemment obtenus. Nous nous sommes alors exclusivement basé sur les commandes
+
+\begin{tcolorbox}\texttt{\$ python -m crisprbuilder\_tb \textemdash \textemdash collect ERR2704808}\end{tcolorbox}
+
+et 
+
+\begin{tcolorbox}\texttt{\$ python -m crisprbuilder\_tb \textemdash \textemdash print 0}\end{tcolorbox}
+
+pour procéder aux vérifications aprés modification de code.
+
+L'utilisation de l'outil de versioning \textit{Git} a constitué une aide précieuse au cours de chaque modification significative de code. Ce stage a été l'occasion de manipuler quotidiennement les principales commandes \textit{Git}. L'utilisation conjointe de \textit{Poetry} et de \textit{Git} qui construisent tous les deux un dossier \textbf{crisprbuilder\_tb} au moment de la création d'un package par
+
+ \begin{tcolorbox}\texttt{\$ poetry new crisprbuilder\_tb}\end{tcolorbox}
+
+et au moment de la création d'un repository par
+
+\begin{tcolorbox}\texttt{\$ git clone https://github.com/stephane-robin/crisprbuilder\_tb.git}\end{tcolorbox}
 
 
 
