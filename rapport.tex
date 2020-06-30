@@ -939,10 +939,10 @@ DOC
 % LES TESTS DU PACKAGE -----------------------
 \chapter{Les tests du package}
 
-Plusieurs niveaux de tests ont dû être effectués pour valider le package avant publication.
+Plusieurs niveaux de tests doivent être effectués pour valider le package avant publication.
 \begin{itemize}
-\item l'environnement de développement nous a servi pour effectuer les tests unitaires, les tests d'intégration, les tests de performance et les tests de non-régression,
-\item l'environnement d'évaluation nous a servi pour effectuer les tests fonctionnels, les tests CLI, les tests de configuration et les tests d'installation
+\item l'environnement de développement nous sert à effectuer les tests unitaires, les tests d'intégration, les tests de performance et les tests de non-régression,
+\item l'environnement de validation nous sert à effectuer les tests fonctionnels, les tests CLI, les tests de configuration et les tests d'installation
 \end{itemize}
 
 
@@ -950,15 +950,25 @@ Plusieurs niveaux de tests ont dû être effectués pour valider le package avan
 % TESTS UNITAIRES ---------
 \section{Les tests unitaires}
 
-Les tests unitaires consistent à évaluer individuellement les composants de l'application (parties de code autonomes, fonctions), en terme de qualité et validation des résultats attendus. Nous réalisons les tests unitaire dans l'environnement de développement dans lequel nous avons construit notre application.
+Les tests unitaires consistent à évaluer individuellement les composants de l'application (parties de code autonomes, fonctions, ...), en terme de qualité et validation des résultats attendus.
 
-Il a fallu comprendre le fonctionnement, puis tester chaque portion de code et chaque fonction individuellement avec des paramètres choisis avant de l'incorporer dans le module \textit{\_\_main\_\_.py}. Il a donc été nécessaire d'adapter au reste du code les fonctions déjà écrites, les documenter en anglais en vue d'une utilisation ultérieure, les rendre performantes en utilisant des compréhensions de listes, éviter les erreurs potentielles en rajoutant des blocs \textbf{try ... except} et des méthodes \textbf{.setdefault} et \textbf{.get}. il a fallu également créer de nouvelles fonctions pour éviter la répétition de code.
+Il faut donc comprendre le fonctionnement, puis tester chaque portion de code et chaque fonction individuellement avec des paramètres choisis avant de l'incorporer dans le module \textit{\_\_main\_\_.py}. Il est donc nécessaire d'adapter au reste du code les fonctions déjà écrites, les documenter en anglais en vue d'une utilisation ultérieure, les rendre performantes en utilisant des compréhensions de listes, éviter les erreurs potentielles en rajoutant des blocs \textbf{try ... except} et des méthodes \textbf{.setdefault} et \textbf{.get}. Il faut également créer de nouvelles fonctions pour éviter la répétition de code.
 
-Les premières difficultés sont apparues avec la lenteur de l'exécution du code. En effet, après avoir transformé en fonctions Python les lignes de commande sous Linux appelées via une instruction Python \textbf{subprocess.run} ou \textbf{os.system} ont été transformées en fonctions Python. Il s'est avéré que ce procédé conduisait à ralentir fortement le code lors des premiers tests de fonctionnement global de l'application, au vu de la taille importante des fichiers à lire par l'interpréteur. Nous avons donc décidé de revenir à l'utilisation de \textbf{subprocess.run} et \textbf{os.system}. Si cette démarche n'a aucune incidence pour la plateforme MacOS, elle imposerait en revanche un changement de code pour la plateforme Windows. Or, en fonction des versions du systéme Windows, l'utilisateur dispose d'une invite de commandes ou d'un PowerShell dont les instructions diffèrent. Nous avons donc choisi de conserver les appels aux instructions en lignes de commande pour les système Posix et d'utiliser des fonctions Python pour les systèmes Windows. Cela entraîne une relative lenteur de traitement pour ces derniers. 
+La taille importante des fichiers sur lesquels nous travaillons génère des délais importants de traitement. Au début de notre travail sur le code, nous avons cherché à transformer les instructions Linux appelées par les méthodes Python \textbf{subprocess.run} et \textbf{os.system} en fonctions Python. Lors des premiers tests d'intégration, le temps de réponse du programme était tellement élevé que nous avons Nous avons constaté lors des premiers tests d'intégration un fort ralentissement du programme lorsque ces modifications étaient effectuées sur l'ensemble du code. fortement le code lors des premiers tests de fonctionnement global de l'application, au vu de la taille importante des fichiers à lire par l'interpréteur. Nous avons donc décidé de revenir à l'utilisation de \textbf{subprocess.run} et \textbf{os.system}. Si cette démarche n'a aucune incidence pour la plateforme MacOS, elle imposerait en revanche un changement de code pour la plateforme Windows. Or, en fonction des versions du systéme Windows, l'utilisateur dispose d'une invite de commandes ou d'un PowerShell dont les instructions diffèrent. Nous avons donc choisi de conserver les appels aux instructions en lignes de commande pour les système Posix et d'utiliser des fonctions Python pour les systèmes Windows. Cela entraîne une relative lenteur de traitement pour ces derniers. 
 
+Pour mieux comprendre ce ralentissement, prenons un exemple sur un unique traitement qui consiste à concaténer deux fichiers \text{.fasta}. L'instruction suivante
 
+\begin{tcolorbox}\texttt{os.system("cat SRR8368696\_1.fasta SRR8368696\_2.fasta > SRR8368696\_shuffled\_system.fasta")}\end{tcolorbox}
 
+est bien plus rapide qu'une fonction Python de concaténation. En effet, le code ci-dessous exécuté 10 fois sur un système Ubuntu 18.04 LTS avec un processus Intel Pentium de 1,6 GHz 64 bits 4 coeurs
 
+\includegraphics[width=15cm]{script_comparaison_time.png}
+
+montre que le temps moyen d'exécution de l'instruction \textbf{os.system} est de XXX, alors qu'il est de XXX lorsqu'on exécute la fonction \textit{concat}.
+
+MAITRISE D'UN ENVIRONNEMENT PYCHARM
+LIGNE DE COMMANDE
+PORTABILITE
 EXEMPLE DE LENTEUR
 
 % PYLINT --------------
