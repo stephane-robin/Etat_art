@@ -218,7 +218,9 @@ ntheorem=true]{lemma}{Lemme}
 \renewcommand{\theproposition}{\arabic{chapter}.\arabic{proposition}}  % propositions
 \renewcommand{\thecorollary}{\arabic{chapter}.\arabic{corollary}}  % corollaires
 \renewcommand{\thelemma}{\arabic{chapter}.\arabic{lemma}}  % lemmes
-\setcounter{secnumdepth}{4}  % profondeur de numérotation
+\setcounter{tocdepth}{1} % profondeur numérotation table matières
+\setcounter{secnumdepth}{3}  % profondeur de numérotation
+
 
 % FORMAT DES SECTIONS-TITRES
 \addto\captionsfrench{%
@@ -733,7 +735,7 @@ Nous avons donc décidé de construire notre package en utilisant \textit{Poetry
 % CREATION DU PACKAGE ---------------
 \section{Création du package et gestion des dépendances}
 
-Pour créer notre package, il ne faut pas commencer par définir un dossier du nom du package, car cela sera automatiquement fait par Poetry. En revanche, il faut s'assurer que Python utilise bien la version 3 pour tout le travail de construction, ce qui se traduit par exemple par une variable d'environnement du type \textbf{\raisebox{-1ex}{\textasciitilde}/.poetry/\_vendor/py3.6} en réponse à l'instruction 
+Pour créer notre package, il ne faut pas commencer par définir un dossier du nom du package, car cela sera automatiquement fait par \textit{Poetry}. En revanche, il faut s'assurer que Python utilise bien la version 3 pour tout le travail de construction, ce qui se traduit par exemple par une variable d'environnement du type \textbf{\raisebox{-1ex}{\textasciitilde}/.poetry/\_vendor/py3.6} en réponse à l'instruction 
 \begin{verbatim}  $ poetry build\end{verbatim}
 Pour parvenir à un tel résultat, et comme expliqué précédemment, on commence par choisir une version appropriée de Python dans le répertoire parent dans lequel on souhaite créer notre package (ici la version 3.6.2)
  \begin{verbatim}  $ cd biologie
@@ -804,7 +806,31 @@ La rubrique [build-system] définit les versions de \textit{Poetry} et \textit{p
 
 Pour installer ensuite les dépendances du projet au sein du package, il est nécessaire d’utiliser l’instruction
 \texttt{\$ poetry install}
-qui crée les fichiers \textit{poetry.lock} et \textit{setup.py}, ainsi que le répertoire \textbf{crisprbuilder\_tb.egg-info} comprenant le code, les ressources et les métadonnées du projet. Ce format facilite la désinstallation et la mise à niveau du code, car le projet est essentiellement autonome dans un unique répertoire. Il autorise ainsi l'installation de plusieurs versions d'un même projet simultanément. Il s'agit d'un format adapté à la distribution de plugins pour des applications extensibles et des frameworks, similaire au format .jar en Java. Il permet également de distribuer les gros packages en entités séparées. De son côté, poetry.lock empêche les dépendances de télécharger la dernière version au moment de l’installation, en fixant la version utilisable par le package. Finalement, setup.py n'est qu'un fichier temporaire servant à la construction de \textbf{crisprbuilder\_tb.egg-info}. 
+qui crée les fichiers poetry.lock et setup.py, ainsi que le répertoire \textbf{crisprbuilder\_tb.egg-info} comprenant le code, les ressources et les métadonnées du projet. Ce format facilite la désinstallation et la mise à niveau du code, car le projet est essentiellement autonome dans un unique répertoire. Il autorise ainsi l'installation de plusieurs versions d'un même projet simultanément. Il s'agit d'un format adapté à la distribution de plugins pour des applications extensibles et des frameworks, similaire au format \textit{.jar} en Java. Il permet également de distribuer les gros packages en entités séparées. De son côté, poetry.lock empêche les dépendances de télécharger la dernière version au moment de l’installation, en fixant la version utilisable par le package. Dans le cas de \textit{Poetry}, setup.py n'est en fait qu'un fichier temporaire servant à la construction de \textbf{crisprbuilder\_tb.egg-info}. 
+
+Lors de l'exécution du code \texttt{\$ poetry install}, on constate que \textit{Poetry} crée en fait un environnement virtuel dans lequel il va installer les dépendances et le package
+
+\begin{verbatim}  $ poetry install
+  Creating virtualenv crisprbuilder-tb-oJzk4q3N-py3.8 in ~/.cache/pypoetry/virtualenvs
+  Installing dependencies from lock file
+
+  Package operations: 14 installs, 0 updates, 0 removals
+
+    - Installing pyparsing (2.4.7)
+    - Installing six (1.14.0)
+    - Installing atomicwrites (1.4.0)
+    - Installing attrs (19.3.0)
+    - Installing more-itertools (5.0.0)
+    - Installing numpy (1.18.4)
+    - Installing packaging (20.3)
+    - Installing pluggy (0.13.1)
+    - Installing py (1.8.1)
+    - Installing wcwidth (0.1.9)
+    - Installing biopython (1.76)
+    - Installing pytest (4.6.9)
+    - Installing xlrd (1.2.0)
+    - Installing xmltodict (0.12.0)
+    - Installing crisprbuilder_tb (0.1.26)\end{verbatim}
 
 
 
@@ -813,7 +839,17 @@ qui crée les fichiers \textit{poetry.lock} et \textit{setup.py}, ainsi que le r
 
 Pour empaqueter le projet, il faut utiliser l’instruction
 \texttt{\$ poetry build}
-qui va permettre de créer un répertoire source \textbf{dist} contenant une archive \textit{crisprbuilder\_tb-0.1.2.tar.gz} et une distribution compilée \textit{crisprbuilder\_tb-0.1.2-py3-none-any.whl}. Attention, si la distribution comporte la mention "py2" au lieu de "py3", cela signifie que la construction sous Poetry a été réalisée à partir de Python2. Il faut donc bien s'assurer de choisir une version de Python3 avant la création du package.
+qui va permettre de créer un répertoire source \textbf{dist} contenant une archive \textit{crisprbuilder\_tb-0.1.2.tar.gz} et une distribution compilée \textit{crisprbuilder\_tb-0.1.2-py3-none-any.whl}. Lors de l'exécution du code \texttt{\$ poetry build}, on constate bien la constitution des fichiers mentionnés
+
+\begin{verbatim}$  poetry build
+  Building crisprbuilder_tb (0.1.2)
+    - Building sdist
+    - Built crisprbuilder_tb-0.1.2.tar.gz
+
+    - Building wheel
+    - Built crisprbuilder_tb-0.1.2-py3-any.whl\end{verbatim}
+
+Attention, si la distribution comporte la mention "py2" au lieu de "py3", cela signifie que la construction sous \textit{Poetry} a été réalisée à partir de Python2. Il faut donc bien s'assurer de choisir une version de Python3 avant la création du package.
 
 On peut vérifier la conformité du package avec l’instruction
 \texttt{\$ poetry check}
@@ -821,11 +857,11 @@ qui renvoie
 \texttt{All set !}
 si le package ne comporte aucune discordance et peut être publié.
 
-Avant d'être publié, la structure du package est alors la suivante
+Avant d'être publié, la structure du package est la suivante
 
 \includegraphics[width=6cm]{tree_level1.png}
 
-Notons que le fichier README.md reste en dehors du répertoire \textbf{crisprbuilder\_tb}, car à cet emplacement il peut être lu par PyPI, et constitue le contenu de la rubrique "Package description" sur le site \href{https://www.pypi.org}{https://www.pypi.org}. 
+Notons que le fichier README.md reste en dehors du répertoire \textbf{crisprbuilder\_tb}, car à cet emplacement il peut être lu par PyPI, et constitue le contenu de la rubrique "Package description" sur les sites \href{https://www.pypi.org}{https://www.pypi.org} ou encore \href{https://www.test.pypi.org/project/crisprbuilder\_tb}{https://www.test.pypi.org/project/crisprbuilder\_tb}
 
 Le dossier \textbf{crisprbuilder\_tb} contient les éléments suivants
 
@@ -839,26 +875,23 @@ Le dossier \textbf{dist} contient les éléments suivants
 
 \includegraphics[width=9cm]{rep_dist.png}
 
-C'est le fichier README.md qui est utilisé pour la description du projet par PyPI sur le site ou encore testPyPI sur le site
-
- \href{https://www.test.pypi.org/project/crisprbuilder\_tb}{https://www.test.pypi.org/project/crisprbuilder\_tb}
-
 Avant de publier le package, il faut tester son comportement à l'installation en dehors de l'environnement de développement. Pour cela, il est possible de le publier officieusement sur la plateforme de test \textit{testPyPI}. Il faut alors se placer à la racine du package et lancer en ligne de commande l'instruction
 \begin{verbatim}  $ twine upload --repository testpypi dist/*\end{verbatim}
 
-Il est donc possible de télécharger un package provenant d'index différents de PyPI. Par exemple, l'installation de \textit{crisprbuilder\_tb} à partir de \textit{testPyPI} se fait à l'aide de l'instruction
-\begin{verbatim}  $ pip3 install -i https://test.pypi.org/simple/ crisprbuilder_tb}\end{verbatim} 
+Il est donc possible de télécharger un package provenant d'index différents de PyPI. Par exemple, l'installation de \textit{CRISPRbuilder\_TB} à partir de \textit{testPyPI} se fait à l'aide de l'instruction
+
+\begin{verbatim}  $ pip install -i https://test.pypi.org/simple/ crisprbuilder_tb\end{verbatim} 
 
 ou si on précise la version du package
 
-\begin{verbatim}  $ pip3 install -i https://test.pypi.org/simple/ crisprbuilder_tb==0.1.2\end{verbatim} A noter qu'il ne faut utiliser de guillemets autour de la version du package.
+\begin{verbatim}  $ pip install -i https://test.pypi.org/simple/ crisprbuilder_tb==0.1.2\end{verbatim} A noter qu'il ne faut utiliser de guillemets autour de la version du package.
 
 Lorsque le package est finalement prêt pour être publié sur PyPI, on utilise l’instruction
 \begin{verbatim}  $ poetry publish\end{verbatim}
 Pour cela, l'auteur du package doit être enregistré sur PyPI avec un identifiant et un mot de passe. A partir de ce moment-là, le package est rendu disponible publiquement.
 
-L’installation du package par un utilisateur quelconque se fait maintenant grâce à l’instruction
-\begin{verbatim}  $ python3 -m pip install nom_package\end{verbatim}
+L’installation du package par n'import quel utilisateur se fait maintenant grâce à l’instruction
+\begin{verbatim}  $ python -m pip install nom_package\end{verbatim}
 
 Les explications relatives à l’utilisation pratique de \textit{Poetry} sont reprises dans le tutoriel suivant que nous venons de publier sur YouTube : \href{http://www.youtube.com}{http://www.youtube.com}
 
@@ -914,10 +947,10 @@ s'est créé le package \textit{crisprbuilder\_tb} disposant de la structure sui
 
 
 % LE PACKAGE CRISPRBUILDER --------------------------------
-\chapter{Le package crisprbuilder\_tb}
+\chapter{Le package \textit{CRISPRbuilder\_TB}}
 
 % FONCTIONNEMENT DU PACKAGE -----------------------
-\section{Fonctionnement du package crisprbuilder\_tb}
+\section{Fonctionnement du package \textit{CRISPRbuilder\_TB}}
 
 La compréhension des chemins d'accès est au coeur du fonctionnement d'un package
 
@@ -932,17 +965,16 @@ L'exécution du package est réalisée en ligne de commande, et une fois que l'u
 
 l'interpréteur va chercher le package à son emplacement de stockage XXX et l'exécute comme si ce dernier se trouvait dans le répertoire courant. Pourtant, le package ne se trouve pas dans le répertoire courant et tous les chemins d'accès aux bases de données et modules du package doivent tenir compte de la variable d'environnement placée au début de chaque chemin d'accès.
 
-Le package est décrit en détail dans le document crisprbuilder\_tb.md, présent dans le répertoire \textbf{doc} du package une fois installé. Ce document est présenté ci-dessous dans sa version originale en anglais.
+
 
 
 
 % DOCUMENTATION DETAILLEE DU PACKAGE ---------------------------
 \section{Documentation détaillée du package}
     
-    \begin{figure}
-\centering
+Le package est décrit en détail dans le document crisprbuilder\_tb.md, présent dans le répertoire \textbf{doc} du package une fois installé. Ce document est présenté ci-dessous dans sa version originale en anglais.
+
 \includegraphics[width=5cm]{femto.png}
-\end{figure}
 
 The CRISPRbuilder\_TB package is an open source software made available
 under generous terms. Please see the LICENSE file for further details.
@@ -958,7 +990,7 @@ Section \cite{guyeux2}.
 
 
 % PURPOSE OF THIS PACKAGE ----------------
-    \subsection{Purpose of this package}\label{purpose-of-this-package}
+    \subsection*{Purpose of this package}\label{purpose-of-this-package}
 
     CRISPRbuilder\_TB will help you collect and annotate Mycobacterium
 tuberculosis whole genome sequencing data for CRISPR investigations.
@@ -990,7 +1022,7 @@ genome information dictionary comprising the following elements:
 
 
 % HOW TO INSTALL THE PACKAGE ------------------------
-    \subsection{How to install the package
+    \subsection*{How to install the package
 ?}\label{how-to-install-the-package}
 
     This package comes with a Command Line Interface, so it should be
@@ -1010,7 +1042,7 @@ on your computer might be different.
 
 
 % HOW TO USE THE COMMAND LINE INTERFACE --------------------
-    \subsection{How to use the Command Line Interface
+    \subsection*{How to use the Command Line Interface
 ?}\label{how-to-use-the-command-line-interface}
 
     After installing the package, you can find help with the command prompt,
@@ -1055,7 +1087,7 @@ command prompt:
 
 
 % EXECUTING CRISPRBUILDER_TB WITH A SRA REFERENCE ------------
-    \subsubsection{Executing CRISPRbuilder\_TB with a SRA
+    \subsubsection*{Executing CRISPRbuilder\_TB with a SRA
 reference}\label{executing-crisprbuilder_tb-with-a-sra-reference}
 
     You can run the package if you wish to find information regarding a
@@ -1083,7 +1115,7 @@ execute it. If you are doing so, the instruction above won't work.
 
 
 % EXECUTING CRISPRBUILDER_TB WITH A LIST OF SRA REFERENCES -----
-    \subsubsection{Executing CRISPRbuilder\_TB with a list of SRA
+    \subsubsection*{Executing CRISPRbuilder\_TB with a list of SRA
 references}\label{executing-crisprbuilder_tb-with-a-list-of-sra-references}
 
     To run the package with a list of SRA references, this list must be
@@ -1106,7 +1138,7 @@ write:
 
 
 % PRINTING THE DATABASE LINEAGE.CSV --------------------------
-    \subsubsection{Printing the database
+    \subsubsection*{Printing the database
 lineage.csv}\label{printing-the-database-lineage.csv}
 
     If you want to consult the \textbf{lineage.csv} database, stay in the
@@ -1121,12 +1153,12 @@ directory containing the package and write in the command prompt:
 The program will then display the content of the database
 \textbf{lineage.csv} whose extract can be read below:
 
-\begin{figure}
-\centering
 \includegraphics[width=16cm]{img_01.png}
-\end{figure}
 
-    \subsubsection{Adding a record to
+
+
+% ADDING A RECORD TO LINEAGE.CSV ------------------------
+    \subsubsection*{Adding a record to
 lineage.csv}\label{adding-a-record-to-lineage.csv}
 
     If you want to add a record to the \textbf{lineage.csv} database, stay
@@ -1148,7 +1180,7 @@ press enter.
 
 
 % REMOVING A RECORD FROM LINEAGE.CSV -------------------------------
-    \subsubsection{Removing a record from
+    \subsubsection*{Removing a record from
 lineage.csv}\label{removing-a-record-from-lineage.csv}
 
     If you want to remove a record from the \textbf{lineage.csv} database,
@@ -1167,10 +1199,7 @@ of the line you wish to delete, which consists of the lineage and the
 position (see below). If you don't know this reference, you can always
 print the \textbf{lineage.csv} database beforehand to find it.
 
-    \begin{figure}
-\centering
 \includegraphics[width=16cm]{selection.png}
-\end{figure}
 
     The execution of the code will end with:
 
@@ -1188,7 +1217,7 @@ print the \textbf{lineage.csv} database beforehand to find it.
 
 
 % CHANGING A RECORD ------------------------
-    \subsubsection{Changing a record from
+    \subsubsection*{Changing a record from
 lineage.csv}\label{changing-a-record-from-lineage.csv}
 
     If you want to change a record from the \textbf{lineage.csv} database,
@@ -1207,10 +1236,7 @@ the line you wish to delete, which consists of the lineage and the
 position (see below). If you don't know the reference, you can always
 print the \textbf{lineage.csv} database beforehand to find it.
 
-    \begin{figure}
-\centering
 \includegraphics[width=16cm]{selection.png}
-\end{figure}
 
     You will then be asked the values of the different fields: lineage,
 position, gene coordinates, allege change, codon number, codon change,
@@ -1233,7 +1259,7 @@ press enter.
 
 
 % COMPOSITION OF THE PACKAGE AND DEPENDENCIES -------------
-    \subsection{Composition of the package and
+    \subsection*{Composition of the package and
 dependencies}\label{composition-of-the-package-and-dependencies}
 
     CRISPRbuilder\_TB needs the following dependencies to work:
@@ -1289,14 +1315,12 @@ CRISPRbuilder\_TB. Please note that this package doesn't support Python
   \textbf{LICENSE} file and the present documentation.
 \end{itemize}
 
-    \begin{figure}
-\centering
 \includegraphics[width=8cm]{rep_crispr.png}
-\end{figure}
+
 
 
 % RETRIEVING THE GENOME INFORMATION -------------------
-    \subsection{Retrieving the genome information
+    \subsection*{Retrieving the genome information
 dictionary}\label{retrieving-the-genome-information-dictionary}
 
     Let's assume you're looking for information regarding ERR2704808. After
@@ -1313,20 +1337,20 @@ to the database. The following message will be displayed:
     Then the files in fasta format will be downloaded to
 \textbf{REP/sequences/ERR2704808} as in the following code:
 
-   XXX
+ \includegraphics[width=13cm]{img_02.png}
 
     If ERR2704808\_shuffled.fasta is not in the \textbf{ERR2704808}
 directory, then the ERR2704808\_1.fasta and ERR2704808\_2.fasta files
 will be mixed in a new ERR2704808\_shuffled.fasta file in the
 \textbf{ERR2704808} directory, as in the following code:
 
-   XXX
+\includegraphics[width=13cm]{img_03.png}
 
     The number of reads represented by '\textgreater{}' in
 ERR2704808\_shuffled.fasta will be counted and assigned to nb\_reads, as
 in the following code:
 
-    XXX
+\includegraphics[width=13cm]{img_04.png}
 
     The length of the reads will be evaluated from
 ERR2704808\_shuffled.fasta as in the following code:
@@ -1522,13 +1546,13 @@ directly from NCBI, according to the code:
   bioproject: PRJEB25506
 \end{verbatim}
 
-TODO - REFERENCE
-
-TRAVAIL SUR NOTEBOOK
 
 
+TODO - TRAVAIL SUR NOTEBOOK
 
-% FIN DOC
+
+
+
 
 
 
