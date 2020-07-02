@@ -1,47 +1,49 @@
 \babel@toc {french}{}
-\contentsline {section}{\numberline {1.}Pr\IeC {\'e}sentation du projet}{5}{section.0.1}
-\contentsline {chapter}{\numberline {1}Etat de l'art}{6}{chapter.1}
-\contentsline {section}{\numberline {1.}Evolution de la branche humaine de la tuberculose}{6}{section.1.1}
-\contentsline {subsection}{\numberline {1.1.}Diversit\IeC {\'e} g\IeC {\'e}n\IeC {\'e}tique de la tuberculose}{6}{subsection.1.1.1}
-\contentsline {subsection}{\numberline {1.2.}Co-\IeC {\'e}volution de la tuberculose avec l'homme moderne}{7}{subsection.1.1.2}
-\contentsline {section}{\numberline {2.}Le d\IeC {\'e}veloppement de souches r\IeC {\'e}sistantes aux antibiotiques}{9}{section.1.2}
-\contentsline {subsection}{\numberline {2.1.}L'expansion de la lign\IeC {\'e}e 4 de \textit {M. tuberculosis}}{9}{subsection.1.2.1}
-\contentsline {subsection}{\numberline {2.2.}L'adaptation de la lign\IeC {\'e}e 4 pour devenir r\IeC {\'e}sistante aux antibiotiques}{10}{subsection.1.2.2}
-\contentsline {section}{\numberline {3.}Le locus CRISPR-Cas}{12}{section.1.3}
-\contentsline {subsection}{\numberline {3.1.}Quelques caract\IeC {\'e}ristiques du g\IeC {\'e}nome de \textit {M. tuberculosis}}{12}{subsection.1.3.1}
-\contentsline {subsection}{\numberline {3.2.}Description du locus CRISPR-Cas}{12}{subsection.1.3.2}
-\contentsline {subsection}{\numberline {3.3.}Fonctionnement du syst\IeC {\`e}me CRISPR-Cas}{13}{subsection.1.3.3}
-\contentsline {section}{\numberline {4.}Le spoligotypage}{13}{section.1.4}
-\contentsline {subsection}{\numberline {4.1.}Vers une normalisation des spoligotypes}{15}{subsection.1.4.1}
-\contentsline {subsection}{\numberline {4.2.}Quel outil informatique pour le spoligotypage ?}{16}{subsection.1.4.2}
-\contentsline {subsection}{\numberline {4.3.}Comparaison de spoligotypes}{19}{subsection.1.4.3}
-\contentsline {chapter}{\numberline {2}La notion de package}{21}{chapter.2}
-\contentsline {section}{\numberline {1.}Vocabulaire}{21}{section.2.1}
-\contentsline {section}{\numberline {2.}Composition d'un package standard}{21}{section.2.2}
-\contentsline {section}{\numberline {3.}Quelle licence choisir ?}{22}{section.2.3}
-\contentsline {chapter}{\numberline {3}Le choix des outils}{23}{chapter.3}
-\contentsline {section}{\numberline {1.}L'environnement de d\IeC {\'e}veloppement}{23}{section.3.1}
-\contentsline {section}{\numberline {2.}L'environnement de test}{25}{section.3.2}
-\contentsline {section}{\numberline {3.}L'outil d'empaquetage}{25}{section.3.3}
-\contentsline {chapter}{\numberline {4}Construction du package avec Poetry}{27}{chapter.4}
-\contentsline {section}{\numberline {1.}Cr\IeC {\'e}ation du package et gestion des d\IeC {\'e}pendances}{27}{section.4.1}
-\contentsline {section}{\numberline {2.}Construction du package et publication}{29}{section.4.2}
-\contentsline {section}{\numberline {3.}Installation du package}{31}{section.4.3}
-\contentsline {section}{\numberline {4.}La structure du package construit par Poetry}{32}{section.4.4}
-\contentsline {chapter}{\numberline {5}Le package crisprbuilder\_tb}{34}{chapter.5}
-\contentsline {section}{\numberline {1.}Fonctionnement du package crisprbuilder\_tb}{34}{section.5.1}
-\contentsline {section}{\numberline {2.}Description d\IeC {\'e}taill\IeC {\'e}e du package}{34}{section.5.2}
-\contentsline {chapter}{\numberline {6}Les tests du package}{35}{chapter.6}
-\contentsline {section}{\numberline {1.}Les tests unitaires}{35}{section.6.1}
-\contentsline {subsection}{\numberline {1.1.}Am\IeC {\'e}lioration du code avec pylint}{35}{subsection.6.1.1}
-\contentsline {section}{\numberline {2.}les tests d'int\IeC {\'e}gration}{36}{section.6.2}
-\contentsline {subsection}{\numberline {2.1.}Les probl\IeC {\`e}mes li\IeC {\'e}s aux chemins d'acc\IeC {\`e}s}{38}{subsection.6.2.1}
-\contentsline {section}{\numberline {3.}Les tests fonctionnels}{38}{section.6.3}
-\contentsline {section}{\numberline {4.}Les tests CLI}{38}{section.6.4}
-\contentsline {section}{\numberline {5.}Les tests de configuration}{38}{section.6.5}
-\contentsline {section}{\numberline {6.}Les tests de performance}{39}{section.6.6}
-\contentsline {subsection}{\numberline {6.1.}Am\IeC {\'e}lioration des performances}{39}{subsection.6.6.1}
-\contentsline {section}{\numberline {7.}Les tests d'installation}{39}{section.6.7}
-\contentsline {section}{\numberline {8.}Les tests de non-r\IeC {\'e}gression}{39}{section.6.8}
-\contentsline {section}{\numberline {9.}Les principaux \IeC {\'e}l\IeC {\'e}ments du code}{41}{section.6.9}
+\contentsline {chapter}{\numberline {1}Pr\IeC {\'e}ambule}{4}{chapter.1}
+\contentsline {section}{\numberline {1.}Remerciements}{4}{section.1.1}
+\contentsline {section}{\numberline {2.}Pr\IeC {\'e}sentation du projet}{4}{section.1.2}
+\contentsline {chapter}{\numberline {2}Etat de l'art}{5}{chapter.2}
+\contentsline {section}{\numberline {1.}Evolution de la branche humaine de la tuberculose}{5}{section.2.1}
+\contentsline {subsection}{\numberline {1.1.}Diversit\IeC {\'e} g\IeC {\'e}n\IeC {\'e}tique de la tuberculose}{5}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {1.2.}Co-\IeC {\'e}volution de la tuberculose avec l'homme moderne}{6}{subsection.2.1.2}
+\contentsline {section}{\numberline {2.}Le d\IeC {\'e}veloppement de souches r\IeC {\'e}sistantes aux antibiotiques}{8}{section.2.2}
+\contentsline {subsection}{\numberline {2.1.}L'expansion de la lign\IeC {\'e}e 4 de \textit {M. tuberculosis}}{8}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.}L'adaptation de la lign\IeC {\'e}e 4 pour devenir r\IeC {\'e}sistante aux antibiotiques}{9}{subsection.2.2.2}
+\contentsline {section}{\numberline {3.}Le locus CRISPR-Cas}{11}{section.2.3}
+\contentsline {subsection}{\numberline {3.1.}Quelques caract\IeC {\'e}ristiques du g\IeC {\'e}nome de \textit {M. tuberculosis}}{11}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {3.2.}Description du locus CRISPR-Cas}{11}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {3.3.}Fonctionnement du syst\IeC {\`e}me CRISPR-Cas}{12}{subsection.2.3.3}
+\contentsline {section}{\numberline {4.}Le spoligotypage}{12}{section.2.4}
+\contentsline {subsection}{\numberline {4.1.}Vers une normalisation des spoligotypes}{14}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {4.2.}Quel outil informatique pour le spoligotypage ?}{15}{subsection.2.4.2}
+\contentsline {subsection}{\numberline {4.3.}Comparaison de spoligotypes}{18}{subsection.2.4.3}
+\contentsline {chapter}{\numberline {3}La notion de package}{20}{chapter.3}
+\contentsline {section}{\numberline {1.}Vocabulaire}{20}{section.3.1}
+\contentsline {section}{\numberline {2.}Composition d'un package standard}{20}{section.3.2}
+\contentsline {section}{\numberline {3.}Quelle licence choisir ?}{21}{section.3.3}
+\contentsline {chapter}{\numberline {4}Le choix des outils}{22}{chapter.4}
+\contentsline {section}{\numberline {1.}L'environnement de d\IeC {\'e}veloppement}{22}{section.4.1}
+\contentsline {section}{\numberline {2.}L'environnement de test}{24}{section.4.2}
+\contentsline {section}{\numberline {3.}L'outil d'empaquetage}{24}{section.4.3}
+\contentsline {chapter}{\numberline {5}Construction du package avec Poetry}{26}{chapter.5}
+\contentsline {section}{\numberline {1.}Cr\IeC {\'e}ation du package et gestion des d\IeC {\'e}pendances}{26}{section.5.1}
+\contentsline {section}{\numberline {2.}Construction du package et publication}{28}{section.5.2}
+\contentsline {section}{\numberline {3.}Installation du package}{30}{section.5.3}
+\contentsline {section}{\numberline {4.}La structure du package construit par Poetry}{31}{section.5.4}
+\contentsline {chapter}{\numberline {6}Le package crisprbuilder\_tb}{33}{chapter.6}
+\contentsline {section}{\numberline {1.}Fonctionnement du package crisprbuilder\_tb}{33}{section.6.1}
+\contentsline {section}{\numberline {2.}Description d\IeC {\'e}taill\IeC {\'e}e du package}{33}{section.6.2}
+\contentsline {chapter}{\numberline {7}Tester le package}{34}{chapter.7}
+\contentsline {section}{\numberline {1.}Les tests unitaires}{34}{section.7.1}
+\contentsline {section}{\numberline {2.}les tests d'int\IeC {\'e}gration}{35}{section.7.2}
+\contentsline {subsection}{\numberline {2.1.}Am\IeC {\'e}lioration du code avec pylint}{35}{subsection.7.2.1}
+\contentsline {subsection}{\numberline {2.2.}Les probl\IeC {\`e}mes li\IeC {\'e}s aux chemins d'acc\IeC {\`e}s}{36}{subsection.7.2.2}
+\contentsline {section}{\numberline {3.}Les tests fonctionnels}{36}{section.7.3}
+\contentsline {section}{\numberline {4.}Les tests CLI}{37}{section.7.4}
+\contentsline {section}{\numberline {5.}Les tests de configuration}{37}{section.7.5}
+\contentsline {section}{\numberline {6.}Les tests de performance}{37}{section.7.6}
+\contentsline {subsection}{\numberline {6.1.}Am\IeC {\'e}lioration des performances}{39}{subsection.7.6.1}
+\contentsline {section}{\numberline {7.}Les tests d'installation}{39}{section.7.7}
+\contentsline {section}{\numberline {8.}Les tests de non-r\IeC {\'e}gression}{39}{section.7.8}
+\contentsline {section}{\numberline {9.}Les principaux \IeC {\'e}l\IeC {\'e}ments du code}{41}{section.7.9}
 \contentsfinish 
