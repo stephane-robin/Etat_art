@@ -25,25 +25,33 @@
 \contentsline {section}{\numberline {1.}L'environnement de d\IeC {\'e}veloppement}{22}{section.4.1}
 \contentsline {section}{\numberline {2.}L'environnement de test}{24}{section.4.2}
 \contentsline {section}{\numberline {3.}L'outil d'empaquetage}{24}{section.4.3}
-\contentsline {chapter}{\numberline {5}Construction du package avec Poetry}{26}{chapter.5}
+\contentsline {chapter}{\numberline {5}Construction du package avec \textit {Poetry}}{26}{chapter.5}
 \contentsline {section}{\numberline {1.}Cr\IeC {\'e}ation du package et gestion des d\IeC {\'e}pendances}{26}{section.5.1}
 \contentsline {section}{\numberline {2.}Construction du package et publication}{28}{section.5.2}
 \contentsline {section}{\numberline {3.}Installation du package}{30}{section.5.3}
 \contentsline {section}{\numberline {4.}La structure du package construit par Poetry}{31}{section.5.4}
-\contentsline {chapter}{\numberline {6}Le package crisprbuilder\_tb}{33}{chapter.6}
-\contentsline {section}{\numberline {1.}Fonctionnement du package crisprbuilder\_tb}{33}{section.6.1}
-\contentsline {section}{\numberline {2.}Description d\IeC {\'e}taill\IeC {\'e}e du package}{33}{section.6.2}
-\contentsline {chapter}{\numberline {7}Tester le package}{34}{chapter.7}
-\contentsline {section}{\numberline {1.}Les tests unitaires}{34}{section.7.1}
-\contentsline {section}{\numberline {2.}les tests d'int\IeC {\'e}gration}{35}{section.7.2}
-\contentsline {subsection}{\numberline {2.1.}Am\IeC {\'e}lioration du code avec pylint}{35}{subsection.7.2.1}
-\contentsline {subsection}{\numberline {2.2.}Les probl\IeC {\`e}mes li\IeC {\'e}s aux chemins d'acc\IeC {\`e}s}{36}{subsection.7.2.2}
-\contentsline {section}{\numberline {3.}Les tests fonctionnels}{36}{section.7.3}
-\contentsline {section}{\numberline {4.}Les tests CLI}{37}{section.7.4}
-\contentsline {section}{\numberline {5.}Les tests de configuration}{37}{section.7.5}
-\contentsline {section}{\numberline {6.}Les tests de performance}{37}{section.7.6}
-\contentsline {subsection}{\numberline {6.1.}Am\IeC {\'e}lioration des performances}{39}{subsection.7.6.1}
-\contentsline {section}{\numberline {7.}Les tests d'installation}{39}{section.7.7}
-\contentsline {section}{\numberline {8.}Les tests de non-r\IeC {\'e}gression}{39}{section.7.8}
-\contentsline {section}{\numberline {9.}Les principaux \IeC {\'e}l\IeC {\'e}ments du code}{41}{section.7.9}
+\contentsline {chapter}{\numberline {6}Le package crisprbuilder\_tb}{32}{chapter.6}
+\contentsline {section}{\numberline {1.}Fonctionnement du package crisprbuilder\_tb}{32}{section.6.1}
+\contentsline {section}{\numberline {2.}Documentation d\IeC {\'e}taill\IeC {\'e}e du package}{32}{section.6.2}
+\contentsline {subsection}{\numberline {2.1.}Purpose of this package}{33}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {2.2.}How to install the package ?}{33}{subsection.6.2.2}
+\contentsline {subsection}{\numberline {2.3.}How to use the Command Line Interface ?}{33}{subsection.6.2.3}
+\contentsline {subsubsection}{\numberline {2.3.1.}Executing CRISPRbuilder\_TB with a SRA reference}{34}{subsubsection.6.2.3.1}
+\contentsline {subsubsection}{\numberline {2.3.2.}Executing CRISPRbuilder\_TB with a list of SRA references}{34}{subsubsection.6.2.3.2}
+\contentsline {subsubsection}{\numberline {2.3.3.}Printing the database lineage.csv}{35}{subsubsection.6.2.3.3}
+\contentsline {subsubsection}{\numberline {2.3.4.}Adding a record to lineage.csv}{35}{subsubsection.6.2.3.4}
+\contentsline {subsubsection}{\numberline {2.3.5.}Removing a record from lineage.csv}{35}{subsubsection.6.2.3.5}
+\contentsline {subsubsection}{\numberline {2.3.6.}Changing a record from lineage.csv}{36}{subsubsection.6.2.3.6}
+\contentsline {subsection}{\numberline {2.4.}Composition of the package and dependencies}{37}{subsection.6.2.4}
+\contentsline {subsection}{\numberline {2.5.}Retrieving the genome information dictionary}{37}{subsection.6.2.5}
+\contentsline {chapter}{\numberline {7}Tester le package}{42}{chapter.7}
+\contentsline {section}{\numberline {1.}Les tests unitaires}{42}{section.7.1}
+\contentsline {section}{\numberline {2.}les tests d'int\IeC {\'e}gration}{43}{section.7.2}
+\contentsline {subsection}{\numberline {2.1.}Le respect des r\IeC {\`e}gles du PEP avec pylint}{43}{subsection.7.2.1}
+\contentsline {section}{\numberline {3.}Les tests de configuration}{45}{section.7.3}
+\contentsline {section}{\numberline {4.}Les tests de performance}{45}{section.7.4}
+\contentsline {subsection}{\numberline {4.1.}Am\IeC {\'e}lioration des performances}{47}{subsection.7.4.1}
+\contentsline {section}{\numberline {5.}Les tests d'installation}{47}{section.7.5}
+\contentsline {section}{\numberline {6.}Les tests de non-r\IeC {\'e}gression}{47}{section.7.6}
+\contentsline {section}{\numberline {7.}Les principaux \IeC {\'e}l\IeC {\'e}ments du code}{48}{section.7.7}
 \contentsfinish 
