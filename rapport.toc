@@ -40,5 +40,5 @@
 \contentsline {subsection}{\numberline {2.2.}Am\IeC {\'e}lioration des performances}{49}{subsection.7.2.2}
 \contentsline {section}{\numberline {3.}Les tests d'installation}{49}{section.7.3}
 \contentsline {section}{\numberline {4.}Les tests de non-r\IeC {\'e}gression}{49}{section.7.4}
-\contentsline {section}{\numberline {5.}Les principaux \IeC {\'e}l\IeC {\'e}ments du code}{50}{section.7.5}
+\contentsline {section}{\numberline {5.}Les principaux \IeC {\'e}l\IeC {\'e}ments du code}{51}{section.7.5}
 \contentsfinish 

@@ -1115,8 +1115,7 @@ specific SRA. From your current directory, write in the command prompt:
 \end{verbatim}
 
     Please note the importance of "-m" to run crisprbuilder\_tb as a
-package. CRISPRbuilder\_TB uses version 3 of Python, so make sure your
-system is set to Python 3 in your current directory before using the
+package, otherwise the interpreter will look at crisprbuilder\_tb as a folder inside the current folder and not a package. CRISPRbuilder\_TB uses version 3 of Python, so make sure your system is set to Python 3 in your current directory before using the
 \texttt{python}instruction. The default version on your computer might
 be different.
 
@@ -1670,6 +1669,11 @@ La gestion des exceptions avec des blocs \textbf{try ... except FileNotFoundErro
 
 Il est nécessaire de tester le comportement de l'application à l'installation et au fonctionnement au sein de différents systèmes d'exploitation. Nous choisissons de tester CRISPRbuilder\_TB avec les systèmes Linux, MacOS et Microsoft et un environnement de travail vierge. Pour cela nous utilisons une machine virtuelle VirtualBox qui va créer artificiellement ces plateformes.
 
+Il faut commencer par télécharger des images \textit{.iso} de Ubuntu 18.04.4 LTS, XXX.
+
+Il faut ensuite cloner chaque version vierge et commencer les tests en rajoutant dans la description toutes les modifications nécessaires afin que le package fonctionne sur une environnement vierge de toutes les dépendances requises.
+
+Les premiers tests de fonctionnement avec un système Linux montrent que
 
 
 
