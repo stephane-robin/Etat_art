@@ -29,7 +29,7 @@
 \contentsline {section}{\numberline {1.}Cr\IeC {\'e}ation du package et gestion des d\IeC {\'e}pendances}{26}{section.5.1}
 \contentsline {section}{\numberline {2.}Construction du package et publication}{29}{section.5.2}
 \contentsline {section}{\numberline {3.}Installation du package}{31}{section.5.3}
-\contentsline {section}{\numberline {4.}La structure du package construit par Poetry}{31}{section.5.4}
+\contentsline {section}{\numberline {4.}La structure du package construit par Poetry}{32}{section.5.4}
 \contentsline {chapter}{\numberline {6}Le package \textit {CRISPRbuilder\_TB}}{33}{chapter.6}
 \contentsline {section}{\numberline {1.}Fonctionnement du package \textit {CRISPRbuilder\_TB}}{33}{section.6.1}
 \contentsline {section}{\numberline {2.}Documentation d\IeC {\'e}taill\IeC {\'e}e du package}{33}{section.6.2}
@@ -37,10 +37,8 @@
 \contentsline {section}{\numberline {1.}Les tests unitaires}{44}{section.7.1}
 \contentsline {section}{\numberline {2.}les tests d'int\IeC {\'e}gration}{45}{section.7.2}
 \contentsline {subsection}{\numberline {2.1.}Le respect des r\IeC {\`e}gles du PEP avec pylint}{45}{subsection.7.2.1}
-\contentsline {section}{\numberline {3.}Les tests de configuration}{47}{section.7.3}
-\contentsline {section}{\numberline {4.}Les tests de performance}{47}{section.7.4}
-\contentsline {subsection}{\numberline {4.1.}Am\IeC {\'e}lioration des performances}{49}{subsection.7.4.1}
-\contentsline {section}{\numberline {5.}Les tests d'installation}{49}{section.7.5}
-\contentsline {section}{\numberline {6.}Les tests de non-r\IeC {\'e}gression}{49}{section.7.6}
-\contentsline {section}{\numberline {7.}Les principaux \IeC {\'e}l\IeC {\'e}ments du code}{50}{section.7.7}
+\contentsline {subsection}{\numberline {2.2.}Am\IeC {\'e}lioration des performances}{49}{subsection.7.2.2}
+\contentsline {section}{\numberline {3.}Les tests d'installation}{49}{section.7.3}
+\contentsline {section}{\numberline {4.}Les tests de non-r\IeC {\'e}gression}{49}{section.7.4}
+\contentsline {section}{\numberline {5.}Les principaux \IeC {\'e}l\IeC {\'e}ments du code}{50}{section.7.5}
 \contentsfinish 

@@ -616,6 +616,8 @@ Note préalable : toutes les explications données dans ce chapitre concernent l
 % L'ENVIRONNEMENT DE DEVELOPPEMENT -----------------------------
 \section{L'environnement de développement}
 
+TODO EXPLICATIONS REAL PYTHON
+
 Avant de créer le package, il faut commencer par construire localement le programme. Pour ce faire, nous définissons un environnement de développement, qui nous servira également à effectuer des tests.
  
 L'outil de création d'environnement virtuel \textit{venv} \index{venv} nous permet de créer un environnement de développement afin de tester les codes du projet. \textit{venv} commence par constituer un dossier contenant tous les exécutables nécessaires à l'utilisation des modules d'un projet Python. 
@@ -666,11 +668,13 @@ Finalement, nous installons dans notre environnement de développement les dépe
 \item \begin{verbatim}  $ pip install xmltodict\end{verbatim}
 le module \textit{xmltodict} permet de lire du code XML comme si il s'agissait de code JSON. Il permet donc une lecture plus rapide des fichiers.
 \item  \begin{verbatim}  $ pip install openpyxl\end{verbatim}
-le package \textit{openpyxl} permet de lire et d'écrire dans des fichiers Excel au format \textit{xlsx, xlsm, xltx} ou \textit{xltm}. Il comprend les modules \textit{et-xmlfile} et \textit{jdcal}.
+le package \textit{openpyxl} permet de lire et d'écrire dans des fichiers Excel au format \textit{xlsx, xlsm, xltx} ou \textit{xltm}. Il comprend les modules \textit{et-xmlfile} et \textit{jdcal}. Il sera utile pour lire et transformer des fichier Excel mais ne sera pas nécessaire pour le fonctionnement du package.
 \item  \begin{verbatim}  $ pip install xlrd\end{verbatim}
 le module \textit{xlrd} extrait des données d'un tableur Excel à partir de la version 2.0 et avant de les formatter.
 \item  \begin{verbatim}  $ pip install biopython\end{verbatim}
 le package \textit{biopython} regroupe un ensemble d'outils Python pour le traitement informatique de la biologie moléculaire et comprend le module numpy.
+\item \begin{verbatim}  $ pip install parallel-fastq-dump\end{verbatim}
+le package \textit{parallel-fastq-dump} permet de téléchargement de fichiers fasta en utilisant plusieurs threads simultanément. Il procure donc un gain de temps à l'application. 
 %\item DateTime==4.3\\
 %Le module datetime permet de manipuler des dates et heures en gérant des objets de type DateTime. 
 %\item pytz==2019.3 (installé avec le module datetime)
@@ -692,6 +696,10 @@ Le package, une fois installé par l'utilisateur, devra fournir un environnement
 
 On pourra retrouver les modules installés via \textit{pip} dans un fichier \textit{requirements.txt} ou similaire qu'on pourra fabriquer en gelant l'état de l'environnement à un moment précis grâce à une instruction du type
 \begin{verbatim}  $ pip freeze > requirements.txt\end{verbatim}.
+
+On pourra alors ré-installer ces modules à l'identique en utilisant l'instruction
+\begin{verbatim}  $ pip install -r requirements.txt\end{verbatim}
+
  Notons que l'outil Poetry quant à lui, regroupe ces modules dans un fichier appelé pyproject.toml.
 
 
@@ -772,20 +780,19 @@ offre l’avantage de chercher automatiquement une version compatible de la dép
 %\begin{tcolorbox} \end{tcolorbox}
 Il faut donc ajouter les dépendances suivantes au projet :
 \begin{verbatim}  $ cd crisprbuilder_tb 
-  $ poetry add python3 
+  %$ poetry add python3 
   $ poetry add xmltodict 
-  $ poetry add openpyxl 
   $ poetry add xlrd 
-  $ poetry add biopython\end{verbatim}
+  $ poetry add biopython
+  $ poetry add parallel-fastq-dump \end{verbatim}
 
 Le fichier pyproject.toml comporte maintenant les versions suivantes
 
 \begin{verbatim}  [tool.poetry.dependencies]
   xlrd = "1.2.0"
   xmltodict = "0.12.0"
-  biopython = "1.76"\end{verbatim}
-
-TODO - MANQUE OPENPYXL ET PYTHON
+  biopython = "1.76"
+  parallel-fastq-dump = "^0.6.5"\end{verbatim}
 
 On peut ensuite compléter manuellement ce fichier pour fournir des informations d'ordre général du type
 
@@ -830,6 +837,7 @@ Lors de l'exécution du code \texttt{\$ poetry install}, on constate que \textit
     - Installing pytest (4.6.9)
     - Installing xlrd (1.2.0)
     - Installing xmltodict (0.12.0)
+    - Installing parallel-fastq-dump (0.6.5)
     - Installing crisprbuilder_tb (0.1.26)\end{verbatim}
 
 
@@ -878,13 +886,22 @@ Le dossier \textbf{dist} contient les éléments suivants
 Avant de publier le package, il faut tester son comportement à l'installation en dehors de l'environnement de développement. Pour cela, il est possible de le publier officieusement sur la plateforme de test \textit{testPyPI}. Il faut alors se placer à la racine du package et lancer en ligne de commande l'instruction
 \begin{verbatim}  $ twine upload --repository testpypi dist/*\end{verbatim}
 
-Il est donc possible de télécharger un package provenant d'index différents de PyPI. Par exemple, l'installation de \textit{CRISPRbuilder\_TB} à partir de \textit{testPyPI} se fait à l'aide de l'instruction
+Il est donc possible de télécharger un package provenant d'index différents de PyPI. Par exemple, l'installation de \textit{CRISPRbuilder\_TB} à partir de \textit{testPyPI} se fait à l'aide de l'instruction suivante, après s'être assuré qu'on utilise bien une version 3 de Python
 
 \begin{verbatim}  $ pip install -i https://test.pypi.org/simple/ crisprbuilder_tb\end{verbatim} 
 
-ou si on précise la version du package
+Il peut arriver que \textit{testPyPI} n'installe pas la dernière version, en général lorsqu'une version est déjà présente sur l'ordinateur. Dans ce cas, il convient de préciser la version souhaitée du package, par exemple pour la version 0.1.2
 
 \begin{verbatim}  $ pip install -i https://test.pypi.org/simple/ crisprbuilder_tb==0.1.2\end{verbatim} A noter qu'il ne faut utiliser de guillemets autour de la version du package.
+
+Il est fréquent qu'il s'affiche à ce moment-là le message d'erreur suivant
+
+\begin{verbatim}  ERROR: Could not find a version that satisfies the requirement crisprbuilder_tb===0.1.2 (from versions: 0.0.1, 0.0.2, 0.0.3, 0.0.4, 0.0.5, 0.1.0, 0.1.1)
+ERROR: No matching distribution found for crisprbuilder_tb==0.1.2\end{verbatim}
+
+Dans ce cas, la répétition des instructions précédentes résout le problème
+\begin{verbatim}  $ pip install -i https://test.pypi.org/simple/ crisprbuilder_tb
+  $ pip install -i https://test.pypi.org/simple/ crisprbuilder_tb==0.1.2\end{verbatim} 
 
 Lorsque le package est finalement prêt pour être publié sur PyPI, on utilise l’instruction
 \begin{verbatim}  $ poetry publish\end{verbatim}
@@ -919,7 +936,7 @@ afin d'obtenir une réponse sous forme de liste du type
   '\raisebox{-1ex}{\textasciitilde}/.local/lib/python3.6/site-packages',
   '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6/site-packages']\end{verbatim}
 
-
+TODO PROBLEME INSTALLATION AVEC REQUIREMENTS.TXT OBLIGATOIRE
 
 % LA STRUCTURE DU PACKAGE CONSTRUIT PAR POETRY -------------------------
 \section{La structure du package construit par Poetry}
@@ -1642,6 +1659,16 @@ Le module bdd.py ne contenant que le dictionnaire Origines n'a pas été évalu�
 
 S'agissant d'un test statique, le code n'est pas exécuté et la performance du code n'est pas prise en compte lors de l'évaluation faite par \textit{pylint}. Ceci explique que \textit{pylint} peut reprocher l'utilisation injustifiée de listes compréhensives, sans tenir compte de l'efficacité d'un tel traitement.
 
+TODO PROBLEME PASSAGE PACKAGE
+CHEMINS D'ACCES
+
+\subsubsection{fichiers existants}
+
+La gestion des exceptions avec des blocs \textbf{try ... except FileNotFoundError} ne permet pas au programme de déplacer un fichier vers un répertoire contenant déjà ce fichier. Ce problème est plus sensible au moment des tests car nous utilisons à plusieurs reprises le même SRA. Toutefois, il pourrait également advenir à un utilisateur qui aurait inscrit plusieurs fois sur une liste le même SRA. Il convient donc de tester la présence d'un fichier dans un répertoire avant de le déplacer.
+
+\subsubsection{L'utilisation de VirtualBox}
+
+Il est nécessaire de tester le comportement de l'application à l'installation et au fonctionnement au sein de différents systèmes d'exploitation. Nous choisissons de tester CRISPRbuilder\_TB avec les systèmes Linux, MacOS et Microsoft et un environnement de travail vierge. Pour cela nous utilisons une machine virtuelle VirtualBox qui va créer artificiellement ces plateformes.
 
 
 
@@ -1665,7 +1692,7 @@ L'objectif initial était de fournir un package qui fournit des informations au 
 Nous fournissons au package un fichier au format \textit{.txt} comprenant plus qu'un \textit{SRA} par ligne. RESULTATS  
 
 
-
+\item \texttt{  \$ python -m crisprbuilder\_tb \textemdash \textemdash collect ERR2704808} ne parvient pas à trouver les modules ...
 
 
 
@@ -1673,22 +1700,19 @@ Nous fournissons au package un fichier au format \textit{.txt} comprenant plus q
 % LES TESTS CLI --------------------------------------------
 \section{Les tests CLI}
 
-L'objectif des tests CLI est de vérifier que les lignes de commandes prévues pour l'exécution du code fournissent bien le résultat escompté. Pour cela, nous testons les commandes
+L'objectif des tests CLI est de vérifier que les lignes de commandes prévues pour l'exécution du code fournissent bien le résultat escompté. Pour cela, nous testons successivement les commandes
 
-\begin{verbatim}\texttt{\$ python -m crisprbuilder\_tb \textemdash \textemdash help}\end{verbatim}
+\begin{itemize}
+\item \texttt{  \$ python -m crisprbuilder\_tb \textemdash \textemdash help} qui fournit bien les informations relatives aux options du package,
+\texttt{  \$ python -m crisprbuilder\_tb \textemdash \textemdash print 0} qui affiche bien la liste demandée,
+\item \texttt{  \$ python -m crisprbuilder\_tb \textemdash \textemdash collect ERR2704808}
+\item \texttt{  \$ python -m crisprbuilder\_tb \textemdash \textemdash change 0}
+\item \texttt{  \$ python -m crisprbuilder\_tb \textemdash \textemdash remove 0}
+\end{itemize}
+\texttt{  \$ python -m crisprbuilder\_tb \textemdash \textemdash add 0}
 
-fournit bien les informations relatives aux options du package, à savoir
-A COMPLETER ???
 
-\begin{verbatim}  $ python -m crisprbuilder_tb --change 0\end{verbatim}
 
-\begin{verbatim}  $ python -m crisprbuilder_tb --remove 0\end{verbatim}
-
-\begin{verbatim}  $ python -m crisprbuilder_tb --add 0\end{verbatim}
-
-\begin{verbatim}  $ python -m crisprbuilder_tb --print 0\end{verbatim}
-
-La fonctionnalité \textit{\textemdash \textemdash collect} a déjà été testée précédemment.
 
 
 
@@ -1756,7 +1780,7 @@ TODO - COMMANDES D'INSTALLATION
 Le même procédé a finalement été appliqué au package publié sur PyPI.
 
 
-
+TODO PROBLEM AVEC REQUIREMENTS.TXT
 
 
 
