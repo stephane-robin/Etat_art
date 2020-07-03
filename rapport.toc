@@ -23,8 +23,8 @@
 \contentsline {section}{\numberline {3.}Quelle licence choisir ?}{21}{section.3.3}
 \contentsline {chapter}{\numberline {4}Le choix des outils}{22}{chapter.4}
 \contentsline {section}{\numberline {1.}L'environnement de d\IeC {\'e}veloppement}{22}{section.4.1}
-\contentsline {section}{\numberline {2.}L'environnement de test}{24}{section.4.2}
-\contentsline {section}{\numberline {3.}L'outil d'empaquetage}{24}{section.4.3}
+\contentsline {section}{\numberline {2.}L'environnement de test}{25}{section.4.2}
+\contentsline {section}{\numberline {3.}L'outil d'empaquetage}{25}{section.4.3}
 \contentsline {chapter}{\numberline {5}Construction du package avec \textit {Poetry}}{26}{chapter.5}
 \contentsline {section}{\numberline {1.}Cr\IeC {\'e}ation du package et gestion des d\IeC {\'e}pendances}{26}{section.5.1}
 \contentsline {section}{\numberline {2.}Construction du package et publication}{29}{section.5.2}

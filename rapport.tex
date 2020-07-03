@@ -608,7 +608,7 @@ Dans le cadre de ce projet, aucune spécification restrictive n'étant requise, 
 % CHOIX DES OUTILS -----------------------------
 \chapter{Le choix des outils}
 
-Note préalable : toutes les explications données dans ce chapitre concernent les plateformes Linux et sont transposables en une moindre mesure sur MacOS.
+Note préalable : toutes les explications données dans ce chapitre concernent les plateformes Linux et sont transposables en une moindre mesure sur MacOS, mais pas nécessairement sur Windows.
 
 
 
@@ -692,15 +692,16 @@ Notons que certains modules utilisés dans ce package sont nativement présents 
 \item du module \textit{argparse} qui
 \end{itemize}
 
-Le package, une fois installé par l'utilisateur, devra fournir un environnement de travail similaire à celui que nous venons de construire, c'est à dire qu'il devra installer automatiquement les dépendances nécessaires à son bon fonctionnement. Ce processus devra rester transparent pour l'utilisateur. 
+Le package, une fois installé par l'utilisateur, devra fournir un environnement de travail similaire à celui que nous venons de construire, c'est à dire que les dépendances nécessaires à son bon fonctionnement devront également être installées. Ce processus devrait rester transparent pour l'utilisateur et être pris en charge par un gestionnaire de package tel que \textit{Poetry} qui regroupe ces modules dans un fichier appelé pyproject.toml. Nous verrons au cours des tests d'installation que les dépendances ne sont pas toujours reconnues à partir de \textit{Poetry} et qu'il est plus sûr de les installer séparément. 
 
-On pourra retrouver les modules installés via \textit{pip} dans un fichier \textit{requirements.txt} ou similaire qu'on pourra fabriquer en gelant l'état de l'environnement à un moment précis grâce à une instruction du type
+On pourrait par exemple retrouver les modules installés via \textit{pip} dans un fichier \textit{requirements.txt} construit en gelant l'état de l'environnement à un moment précis grâce à une instruction du type
 \begin{verbatim}  $ pip freeze > requirements.txt\end{verbatim}.
 
-On pourra alors ré-installer ces modules à l'identique en utilisant l'instruction
+On pourrait alors ré-installer ces modules à l'identique en utilisant l'instruction
 \begin{verbatim}  $ pip install -r requirements.txt\end{verbatim}
 
- Notons que l'outil Poetry quant à lui, regroupe ces modules dans un fichier appelé pyproject.toml.
+Cette méthode fonctionne bien pour construire un environnement de développement à partir d'un répertoire courant où se trouve le fichier requirements.txt. Toutefois, dans le cas d'un package, le fichier requirements.txt serait compressé dans l'archive puis intallé à l'emplacement désigné des packages pour chaque ordinateur (\textbf{site-packages} par exemple). Il faudrait donc que l'utilisateur trouve d'abord cet emplacement pour ensuite exécuter le fichier requirements.txt. Nous pensons qu'il est plus simple pour l'utilisateur de suivre la documentation crisprbuilder\_tb.md et de procéder lui-même à l'installation des dépendances en ligne de commande.
+
 
 
 % L'ENVIRONNEMENT DE TEST ----------------------
@@ -1044,19 +1045,26 @@ genome information dictionary comprising the following elements:
 
     This package comes with a Command Line Interface, so it should be
 installed and executed using your command prompt. For Linux, MacOS or
-Windows platforms, the installation requires the same instruction. Go
-the the directory you want the package to be stored to and write in your
-command prompt:
+Windows platforms, the installation requires the same instruction. From your current directory, first install the dependencies then the package by writing in the command prompt:
 
     \begin{verbatim}
-  pip install crisprbuilder_tb
+  $ pip install xlrd==1.2.0
+  $ pip install xmltodict==0.12.0
+  $ pip install biopython==1.76
+  $ pip install parallel-fastq-dump==0.6.5
+  $ pip install crisprbuilder_tb
 \end{verbatim}
 
     Please note that \texttt{cripsrbuilder\_tb} is written without capital
 letters. Make sure your system is set to Python 3 in your current
 directory before using the \texttt{pip} instruction. The default version
-on your computer might be different.
+on your computer might be different. You can also check that \textit{pip} is linked to Python3 by writing \texttt{pip --version}, which will display a line similar to
 
+\begin{verbatim}
+pip 20.1.1 from ~/pyenv/versions/3.8.0/lib/python3.8/site-packages/pip (python 3.8)
+\end{verbatim}
+
+TODO COMMANDES GIT
 
 % HOW TO USE THE COMMAND LINE INTERFACE --------------------
     \subsection*{How to use the Command Line Interface
