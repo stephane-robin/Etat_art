@@ -274,11 +274,28 @@ Je voudrais également souligner la patience dont ils ont fait preuve pour m'exp
 % PRESENTATION DU PROJET --------------------------------	
 \section{Présentation du projet}
 
-Dans le cadre d'un travail de recherche en bio-informatique, Christophe Guyeux, Jean-Claude Charr, Christophe Sola et Guislaine Refrégier ont créé du code "brut" leur permettant d'afficher et de stocker des données relatives à une SRA\footnote{\textbf{SRA:} Sequence Read Archive} particulière. Ce code doit être rassemblé, réorganisé, nettoyé pour être conforme aux critères PEP\footnote{\textbf{PEP:} Python Enhancement Proposals}. Il doit être rendu fonctionnel puis plus efficace si possible. Il doit s'exécuter en utilisant un \textit{Command Line Interface}, et doit finalement être empaqueté pour qu'un utilisateur puisse l'utiliser quelque soit sa plateforme (Linux, MacOS ou Windows) une fois installé. Pour cela, il est nécessaire de publier ce package sur PyPI\footnote{\textbf{PyPI:} Python Package Index} et de le documenter clairement en anglais pour en faciliter l'utilisation.
+Dans le cadre d'un travail de recherche en bio-informatique, Christophe Guyeux, Jean-Claude Charr, Christophe Sola et Guislaine Refrégier ont créé du code "brut" leur permettant d'afficher et de stocker des données relatives à une SRA\footnote{\textbf{SRA:} Sequence Read Archive} particulière. Ce code doit être rassemblé, réorganisé, nettoyé pour être conforme aux critères PEP\footnote{\textbf{PEP:} Python Enhancement Proposals}. Il doit être rendu fonctionnel puis plus efficace si possible. Il doit s'exécuter en utilisant une interface en ligne de commande, et doit finalement être empaqueté pour qu'un utilisateur puisse l'utiliser quelque soit sa plateforme (Linux, MacOS ou Windows) une fois installé. Pour cela, il est nécessaire de publier ce package sur PyPI\footnote{\textbf{PyPI:} Python Package Index} et de le documenter clairement en anglais pour en faciliter l'utilisation.
 
-Lorsque nous avons défini les objectifs du stage, il est immédiatement ressorti l'importance de lui donner un caractère pratique, qui pourrait éventuellement être transposable dans le milieu professionnel. La reconstruction du programme à partir d'éléments de code, la nécessité de créer localement un environnement spécifique de travail et d'installer automatiquement cet environnement sur les ordinateurs des utilisateurs, la possibilité de faire fonctionner le package sur différentes plateformes, les différents tests effectués, la création et publication du package sont autant de compétences pratiques utiles, auxquelles il faut se confronter pour bien en comprendre les difficultés. Par ailleurs, la construction de ce package a nécessité de comprendre le fonctionnement de termes clés en bio-informatique afin de pouvoir travailler dans ce cadre métier particulier. Ceci a conduit à une synthèse de l'état de l'art fortement orientée vers la biologie et plus particulièrement le \textit{CRISPR}.
+Lorsque nous avons défini les objectifs du stage, il est immédiatement ressorti l'importance de lui donner un caractère pratique, qui pourrait éventuellement être transposable dans le milieu professionnel.
 
+Ainsi, l'élaboration de ce package a nécessité de passer par différentes étapes permettant de développer les compétences suivantes :
+\begin{itemize}
+\item amélioration des connaissances Python car il a fallu reconstruire le programme à partir d'éléments de code et chercher à optimiser les performances de traitement,
+\item création d'un notebook de documentation en anglais et d'une docstring pour le package dans le respect des conventions du PEP-257,
+\item création d'un environnement de développement car il a fallu tester le code pas à pas durant son élaboration,
+\item utilisation de l'outil de versionnement \textit{Git}, nécessaire pour sauvegarder le projet et pour revenir sur une version fonctionnelle après une modification erronée, 
+\item utilisation d'un environnement de développement intégré PyCharm pour faciliter le travail, mais cela implique également une gestion des modules installés et des environnements de développement,
+\item création d'une interface en ligne de commande, suivant le cahier des charges du projet,
+\item création et publication d'un package, pour lequel il a fallu gérer la problématique des chemins d'accès, 
+\item rendre une application portable, en modifiant le code en fonction du système d'exploitation
+\item création de machines virtuelles pour effectuer des tests sur différents systèmes d'exploitation, et création d'un environnement de test sur ces machines virtuelles
+\item tests complets du package (unitaires, ... test pylint, module unittest,
+\item la construction de ce package a nécessité de comprendre le fonctionnement de termes clés en bio-informatique afin de pouvoir travailler dans ce cadre métier particulier. Ceci a conduit à une synthèse de l'état de l'art fortement orientée vers la biologie et plus particulièrement le \textit{CRISPR}.
+\end{itemize}
 
+Il faut assurément se confronter au moins une fois à ces compétences pratiques utiles pour bien en appréhender les difficultés.
+
+Nous allons voir en détail dans ce rapport les différentes étapes suivies.
 
 
 
@@ -608,7 +625,7 @@ Dans le cadre de ce projet, aucune spécification restrictive n'étant requise, 
 % CHOIX DES OUTILS -----------------------------
 \chapter{Le choix des outils}
 
-Note préalable : toutes les explications données dans ce chapitre concernent les plateformes Linux et sont transposables en une moindre mesure sur MacOS, mais pas nécessairement sur Windows.
+Note préalable : toutes les explications données dans cette partie concernent les plateformes Linux et sont transposables en une moindre mesure sur MacOS, mais pas nécessairement sur Windows.
 
 
 
@@ -688,8 +705,8 @@ Notons que certains modules utilisés dans ce package sont nativement présents 
 \item du module \textit{csv} qui implémente des classes pour lire et écrire des données liées à des feuilles de calcul ou des bases de données au format \textit{csv},
 \item du module \textit{shutil} qui propose des opérations sur les fichiers et collections de fichiers, notamment la copie et suppression de fichiers,
 \item du module \textit{subprocess.run} qui permet de gérer de nouveaux processus, de se connecter à leurs flux d'input/output/erreurs. Il remplace plusieurs modules dépréciés : \textit{os.system, os.spawn*, os.popen*, popen2.*, commands.* },
-\item du module \textit{pathlib} qui
-\item du module \textit{argparse} qui
+\item du module \textit{pathlib} qui fournit des classes de chemins purs indépendants du système d'exploitation, ce qui permet au code de manipuler des chemins sans accéder au système d'exploitation,
+\item du module \textit{argparse} qui gère la création et l'utilisation d'interfaces en ligne de commande.
 \end{itemize}
 
 Le package, une fois installé par l'utilisateur, devra fournir un environnement de travail similaire à celui que nous venons de construire, c'est à dire que les dépendances nécessaires à son bon fonctionnement devront également être installées. Ce processus devrait rester transparent pour l'utilisateur et être pris en charge par un gestionnaire de package tel que \textit{Poetry} qui regroupe ces modules dans un fichier appelé pyproject.toml. Nous verrons au cours des tests d'installation que les dépendances ne sont pas toujours reconnues à partir de \textit{Poetry} et qu'il est plus sûr de les installer séparément. 
@@ -700,7 +717,7 @@ On pourrait par exemple retrouver les modules installés via \textit{pip} dans u
 On pourrait alors ré-installer ces modules à l'identique en utilisant l'instruction
 \begin{verbatim}  $ pip install -r requirements.txt\end{verbatim}
 
-Cette méthode fonctionne bien pour construire un environnement de développement à partir d'un répertoire courant où se trouve le fichier requirements.txt. Toutefois, dans le cas d'un package, le fichier requirements.txt serait compressé dans l'archive puis intallé à l'emplacement désigné des packages pour chaque ordinateur (\textbf{site-packages} par exemple). Il faudrait donc que l'utilisateur trouve d'abord cet emplacement pour ensuite exécuter le fichier requirements.txt. Nous pensons qu'il est plus simple pour l'utilisateur de suivre la documentation crisprbuilder\_tb.md et de procéder lui-même à l'installation des dépendances en ligne de commande.
+Cette méthode fonctionne bien pour construire un environnement de développement à partir d'un répertoire courant où se trouve le fichier requirements.txt. Toutefois, lors de la création d'un package, le fichier requirements.txt serait compressé dans l'archive puis intallé à l'emplacement désigné des packages pour chaque ordinateur (\textbf{site-packages} par exemple). Il faudrait donc que l'utilisateur trouve d'abord cet emplacement pour ensuite exécuter le fichier requirements.txt. Nous pensons qu'il est plus simple pour l'utilisateur de suivre la documentation crisprbuilder\_tb.md et de procéder lui-même à l'installation des dépendances en ligne de commande.
 
 
 
@@ -781,7 +798,6 @@ offre l’avantage de chercher automatiquement une version compatible de la dép
 %\begin{tcolorbox} \end{tcolorbox}
 Il faut donc ajouter les dépendances suivantes au projet :
 \begin{verbatim}  $ cd crisprbuilder_tb 
-  %$ poetry add python3 
   $ poetry add xmltodict 
   $ poetry add xlrd 
   $ poetry add biopython
@@ -891,7 +907,7 @@ Il est donc possible de télécharger un package provenant d'index différents d
 
 \begin{verbatim}  $ pip install -i https://test.pypi.org/simple/ crisprbuilder_tb\end{verbatim} 
 
-Il peut arriver que \textit{testPyPI} n'installe pas la dernière version, en général lorsqu'une version est déjà présente sur l'ordinateur. Dans ce cas, il convient de préciser la version souhaitée du package, par exemple pour la version 0.1.2
+Il peut arriver que \textit{testPyPI} n'installe pas la dernière version, en général lorsqu'une version est déjà présente sur l'ordinateur. Dans ce cas, il convient de préciser la version souhaitée du package, par exemple pour la version 0.1.2, il faut écrire
 
 \begin{verbatim}  $ pip install -i https://test.pypi.org/simple/ crisprbuilder_tb==0.1.2\end{verbatim} A noter qu'il ne faut utiliser de guillemets autour de la version du package.
 
@@ -939,17 +955,16 @@ afin d'obtenir une réponse sous forme de liste du type
 
 TODO PROBLEME INSTALLATION AVEC REQUIREMENTS.TXT OBLIGATOIRE
 
-% LA STRUCTURE DU PACKAGE CONSTRUIT PAR POETRY -------------------------
+% LA STRUCTURE DU PACKAGE TEL QU'IL EST INSTALLE CONSTRUIT PAR POETRY -------------------------
 \section{La structure du package construit par Poetry}
 
-Le répertoire \textbf{crisprbuilder\_tb} contient obligatoirement à la racine les fichiers \_\_init\_\_.py et \_\_main\_\_.py
+Le fichier crisprbuilder\_tb-0.1.2.tar.gz est une archive qui, une fois décompressée contient les éléments suivants :
 
-Par ailleurs, tous les répertoires comprenant des modules Python doivent contenir un fichier
- \_\_init\_\_.py.
+\includegraphics[width=7cm]{tar.png}
 
-Lors de l'exécution de l'instruction 
-\texttt{\$ poetry new crisprbuilder\_tb}
-s'est créé le package \textit{crisprbuilder\_tb} disposant de la structure suivante :
+On constate la même arborescence que celle créée au moment de l'instruction XXX, avec en supplément les fichiers 
+
+
 
 \begin{itemize}
 \item un répertoire \textbf{doc} comprenant la documentation nécessaire pour comprendre et utiliser convenablement le package,
@@ -957,10 +972,11 @@ s'est créé le package \textit{crisprbuilder\_tb} disposant de la structure sui
 \item un répertoire \textbf{data} comprenant les bases de données utiles au programme, sans aucun module et donc aucun fichier \_\_init\_\_.py,
 \item un répertoire \textbf{REP} comprenant un répertoire séquences qui contient les résultats de recherche au sujet de différents SRA,
 \item un répertoire \textbf{tmp} comprenant un fichier nb.txt qui change pour chaque SRA
-à la racine du package, les fichiers \_\_init\_\_.py, \_\_main\_\_.py, fonctions.py et bdd.py.
+\item à la racine du package, les fichiers \_\_init\_\_.py, \_\_main\_\_.py, fonctions.py et bdd.py.
 \end{itemize}
 
-
+Notons que tous les répertoires comprenant des modules Python doivent contenir un fichier
+ \_\_init\_\_.py.
 
 
 
@@ -1064,7 +1080,6 @@ on your computer might be different. You can also check that \textit{pip} is lin
 pip 20.1.1 from ~/pyenv/versions/3.8.0/lib/python3.8/site-packages/pip (python 3.8)
 \end{verbatim}
 
-TODO COMMANDES GIT
 
 % HOW TO USE THE COMMAND LINE INTERFACE --------------------
     \subsection*{How to use the Command Line Interface
@@ -1833,34 +1848,14 @@ Ce stage m'a ouvert l'esprit vers le domaine de la bioinformatique et m'a permis
 Notons qu'à terme, l'objectif du package sera de proposer une reconstitution du \textit{CRISPR}.
 	
 
-L'élaboration de ce package m'a permis de développer les compétences concrètes suivantes :
-\begin{itemize}
-\item création d'un environnement de développement,
-\item travail sur le code, concentration sur l'augmentation des performances de traitement,
-\item documentation du package PEP-257 docstring conventions
-\item création d'une Command Line Interface,
-\item création et publication d'un package
-\item travail sur la portabilité d'une application
-\item création d'un environnement de test,
-\item tests du package (unitaires, ... test pylint, module unittest,
-\item utilisation de l'outil de versionnement \textit{Git}
-\item utilisation d'un environnement de développement intégré
-\end{itemize}
-	
-TODO - PROBLEME
 
-mv /home/stephane/.local/lib/python3.6/site-packages/crisprtest /home/stephane/Téléchargements
 
-répétition de pip install
+
 	
 
-% LES ELEMENTS DU CODE ------------------------------------------
 
-\section{Les principaux éléments du code}
 
-dico est composé de la façon suivante :
-
-Un fichier pkl tel que dico\_africanum.pkl est créé par pickle et contient un flux d'octets représentant les objets à sérialiser.
+UTILITE ???
 
 pickle permet aux objets d'être sérialisés en fichiers sur disque et désérialisés dans le programme au moment de l'exécution.
 	
