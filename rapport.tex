@@ -283,14 +283,14 @@ Ainsi, l'élaboration de ce package a nécessité de passer par différentes ét
 \item amélioration des connaissances Python car il a fallu reconstruire le programme à partir d'éléments de code et chercher à optimiser les performances de traitement,
 \item création d'un notebook de documentation en anglais et d'une docstring pour le package dans le respect des conventions du PEP-257,
 \item création d'un environnement de développement car il a fallu tester le code pas à pas durant son élaboration,
-\item utilisation de l'outil de versionnement \textit{Git}, nécessaire pour sauvegarder le projet et pour revenir sur une version fonctionnelle après une modification erronée, 
+\item utilisation de l'outil de versionnement Git, nécessaire pour sauvegarder le projet et pour revenir sur une version fonctionnelle après une modification erronée, 
 \item utilisation d'un environnement de développement intégré PyCharm pour faciliter le travail, mais cela implique également une gestion des modules installés et des environnements de développement,
 \item création d'une interface en ligne de commande, suivant le cahier des charges du projet,
 \item création et publication d'un package, pour lequel il a fallu gérer la problématique des chemins d'accès, 
 \item rendre une application portable, en modifiant le code en fonction du système d'exploitation
 \item création de machines virtuelles pour effectuer des tests sur différents systèmes d'exploitation, et création d'un environnement de test sur ces machines virtuelles
 \item tests complets du package (unitaires, ... test pylint, module unittest,
-\item la construction de ce package a nécessité de comprendre le fonctionnement de termes clés en bio-informatique afin de pouvoir travailler dans ce cadre métier particulier. Ceci a conduit à une synthèse de l'état de l'art fortement orientée vers la biologie et plus particulièrement le \textit{CRISPR}.
+\item la construction de ce package a nécessité de comprendre le fonctionnement de termes clés en bio-informatique afin de pouvoir travailler dans ce cadre métier particulier. Ceci a conduit à une synthèse de l'état de l'art fortement orientée vers la biologie et plus particulièrement le CRISPR.
 \end{itemize}
 
 Il faut assurément se confronter au moins une fois à ces compétences pratiques utiles pour bien en appréhender les difficultés.
@@ -585,17 +585,17 @@ Définissons tout d'abord le vocabulaire que nous allons utiliser dans ce rappor
 % COMPOSITION D'UN PACKAGE STANDARD ------------------
 \section{Composition d'un package standard}
 
-Un package standard comporte obligatoirement un fichier \_\_init\_\_.py qui va définir la version du projet et le nom du module de lancement du programme (souvent \_\_main\_\_.py). Il est toutefois acceptable et parfois même recommandé de conserver un fichier \_\_init\_\_.py vide. Par ailleurs, chaque sous dossier vide ou contenant des modules Python devra également contenir un fichier \_\_init\_\_.py.
+Un package standard comporte obligatoirement un fichier \textbf{\_\_init\_\_.py} qui va définir la version du projet et le nom du module de lancement du programme (souvent \textbf{\_\_main\_\_.py}). Il est toutefois acceptable et parfois même recommandé de conserver un fichier \textbf{\_\_init\_\_.py} vide. Par ailleurs, chaque sous dossier vide ou contenant des modules Python devra également contenir un fichier \textbf{\_\_init\_\_.py}.
 
-Les fichiers setup.py,  requirements.txt, LICENSE,  README.md et MANIFEST.in sont également nécessaires.  
+Les fichiers \textbf{setup.py}, \textbf{requirements.txt}, \textbf{LICENSE},  \textbf{README.md} et \textbf{MANIFEST.in} sont également nécessaires.  
 \begin{itemize}
-\item setup.py est le script de construction et configuration destiné au \textit{setuptools}. Il définit notamment le nom et la version du package, ainsi que les fichiers qu'il contient. Il sert également d'interface en ligne de commande relative aux différentes fonctionnalités du package. setup.cfg est un fichier d'initialisation qui contient les options par défaut des commandes du setup.py.
-\item requirements.txt permet l'installation des dépendances à l'aide d'un unique fichier contenant un module à installer par ligne. Il nécessite l'instruction 
+\item \textbf{setup.py} est le script de construction et configuration destiné au \textit{setuptools}. Il définit notamment le nom et la version du package, ainsi que les fichiers qu'il contient. Il sert également d'interface en ligne de commande relative aux différentes fonctionnalités du package. setup.cfg est un fichier d'initialisation qui contient les options par défaut des commandes du \textbf{setup.py}.
+\item \textbf{requirements.txt} permet l'installation des dépendances à l'aide d'un unique fichier contenant un module à installer par ligne. Il nécessite l'instruction 
 \texttt{  pip install -r requirements.txt}
 pour commencer ces installations.
-\item LICENSE définit les termes légaux de la distribution. De nombreux pays n'autorisent pas l'utilisation ou la distribution d'un package qui ne dispose pas de licence.
-\item README.md décrit l'objectif du package, son installation, la nature de ses dépendances et les principales fonctionnalités.
-\item MANIFEST.in permet d'inclure dans le package certains fichiers qui ne sont pas automatiquement intégrés. 
+\item \textbf{LICENSE} définit les termes légaux de la distribution. De nombreux pays n'autorisent pas l'utilisation ou la distribution d'un package qui ne dispose pas de licence.
+\item \textbf{README.md} décrit l'objectif du package, son installation, la nature de ses dépendances et les principales fonctionnalités.
+\item \textbf{MANIFEST.in} permet d'inclure dans le package certains fichiers qui ne sont pas automatiquement intégrés. 
 \end{itemize}
 
 Il est important de regrouper l'ensemble des modules nécessaires au fonctionnement du package dans un répertoire portant le même nom que ce package, accompagné d'un fichier \_\_init\_\_.py, sinon l'archive et la distribution du package se construiront à vide. L'installation à partir de PyPI fonctionnera mais l'exécution du package restera inactive.
@@ -622,6 +622,15 @@ Dans le cadre de ce projet, aucune spécification restrictive n'étant requise, 
 
 
 
+% FONCTIONNEMENT D'UN PACKAGE
+\section{Fonctionnement d'un package}
+
+EXPLICATIONS PROBLEME PATHS
+
+
+
+
+
 % CHOIX DES OUTILS -----------------------------
 \chapter{Le choix des outils}
 
@@ -635,9 +644,9 @@ Note préalable : toutes les explications données dans cette partie concernent 
 
 TODO EXPLICATIONS REAL PYTHON
 
-Avant de créer le package, il faut commencer par construire localement le programme. Pour ce faire, nous définissons un environnement de développement, qui nous servira également à effectuer des tests.
+Avant de créer le package, il faut commencer par construire localement un programme fonctionnel. Pour cela, nous définissons un environnement de développement, qui nous sert à exécuter le code et à le tester au fur et à mesure de son élaboration. Cet environnement contient tous les modules et packages nécessaires à son bon fonctionnement, c'est à dire les dépendances du projet.
  
-L'outil de création d'environnement virtuel \textit{venv} \index{venv} nous permet de créer un environnement de développement afin de tester les codes du projet. \textit{venv} commence par constituer un dossier contenant tous les exécutables nécessaires à l'utilisation des modules d'un projet Python. 
+L'outil de création d'environnement virtuel \textit{venv} nous permet de créer cet environnement de développement afin de tester les codes du projet. \textit{venv} commence par constituer un dossier contenant tous les exécutables nécessaires à l'utilisation des modules d'un projet Python. 
 
 Dans le cadre de notre étude, nous créons un répertoire \textbf{biologie}, nous nous plaçons dedans puis nous créons, à l'aide de \textit{venv}, un environnement de développement \textbf{env\_bio}. 
 \begin{verbatim}  $ cd biologie
@@ -724,7 +733,19 @@ Cette méthode fonctionne bien pour construire un environnement de développemen
 % L'ENVIRONNEMENT DE TEST ----------------------
 \section{L'environnement de test}
 
+L'environnement de test doit simuler le cas le plus défavorable, c'est à dire qu'il doit être représentatif d'un ordinateur "vierge" ne disposant pas des dépendances nécessaires. Par ailleurs, cet environnement de test doit tenir compte des différents systèmes d'exploitation envisagés lors de la campagne de tests. Pour simuler les réactions des différents systèmes d'exploitation possibles, nous allons installer sur notre ordinateur une machine virtuelle en utilisant VirtualBox.
 
+
+
+\subsubsection{L'utilisation de VirtualBox}
+
+Il est nécessaire de tester le comportement de l'application à l'installation et au fonctionnement au sein de différents systèmes d'exploitation. Nous choisissons de tester CRISPRbuilder\_TB avec les systèmes Linux, MacOS et Microsoft et un environnement de travail vierge. Pour cela nous utilisons une machine virtuelle VirtualBox qui va créer artificiellement ces plateformes.
+
+Il faut commencer par télécharger des images \textit{.iso} de Ubuntu 18.04.4 LTS, XXX.
+
+Il faut ensuite cloner chaque version vierge et commencer les tests en rajoutant dans la description toutes les modifications nécessaires afin que le package fonctionne sur une environnement vierge de toutes les dépendances requises.
+
+Les premiers tests de fonctionnement avec un système Linux montrent que
 
 
 	
@@ -976,21 +997,21 @@ On constate la même arborescence que celle créée au moment de l'instruction X
 \end{itemize}
 
 Notons que tous les répertoires comprenant des modules Python doivent contenir un fichier
- \_\_init\_\_.py.
+\textbf{ \_\_init\_\_.py}.
 
 
 
 % LE PACKAGE CRISPRBUILDER --------------------------------
-\chapter{Le package \textit{CRISPRbuilder\_TB}}
+\chapter{Le package CRISPRbuilder\_TB}
 
 % FONCTIONNEMENT DU PACKAGE -----------------------
-\section{Fonctionnement du package \textit{CRISPRbuilder\_TB}}
+\section{Fonctionnement du package CRISPRbuilder\_TB}
 
 La compréhension des chemins d'accès est au coeur du fonctionnement d'un package
 
-Le package \textit{CRISPRbuilder\_TB} ne fonctionne pas comme un module qu'on importerait en début de code Python afin d'en utiliser les différentes méthodes.
+Le package CRISPRbuilder\_TB ne fonctionne pas comme un module qu'on importerait en début de code Python afin d'en utiliser les différentes méthodes.
 
-Par ailleurs, il n'est pas prévu que l'utilisateur se place dans le package pour exécuter directement le module \_\_main\_\_.py en écrivant en ligne de commande
+Par ailleurs, il n'est pas prévu que l'utilisateur se place dans le package pour exécuter directement le module \textbf{\_\_main\_\_.py} en écrivant en ligne de commande
 \texttt{\$ python crisprbuilder\_tb \textemdash \textemdash collect ERR2704808}
 sans le "-m", car dans ce cas l'exécution entraînerait la levée d'une exception due aux différents chemins d'accès qui seraient erronés. (explications des chemins d'accès ci-dessous)
 
@@ -1675,7 +1696,7 @@ De la même façon, le module fonctions.py a obtenu la note de 9.80 / 10 avec le
   fonctions.py:400:0: R0913: Too many arguments (7/5) (too-many-arguments)
 
   -----------------------------------
-  Your code has been rated at 9.80/10\end{tcolorbox}
+  Your code has been rated at 9.80/10\end{verbatim}
 
 Le module bdd.py ne contenant que le dictionnaire Origines n'a pas été évalué par \textit{pylint}.
 
@@ -1688,15 +1709,7 @@ CHEMINS D'ACCES
 
 La gestion des exceptions avec des blocs \textbf{try ... except FileNotFoundError} ne permet pas au programme de déplacer un fichier vers un répertoire contenant déjà ce fichier. Ce problème est plus sensible au moment des tests car nous utilisons à plusieurs reprises le même SRA. Toutefois, il pourrait également advenir à un utilisateur qui aurait inscrit plusieurs fois sur une liste le même SRA. Il convient donc de tester la présence d'un fichier dans un répertoire avant de le déplacer.
 
-\subsubsection{L'utilisation de VirtualBox}
 
-Il est nécessaire de tester le comportement de l'application à l'installation et au fonctionnement au sein de différents systèmes d'exploitation. Nous choisissons de tester CRISPRbuilder\_TB avec les systèmes Linux, MacOS et Microsoft et un environnement de travail vierge. Pour cela nous utilisons une machine virtuelle VirtualBox qui va créer artificiellement ces plateformes.
-
-Il faut commencer par télécharger des images \textit{.iso} de Ubuntu 18.04.4 LTS, XXX.
-
-Il faut ensuite cloner chaque version vierge et commencer les tests en rajoutant dans la description toutes les modifications nécessaires afin que le package fonctionne sur une environnement vierge de toutes les dépendances requises.
-
-Les premiers tests de fonctionnement avec un système Linux montrent que
 
 
 
@@ -1718,9 +1731,9 @@ L'objectif initial était de fournir un package qui fournit des informations au 
 
 Nous fournissons au package un fichier au format \textit{.txt} comprenant plus qu'un \textit{SRA} par ligne. RESULTATS  
 
-
-\item \texttt{  \$ python -m crisprbuilder\_tb \textemdash \textemdash collect ERR2704808} ne parvient pas à trouver les modules ...
-
+\begin{verbatim}
+  $ python -m crisprbuilder_tb --collect ERR2704808 ne parvient pas à trouver les modules ...
+\end{verbatim}
 
 
 
@@ -1769,7 +1782,7 @@ En revanche, augmentation des performances
 
 La taille importante des fichiers sur lesquels nous travaillons génère des délais importants de traitement. Au début de notre travail sur le code, nous avons cherché à transformer les instructions Linux appelées par les méthodes Python \textbf{subprocess.run} et \textbf{os.system} en fonctions Python pour améliorer la portabilité de l'application en évitant de se limiter aux systèmes Linux. Lors des premiers tests d'intégration, le temps de réponse du programme était tellement élevé que nous avons Nous avons constaté lors des premiers tests d'intégration un fort ralentissement du programme lorsque ces modifications étaient effectuées sur l'ensemble du code. fortement le code lors des premiers tests de fonctionnement global de l'application, au vu de la taille importante des fichiers à lire par l'interpréteur. Nous avons donc décidé de revenir à l'utilisation de \textbf{subprocess.run} et \textbf{os.system}. Si cette démarche n'a aucune incidence pour la plateforme MacOS, elle imposerait en revanche un changement de code pour la plateforme Windows. Or, en fonction des versions du systéme Windows, l'utilisateur dispose d'une invite de commandes ou d'un PowerShell dont les instructions diffèrent. Nous avons donc choisi de conserver les appels aux instructions en lignes de commande pour les système Posix et d'utiliser des fonctions Python pour les systèmes Windows. Cela entraîne une relative lenteur de traitement pour ces derniers. 
 
-Pour mieux comprendre ce ralentissement, prenons un exemple sur un traitement simple consistant à concaténer deux fichiers \text{.fasta}. L'instruction suivante
+Pour mieux comprendre ce ralentissement, prenons un exemple sur un traitement simple consistant à concaténer deux fichiers \textit{.fasta}. L'instruction suivante
 
 \begin{verbatim}os.system("cat SRR8368696_1.fasta SRR8368696_2.fasta > SRR8368696_shuffled_system.fasta")\end{verbatim}
 
@@ -1798,7 +1811,7 @@ Cette différence de quelques secondes pour une seule fonction entraîne par con
 % LES TESTS D'INSTALLATION -----------------------------
 \section{Les tests d'installation}
 
-Une fois que l'application a été validée et publiée sur testPyPI, nous avons contrôlé la documentation au sein des modules et des fonctions, dans le fichier \textit{README.md} et surtout dans le fichier \textit{crisprbuilder\_tb.md}. 
+Une fois que l'application a été validée et publiée sur testPyPI, nous avons contrôlé la documentation au sein des modules et des fonctions, dans le fichier README.md et surtout dans le fichier crisprbuilder\_tb.md. 
 
 Nous avons également vérifié le bon fonctionnement de l'installation sur un système Ubuntu 18.04 LTS, un MacOS Sierra et un Windows Vista. Les ordinateurs utilisés ne disposaient pas de l'environnement de travail nécessaire à l'application avant l'installation de celle-ci. Les installations ont été testées de bout en bout avec les commandes
 
@@ -1827,7 +1840,7 @@ et
 
 pour procéder aux vérifications aprés modification de code.
 
-L'utilisation de l'outil de versioning \textit{Git} a constitué une aide précieuse au cours de chaque modification significative de code. Ce stage a été l'occasion de manipuler quotidiennement les principales commandes \textit{Git}. L'utilisation conjointe de \textit{Poetry} et de \textit{Git} qui construisent tous les deux un dossier \textbf{crisprbuilder\_tb} au moment de la création d'un package par
+L'utilisation de l'outil de versioning Git a constitué une aide précieuse au cours de chaque modification significative de code. Ce stage a été l'occasion de manipuler quotidiennement les principales commandes Git. L'utilisation conjointe de \textit{Poetry} et de Git qui construisent tous les deux un dossier \textbf{crisprbuilder\_tb} au moment de la création d'un package par
 
  \begin{tcolorbox}\texttt{\$ poetry new crisprbuilder\_tb}\end{tcolorbox}
 

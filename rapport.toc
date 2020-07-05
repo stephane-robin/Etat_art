@@ -21,23 +21,31 @@
 \contentsline {section}{\numberline {1.}Vocabulaire}{21}{section.3.1}
 \contentsline {section}{\numberline {2.}Composition d'un package standard}{21}{section.3.2}
 \contentsline {section}{\numberline {3.}Quelle licence choisir ?}{22}{section.3.3}
+\contentsline {section}{\numberline {4.}Fonctionnement d'un package}{22}{section.3.4}
 \contentsline {chapter}{\numberline {4}Le choix des outils}{23}{chapter.4}
 \contentsline {section}{\numberline {1.}L'environnement de d\IeC {\'e}veloppement}{23}{section.4.1}
 \contentsline {section}{\numberline {2.}L'environnement de test}{26}{section.4.2}
+\contentsline {subsubsection}{\numberline {2.0.1.}L'utilisation de VirtualBox}{26}{subsubsection.4.2.0.1}
 \contentsline {section}{\numberline {3.}L'outil d'empaquetage}{26}{section.4.3}
-\contentsline {chapter}{\numberline {5}Construction du package avec \textit {Poetry}}{27}{chapter.5}
-\contentsline {section}{\numberline {1.}Cr\IeC {\'e}ation du package et gestion des d\IeC {\'e}pendances}{27}{section.5.1}
-\contentsline {section}{\numberline {2.}Construction du package et publication}{29}{section.5.2}
-\contentsline {section}{\numberline {3.}Installation du package}{32}{section.5.3}
-\contentsline {section}{\numberline {4.}La structure du package construit par Poetry}{33}{section.5.4}
-\contentsline {chapter}{\numberline {6}Le package \textit {CRISPRbuilder\_TB}}{34}{chapter.6}
-\contentsline {section}{\numberline {1.}Fonctionnement du package \textit {CRISPRbuilder\_TB}}{34}{section.6.1}
-\contentsline {section}{\numberline {2.}Documentation d\IeC {\'e}taill\IeC {\'e}e du package}{34}{section.6.2}
-\contentsline {chapter}{\numberline {7}Tester le package}{45}{chapter.7}
-\contentsline {section}{\numberline {1.}Les tests unitaires}{45}{section.7.1}
-\contentsline {section}{\numberline {2.}les tests d'int\IeC {\'e}gration}{46}{section.7.2}
-\contentsline {subsection}{\numberline {2.1.}Le respect des r\IeC {\`e}gles du PEP avec pylint}{46}{subsection.7.2.1}
-\contentsline {subsection}{\numberline {2.2.}Am\IeC {\'e}lioration des performances}{50}{subsection.7.2.2}
-\contentsline {section}{\numberline {3.}Les tests d'installation}{50}{section.7.3}
-\contentsline {section}{\numberline {4.}Les tests de non-r\IeC {\'e}gression}{50}{section.7.4}
+\contentsline {chapter}{\numberline {5}Construction du package avec \textit {Poetry}}{28}{chapter.5}
+\contentsline {section}{\numberline {1.}Cr\IeC {\'e}ation du package et gestion des d\IeC {\'e}pendances}{28}{section.5.1}
+\contentsline {section}{\numberline {2.}Construction du package et publication}{30}{section.5.2}
+\contentsline {section}{\numberline {3.}Installation du package}{33}{section.5.3}
+\contentsline {section}{\numberline {4.}La structure du package construit par Poetry}{34}{section.5.4}
+\contentsline {chapter}{\numberline {6}Le package CRISPRbuilder\_TB}{35}{chapter.6}
+\contentsline {section}{\numberline {1.}Fonctionnement du package CRISPRbuilder\_TB}{35}{section.6.1}
+\contentsline {section}{\numberline {2.}Documentation d\IeC {\'e}taill\IeC {\'e}e du package}{35}{section.6.2}
+\contentsline {chapter}{\numberline {7}Tester le package}{46}{chapter.7}
+\contentsline {section}{\numberline {1.}Les tests unitaires}{46}{section.7.1}
+\contentsline {section}{\numberline {2.}les tests d'int\IeC {\'e}gration}{47}{section.7.2}
+\contentsline {subsection}{\numberline {2.1.}Le respect des r\IeC {\`e}gles du PEP avec pylint}{47}{subsection.7.2.1}
+\contentsline {subsubsection}{\numberline {2.1.1.}fichiers existants}{48}{subsubsection.7.2.1.1}
+\contentsline {subsection}{\numberline {2.2.}Les probl\IeC {\`e}mes li\IeC {\'e}s aux chemins d'acc\IeC {\`e}s}{48}{subsection.7.2.2}
+\contentsline {section}{\numberline {3.}Les tests fonctionnels}{48}{section.7.3}
+\contentsline {section}{\numberline {4.}Les tests CLI}{49}{section.7.4}
+\contentsline {section}{\numberline {5.}Les tests de configuration}{49}{section.7.5}
+\contentsline {section}{\numberline {6.}Les tests de performance}{49}{section.7.6}
+\contentsline {subsection}{\numberline {6.1.}Am\IeC {\'e}lioration des performances}{51}{subsection.7.6.1}
+\contentsline {section}{\numberline {7.}Les tests d'installation}{51}{section.7.7}
+\contentsline {section}{\numberline {8.}Les tests de non-r\IeC {\'e}gression}{51}{section.7.8}
 \contentsfinish 
