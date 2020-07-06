@@ -589,7 +589,7 @@ Un package standard comporte obligatoirement un fichier \textbf{\_\_init\_\_.py}
 
 Les fichiers \textbf{setup.py}, \textbf{requirements.txt}, \textbf{LICENSE},  \textbf{README.md} et \textbf{MANIFEST.in} sont également nécessaires.  
 \begin{itemize}
-\item \textbf{setup.py} est le script de construction et configuration destiné au \textit{setuptools}. Il définit notamment le nom et la version du package, ainsi que les fichiers qu'il contient. Il sert également d'interface en ligne de commande relative aux différentes fonctionnalités du package. setup.cfg est un fichier d'initialisation qui contient les options par défaut des commandes du \textbf{setup.py}.
+\item \textbf{setup.py} est le script de construction et configuration destiné au \textit{setuptools}. Il définit notamment le nom et la version du package, ainsi que les fichiers qu'il contient. Il sert également d'interface en ligne de commande relative aux différentes fonctionnalités du package. \textbf{setup.cfg} est un fichier d'initialisation qui contient les options par défaut des commandes du \textbf{setup.py}.
 \item \textbf{requirements.txt} permet l'installation des dépendances à l'aide d'un unique fichier contenant un module à installer par ligne. Il nécessite l'instruction 
 \texttt{  pip install -r requirements.txt}
 pour commencer ces installations.
@@ -598,9 +598,9 @@ pour commencer ces installations.
 \item \textbf{MANIFEST.in} permet d'inclure dans le package certains fichiers qui ne sont pas automatiquement intégrés. 
 \end{itemize}
 
-Il est important de regrouper l'ensemble des modules nécessaires au fonctionnement du package dans un répertoire portant le même nom que ce package, accompagné d'un fichier \_\_init\_\_.py, sinon l'archive et la distribution du package se construiront à vide. L'installation à partir de PyPI fonctionnera mais l'exécution du package restera inactive.
+Il est important de regrouper l'ensemble des modules nécessaires au fonctionnement du package dans un répertoire portant le même nom que ce package, accompagné d'un fichier \textbf{\_\_init\_\_.py}, sinon l'archive et la distribution du package se construiront à vide. L'installation à partir de PyPI fonctionnera mais l'exécution du package restera inactive.
 
-Avec la PEP-518\footnote{\textbf{PEP-518:} specifying minimum build system requirements for Python projects}, le PyPA\footnote{\textbf{PyPA:} Python Packaging Authority} a proposé un nouveau standard au format pyproject.toml, qui remplace les fichiers setup.py, requirements.txt, setup.cfg, et MANIFEST.in. C'est ce nouveau standard qui est utilisé lors de la création d'un package avec \textit{Poetry}.
+Avec la PEP-518\footnote{\textbf{PEP-518:} specifying minimum build system requirements for Python projects}, le PyPA\footnote{\textbf{PyPA:} Python Packaging Authority} a proposé un nouveau standard au format \textit{.toml}, qui remplace les fichiers \textbf{setup.py}, \textbf{requirements.txt}, \textbf{setup.cfg}, et \textbf{MANIFEST.in}. C'est ce nouveau standard qui est utilisé lors de la création d'un package avec \textit{Poetry}.
 
 Les paquets construits pour des systèmes Unix (Linux et MacOS) nécessitent l'incorporation de fichiers build.sh et meta.yaml. Les paquets construits pour les systèmes Windows nécessitent l'incorporation des fichiers bld.bat et meta.yaml. 
 
@@ -711,7 +711,7 @@ Notons que certains modules utilisés dans ce package sont nativement présents 
 \begin{itemize}
 \item du module \textit{os} qui fournit une manière portable d'utiliser les fonctionnalités dépendantes du système d'exploitation,
 \item du module \textit{pickle} qui permet de sérialiser et désérialiser une structure d'objet Python. Il remplace le module primitif \textit{marshal},
-\item du module \textit{csv} qui implémente des classes pour lire et écrire des données liées à des feuilles de calcul ou des bases de données au format \textit{csv},
+\item du module \textit{csv} qui implémente des classes pour lire et écrire des données liées à des feuilles de calcul ou des bases de données au format \textit{.csv},
 \item du module \textit{shutil} qui propose des opérations sur les fichiers et collections de fichiers, notamment la copie et suppression de fichiers,
 \item du module \textit{subprocess.run} qui permet de gérer de nouveaux processus, de se connecter à leurs flux d'input/output/erreurs. Il remplace plusieurs modules dépréciés : \textit{os.system, os.spawn*, os.popen*, popen2.*, commands.* },
 \item du module \textit{pathlib} qui fournit des classes de chemins purs indépendants du système d'exploitation, ce qui permet au code de manipuler des chemins sans accéder au système d'exploitation,
@@ -801,11 +801,11 @@ qui permet de générer le squelette de l'application contenant les éléments s
 \includegraphics[width=6cm]{nom_package_tree.png}
 
 \begin{itemize}
-\item le répertoire \textbf{crisprbuilder\_tb} contient initialement le fichier \_\_init\_\_.py et c'est dans ce répertoire que nous allons rajouter tous les composants principaux du code  \_\_main\_\_.py, fonctions.py, bdd.py et les répertoires \textbf{data}, \textbf{doc}, \textbf{REP} et \textbf{tmp} avec leurs contenus. En effet, la création de l'archive va compresser ce répertoire \textbf{crisprbuilder\_tb} afin de le publier. Il devra contenir tout ce qui est nécessaire au fonctionnement de l'application. Lors de sa création, le fichier \_\_init\_\_.py contenait uniquement la version du package. Pour éviter tout conflit de version avec le fichier pyproject.toml, nous vidons le fichier \_\_init\_\_.py du répertoire crisprbuilder\_tb
+\item le répertoire \textbf{crisprbuilder\_tb} contient initialement le fichier \textbf{\_\_init\_\_.py} et c'est dans ce répertoire que nous allons rajouter tous les composants principaux du code  \textbf{\_\_main\_\_.py}, \textbf{fonctions.py}, \textbf{bdd.py} et les répertoires \textbf{data}, \textbf{doc}, \textbf{REP} et \textbf{tmp} avec leurs contenus. En effet, la création de l'archive va compresser ce répertoire \textbf{crisprbuilder\_tb} afin de le publier. Il devra contenir tout ce qui est nécessaire au fonctionnement de l'application. Lors de sa création, le fichier\textbf{\_\_init\_\_.py} contenait uniquement la version du package. Pour éviter tout conflit de version avec le fichier pyproject.toml, nous vidons le fichier \textbf{\_\_init\_\_.py} du répertoire \textbf{crisprbuilder\_tb}
 \item le répertoire \textbf{tests} contient les tests unitaires relatifs au bon fonctionnement du package
 \item le fichier README.rst fournit une brève description du package, et nous le modifions au format markdown README.md à l'usage plus répandu
-\item le fichier pyproject.toml remplace les anciens standards de définition de packages : setup.exe et requirements.txt. Il précise notamment le nom du package, sa version, sa description, l’emplacement de son dépôt (par exemple sur GitHub), l’adresse email de l’auteur du package, et la version des dépendances
-\item nous rajoutons à la racine du package un fichier LICENSE, un fichier .gitignore pour la gestion des versions. 
+\item le fichier \textbf{pyproject.toml} remplace les anciens standards de définition de packages : \textbf{setup.exe} et \textbf{requirements.txt}. Il précise notamment le nom du package, sa version, sa description, l’emplacement de son dépôt (par exemple sur GitHub), l’adresse email de l’auteur du package, et la version des dépendances
+\item nous rajoutons à la racine du package un fichier \textbf{LICENSE}, un fichier .gitignore pour la gestion des versions. 
 \end{itemize}
 
 Notons qu'il est préférable de choisir un nom de package en minuscules pour éviter toute confusion car, bien que les majuscules soient conservées sur PyPI, l'appel du package en ligne de commande devra s'effectuer en minuscules. En outre, par convention il faut éviter le symbole '-' qui est automatiquement remplacé par '\_' lors de la création du package.
@@ -924,11 +924,11 @@ Le dossier \textbf{dist} contient les éléments suivants
 Avant de publier le package, il faut tester son comportement à l'installation en dehors de l'environnement de développement. Pour cela, il est possible de le publier officieusement sur la plateforme de test \textit{testPyPI}. Il faut alors se placer à la racine du package et lancer en ligne de commande l'instruction
 \begin{verbatim}  $ twine upload --repository testpypi dist/*\end{verbatim}
 
-Il est donc possible de télécharger un package provenant d'index différents de PyPI. Par exemple, l'installation de \textit{CRISPRbuilder\_TB} à partir de \textit{testPyPI} se fait à l'aide de l'instruction suivante, après s'être assuré qu'on utilise bien une version 3 de Python
+Il est donc possible de télécharger un package provenant d'index différents de PyPI. Par exemple, l'installation de CRISPRbuilder\_TB à partir de testPyPI se fait à l'aide de l'instruction suivante, après s'être assuré qu'on utilise bien une version 3 de Python
 
 \begin{verbatim}  $ pip install -i https://test.pypi.org/simple/ crisprbuilder_tb\end{verbatim} 
 
-Il peut arriver que \textit{testPyPI} n'installe pas la dernière version, en général lorsqu'une version est déjà présente sur l'ordinateur. Dans ce cas, il convient de préciser la version souhaitée du package, par exemple pour la version 0.1.2, il faut écrire
+Il peut arriver que testPyPI n'installe pas la dernière version, en général lorsqu'une version est déjà présente sur l'ordinateur. Dans ce cas, il convient de préciser la version souhaitée du package, par exemple pour la version 0.1.2, il faut écrire
 
 \begin{verbatim}  $ pip install -i https://test.pypi.org/simple/ crisprbuilder_tb==0.1.2\end{verbatim} A noter qu'il ne faut utiliser de guillemets autour de la version du package.
 
@@ -971,8 +971,8 @@ Attention, dans le cas où l'installation d'un de ces modules échoue, il faut r
 A RAJOUTER DANS LE NOTEBOOK AVEC LES SPOLIGO
 ATTENTION A L'ESPACE AVANT CRISPRBUILDER LORS DE L'INSTALLATION A RAJOUTER AU NOTEBOOK
 
-Au moment de l'installation, que ce soit à partir de \textit{PyPI} ou d'un autre index tel que
-\textit{testPyPI}, l'utilisateur ne choisit pas l'emplacement d'installation. Celui-ci est définit automatiquement par le système en fonction des variables d'environnement. Par exemple, si on utilise une version particulière de Python avec \textit{pyenv}, alors le package pourra se trouver dans \textbf{\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6/}. Il est également fréquent de le retrouver dans \textbf{\raisebox{-1ex}{\textasciitilde}/.local/lib/python3.6/site-packages/} avec la plupart des différentes packages. Comme on ne connaît pas avec certitude l'emplacement dans lequel le package va s'installer, il convient de définir une variable d'environnement qui pointe vers l'emplacement d'installation.
+Au moment de l'installation, que ce soit à partir de PyPI ou d'un autre index tel que
+testPyPI, l'utilisateur ne choisit pas l'emplacement d'installation. Celui-ci est définit automatiquement par le système en fonction des variables d'environnement. Par exemple, si on utilise une version particulière de Python avec \textit{pyenv}, alors le package pourra se trouver dans \textbf{\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6/}. Il est également fréquent de le retrouver dans \textbf{\raisebox{-1ex}{\textasciitilde}/.local/lib/python3.6/site-packages/} avec la plupart des différentes packages. Comme on ne connaît pas avec certitude l'emplacement dans lequel le package va s'installer, il convient de définir une variable d'environnement qui pointe vers l'emplacement d'installation.
 
 Lors de l'exécution du package, il est nécessaire de l'appeler par son nom en utilisant l'indice "-m" signifiant "module". Il n'est pas utile de préciser l'utilisation de Python3 si le répertoire courant travaille déjà avec cette version. En revanche, les chemins relatifs dans les modules du package ne devront pas utiliser le nom crisprbuilder\_tb car celui-ci ne sera pas reconnu, une fois à la racine du package. EXPLICATIONS A CHANGER
 
@@ -1005,10 +1005,10 @@ On constate la même arborescence que celle créée au moment de l'instruction X
 \begin{itemize}
 \item un répertoire \textbf{doc} comprenant la documentation nécessaire pour comprendre et utiliser convenablement le package,
 \item un répertoire \textbf{\_\_pycache\_\_} comprenant des fichiers compilés et un fichier \_\_init\_\_.py,
-\item un répertoire \textbf{data} comprenant les bases de données utiles au programme, sans aucun module et donc aucun fichier \_\_init\_\_.py,
+\item un répertoire \textbf{data} comprenant les bases de données utiles au programme, sans aucun module et donc aucun fichier \textbf{\_\_init\_\_.py},
 \item un répertoire \textbf{REP} comprenant un répertoire séquences qui contient les résultats de recherche au sujet de différents SRA,
 \item un répertoire \textbf{tmp} comprenant un fichier nb.txt qui change pour chaque SRA
-\item à la racine du package, les fichiers \_\_init\_\_.py, \_\_main\_\_.py, fonctions.py et bdd.py.
+\item à la racine du package, les fichiers \textbf{\_\_init\_\_.py}, \textbf{\_\_main\_\_.py}, \textbf{fonctions.py} et \textbf{bdd.py}.
 \end{itemize}
 
 Notons que tous les répertoires comprenant des modules Python doivent contenir un fichier
@@ -1682,27 +1682,11 @@ be blasted, as in the code:
 
     As a result, the programm will display the following information:
 
-   % \begin{verbatim}
-%spoligo: ■□□■■■■□□□□□■■■■■■■■□□□□■■■□□■■■■■■■□□□■■■■
-
-%spoligo_nb: [294, 0, 0, 283, 316, 284, 298, 0, 0, 0, 0, 0, 290, 331, 304, 324, 279, 259, 284, 357, 0, 0, 0, 0, 500, 296, 315, 0, 0, 351, 273, 312, 341, 299, 309, 339, 0, 0, 0, 230, 254, 277, 294]
-
-%spoligo_new: ■■□□■■■■■■■■■■■■□□□□□□■■■■■■■■□□□□■■■□□■■■■■■■■■■■□□□□□□□□□□■■■■■■■■□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□
-
-%spoligo_new_nb: [295, 294, 0, 0, 258, 309, 359, 321, 310, 258, 300, 283, 316, 284, 298, 310, 0, 0, 0, 0, 0, 0, 290, 331, 304, 324, 279, 259, 284, 357, 0, 0, 0, 0, 500, 296, 315, 0, 0, 351, 273, 312, 341, 299, 293, 309, 339, 309, 297, 306, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 299, 230, 254, 277, 294, 275, 307, 323, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-%\end{verbatim}
+\includegraphics[width=16.5cm]{spoligo1.png}
 
     The same process is applied to the spoligotypes\_vitro.
 
-   % \begin{verbatim}
-%spoligo_vitro: ■□□■■■■□□□□□■■■■■■■■□□□□■■■□□■■■■■■■□□□■■■■
-
-%spoligo_vitro_nb: [(327, 314), (0, 0), (0, 0), (303, 302), (360, 353), (332, 310), (342, 334), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (346, 334), (357, 359), (345, 336), (345, 354), (310, 301), (291, 287), (297, 327), (391, 382), (0, 0), (0, 0), (0, 0), (0, 0), (500, 500), (332, 321), (346, 362), (0, 0), (0, 0), (377, 371), (312, 297), (338, 356), (401, 364), (343, 341), (329, 339), (368, 363), (0, 0), (0, 0), (0, 0), (269, 270), (289, 270), (331, 305), (333, 327)]
-
-%spoligo_vitro_new: ■■□□■■■■■■■■■■■■□□□□□□■■□■■■■■□□□□■■■□□■■■■■■■■■■■□□□□□□□□□□■■■■■■■■□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□
-
-%spoligo_vitro_new_nb: [(347, 325), (327, 314), (0, 0), (0, 0), (298, 280), (338, 353), (396, 396), (375, 355), (351, 335), (288, 285), (329, 329), (303, 302), (360, 353), (332, 310), (342, 334), (344, 329), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (346, 334), (357, 359), (0, 301), (345, 354), (310, 301), (291, 287), (297, 327), (391, 382), (0, 0), (0, 0), (0, 0), (0, 0), (500, 500), (332, 321), (346, 362), (0, 0), (0, 0), (377, 371), (312, 297), (338, 356), (401, 364), (343, 341), (341, 326), (329, 339), (368, 363), (341, 337), (338, 337), (362, 338), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (336, 338), (269, 270), (289, 270), (331, 305), (332, 327), (313, 293), (322, 335), (347, 371), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (300, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0)]
-%\end{verbatim}
+\includegraphics[width=16.5cm]{spoligo2.png}
 
     The Spoligotype International Type and Spoligotype International Type
 silico will be retrieved according to the following code:
@@ -2038,15 +2022,25 @@ Cette différence de quelques secondes pour une seule fonction entraîne par con
 % AMELIORATION DES PERFORMANCES -----------------------
 \subsection{Amélioration des performances}
 
+A ENLEVER
+xlrd = "1.2.0"
+xmltodict = "0.12.0"
+biopython = "1.76"
+parallel-fastq-dump = "$^0.6.5$"
 
+Le module \textit{fastq-dump} permettant le téléchargement à partir du NCBI peut s'avérer très lent en fonction de l'utilisation de la base de données en temps réel. L'utilisation de plusieurs threads devrait permettre de diviser le travail en plusieurs tâches effectuées simultanément. Malheureusement, Python n'accepte pas nativement le recours à  plusieurs threads. C'est en fait le GIL\footnote{\textbf{GIL:} } qui interdit cette pratique en autorisant le travail d'un unique thread Python à la fois. Pour résoudre ce problème, on utilise à la place de \textit{fastq-dump} le module \textit{parallel-fastq-dump} qui utilise l'implémentation CPython et donc incorpore du langage C dans son contenu.
+
+ 
+
+DEFINIR GIL
 
 
 % LES TESTS D'INSTALLATION -----------------------------
 \section{Les tests d'installation}
 
-Ce type de tests permet de s'assurer que l'utilisateur est bien en mesure d'installer le package quel que soit le système d'exploitation utilisé. Il nécessite l'utilisation d'une machine virtuelle... VIRTUALBOX
+Ce type de tests permet de s'assurer que l'utilisateur sera en mesure d'installer le package quel que soit le système d'exploitation utilisé. Il nécessite l'utilisation d'une machine virtuelle... VIRTUALBOX
 
-Dès la première installation effectuée sur une machine Ubuntu vierge sont apparues des difficultés 
+Dès la première installation effectuée sur une machine Ubuntu vierge sont apparues des difficultés d'installation automatique des modules au regard des contraintes imposées par le fichier \textbf{poetry.lock}. Pour s'assurer que les dépendances soient bien installées, nous avons proposé que l'utilisateur le fasse manuellement en suivant les consignes données dans la documentation et à l'aide de l'instruction \texttt{pip install nom\_module}. Toutefois, le module \textit{parallel-fastq-dump} même installé ne 
 
 
 
