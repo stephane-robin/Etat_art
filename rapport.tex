@@ -785,14 +785,14 @@ Nous avons donc décidé de construire notre package en utilisant \textit{Poetry
 Pour créer notre package, il ne faut pas commencer par définir un dossier du nom du package, car cela sera automatiquement fait par \textit{Poetry}. En revanche, il faut s'assurer que Python utilise bien la version 3 pour tout le travail de construction, ce qui se traduit par exemple par une variable d'environnement du type \textbf{\raisebox{-1ex}{\textasciitilde}/.poetry/\_vendor/py3.6} en réponse à l'instruction 
 \begin{verbatim}  $ poetry build\end{verbatim}
 Pour parvenir à un tel résultat, et comme expliqué précédemment, on commence par choisir une version appropriée de Python dans le répertoire parent dans lequel on souhaite créer notre package (ici la version 3.6.2)
- \begin{verbatim}  $ cd biologie
-  $ pyenv versions
+ \begin{verbatim}     cd biologie
+     pyenv versions
   * system
-    2.7.10
-    3.6.2
-    3.8.0
-  $ pyenv local 3.6.2
-  $ python --version\end{verbatim}
+     2.7.10
+     3.6.2
+     3.8.0
+     pyenv local 3.6.2
+     python --version\end{verbatim}
 
 Puis la création du projet se fait à l'aide de la commande
 \texttt{poetry new crisprbuilder\_tb}
@@ -818,11 +818,11 @@ offre l’avantage de chercher automatiquement une version compatible de la dép
 
 %\begin{tcolorbox} \end{tcolorbox}
 Il faut donc ajouter les dépendances suivantes au projet :
-\begin{verbatim}  $ cd crisprbuilder_tb 
-  $ poetry add xmltodict 
-  $ poetry add xlrd 
-  $ poetry add biopython
-  $ poetry add parallel-fastq-dump \end{verbatim}
+\begin{verbatim}  cd crisprbuilder_tb 
+  poetry add xlrd 
+  poetry add xmltodict 
+  poetry add biopython
+  poetry add parallel-fastq-dump \end{verbatim}
 
 Le fichier pyproject.toml comporte maintenant les versions suivantes
 
@@ -945,9 +945,6 @@ Lorsque le package est finalement prêt pour être publié sur PyPI, on utilise 
 \begin{verbatim}  $ poetry publish\end{verbatim}
 Pour cela, l'auteur du package doit être enregistré sur PyPI avec un identifiant et un mot de passe. A partir de ce moment-là, le package est rendu disponible publiquement.
 
-L’installation du package par n'import quel utilisateur se fait maintenant grâce à l’instruction
-\begin{verbatim}  $ python -m pip install nom_package\end{verbatim}
-
 Les explications relatives à l’utilisation pratique de \textit{Poetry} sont reprises dans le tutoriel suivant que nous venons de publier sur YouTube : \href{http://www.youtube.com}{http://www.youtube.com}
 
 
@@ -955,6 +952,24 @@ Les explications relatives à l’utilisation pratique de \textit{Poetry} sont r
 
 % INSTALLATION DU PACKAGE --------------------------
 \section{Installation du package}
+
+L’installation du package par n'import quel utilisateur se fait maintenant grâce à l’instruction
+\begin{verbatim}  $ python -m pip install nom_package\end{verbatim}
+
+Mais avant cela, il faut s'assurer que \textit{pip} est bien configuré pour travailler avec la version 3 de Python, et il faut installer les dépendances avant d'installer CRISPRbuilder\_TB à l'aide des instructions suivantes 
+
+\begin{verbatim}
+pip install xlrd==1.2.0
+pip install xmltodict==0.12.0
+pip install biopython==1.76
+pip install parallel-fastq-dump==0.6.5
+\end{verbatim}
+
+Attention, dans le cas où l'installation d'un de ces modules échoue, il faut réitirer l'instruction sans préciser la version souhaitée, puis au besoin de nouveau exécuter l'instruction en précisant la version. Il n'apparaît aucune raison évidente pour que ça fonctionn, mais pourtant cela permet de bien télécharger certains modules récalcitrants. A RAJOUTER DANS LE NOTEBOOK
+
+
+A RAJOUTER DANS LE NOTEBOOK AVEC LES SPOLIGO
+ATTENTION A L'ESPACE AVANT CRISPRBUILDER LORS DE L'INSTALLATION A RAJOUTER AU NOTEBOOK
 
 Au moment de l'installation, que ce soit à partir de \textit{PyPI} ou d'un autre index tel que
 \textit{testPyPI}, l'utilisateur ne choisit pas l'emplacement d'installation. Celui-ci est définit automatiquement par le système en fonction des variables d'environnement. Par exemple, si on utilise une version particulière de Python avec \textit{pyenv}, alors le package pourra se trouver dans \textbf{\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6/}. Il est également fréquent de le retrouver dans \textbf{\raisebox{-1ex}{\textasciitilde}/.local/lib/python3.6/site-packages/} avec la plupart des différentes packages. Comme on ne connaît pas avec certitude l'emplacement dans lequel le package va s'installer, il convient de définir une variable d'environnement qui pointe vers l'emplacement d'installation.
@@ -1397,25 +1412,91 @@ to the database. The following message will be displayed:
     Then the files in fasta format will be downloaded to
 \textbf{REP/sequences/ERR2704808} as in the following code:
 
- \includegraphics[width=13cm]{img_02.png}
+\begin{verbatim}
+  if len([u for u in listdir(rep) if 'fasta' in u]) == 0:
+      print("We're downloading the files in fasta format")
+
+      try:
+          completed = subprocess.run(['parallel-fastq-dump', '-t', '8',
+                                      '--split-files', '--fasta', '-O', P_REP,
+                                      '-s', item], check=True)
+          completed.check_returncode()
+          # if the download worked
+          print("fasta files successfully downloaded.")
+          for k in listdir(P_REP):
+              if k.endswith('.fasta'):
+                  p_item_k = str(PurePath(crisprbuilder_tb.__path__[0], 'REP',
+                                          'sequences', item, k))
+                  p_k = str(PurePath(crisprbuilder_tb.__path__[0], 'REP', k))
+                  try:
+                      move(p_k, p_item_k)
+                  except FileNotFoundError:
+                      print("We can't transfer the fasta files in the proper "
+                            "repository.")
+      except subprocess.CalledProcessError:
+          # if the download didn't work, we delete the SRA from dico_afr
+          del dico_afr[item]
+          print("Failed to download fasta files.")
+\end{verbatim}
 
     If ERR2704808\_shuffled.fasta is not in the \textbf{ERR2704808}
 directory, then the ERR2704808\_1.fasta and ERR2704808\_2.fasta files
 will be mixed in a new ERR2704808\_shuffled.fasta file in the
 \textbf{ERR2704808} directory, as in the following code:
 
-\includegraphics[width=13cm]{img_03.png}
+\begin{verbatim}
+  p_shuffled = str(PurePath(crisprbuilder_tb.__path__[0], 'REP', 'sequences',
+                            item, item + '_shuffled.fasta'))
+      if item + '_shuffled.fasta' not in listdir(rep):
+
+          print("We're mixing both fasta files, which correspond to the two "
+                "splits ends.")
+
+          p_fasta_1 = str(PurePath(crisprbuilder_tb.__path__[0], 'REP',
+                                   'sequences', item, item + '_1.fasta'))
+          p_fasta_2 = str(PurePath(crisprbuilder_tb.__path__[0], 'REP',
+                                   'sequences', item, item + '_2.fasta'))
+
+          if name == 'posix':
+              system("sed -i 's/" + item + './' + item + "_1./g' " + p_fasta_1)
+              system("sed -i 's/" + item + './' + item + "_2./g' " + p_fasta_2)
+              system("cat " + p_fasta_1 + " " + p_fasta_2 + " > " + p_shuffled)
+          else:
+              fonctions.change_elt_file(p_fasta_1, '_1', item)
+              fonctions.change_elt_file(p_fasta_2, '_2', item)
+              fonctions.concat(p_fasta_1, p_fasta_2, p_shuffled)
+\end{verbatim}
 
     The number of reads represented by '\textgreater{}' in
 ERR2704808\_shuffled.fasta will be counted and assigned to nb\_reads, as
 in the following code:
 
-\includegraphics[width=13cm]{img_04.png}
+\begin{verbatim}
+  if 'nb_reads' not in dico_afr[item] or dico_afr[item]['nb_reads'] == '':
+      if name == 'posix':
+          system("cat " + p_shuffled + " | grep '>' | wc -l > " + P_TXT_POSIX)
+          nb_reads = eval(open(P_TXT_POSIX).read().split('\n')[0])
+      else:
+          with open(p_shuffled, 'r') as f_in, open(P_TXT_WIN, 'w') as f_out:
+              lignes = f_in.readlines()
+              cpt = 0
+              for elt in lignes:
+                  cpt += elt.count('>')
+                  f_out.write(str(cpt))
+          nb_reads = eval(open(P_TXT_WIN).read().split('\n')[0])
+
+      dico_afr[item]['nb_reads'] = nb_reads
+\end{verbatim}
 
     The length of the reads will be evaluated from
 ERR2704808\_shuffled.fasta as in the following code:
 
-   XXX
+\begin{verbatim}
+  if 'len_reads' not in dico_afr[item]:
+      nb_len = len(''.join(open(p_shuffled).read(10000).split('>')[1].split(
+                   '\n')[1:]))
+      dico_afr[item]['len_reads'] = nb_len
+\end{verbatim}
 
     which eventually will be displayed by:
 
@@ -1455,7 +1536,18 @@ the following message:
     The coverage will be calculated and, if it is too, low the procedure
 will be cancelled:
 
-   XXX
+ \begin{verbatim}
+  if 'couverture' not in dico_afr[item] or \
+          dico_afr[item].get('couverture') == '':
+      dico_afr[item]['couverture'] = round(dico_afr[item].get('nb_reads') *
+                                           dico_afr[item].get('len_reads') /
+                                           TAILLE_GEN, 2)
+        
+  if dico_afr[item].get('couverture') < 50:
+      del dico_afr[item]
+      print(f"The coverage is too low. {item} is being removed from the "
+            "database")
+\end{verbatim}
 
     which will be displayed by:
 
@@ -1466,7 +1558,17 @@ will be cancelled:
     Then, a database for blast will be created in
 \textbf{REP/sequences/ERR2704808/ERR2704808}, as in the code:
 
-   XXX
+\begin{verbatim}
+  if item+'.nal' not in listdir(rep) and item+'.nin' not in listdir(rep):
+      print("We're creating a database for Blast")
+      try:
+          completed = subprocess.run(['makeblastdb', '-in', p_shuffled,
+                                      '-dbtype', 'nucl', '-title', item,
+                                      '-out', repitem], check=True)
+          completed.check_returncode()
+      except subprocess.CalledProcessError:
+          print("We can't proceed blasting file.")
+\end{verbatim}
 
     You will then read the following message:
 
@@ -1484,7 +1586,15 @@ will be cancelled:
     Some research will eventually be made in the dataset Brynildsrud,
 according to the code:
 
-   XXX
+\begin{verbatim}
+  brynildsrud = fonctions.to_brynildsrud()
+  if item in brynildsrud:
+      for elt in brynildsrud[item]:
+          dico_afr[item][elt] = brynildsrud[item][elt]
+          print(f"{item} is in the database Brynildsrud")
+  else:
+      print(f"{item} is not in the database Brynildsrud")
+\end{verbatim}
 
     If ERR2704808 doesn't belong to the dataset Brynildsrud, the following
 message will appear:
@@ -1496,7 +1606,69 @@ message will appear:
     Sequences from the fasta files will be added and the spoligotypes will
 be blasted, as in the code:
 
-   XXX
+\begin{verbatim}
+  if 'spoligo' not in dico_afr[item] or dico_afr[item]['spoligo'] == '':
+      print("The spoligotypes are being blasted")
+      dico_afr[item]['spoligo'] = ''
+      dico_afr[item]['spoligo_new'] = ''
+
+      p_spoligo_old = str(PurePath(crisprbuilder_tb.__path__[0], 'data',
+                                   'spoligo_old.fasta'))
+      p_spoligo_new = str(PurePath(crisprbuilder_tb.__path__[0], 'data',
+                                   'spoligo_new.fasta'))
+      p_old_blast = str(PurePath(crisprbuilder_tb.__path__[0], 'tmp', item
+                                 + "_old.blast"))
+      p_new_blast = str(PurePath(crisprbuilder_tb.__path__[0], 'tmp', item
+                                 + "_new.blast"))
+
+      try:
+          completed = subprocess.run("blastn -num_threads 12 -query " +
+                                     p_spoligo_old + " -evalue 1e-6 -task "
+                                     "blastn -db " + repitem + " -outfmt "
+                                     "'10 qseqid sseqid sstart send qlen "
+                                     "length score evalue' -out " +
+                                     p_old_blast, shell=True, check=True)
+          completed.check_returncode()
+      except subprocess.CalledProcessError:
+          print("We can't proceed blasting file.")
+
+      try:
+          completed = subprocess.run("blastn -num_threads 12 -query " +
+                                     p_spoligo_new + " -evalue 1e-6 -task "
+                                     "blastn -db " + repitem + " -outfmt "
+                                     "'10 qseqid sseqid sstart send qlen "
+                                     "length score evalue' -out " +
+                                     p_new_blast, shell=True, check=True)
+          completed.check_returncode()
+      except subprocess.CalledProcessError:
+          print("We can't proceed blasting file.")
+
+      for pos, spol in enumerate(['old', 'new']):
+          p_blast = str(PurePath(crisprbuilder_tb.__path__[0], 'tmp', item
+                                 + '_' + spol + '.blast'))
+          p_fasta = str(PurePath(crisprbuilder_tb.__path__[0], 'data',
+                                 'spoligo_' + spol + '.fasta'))
+
+          with open(p_blast) as file:
+              matches = file.read()
+              nb_max = open(p_fasta).read().count('>')
+              for k in range(1, nb_max + 1):
+                  if matches.count('espaceur' + spol.capitalize() + str(k)
+                                   + ',') >= 5:
+                      dico_afr[item]['spoligo' + ['', '_new'][pos]] \
+                                     += '\u25A0'
+                  else:
+                      dico_afr[item]['spoligo' + ['', '_new'][pos]] \
+                                     += '\u25A1'
+
+          dico_afr[item]['spoligo' + ['', '_new'][pos] + '_nb'] = [
+              matches.count('espaceur' + spol.capitalize() + str(k) + ',')
+              for k in range(1, nb_max + 1)]
+          try:
+              move(p_blast, rep)
+          except FileNotFoundError:
+              print(p_blast, " is already in the SRA directory.")
+\end{verbatim}
 
     You will read the message:
 
@@ -1535,7 +1707,13 @@ be blasted, as in the code:
     The Spoligotype International Type and Spoligotype International Type
 silico will be retrieved according to the following code:
 
-    XXX
+\begin{verbatim}
+  if 'SIT' not in dico_afr[item] or dico_afr[item]['SIT'] == '':
+      fonctions.add_spoligo_dico('SIT', dico_afr, item, spol_sit)
+
+  if 'SIT_silico' not in dico_afr[item]:
+      fonctions.add_spoligo_dico('SIT_silico', dico_afr, item, spol_sit)
+\end{verbatim}
 
     which will display the following message:
 
@@ -1549,7 +1727,37 @@ the different lineages L6+animal, Principal Genotyping Group, Principal
 Genotyping Group-cp, Coll, Pali, Shitikov and Stucki, as for example in
 the code:
 
-   XXX
+\begin{verbatim}
+  if 'lineage_Pali' not in dico_afr[item]:
+      lignee = []
+      lignee_snp = fonctions.to_reads('Pali')
+      print("We're adding the lineage according to the SNPs Pali")
+
+      for item2, pos0 in enumerate(lignee_snp):
+          seq1, seq2 = lignee_snp[pos0][:2]
+          p_blast = str(PurePath(crisprbuilder_tb.__path__[0], 'tmp',
+                                 'snp_Pali.blast'))
+          with open(fonctions.P_FASTA, 'w') as f_fasta:
+              f_fasta.write('>\n' + seq2)
+          cmd = "blastn -query " + fonctions.P_FASTA + " -num_threads 12" \
+                " -evalue 1e-5 -task blastn -db " + repitem + \
+                " -outfmt '10 sseq' -out " + p_blast
+          system(cmd)
+          with open(p_blast) as f_blast:
+              formatted_results = f_blast.read().splitlines()
+
+          nb_seq1 = fonctions.to_nb_seq(seq1, formatted_results, 16, 20,
+                                        21, 25)
+          nb_seq2 = fonctions.to_nb_seq(seq2, formatted_results, 16, 20,
+                                        21, 25)
+
+          if nb_seq2 > nb_seq1:
+              lignee.append(lignee_snp[pos0][2])
+
+      lignee = [u for u in sorted(set(lignee))]
+
+      dico_afr[item]['lineage_Pali'] = lignee
+\end{verbatim}
 
     During its work the program will display the following message:
 
@@ -1581,7 +1789,19 @@ the code:
     Some general information will be retrieved from the dataset Origines or
 directly from NCBI, according to the code:
 
-   XXX
+\begin{verbatim}
+  if 'Source' not in dico_afr[item]:
+      for ref in bdd.Origines:
+          if item in ref['run accessions']:
+              for elt in ['Source', 'Author', 'study accession number',
+                          'location']:
+                  dico_afr[item][elt] = ref.get(elt)
+
+  if 'taxid' not in dico_afr[item]:
+      dicobis = fonctions.get_info(item)
+      for elt in dicobis:
+          dico_afr[item][elt] = dicobis[elt]
+\end{verbatim}
 
     If the SRA belongs to Origines, the following message will be displayed:
 
@@ -1605,13 +1825,6 @@ directly from NCBI, according to the code:
   study: ena-STUDY-DST/NRF Centre of Excellence for Biomedical TB research, SAMRC Centre for TB Research-10-03-2018-12:26:21:907-341
   bioproject: PRJEB25506
 \end{verbatim}
-
-
-
-TODO - TRAVAIL SUR NOTEBOOK
-
-
-
 
 
 
@@ -1735,12 +1948,7 @@ Nous fournissons au package un fichier au format \textit{.txt} comprenant plus q
   $ python -m crisprbuilder_tb --collect ERR2704808 ne parvient pas à trouver les modules ...
 \end{verbatim}
 
-
-
-% LES TESTS CLI --------------------------------------------
-\section{Les tests CLI}
-
-L'objectif des tests CLI est de vérifier que les lignes de commandes prévues pour l'exécution du code fournissent bien le résultat escompté. Pour cela, nous testons successivement les commandes
+Les tests fonctionnels comprennent la validation de l'interface en ligne de commande. Il s'agit donc de vérifier que les lignes de commandes prévues pour l'exécution du code fournissent bien le résultat escompté. Pour cela, nous testons successivement les commandes
 
 \begin{itemize}
 \item \texttt{  \$ python -m crisprbuilder\_tb \textemdash \textemdash help} qui fournit bien les informations relatives aux options du package,
@@ -1788,7 +1996,32 @@ Pour mieux comprendre ce ralentissement, prenons un exemple sur un traitement si
 
 est bien plus rapide qu'une fonction Python que nous pourrions définir pour concaténer et qui permettrait d'améliorer la portabilité du programme. En effet, nous constatons que le code ci-dessous exécuté 10 fois sur un système Ubuntu 18.04 LTS avec un processus Intel Pentium de 1,6 GHz 64 bits 4 coeurs
 
-\includegraphics[width=15cm]{script_comparaison_time.png}
+\begin{verbatim}
+  import time
+  import os
+
+  def concat(p_f1, p_f2, p_shuffled):
+      with open(p_f1, 'r') as file_1, open(p_f2, 'r') as file_2, \
+              open(p_shuffled, 'w') as f_shuffled:
+          lignes_1 = file_1.readlines()
+          for elt in lignes_1:
+              f_shuffled.write(elt)
+          lignes_2 = file_2.readlines()
+          for elt in lignes_2:
+              f_shuffled.write(elt)
+
+  debut_concat = int(round(time.time() * 1000))
+  concat('SRR8368696_1.fasta', 'SRR8368696_2.fasta', 'SRR8368696_shuffled_concat.fasta')
+  fin_concat = int(round(time.time() * 1000))
+  temps_concat = fin_concat - debut_concat
+  print(temps_concat)
+
+  debut_system = int(round(time.time() * 1000))
+  os.system("cat SRR8368696_1.fasta SRR8368696_2.fasta > SRR8368696_shuffled_system.fasta")
+  fin_system = int(round(time.time() * 1000))
+  temps_system = fin_system - debut_system
+  print(temps_system)
+\end{verbatim}
 
 affiche un temps moyen d'exécution de l'instruction \textbf{os.system} de 19,3 secondes, alors qu'il est de 26,7 secondes lorsqu'on exécute la fonction \textit{concat}.
 
@@ -1811,7 +2044,14 @@ Cette différence de quelques secondes pour une seule fonction entraîne par con
 % LES TESTS D'INSTALLATION -----------------------------
 \section{Les tests d'installation}
 
-Une fois que l'application a été validée et publiée sur testPyPI, nous avons contrôlé la documentation au sein des modules et des fonctions, dans le fichier README.md et surtout dans le fichier crisprbuilder\_tb.md. 
+Ce type de tests permet de s'assurer que l'utilisateur est bien en mesure d'installer le package quel que soit le système d'exploitation utilisé. Il nécessite l'utilisation d'une machine virtuelle... VIRTUALBOX
+
+Dès la première installation effectuée sur une machine Ubuntu vierge sont apparues des difficultés 
+
+
+
+
+Une fois que l'application a été validée et publiée sur testPyPI, nous avons contrôlé la documentation au sein des modules et des fonctions, dans le fichier \textbf{README.md} et surtout dans le fichier \textbf{crisprbuilder\_tb.md}. 
 
 Nous avons également vérifié le bon fonctionnement de l'installation sur un système Ubuntu 18.04 LTS, un MacOS Sierra et un Windows Vista. Les ordinateurs utilisés ne disposaient pas de l'environnement de travail nécessaire à l'application avant l'installation de celle-ci. Les installations ont été testées de bout en bout avec les commandes
 
@@ -1822,7 +2062,7 @@ Le même procédé a finalement été appliqué au package publié sur PyPI.
 
 TODO PROBLEM AVEC REQUIREMENTS.TXT
 
-
+PROBLEME LE PACKAGE NE S'INSTALLE PAS
 
 
 % LES TESTS DE NON REGRESSION ---------------------------------
@@ -1855,6 +2095,8 @@ et au moment de la création d'un repository par
 
 % CONCLUSION ----------------------
 \chapter*{Conclusion}
+
+TODO
 
 Ce stage m'a ouvert l'esprit vers le domaine de la bioinformatique et m'a permis de réfléchir à 
 
