@@ -22,17 +22,16 @@
 \contentsline {section}{\numberline {2.}Composition d'un package standard}{21}{section.3.2}
 \contentsline {section}{\numberline {3.}Quelle licence choisir ?}{22}{section.3.3}
 \contentsline {section}{\numberline {4.}Fonctionnement d'un package}{22}{section.3.4}
+\contentsline {section}{\numberline {5.}Fonctionnement du package CRISPRbuilder\_TB}{23}{section.3.5}
 \contentsline {chapter}{\numberline {4}Le choix des outils}{24}{chapter.4}
 \contentsline {section}{\numberline {1.}L'environnement de d\IeC {\'e}veloppement}{24}{section.4.1}
 \contentsline {section}{\numberline {2.}L'outil d'empaquetage}{26}{section.4.2}
 \contentsline {chapter}{\numberline {5}Construction du package avec \textit {Poetry}}{28}{chapter.5}
 \contentsline {section}{\numberline {1.}Cr\IeC {\'e}ation du package et gestion des d\IeC {\'e}pendances}{28}{section.5.1}
-\contentsline {section}{\numberline {2.}Construction du package et publication}{30}{section.5.2}
+\contentsline {section}{\numberline {2.}Construction du package et publication}{31}{section.5.2}
 \contentsline {section}{\numberline {3.}Installation du package}{33}{section.5.3}
 \contentsline {section}{\numberline {4.}La structure du package construit par Poetry}{34}{section.5.4}
-\contentsline {chapter}{\numberline {6}Le package CRISPRbuilder\_TB}{36}{chapter.6}
-\contentsline {section}{\numberline {1.}Fonctionnement du package CRISPRbuilder\_TB}{36}{section.6.1}
-\contentsline {section}{\numberline {2.}Documentation d\IeC {\'e}taill\IeC {\'e}e du package}{36}{section.6.2}
+\contentsline {chapter}{\numberline {6}La documentation du package CRISPRbuilder\_TB}{36}{chapter.6}
 \contentsline {chapter}{\numberline {7}Tester le package}{50}{chapter.7}
 \contentsline {section}{\numberline {1.}Les tests unitaires}{50}{section.7.1}
 \contentsline {section}{\numberline {2.}les tests d'int\IeC {\'e}gration}{51}{section.7.2}

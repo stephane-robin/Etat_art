@@ -270,6 +270,8 @@ Je tiens à exprimer mes plus sincères remerciements à Messieurs Christophe Gu
 
 Je voudrais également souligner la patience dont ils ont fait preuve pour m'expliquer les notions de bioinformatique que j'ai été amené à découvrir durant ce projet. Il en ressort que j'ai particulièrement apprécié de travailler sous leur direction.
 
+usr: ufc
+pw: uni25frcomte
 
 % PRESENTATION DU PROJET --------------------------------	
 \section{Présentation du projet}
@@ -600,16 +602,10 @@ pour commencer ces installations.
 
 Il est important de regrouper l'ensemble des modules nécessaires au fonctionnement du package dans un répertoire portant le même nom que ce package, accompagné d'un fichier \textbf{\_\_init\_\_.py}, sinon l'archive et la distribution du package se construiront à vide. L'installation à partir de PyPI fonctionnera mais l'exécution du package restera inactive.
 
-Par ailleurs, les paquets construits pour des systèmes Unix (Linux et MacOS) nécessitent l'incorporation de fichiers \textbf{build.sh} et \textbf{meta.yaml}. Les paquets construits pour les systèmes Windows nécessitent l'incorporation des fichiers \textbf{bld.bat} et \textbf{meta.yaml}.
-
-TODO - A VERIFIER DANS LE CAS DE POETRY
-
 Avec la PEP-518\footnote{\textbf{PEP-518:} specifying minimum build system requirements for Python projects}, le PyPA\footnote{\textbf{PyPA:} Python Packaging Authority} a proposé un nouveau standard au format \textit{.toml}, qui remplace les fichiers \textbf{setup.py}, \textbf{requirements.txt}, \textbf{setup.cfg} et \textbf{MANIFEST.in}. C'est ce nouveau standard qui est utilisé lors de la création d'un package avec \textit{Poetry}.
 
- 
+ Par ailleurs, les packages construits pour des systèmes Linux et MacOS nécessitent l'incorporation de fichiers \textbf{build.sh} et \textbf{meta.yaml} alors que les packages construits pour les systèmes Windows nécessitent l'incorporation des fichiers \textbf{bld.bat} et \textbf{meta.yaml}. Ces différents formats sont également incorporés dans un fichier \textbf{pyproject.toml}.
 
-
-UNE DIFFICULTE LA VERSION DE PYTHON PRISE EN COMPTE PAR POETRY
 
 
 % QUELLE LICENCE CHOISIR ------------------
@@ -630,16 +626,31 @@ Dans le cadre de ce projet, aucune spécification restrictive n'étant requise, 
 % FONCTIONNEMENT D'UN PACKAGE
 \section{Fonctionnement d'un package}
 
-Un programme s'exécute dans un répertoire courant et accède aux différents différents fichiers support en utilisant un chemin relatif au départ de ce répertoire ou absolu. Les différentes dépendances sont importées en début de code, sans référence à un chemin d'accès car elles ont préalablement été installées dans l'environnement de développement puis dans la version de Python utilisée. Elles sont en plus installées dans l'environnement de développement intégré dans le cas où on utilise un tel outil.
+Un programme s'exécute dans un répertoire courant et accède aux différents fichiers support en utilisant un chemin relatif par rapport à ce répertoire ou encore en utilisant un chemin absolu. Les différentes dépendances sont importées en début de code, sans référence à un chemin d'accès car elles ont préalablement été installées dans l'environnement de développement puis dans la version de Python utilisée. Elles sont en plus installées dans l'environnement de développement intégré dans le cas où on utilise un tel outil.
 
-Un package en revanche, n'est pas défini par rapport au répertoire courant. Il va s'installer à un emplacement spécifique défini par le système d'exploitation, comme \textbf{site-packages} pour Linux. On peut chercher son emplacement exact et  le déplacer mais ceci n'a que peu d'intérêt vu que le système connaît l'emplacement de ses packages.
+Un package en revanche, n'est pas défini par rapport au répertoire courant. Il va s'installer à un emplacement spécifique défini par le système d'exploitation, comme \textit{dist-packages} ou \textbf{site-packages} pour Linux. On peut chercher son emplacement exact et  le déplacer mais ceci n'a que peu d'intérêt vu que le système connaît l'emplacement de ses packages.
 
-On peut alors se poser la question de savoir comment accéder aux différents fichiers support, sachant que l'exécution se fait depuis un répertoire courant mais le module \textbf{\_\_main\_\_.py} se trouve à l'emplacement prévu pour les packages. Quelle est donc la référence choisie pour définir un chemin d'accès relatif ? L'utilisation d'un chemin d'accès absolu n'est pas non plus la solution car ce chemin est dépendant des systèmes d'exploitation utilisés.
+On peut se poser la question de savoir comment accéder aux différents fichiers support, sachant que l'exécution se fait depuis un répertoire courant alors que le module \textbf{\_\_main\_\_.py} se trouve à l'emplacement prévu pour les packages. Quelle est donc la référence choisie pour définir un chemin d'accès relatif ? L'utilisation d'un chemin d'accès absolu ne semble pas non plus être la solution car ce chemin est dépendant des systèmes d'exploitation utilisés. \_file\_ TODO
 
 En fait, l'exécution d'un package se fait à partir d'un répertoire courant et tous les fichiers nécessaires à son fonctionnement sont atteints par rapport à une référence relative XXX. L'emplacement du package dans le système est donc transparente pour l'utilisateur. Lorsque celui-ci exécute \texttt{python -m crisprbuilder\_tb \textemdash \textemdash collect ERR2704808}, le système cherche le package dans \textbf{site-packages}, puis le fichier \textbf{\_\_init\_\_.py} et à partir de là exécute le module \textbf{\_\_main\_\_.py}. Les fichiers nécessaires au fonctionnement sont atteignables grâce à l'adresse relative qui ne contient pas le nom du répertoire \textbf{crisprbuilder\_tb} car lors de la lecture du fichier \textbf{\_\_main\_\_.py} l'exécution du code se trouve déjà dans le package. Il ne se trouve en fait aucun fichier ou répertoire à l'intérieur du répertoire courant où l'archive n'a pas été téléchargée contrairement à ce qu'on pourrait imaginer.
 
 
 
+% FONCTIONNEMENT DU PACKAGE -----------------------
+\section{Fonctionnement du package CRISPRbuilder\_TB}
+
+La compréhension des chemins d'accès est au coeur du fonctionnement d'un package
+
+Le package CRISPRbuilder\_TB ne fonctionne pas comme un module qu'on importerait en début de code Python afin d'en utiliser les différentes méthodes.
+
+Par ailleurs, il n'est pas prévu que l'utilisateur se place dans le package pour exécuter directement le module \textbf{\_\_main\_\_.py} en écrivant en ligne de commande
+\texttt{ python crisprbuilder\_tb \textemdash \textemdash collect ERR2704808}
+sans le "-m", car dans ce cas l'exécution entraînerait la levée d'une exception due aux différents chemins d'accès qui seraient erronés. (explications des chemins d'accès ci-dessous)
+
+L'exécution du package est réalisée en ligne de commande, et une fois que l'utilisateur a écrit 
+\begin{verbatim}  python -m crisprbuilder_tb --collect ERR2704808\end{verbatim}
+
+l'interpréteur va chercher le package à son emplacement de stockage XXX et l'exécute comme si ce dernier se trouvait dans le répertoire courant. Pourtant, le package ne se trouve pas dans le répertoire courant et tous les chemins d'accès aux bases de données et modules du package doivent tenir compte de la variable d'environnement placée au début de chaque chemin d'accès.
 
 
 % CHOIX DES OUTILS -----------------------------
@@ -741,11 +752,6 @@ Cette méthode fonctionne bien pour construire un environnement de développemen
 
 
 
-
-
-
-
-
 	
 
 % L'OUTIL D'EMPAQUETAGE --------------------
@@ -754,12 +760,14 @@ Cette méthode fonctionne bien pour construire un environnement de développemen
 	Le PyPA recommande l'utilisation de :
 \begin{itemize}
 \item \textit{setuptools} pour définir des projets et créer des sources de distribution,
+\item \textit{pip} pour l'installation de librairies à partir de PyPI \textit{Python Package Index},
 \item \textit{pipenv} pour la gestion des dépendances de packages lors du développement d'applications,
 \item \textit{venv} pour isoler les dépendances particulières d'une application et créer un environnement de travail,
+\item \textit{pyenv} pour la gestion des versions de Python,
 \item \textit{conda} permettant de fournir un environnement de travail favorable aux projets scientifiques, avec notamment tous les modules essentiels pré-installés,
 \item \textit{buildout} pour les projets de développement Web,
-\item \textit{poetry} pour un besoin particulier non couvert par \textit{pipenv},
-\item \textit{pip} pour l'installation de librairies à partir de PyPI \textit{Python Package Index}.
+\item \textit{poetry} pour un besoin particulier non couvert par \textit{pipenv}.
+
 \end{itemize}
 
 Au regard de ces recommandations, nous avons testé les outils suivants dans le but de définir un environnement de développement et de construire un package incorporant les dépendances requises.
@@ -773,6 +781,7 @@ Nous avons tout d'abord cherché à construire le package manuellement, à parti
 Nous avons donc décidé de construire notre package en utilisant \textit{Poetry}, qui est un outil complet multiplateformes autour duquel la communauté Python reste très active. Il propose à la fois la gestion des dépendances, l'empaquetage (création d'une structure pour un projet et la génération de fichiers de configuration et de manifestes) et la publication. \textit{Poetry} automatise ces différents procédés et facilite grandement le travail. Nous étudions en détail l'utilisation de cet outil dans la section suivante.
 	
 
+
 % POETRY ---------------
 \chapter{Construction du package avec \textit{Poetry}}
 
@@ -783,25 +792,25 @@ Nous avons donc décidé de construire notre package en utilisant \textit{Poetry
 Pour créer notre package, il ne faut pas commencer par définir un dossier du nom du package, car cela sera automatiquement fait par \textit{Poetry}. En revanche, il faut s'assurer que Python utilise bien la version 3 pour tout le travail de construction, ce qui se traduit par exemple par une variable d'environnement du type \textbf{\raisebox{-1ex}{\textasciitilde}/.poetry/\_vendor/py3.6} en réponse à l'instruction 
 \begin{verbatim}  poetry build\end{verbatim}
 Pour parvenir à un tel résultat, et comme expliqué précédemment, on commence par choisir une version appropriée de Python dans le répertoire parent dans lequel on souhaite créer notre package (ici la version 3.6.2)
- \begin{verbatim}     cd biologie
-     pyenv versions
+ \begin{verbatim}    cd parent
+    pyenv versions
   * system
-     2.7.10
-     3.6.2
-     3.8.0
-     pyenv local 3.6.2
-     python --version\end{verbatim}
+    2.7.10
+    3.6.2
+    3.8.0
+    pyenv local 3.6.2
+    python --version\end{verbatim}
 
 Puis la création du projet se fait à l'aide de la commande
 \texttt{poetry new crisprbuilder\_tb}
-qui permet de générer le squelette de l'application contenant les éléments suivants
+qui permet de générer le squelette de l'application contenant les éléments suivants.
 
 \includegraphics[width=6cm]{nom_package_tree.png}
 
 \begin{itemize}
 \item le répertoire \textbf{crisprbuilder\_tb} contient initialement le fichier \textbf{\_\_init\_\_.py} et c'est dans ce répertoire que nous allons rajouter tous les composants principaux du code  \textbf{\_\_main\_\_.py}, \textbf{fonctions.py}, \textbf{bdd.py} et les répertoires \textbf{data}, \textbf{doc}, \textbf{REP} et \textbf{tmp} avec leurs contenus. En effet, la création de l'archive va compresser ce répertoire \textbf{crisprbuilder\_tb} afin de le publier. Il devra contenir tout ce qui est nécessaire au fonctionnement de l'application. Lors de sa création, le fichier\textbf{\_\_init\_\_.py} contenait uniquement la version du package. Pour éviter tout conflit de version avec le fichier pyproject.toml, nous vidons le fichier \textbf{\_\_init\_\_.py} du répertoire \textbf{crisprbuilder\_tb}
 \item le répertoire \textbf{tests} contient les tests unitaires relatifs au bon fonctionnement du package
-\item le fichier README.rst fournit une brève description du package, et nous le modifions au format markdown README.md à l'usage plus répandu
+\item le fichier \textbf{README.rst} fournit une brève description du package, et nous le modifions au format markdown \textbf{README.md} à l'usage plus répandu
 \item le fichier \textbf{pyproject.toml} remplace les anciens standards de définition de packages : \textbf{setup.exe} et \textbf{requirements.txt}. Il précise notamment le nom du package, sa version, sa description, l’emplacement de son dépôt (par exemple sur GitHub), l’adresse email de l’auteur du package, et la version des dépendances
 \item nous rajoutons à la racine du package un fichier \textbf{LICENSE}, un fichier .gitignore pour la gestion des versions. 
 \end{itemize}
@@ -809,7 +818,7 @@ qui permet de générer le squelette de l'application contenant les éléments s
 Notons qu'il est préférable de choisir un nom de package en minuscules pour éviter toute confusion car, bien que les majuscules soient conservées sur PyPI, l'appel du package en ligne de commande devra s'effectuer en minuscules. En outre, par convention il faut éviter le symbole '-' qui est automatiquement remplacé par '\_' lors de la création du package.
 
 En ce qui concerne la gestion des versions de dépendances, il faut tout d'abord se placer dans le répertoire \textbf{crisprbuilder\_tb} puis utiliser l’instruction
-\texttt{\$ poetry add nom\_dependance}  
+\texttt{  poetry add nom\_dependance}  
 qui assure la compatibilité de la dépendance \textit{nom\_dependance} avec le package \textit{crisprbuilder\_tb}. Il est également possible d’imposer certaines contraintes sur les versions des dépendances ou encore de rentrer manuellement les dépendances dans le fichier pyproject.toml, mais l’instruction 
 \texttt{\$ poetry add nom\_dependance} 
 offre l’avantage de chercher automatiquement une version compatible de la dépendance, puis de l’inscrire dans pyproject.toml.
@@ -825,9 +834,10 @@ Il faut donc ajouter les dépendances suivantes au projet :
 Le fichier pyproject.toml comporte maintenant les versions suivantes
 
 \begin{verbatim}  [tool.poetry.dependencies]
-  xlrd = "1.2.0"
-  xmltodict = "0.12.0"
-  biopython = "1.76"
+  python = "^3.6"
+  xlrd = "^1.2.0"
+  xmltodict = "^0.12.0"
+  biopython = "^1.77"
   parallel-fastq-dump = "^0.6.5"\end{verbatim}
 
 On peut ensuite compléter manuellement ce fichier pour fournir des informations d'ordre général du type
@@ -848,10 +858,10 @@ La rubrique [tool.poetry.dev-dependencies] définit le module qui procèdera aux
 La rubrique [build-system] définit les versions de \textit{Poetry} et \textit{poetry.masonry.api} nécessaires à la construction du package.
 
 Pour installer ensuite les dépendances du projet au sein du package, il est nécessaire d’utiliser l’instruction
-\texttt{\$ poetry install}
-qui crée les fichiers poetry.lock et setup.py, ainsi que le répertoire \textbf{crisprbuilder\_tb.egg-info} comprenant le code, les ressources et les métadonnées du projet. Ce format facilite la désinstallation et la mise à niveau du code, car le projet est essentiellement autonome dans un unique répertoire. Il autorise ainsi l'installation de plusieurs versions d'un même projet simultanément. Il s'agit d'un format adapté à la distribution de plugins pour des applications extensibles et des frameworks, similaire au format \textit{.jar} en Java. Il permet également de distribuer les gros packages en entités séparées. De son côté, poetry.lock empêche les dépendances de télécharger la dernière version au moment de l’installation, en fixant la version utilisable par le package. Dans le cas de \textit{Poetry}, setup.py n'est en fait qu'un fichier temporaire servant à la construction de \textbf{crisprbuilder\_tb.egg-info}. 
+\texttt{ poetry install}
+qui crée les fichiers \textbf{poetry.lock} et \textbf{setup.py}, ainsi que le répertoire \textbf{crisprbuilder\_tb.egg-info} comprenant le code, les ressources et les métadonnées du projet. Ce format facilite la désinstallation et la mise à niveau du code, car le projet est essentiellement autonome dans un unique répertoire. Il autorise ainsi l'installation de plusieurs versions d'un même projet simultanément. Il s'agit d'un format adapté à la distribution de plugins pour des applications extensibles et des frameworks, similaire au format \textit{.jar} en Java. Il permet également de distribuer les gros packages en entités séparées. De son côté, \textbf{poetry.lock} empêche les dépendances de télécharger la dernière version au moment de l’installation, en fixant la version utilisable par le package. Dans le cas de \textit{Poetry}, \textbf{setup.py} n'est en fait qu'un fichier temporaire servant à la construction de \textbf{crisprbuilder\_tb.egg-info}. 
 
-Lors de l'exécution du code \texttt{\$ poetry install}, on constate que \textit{Poetry} crée en fait un environnement virtuel dans lequel il va installer les dépendances et le package
+Lors de l'exécution du code \texttt{ poetry install}, on constate que \textit{Poetry} crée en fait un environnement virtuel dans lequel il va installer les dépendances et le package
 
 \begin{verbatim}  poetry install
   Creating virtualenv crisprbuilder-tb-oJzk4q3N-py3.8 in ~/.cache/pypoetry/virtualenvs
@@ -882,8 +892,8 @@ Lors de l'exécution du code \texttt{\$ poetry install}, on constate que \textit
 \section{Construction du package et publication}
 
 Pour empaqueter le projet, il faut utiliser l’instruction
-\texttt{\$ poetry build}
-qui va permettre de créer un répertoire source \textbf{dist} contenant une archive \textit{crisprbuilder\_tb-0.1.2.tar.gz} et une distribution compilée \textit{crisprbuilder\_tb-0.1.2-py3-none-any.whl}. Lors de l'exécution du code \texttt{\$ poetry build}, on constate bien la constitution des fichiers mentionnés
+\texttt{ poetry build}
+qui va permettre de créer un répertoire source \textbf{dist} contenant une archive \textbf{crisprbuilder\_tb-0.1.2.tar.gz} et une distribution compilée \textbf{crisprbuilder\_tb-0.1.2-py3-none-any.whl}. Lors de l'exécution du code \texttt{ poetry build}, on constate bien la constitution des fichiers mentionnés
 
 \begin{verbatim}  poetry build
   Building crisprbuilder_tb (0.1.2)
@@ -905,7 +915,7 @@ Avant d'être publié, la structure du package est la suivante
 
 \includegraphics[width=6cm]{tree_level1.png}
 
-Notons que le fichier README.md reste en dehors du répertoire \textbf{crisprbuilder\_tb}, car à cet emplacement il peut être lu par PyPI, et constitue le contenu de la rubrique "Package description" sur les sites \href{https://www.pypi.org}{https://www.pypi.org} ou encore \href{https://www.test.pypi.org/project/crisprbuilder\_tb}{https://www.test.pypi.org/project/crisprbuilder\_tb}
+Notons que le fichier \textbf{README.md} reste en dehors du répertoire \textbf{crisprbuilder\_tb}, car à cet emplacement il peut être lu par PyPI, et constitue le contenu de la rubrique "Package description" sur les sites \href{https://www.pypi.org}{https://www.pypi.org} ou encore \href{https://www.test.pypi.org/project/crisprbuilder\_tb}{https://www.test.pypi.org/project/crisprbuilder\_tb}
 
 Le dossier \textbf{crisprbuilder\_tb} contient les éléments suivants
 
@@ -922,9 +932,14 @@ Le dossier \textbf{dist} contient les éléments suivants
 Avant de publier le package, il faut tester son comportement à l'installation en dehors de l'environnement de développement. Pour cela, il est possible de le publier officieusement sur la plateforme de test \textit{testPyPI}. Il faut alors se placer à la racine du package et lancer en ligne de commande l'instruction
 \begin{verbatim}  twine upload --repository testpypi dist/*\end{verbatim}
 
-Il est donc possible de télécharger un package provenant d'index différents de PyPI. Par exemple, l'installation de CRISPRbuilder\_TB à partir de testPyPI se fait à l'aide de l'instruction suivante, après s'être assuré qu'on utilise bien une version 3 de Python
+Il est donc possible de télécharger un package provenant d'index différents de PyPI. Par exemple, l'installation de CRISPRbuilder\_TB à partir de testPyPI se fait à l'aide de l'instruction suivante, après s'être assuré que \textit{pip} s'exécute avec une version 3 de Python
 
-\begin{verbatim}  pip install -i https://test.pypi.org/simple/ crisprbuilder_tb\end{verbatim} 
+\begin{verbatim}  pip install --index-url https://test.pypi.org/simple/ --extra-index-url 
+  https://pypi.org/simple/ crisprbuilder_tb\end{verbatim} 
+
+Attention à bien respecter l'espace entre \texttt{ simple/} et \texttt{crisprbuilder\_tb}.
+
+L'instruction \texttt{ \textemdash \textemdash index \textemdash url} permet l'installation du package à partir de textPyPI alors que l'instruction \texttt{ \textemdash \textemdash extra \textemdash index \textemdash url} permet l'installation des dépendances à partir de PyPI car elles ne sont très certainement pas répertoriées dans testPyPI. L'oubli de cette précision dans l'hébergement des dépendances n'autorise pas l'installation du package, comme nous le constaterons plus tard au cours des tests d'installation.
 
 Il peut arriver que testPyPI n'installe pas la dernière version, en général lorsqu'une version est déjà présente sur l'ordinateur. Dans ce cas, il convient de préciser la version souhaitée du package, par exemple pour la version 0.1.2, il faut écrire
 
@@ -932,18 +947,18 @@ Il peut arriver que testPyPI n'installe pas la dernière version, en général l
 
 Il est fréquent qu'il s'affiche à ce moment-là le message d'erreur suivant
 
-\begin{verbatim}  ERROR: Could not find a version that satisfies the requirement crisprbuilder_tb===0.1.2 (from versions: 0.0.1, 0.0.2, 0.0.3, 0.0.4, 0.0.5, 0.1.0, 0.1.1)
+\begin{verbatim}  ERROR: Could not find a version that satisfies the requirement crisprbuilder_tb==0.1.2 (from versions: 0.0.1, 0.0.2, 0.0.3, 0.0.4, 0.0.5, 0.1.0, 0.1.1)
 ERROR: No matching distribution found for crisprbuilder_tb==0.1.2\end{verbatim}
 
 Dans ce cas, la répétition des instructions précédentes résout le problème
 \begin{verbatim}  pip install -i https://test.pypi.org/simple/ crisprbuilder_tb
-  $ pip install -i https://test.pypi.org/simple/ crisprbuilder_tb==0.1.2\end{verbatim} 
+  pip install -i https://test.pypi.org/simple/ crisprbuilder_tb==0.1.2\end{verbatim} 
 
 Lorsque le package est finalement prêt pour être publié sur PyPI, on utilise l’instruction
 \begin{verbatim}  poetry publish\end{verbatim}
 Pour cela, l'auteur du package doit être enregistré sur PyPI avec un identifiant et un mot de passe. A partir de ce moment-là, le package est rendu disponible publiquement.
 
-Les explications relatives à l’utilisation pratique de \textit{Poetry} sont reprises dans le tutoriel suivant que nous venons de publier sur YouTube : \href{http://www.youtube.com}{http://www.youtube.com}
+On pourra retrouver un cas concret de publication de package simple en utilisant \textit{Poetry} dans le tutoriel que nous venons de publier sur YouTube : \href{http://www.youtube.com}{http://www.youtube.com}
 
 
 
@@ -951,19 +966,43 @@ Les explications relatives à l’utilisation pratique de \textit{Poetry} sont r
 % INSTALLATION DU PACKAGE --------------------------
 \section{Installation du package}
 
-L’installation du package par n'import quel utilisateur se fait maintenant grâce à l’instruction
-\begin{verbatim}  python -m pip install nom_package\end{verbatim}
+2 ETAPES DOWNLOAD ET INSTALL
+UNINSTALL FORM PYPI
 
-Mais avant cela, il faut s'assurer que \textit{pip} est bien configuré pour travailler avec la version 3 de Python, et il faut installer les dépendances avant d'installer CRISPRbuilder\_TB à l'aide des instructions suivantes 
+L’installation du package par n'importe quel utilisateur se fait grâce à l’instruction
+\begin{verbatim}  pip install crisprbuilder_tb\end{verbatim}
+après s'être assuré que \textit{pip} est bien configuré pour s'exécuter avec Python 3.
+
+Dans le cas contraire, il convient de préciser
+\begin{verbatim}  pip3 install crisprbuilder_tb\end{verbatim}
+
+Dans un premier temps, le programme télécharge la dernière version de \textit{crisprbuilder\_tb}, puis les dépendances \textit{xmltodict}, \textit{parallel-fastq-dump}, \textit{xlrd}, \textit{biopython}, \textit{numpy}. Dans un deuxième temps, il installe les dépendances et le package \textit{crisprbuilder\_tb}.
 
 \begin{verbatim}
-pip install xlrd==1.2.0
-pip install xmltodict==0.12.0
-pip install biopython==1.76
-pip install parallel-fastq-dump==0.6.5
+Collecting XXX
+
 \end{verbatim}
 
-Attention, dans le cas où l'installation d'un de ces modules échoue, il faut réitirer l'instruction sans préciser la version souhaitée, puis au besoin de nouveau exécuter l'instruction en précisant la version. Il n'apparaît aucune raison évidente pour que ça fonctionn, mais pourtant cela permet de bien télécharger certains modules récalcitrants. A RAJOUTER DANS LE NOTEBOOK
+On remarque donc qu'il n'est pas nécessaire d'installer manuellement les dépendances du projet.
+
+Dans le cas où une version antérieure de CRISPRbuilder\_TB existe déjà sur l'ordinateur, il est possible de la mettre à niveau de la façon suivante
+\begin{verbatim}
+  pip install --upgrade crisprbuilder_tb
+\end{verbatim}
+
+En cas de difficulté rencontrée, on peut forcer la mise à niveau en supprimant d'abord le package \textit{crisprbuilder\_tb}
+\begin{verbatim}
+  pip uninstall crisprbuilder_tb
+  pip install crisprbuilder_tb
+\end{verbatim}
+
+On peut forcer l'installation d'une version spécifique, par exemple la 1.2.0, en exécutant
+\begin{verbatim}
+  pip install crisprbuilder_tb==1.2.0
+\end{verbatim}
+
+
+
 
 
 A RAJOUTER DANS LE NOTEBOOK AVEC LES SPOLIGO
@@ -987,7 +1026,7 @@ afin d'obtenir une réponse sous forme de liste du type
   '\raisebox{-1ex}{\textasciitilde}/.local/lib/python3.6/site-packages',
   '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6/site-packages']\end{verbatim}
 
-TODO PROBLEME INSTALLATION AVEC REQUIREMENTS.TXT OBLIGATOIRE
+
 
 % LA STRUCTURE DU PACKAGE TEL QU'IL EST INSTALLE CONSTRUIT PAR POETRY -------------------------
 \section{La structure du package construit par Poetry}
@@ -1015,32 +1054,18 @@ Notons que tous les répertoires comprenant des modules Python doivent contenir 
 
 
 % LE PACKAGE CRISPRBUILDER --------------------------------
-\chapter{Le package CRISPRbuilder\_TB}
+\chapter{La documentation du package CRISPRbuilder\_TB}
 
-% FONCTIONNEMENT DU PACKAGE -----------------------
-\section{Fonctionnement du package CRISPRbuilder\_TB}
+La création d'un package nécessite l'élaboration d'une documentation détaillée en anglais permettant de bien comprendre son fonctionnement. Une documentation trop succincte ou peu détaillée aurait pour conséquence le manque d'intérêt pour le package ou une incompréhension légitime qui démotiverait ses utilisateurs.
 
-La compréhension des chemins d'accès est au coeur du fonctionnement d'un package
+Cette documentation doit comporter trois volets :
+\begin{itemize}
+\item une \textit{docstring} inclue dans le code au début de chaque fonction et de chaque module,
+\item un fichier \textbf{README.md} servant à la fois de description succincte du package sur PyPI et de manuel d'instruction pour les utilisateurs les plus pressés,
+\item une documentation détaillée \textbf{crisprbuilder\_tb.md} inclue dans le répertoire \textbf{doc} du package.
+\end{itemize}   
 
-Le package CRISPRbuilder\_TB ne fonctionne pas comme un module qu'on importerait en début de code Python afin d'en utiliser les différentes méthodes.
-
-Par ailleurs, il n'est pas prévu que l'utilisateur se place dans le package pour exécuter directement le module \textbf{\_\_main\_\_.py} en écrivant en ligne de commande
-\texttt{\$ python crisprbuilder\_tb \textemdash \textemdash collect ERR2704808}
-sans le "-m", car dans ce cas l'exécution entraînerait la levée d'une exception due aux différents chemins d'accès qui seraient erronés. (explications des chemins d'accès ci-dessous)
-
-L'exécution du package est réalisée en ligne de commande, et une fois que l'utilisateur a écrit 
-\begin{verbatim}  $ python -m crisprbuilder_tb --collect ERR2704808\end{verbatim}
-
-l'interpréteur va chercher le package à son emplacement de stockage XXX et l'exécute comme si ce dernier se trouvait dans le répertoire courant. Pourtant, le package ne se trouve pas dans le répertoire courant et tous les chemins d'accès aux bases de données et modules du package doivent tenir compte de la variable d'environnement placée au début de chaque chemin d'accès.
-
-
-
-
-
-% DOCUMENTATION DETAILLEE DU PACKAGE ---------------------------
-\section{Documentation détaillée du package}
-    
-Le package est décrit en détail dans le document crisprbuilder\_tb.md, présent dans le répertoire \textbf{doc} du package une fois installé. Ce document est présenté ci-dessous dans sa version originale en anglais.
+Nous présentons ci-dessous cette documentation détaillée dans sa version originale en anglais.
 
 \includegraphics[width=5cm]{femto.png}
 
@@ -1058,7 +1083,7 @@ Section \cite{guyeux2}.
 
 
 % PURPOSE OF THIS PACKAGE ----------------
-    \subsection*{Purpose of this package}\label{purpose-of-this-package}
+    \section*{Purpose of this package}\label{purpose-of-this-package}
 
     CRISPRbuilder\_TB will help you collect and annotate Mycobacterium
 tuberculosis whole genome sequencing data for CRISPR investigations.
@@ -1090,33 +1115,63 @@ genome information dictionary comprising the following elements:
 
 
 % HOW TO INSTALL THE PACKAGE ------------------------
-    \subsection*{How to install the package
+    \section*{How to install the package
 ?}\label{how-to-install-the-package}
 
-    This package comes with a Command Line Interface, so it should be
-installed and executed using your command prompt. For Linux, MacOS or
-Windows platforms, the installation requires the same instruction. From your current directory, first install the dependencies then the package by writing in the command prompt:
-
-    \begin{verbatim}
-  $ pip install xlrd==1.2.0
-  $ pip install xmltodict==0.12.0
-  $ pip install biopython==1.76
-  $ pip install parallel-fastq-dump==0.6.5
-  $ pip install crisprbuilder_tb
-\end{verbatim}
-
-    Please note that \texttt{cripsrbuilder\_tb} is written without capital
-letters. Make sure your system is set to Python 3 in your current
-directory before using the \texttt{pip} instruction. The default version
-on your computer might be different. You can also check that \textit{pip} is linked to Python3 by writing \texttt{pip --version}, which will display a line similar to
+Make sure your system is set to \textbf{Python 3} in your current directory and \textit{pip} is set to work with Python 3, before using the \texttt{ pip} instruction and executing the package. The defaulit version on your computer might be different. You can also check that \textit{pip} is linked to Python3 by writing \texttt{ pip \textemdash \textemdash version}, which will display a line similar to
 
 \begin{verbatim}
 pip 20.1.1 from ~/pyenv/versions/3.8.0/lib/python3.8/site-packages/pip (python 3.8)
 \end{verbatim}
 
+    This package comes with a Command Line Interface, so it should be
+installed and executed using your command prompt. For Linux, MacOS or
+Windows platforms, the installation requires the same instruction. From your current directory, execute the following line:
+
+    \begin{verbatim}
+  pip install crisprbuilder_tb
+\end{verbatim}
+
+    Please note that \texttt{cripsrbuilder\_tb} is written without capital
+letters in the command prompt.
+
+First the program will download the last version of CRISPRbuilder\_TB, and the dependencies \textit{xmltodict, parallel-fastq-dump, xlrd, biopython, numpy}. Then it will install the dependencies and the package.
+
+\begin{verbatim}  Collecting crisprbuilder_tb
+  Collecting xmltodict<0.13.0,>=0.12.0 (from crisprbuilder_tb)
+  Collecting xlrd<2.0.0,>=1.2.0 (from crisprbuilder_tb)
+  Collecting parallel-fastq-dump<0.7.0,>=0.6.5 (from crisprbuilder_tb)
+  Collecting biopython <2.0,>=1.77 (from crisprbuilder_tb)
+  Collecting numpy (from biopython<2.0,>=1.77->crisprbuilder_tb)
+  Installing collected packages: xmltodict, xlrd, parallel-fastq-dump, numpy, biopython, crisprbuilder_tb
+  Successfully installed biopython-1.77 crisprbuilder_tb-1.2.0 numpy-1.19.0 parallel-fastq-dump-0.6.5 xlrd-1.2.0 xmltodict-0.12.0
+\end{verbatim}
+
+ It is not necessary to first install the dependencies, since CRISPRbuilder\_TB will deal with them on its own.
+
+If a previous version of CRISPRbuilder\_TB already exists on your computer, you can upgrade it using 
+
+\begin{verbatim}
+  pip install --upgrade crisprbuilder_tb
+\end{verbatim}
+
+If this instruction doesn't work, you can enforce the upgrade by first removing the package before installing it again
+
+\begin{verbatim}
+  pip uninstall crisprbuilder_tb
+  pip install crisprbuilder_tb
+\end{verbatim}
+
+You can also choose a specific version of the package on PyPI, like for example
+
+\begin{verbatim}
+  pip install crisprbuilder_tb==1.2.0
+\end{verbatim}
+
+
 
 % HOW TO USE THE COMMAND LINE INTERFACE --------------------
-    \subsection*{How to use the Command Line Interface
+    \section*{How to use the Command Line Interface
 ?}\label{how-to-use-the-command-line-interface}
 
     After installing the package, you can find help with the command prompt,
@@ -1161,7 +1216,7 @@ command prompt:
 
 
 % EXECUTING CRISPRBUILDER_TB WITH A SRA REFERENCE ------------
-    \subsubsection*{Executing CRISPRbuilder\_TB with a SRA
+    \subsection*{Executing CRISPRbuilder\_TB with a SRA
 reference}\label{executing-crisprbuilder_tb-with-a-sra-reference}
 
     You can run the package if you wish to find information regarding a
@@ -1188,7 +1243,7 @@ execute it. If you are doing so, the instruction above won't work.
 
 
 % EXECUTING CRISPRBUILDER_TB WITH A LIST OF SRA REFERENCES -----
-    \subsubsection*{Executing CRISPRbuilder\_TB with a list of SRA
+    \subsection*{Executing CRISPRbuilder\_TB with a list of SRA
 references}\label{executing-crisprbuilder_tb-with-a-list-of-sra-references}
 
     To run the package with a list of SRA references, this list must be
@@ -1211,7 +1266,7 @@ write:
 
 
 % PRINTING THE DATABASE LINEAGE.CSV --------------------------
-    \subsubsection*{Printing the database
+    \subsection*{Printing the database
 lineage.csv}\label{printing-the-database-lineage.csv}
 
     If you want to consult the \textbf{lineage.csv} database, stay in the
@@ -1231,7 +1286,7 @@ The program will then display the content of the database
 
 
 % ADDING A RECORD TO LINEAGE.CSV ------------------------
-    \subsubsection*{Adding a record to
+    \subsection*{Adding a record to
 lineage.csv}\label{adding-a-record-to-lineage.csv}
 
     If you want to add a record to the \textbf{lineage.csv} database, stay
@@ -1253,7 +1308,7 @@ press enter.
 
 
 % REMOVING A RECORD FROM LINEAGE.CSV -------------------------------
-    \subsubsection*{Removing a record from
+    \subsection*{Removing a record from
 lineage.csv}\label{removing-a-record-from-lineage.csv}
 
     If you want to remove a record from the \textbf{lineage.csv} database,
@@ -1290,7 +1345,7 @@ print the \textbf{lineage.csv} database beforehand to find it.
 
 
 % CHANGING A RECORD ------------------------
-    \subsubsection*{Changing a record from
+    \subsection*{Changing a record from
 lineage.csv}\label{changing-a-record-from-lineage.csv}
 
     If you want to change a record from the \textbf{lineage.csv} database,
@@ -1332,7 +1387,7 @@ press enter.
 
 
 % COMPOSITION OF THE PACKAGE AND DEPENDENCIES -------------
-    \subsection*{Composition of the package and
+    \section*{Composition of the package and
 dependencies}\label{composition-of-the-package-and-dependencies}
 
     CRISPRbuilder\_TB needs the following dependencies to work:
@@ -1393,7 +1448,7 @@ CRISPRbuilder\_TB. Please note that this package doesn't support Python
 
 
 % RETRIEVING THE GENOME INFORMATION -------------------
-    \subsection*{Retrieving the genome information
+    \section*{Retrieving the genome information
 dictionary}\label{retrieving-the-genome-information-dictionary}
 
     Let's assume you're looking for information regarding ERR2704808. After
