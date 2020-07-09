@@ -22,11 +22,9 @@
 \contentsline {section}{\numberline {2.}Composition d'un package standard}{21}{section.3.2}
 \contentsline {section}{\numberline {3.}Quelle licence choisir ?}{22}{section.3.3}
 \contentsline {section}{\numberline {4.}Fonctionnement d'un package}{22}{section.3.4}
-\contentsline {chapter}{\numberline {4}Le choix des outils}{23}{chapter.4}
-\contentsline {section}{\numberline {1.}L'environnement de d\IeC {\'e}veloppement}{23}{section.4.1}
-\contentsline {section}{\numberline {2.}L'environnement de test}{26}{section.4.2}
-\contentsline {subsubsection}{\numberline {2.0.1.}L'utilisation de VirtualBox}{26}{subsubsection.4.2.0.1}
-\contentsline {section}{\numberline {3.}L'outil d'empaquetage}{26}{section.4.3}
+\contentsline {chapter}{\numberline {4}Le choix des outils}{24}{chapter.4}
+\contentsline {section}{\numberline {1.}L'environnement de d\IeC {\'e}veloppement}{24}{section.4.1}
+\contentsline {section}{\numberline {2.}L'outil d'empaquetage}{26}{section.4.2}
 \contentsline {chapter}{\numberline {5}Construction du package avec \textit {Poetry}}{28}{chapter.5}
 \contentsline {section}{\numberline {1.}Cr\IeC {\'e}ation du package et gestion des d\IeC {\'e}pendances}{28}{section.5.1}
 \contentsline {section}{\numberline {2.}Construction du package et publication}{30}{section.5.2}
@@ -40,11 +38,12 @@
 \contentsline {section}{\numberline {2.}les tests d'int\IeC {\'e}gration}{51}{section.7.2}
 \contentsline {subsection}{\numberline {2.1.}Le respect des r\IeC {\`e}gles du PEP avec pylint}{51}{subsection.7.2.1}
 \contentsline {subsubsection}{\numberline {2.1.1.}fichiers existants}{52}{subsubsection.7.2.1.1}
-\contentsline {subsection}{\numberline {2.2.}Les probl\IeC {\`e}mes li\IeC {\'e}s aux chemins d'acc\IeC {\`e}s}{52}{subsection.7.2.2}
-\contentsline {section}{\numberline {3.}Les tests fonctionnels}{52}{section.7.3}
-\contentsline {section}{\numberline {4.}Les tests de configuration}{53}{section.7.4}
-\contentsline {section}{\numberline {5.}Les tests de performance}{53}{section.7.5}
+\contentsline {section}{\numberline {3.}Les tests de non-r\IeC {\'e}gression}{52}{section.7.3}
+\contentsline {subsection}{\numberline {3.1.}Les probl\IeC {\`e}mes li\IeC {\'e}s aux chemins d'acc\IeC {\`e}s}{53}{subsection.7.3.1}
+\contentsline {section}{\numberline {4.}Les tests fonctionnels}{53}{section.7.4}
+\contentsline {section}{\numberline {5.}Les tests de performance}{54}{section.7.5}
 \contentsline {subsection}{\numberline {5.1.}Am\IeC {\'e}lioration des performances}{55}{subsection.7.5.1}
-\contentsline {section}{\numberline {6.}Les tests d'installation}{55}{section.7.6}
-\contentsline {section}{\numberline {7.}Les tests de non-r\IeC {\'e}gression}{56}{section.7.7}
+\contentsline {section}{\numberline {6.}Les tests d'installation}{56}{section.7.6}
+\contentsline {subsubsection}{\numberline {6.0.1.}L'utilisation de VirtualBox}{56}{subsubsection.7.6.0.1}
+\contentsline {section}{\numberline {7.}Les tests de configuration}{57}{section.7.7}
 \contentsfinish 
