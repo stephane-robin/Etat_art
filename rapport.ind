@@ -1,6 +1,77 @@
 \begin{theindex}
 
+  \item All\IeC {\`e}le, \hyperpage{12}
+  \item Approche bay\IeC {\'e}sienne, \hyperpage{9}
+  \item ARN polym\IeC {\'e}rase, \hyperpage{10}
+
+  \indexspace
+
+  \item Base de donn\IeC {\'e}es SITVIT, \hyperpage{12}
+  \item Base de donn\IeC {\'e}es SITVIT2, \hyperpage{18}
+  \item BLAST, \hyperpage{18}
+
+  \indexspace
+
+  \item Codon, \hyperpage{6}
+  \item Contig, \hyperpage{18}
+
+  \indexspace
+
+  \item Enzyme de restriction, \hyperpage{13}
+  \item Epid\IeC {\'e}miologie, \hyperpage{18}
+
+  \indexspace
+
+  \item G\IeC {\'e}nome, \hyperpage{7}
+  \item GIL, \hyperpage{54}
+
+  \indexspace
+
+  \item Haplogroupe, \hyperpage{7}
+  \item Homoplasie, \hyperpage{6}
+
+  \indexspace
+
+  \item Isolat, \hyperpage{9}
+
+  \indexspace
+
+  \item Macrophage, \hyperpage{11}
+  \item Marqueur MIRU, \hyperpage{12}
+  \item Marqueur VNTR, \hyperpage{12}
+  \item Mitochondrie, \hyperpage{7}
+  \item MTBC, \hyperpage{7}
+
+  \indexspace
+
+  \item Paire de bases, \hyperpage{6}
+  \item PCR, \hyperpage{13}
+  \item PEP, \hyperpage{4}
+  \item PEP-257, \hyperpage{49}
+  \item PEP-518, \hyperpage{21}
+  \item PEP-8, \hyperpage{49}
+  \item Phylog\IeC {\'e}nie, \hyperpage{6}
   \item pip, \hyperpage{25}
+  \item Promoteur, \hyperpage{11}
+  \item Puce \IeC {\`a} ADN, \hyperpage{14}
   \item pyenv, \hyperpage{24}
+  \item pylint, \hyperpage{49}
+  \item PyPA, \hyperpage{21}
+  \item PyPI, \hyperpage{4}
+
+  \indexspace
+
+  \item Reads, \hyperpage{16}
+
+  \indexspace
+
+  \item S\IeC {\'e}quen\IeC {\c c}age du g\IeC {\'e}nome, 
+		\hyperpage{18}
+  \item Sous-unit\IeC {\'e} $\beta $, \hyperpage{10}
+  \item SRA, \hyperpage{4}
+
+  \indexspace
+
+  \item unittest, \hyperpage{48}
 
 \end{theindex}
