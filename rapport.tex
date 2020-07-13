@@ -238,8 +238,8 @@ ntheorem=true]{lemma}{Lemme}
 % CONCERNE LA TABLE DES MATIERES
 %\renewcommand{\@chapapp}{}  % le mot `chapitre'' n'apparait plus en titre de chapitre
 \renewcommand\l@section{\@dottedtocline{1}{0em}{1.5em}}  % espacement dans le titre d'une section
-\renewcommand\l@subsection{\@dottedtocline{1}{2.5em}{2.5em}}  % espacement dans le titre d'une sous-section
-\renewcommand\l@subsubsection{\@dottedtocline{1}{5em}{2.5em}}  % espacement dans le titre d'une sous-sous-section
+%\renewcommand\l@subsection{\@dottedtocline{1}{2.5em}{2.5em}}  % espacement dans le titre d'une sous-section
+%\renewcommand\l@subsubsection{\@dottedtocline{1}{5em}{2.5em}}  % espacement dans le titre d'une sous-sous-section
 
 \makeatother
 \makeindex
@@ -626,6 +626,8 @@ Dans le cadre de ce projet, aucune spécification restrictive n'étant requise, 
 % FONCTIONNEMENT D'UN PACKAGE
 \section{Fonctionnement d'un package}
 
+La bonne compréhension des chemins d'accès est au coeur du fonctionnement d'un package.
+
 Un programme s'exécute dans un répertoire courant et accède aux différents fichiers support en utilisant un chemin relatif par rapport à ce répertoire ou encore en utilisant un chemin absolu. Les différentes dépendances sont importées en début de code, sans référence à un chemin d'accès car elles ont préalablement été installées dans l'environnement de développement puis dans la version de Python utilisée. Elles sont en plus installées dans l'environnement de développement intégré dans le cas où on utilise un tel outil.
 
 Un package en revanche, n'est pas défini par rapport au répertoire courant. Il va s'installer à un emplacement spécifique défini par le système d'exploitation, comme \textit{dist-packages} ou \textbf{site-packages} pour Linux. On peut chercher son emplacement exact et  le déplacer mais ceci n'a que peu d'intérêt vu que le système connaît l'emplacement de ses packages.
@@ -639,7 +641,7 @@ En fait, l'exécution d'un package se fait à partir d'un répertoire courant et
 % FONCTIONNEMENT DU PACKAGE -----------------------
 \section{Fonctionnement du package CRISPRbuilder\_TB}
 
-La compréhension des chemins d'accès est au coeur du fonctionnement d'un package
+
 
 Le package CRISPRbuilder\_TB ne fonctionne pas comme un module qu'on importerait en début de code Python afin d'en utiliser les différentes méthodes.
 
@@ -651,6 +653,7 @@ L'exécution du package est réalisée en ligne de commande, et une fois que l'u
 \begin{verbatim}  python -m crisprbuilder_tb --collect ERR2704808\end{verbatim}
 
 l'interpréteur va chercher le package à son emplacement de stockage XXX et l'exécute comme si ce dernier se trouvait dans le répertoire courant. Pourtant, le package ne se trouve pas dans le répertoire courant et tous les chemins d'accès aux bases de données et modules du package doivent tenir compte de la variable d'environnement placée au début de chaque chemin d'accès.
+
 
 
 % CHOIX DES OUTILS -----------------------------
@@ -676,8 +679,8 @@ Dans le cadre de notre étude, nous créons un répertoire \textbf{biologie}, no
 
 Dans cet environnement vient d'être créé le répertoire \textbf{bin} comprenant notamment le fichier activate, qui permet d'activer les fonctionnalités de notre environnement.
 Cette activation ne peut se faire qu'à partir du répertoire parent \textbf{biologie}. Il faut ensuite se placer à l'intérieur de \textbf{env\_bio} pour définir les modules utiles à l'environnement. 
- \begin{verbatim}  $ source env_bio/bin/activate
-  (env_bio)$ cd env_bio\end{verbatim}
+ \begin{verbatim}  source env_bio/bin/activate
+  (env_bio)  cd env_bio\end{verbatim}
 
 La plupart des systèmes d'exploitation incorporent Python2.7 par défaut. Il convient donc de définir une version 3 de Python dans cet environnement de développement, et plus précisément une version 3.6 ou supérieure. Pour cela, le module \textit{pyenv} \index{pyenv} nous permet de définir une version de Python comme version locale de travail dans l'environnement. 
 
@@ -694,9 +697,9 @@ La version 3.6.2 de Python se trouve maintenant installée dans \textbf{\raisebo
 Pour connaître toutes les versions de Python installées par pyenv, il suffit d'exécuter l'instruction suivante qui fournit une liste de résultats
 \begin{verbatim}  pyenv versions
   * system
-     2.7.10
-     3.6.2
-     3.8.0\end{verbatim}
+    2.7.10
+    3.6.2
+    3.8.0\end{verbatim}
 où le caractère "*" indique la version active dans le répertoire courant.
 
 On peut alors choisir la version 3.6.2 pour notre environnement de travail. Il suffit de se placer dans cet environnement et d'exécuter l'instruction
@@ -783,7 +786,10 @@ Nous avons donc décidé de construire notre package en utilisant \textit{Poetry
 
 
 % POETRY ---------------
-\chapter{Construction du package avec \textit{Poetry}}
+\chapter{Construction du package avec Poetry}
+
+
+Note préalable : toutes les explications données dans cette partie concernent les plateformes Linux et sont transposables en une moindre mesure sur MacOS, mais pas nécessairement sur Windows.
 
 
 % CREATION DU PACKAGE ---------------
@@ -903,12 +909,12 @@ qui va permettre de créer un répertoire source \textbf{dist} contenant une arc
     - Building wheel
     - Built crisprbuilder_tb-0.1.2-py3-any.whl\end{verbatim}
 
-Attention, si la distribution comporte la mention "py2" au lieu de "py3", cela signifie que la construction sous \textit{Poetry} a été réalisée à partir de Python2. Il faut donc bien s'assurer de choisir une version de Python3 avant la création du package.
+Attention, si la distribution comporte la mention "py2" au lieu de "py3", cela signifie que la construction sous \textit{Poetry} a été réalisée à partir de Python 2. Il faut donc bien s'assurer de choisir une version de Python 3 avant la création du package.
 
 On peut vérifier la conformité du package avec l’instruction
-\texttt{\$ poetry check}
+\texttt{ poetry check}
 qui renvoie
-\texttt{All set !}
+\texttt{ All set !}
 si le package ne comporte aucune discordance et peut être publié.
 
 Avant d'être publié, la structure du package est la suivante
@@ -917,7 +923,7 @@ Avant d'être publié, la structure du package est la suivante
 
 Notons que le fichier \textbf{README.md} reste en dehors du répertoire \textbf{crisprbuilder\_tb}, car à cet emplacement il peut être lu par PyPI, et constitue le contenu de la rubrique "Package description" sur les sites \href{https://www.pypi.org}{https://www.pypi.org} ou encore \href{https://www.test.pypi.org/project/crisprbuilder\_tb}{https://www.test.pypi.org/project/crisprbuilder\_tb}
 
-Le dossier \textbf{crisprbuilder\_tb} contient les éléments suivants
+Le dossier \textbf{crisprbuilder\_tb} contient maintenant les éléments suivants
 
 \includegraphics[width=8cm]{rep_crispr.png}
 
@@ -929,113 +935,26 @@ Le dossier \textbf{dist} contient les éléments suivants
 
 \includegraphics[width=9cm]{rep_dist.png}
 
-Avant de publier le package, il faut tester son comportement à l'installation en dehors de l'environnement de développement. Pour cela, il est possible de le publier officieusement sur la plateforme de test \textit{testPyPI}. Il faut alors se placer à la racine du package et lancer en ligne de commande l'instruction
-\begin{verbatim}  twine upload --repository testpypi dist/*\end{verbatim}
 
-Il est donc possible de télécharger un package provenant d'index différents de PyPI. Par exemple, l'installation de CRISPRbuilder\_TB à partir de testPyPI se fait à l'aide de l'instruction suivante, après s'être assuré que \textit{pip} s'exécute avec une version 3 de Python
-
-\begin{verbatim}  pip install --index-url https://test.pypi.org/simple/ --extra-index-url 
-  https://pypi.org/simple/ crisprbuilder_tb\end{verbatim} 
-
-Attention à bien respecter l'espace entre \texttt{ simple/} et \texttt{crisprbuilder\_tb}.
-
-L'instruction \texttt{ \textemdash \textemdash index \textemdash url} permet l'installation du package à partir de textPyPI alors que l'instruction \texttt{ \textemdash \textemdash extra \textemdash index \textemdash url} permet l'installation des dépendances à partir de PyPI car elles ne sont très certainement pas répertoriées dans testPyPI. L'oubli de cette précision dans l'hébergement des dépendances n'autorise pas l'installation du package, comme nous le constaterons plus tard au cours des tests d'installation.
-
-Il peut arriver que testPyPI n'installe pas la dernière version, en général lorsqu'une version est déjà présente sur l'ordinateur. Dans ce cas, il convient de préciser la version souhaitée du package, par exemple pour la version 0.1.2, il faut écrire
-
-\begin{verbatim}  pip install -i https://test.pypi.org/simple/ crisprbuilder_tb==0.1.2\end{verbatim} A noter qu'il ne faut utiliser de guillemets autour de la version du package.
-
-Il est fréquent qu'il s'affiche à ce moment-là le message d'erreur suivant
-
-\begin{verbatim}  ERROR: Could not find a version that satisfies the requirement crisprbuilder_tb==0.1.2 (from versions: 0.0.1, 0.0.2, 0.0.3, 0.0.4, 0.0.5, 0.1.0, 0.1.1)
-ERROR: No matching distribution found for crisprbuilder_tb==0.1.2\end{verbatim}
-
-Dans ce cas, la répétition des instructions précédentes résout le problème
-\begin{verbatim}  pip install -i https://test.pypi.org/simple/ crisprbuilder_tb
-  pip install -i https://test.pypi.org/simple/ crisprbuilder_tb==0.1.2\end{verbatim} 
 
 Lorsque le package est finalement prêt pour être publié sur PyPI, on utilise l’instruction
 \begin{verbatim}  poetry publish\end{verbatim}
 Pour cela, l'auteur du package doit être enregistré sur PyPI avec un identifiant et un mot de passe. A partir de ce moment-là, le package est rendu disponible publiquement.
 
-On pourra retrouver un cas concret de publication de package simple en utilisant \textit{Poetry} dans le tutoriel que nous venons de publier sur YouTube : \href{http://www.youtube.com}{http://www.youtube.com}
+On pourra retrouver un cas concret simple de publication de package avec \textit{Poetry} dans le tutoriel que nous venons de publier sur YouTube : \href{http://www.youtube.com}{http://www.youtube.com}
 
 
-
-
-% INSTALLATION DU PACKAGE --------------------------
-\section{Installation du package}
-
-2 ETAPES DOWNLOAD ET INSTALL
-UNINSTALL FORM PYPI
-
-L’installation du package par n'importe quel utilisateur se fait grâce à l’instruction
-\begin{verbatim}  pip install crisprbuilder_tb\end{verbatim}
-après s'être assuré que \textit{pip} est bien configuré pour s'exécuter avec Python 3.
-
-Dans le cas contraire, il convient de préciser
-\begin{verbatim}  pip3 install crisprbuilder_tb\end{verbatim}
-
-Dans un premier temps, le programme télécharge la dernière version de \textit{crisprbuilder\_tb}, puis les dépendances \textit{xmltodict}, \textit{parallel-fastq-dump}, \textit{xlrd}, \textit{biopython}, \textit{numpy}. Dans un deuxième temps, il installe les dépendances et le package \textit{crisprbuilder\_tb}.
-
-\begin{verbatim}
-Collecting XXX
-
-\end{verbatim}
-
-On remarque donc qu'il n'est pas nécessaire d'installer manuellement les dépendances du projet.
-
-Dans le cas où une version antérieure de CRISPRbuilder\_TB existe déjà sur l'ordinateur, il est possible de la mettre à niveau de la façon suivante
-\begin{verbatim}
-  pip install --upgrade crisprbuilder_tb
-\end{verbatim}
-
-En cas de difficulté rencontrée, on peut forcer la mise à niveau en supprimant d'abord le package \textit{crisprbuilder\_tb}
-\begin{verbatim}
-  pip uninstall crisprbuilder_tb
-  pip install crisprbuilder_tb
-\end{verbatim}
-
-On peut forcer l'installation d'une version spécifique, par exemple la 1.2.0, en exécutant
-\begin{verbatim}
-  pip install crisprbuilder_tb==1.2.0
-\end{verbatim}
-
-
-
-
-
-A RAJOUTER DANS LE NOTEBOOK AVEC LES SPOLIGO
-ATTENTION A L'ESPACE AVANT CRISPRBUILDER LORS DE L'INSTALLATION A RAJOUTER AU NOTEBOOK
-
-Au moment de l'installation, que ce soit à partir de PyPI ou d'un autre index tel que
-testPyPI, l'utilisateur ne choisit pas l'emplacement d'installation. Celui-ci est définit automatiquement par le système en fonction des variables d'environnement. Par exemple, si on utilise une version particulière de Python avec \textit{pyenv}, alors le package pourra se trouver dans \textbf{\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6/}. Il est également fréquent de le retrouver dans \textbf{\raisebox{-1ex}{\textasciitilde}/.local/lib/python3.6/site-packages/} avec la plupart des différentes packages. Comme on ne connaît pas avec certitude l'emplacement dans lequel le package va s'installer, il convient de définir une variable d'environnement qui pointe vers l'emplacement d'installation.
-
-Lors de l'exécution du package, il est nécessaire de l'appeler par son nom en utilisant l'indice "-m" signifiant "module". Il n'est pas utile de préciser l'utilisation de Python3 si le répertoire courant travaille déjà avec cette version. En revanche, les chemins relatifs dans les modules du package ne devront pas utiliser le nom crisprbuilder\_tb car celui-ci ne sera pas reconnu, une fois à la racine du package. EXPLICATIONS A CHANGER
-
-Par défaut, Python cherche ses modules et packages dans la variable d'environnement \$PYTHONPATH. On peut alors consulter les différents chemins connus par cette variable d'environnement en exécutant l'instruction
-\begin{verbatim}  python
-  >>> import sys
-  >>> print(sys.path)\end{verbatim}
-
-afin d'obtenir une réponse sous forme de liste du type
-\begin{verbatim}  ['',
-  '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python36.zip',
-  '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6',
-  '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6/lib-dynload',    
-  '\raisebox{-1ex}{\textasciitilde}/.local/lib/python3.6/site-packages',
-  '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6/site-packages']\end{verbatim}
 
 
 
 % LA STRUCTURE DU PACKAGE TEL QU'IL EST INSTALLE CONSTRUIT PAR POETRY -------------------------
 \section{La structure du package construit par Poetry}
 
-Le fichier crisprbuilder\_tb-0.1.2.tar.gz est une archive qui, une fois décompressée contient les éléments suivants :
+Le fichier \textbf{crisprbuilder\_tb-0.1.2.tar.gz} est une archive qui, une fois décompressée contient les éléments suivants :
 
 \includegraphics[width=7cm]{tar.png}
 
-On constate la même arborescence que celle créée au moment de l'instruction XXX, avec en supplément les fichiers 
+On constate la même arborescence que celle obtenue lors de la création du package, avec en supplément les fichiers \textbf{PKG.INFO} et \textbf{setup.py}
 
 
 
@@ -1054,7 +973,9 @@ Notons que tous les répertoires comprenant des modules Python doivent contenir 
 
 
 % LE PACKAGE CRISPRBUILDER --------------------------------
-\chapter{La documentation du package CRISPRbuilder\_TB}
+\chapter{La documentation du package \\(version originale)}
+
+Note préalable : toutes les explications données dans cette partie concernent les plateformes Linux et sont transposables en une moindre mesure sur MacOS, mais pas nécessairement sur Windows.
 
 La création d'un package nécessite l'élaboration d'une documentation détaillée en anglais permettant de bien comprendre son fonctionnement. Une documentation trop succincte ou peu détaillée aurait pour conséquence le manque d'intérêt pour le package ou une incompréhension légitime qui démotiverait ses utilisateurs.
 
@@ -1083,7 +1004,7 @@ Section \cite{guyeux2}.
 
 
 % PURPOSE OF THIS PACKAGE ----------------
-    \section*{Purpose of this package}\label{purpose-of-this-package}
+    \section{Purpose of this package}\label{purpose-of-this-package}
 
     CRISPRbuilder\_TB will help you collect and annotate Mycobacterium
 tuberculosis whole genome sequencing data for CRISPR investigations.
@@ -1115,7 +1036,7 @@ genome information dictionary comprising the following elements:
 
 
 % HOW TO INSTALL THE PACKAGE ------------------------
-    \section*{How to install the package
+    \section{How to install the package
 ?}\label{how-to-install-the-package}
 
 Make sure your system is set to \textbf{Python 3} in your current directory and \textit{pip} is set to work with Python 3, before using the \texttt{ pip} instruction and executing the package. The defaulit version on your computer might be different. You can also check that \textit{pip} is linked to Python3 by writing \texttt{ pip \textemdash \textemdash version}, which will display a line similar to
@@ -1171,7 +1092,7 @@ You can also choose a specific version of the package on PyPI, like for example
 
 
 % HOW TO USE THE COMMAND LINE INTERFACE --------------------
-    \section*{How to use the Command Line Interface
+    \section{How to use the Command Line Interface
 ?}\label{how-to-use-the-command-line-interface}
 
     After installing the package, you can find help with the command prompt,
@@ -1216,7 +1137,7 @@ command prompt:
 
 
 % EXECUTING CRISPRBUILDER_TB WITH A SRA REFERENCE ------------
-    \subsection*{Executing CRISPRbuilder\_TB with a SRA
+    \subsection{Executing CRISPRbuilder\_TB with a SRA
 reference}\label{executing-crisprbuilder_tb-with-a-sra-reference}
 
     You can run the package if you wish to find information regarding a
@@ -1243,7 +1164,7 @@ execute it. If you are doing so, the instruction above won't work.
 
 
 % EXECUTING CRISPRBUILDER_TB WITH A LIST OF SRA REFERENCES -----
-    \subsection*{Executing CRISPRbuilder\_TB with a list of SRA
+    \subsection{Executing CRISPRbuilder\_TB with a list of SRA
 references}\label{executing-crisprbuilder_tb-with-a-list-of-sra-references}
 
     To run the package with a list of SRA references, this list must be
@@ -1266,7 +1187,7 @@ write:
 
 
 % PRINTING THE DATABASE LINEAGE.CSV --------------------------
-    \subsection*{Printing the database
+    \subsection{Printing the database
 lineage.csv}\label{printing-the-database-lineage.csv}
 
     If you want to consult the \textbf{lineage.csv} database, stay in the
@@ -1286,7 +1207,7 @@ The program will then display the content of the database
 
 
 % ADDING A RECORD TO LINEAGE.CSV ------------------------
-    \subsection*{Adding a record to
+    \subsection{Adding a record to
 lineage.csv}\label{adding-a-record-to-lineage.csv}
 
     If you want to add a record to the \textbf{lineage.csv} database, stay
@@ -1308,7 +1229,7 @@ press enter.
 
 
 % REMOVING A RECORD FROM LINEAGE.CSV -------------------------------
-    \subsection*{Removing a record from
+    \subsection{Removing a record from
 lineage.csv}\label{removing-a-record-from-lineage.csv}
 
     If you want to remove a record from the \textbf{lineage.csv} database,
@@ -1345,7 +1266,7 @@ print the \textbf{lineage.csv} database beforehand to find it.
 
 
 % CHANGING A RECORD ------------------------
-    \subsection*{Changing a record from
+    \subsection{Changing a record from
 lineage.csv}\label{changing-a-record-from-lineage.csv}
 
     If you want to change a record from the \textbf{lineage.csv} database,
@@ -1387,7 +1308,7 @@ press enter.
 
 
 % COMPOSITION OF THE PACKAGE AND DEPENDENCIES -------------
-    \section*{Composition of the package and
+    \section{Composition of the package and
 dependencies}\label{composition-of-the-package-and-dependencies}
 
     CRISPRbuilder\_TB needs the following dependencies to work:
@@ -1448,7 +1369,7 @@ CRISPRbuilder\_TB. Please note that this package doesn't support Python
 
 
 % RETRIEVING THE GENOME INFORMATION -------------------
-    \section*{Retrieving the genome information
+    \section{Retrieving the genome information
 dictionary}\label{retrieving-the-genome-information-dictionary}
 
     Let's assume you're looking for information regarding ERR2704808. After
@@ -1870,6 +1791,8 @@ directly from NCBI, according to the code:
 % LES TESTS DU PACKAGE -----------------------
 \chapter{Tester le package}
 
+Note préalable : toutes les explications données dans cette partie concernent les plateformes Linux et sont transposables en une moindre mesure sur MacOS, mais pas nécessairement sur Windows.
+
 Les tests font partie du processus de développement et sont effectués dans chacune des phases de création du code afin de pouvoir continuer à l'étape suivante.
 
 Plusieurs niveaux de tests doivent être effectués pour valider le package avant publication. Ils nécessitent un environnement de développement dont nous avons déjà parlé et un environnement de test. Celui-ci est re-créé pour chaque système d'exploitation faisant partie de la campagne de tests. Il doit simuler le cas le plus défavorable, c'est à dire qu'il doit être représentatif d'un système d'exploitation "vierge" ne disposant pas des dépendances nécessaires à l'exécution du package. Il doit toutefois fonctionner avec Python 3 par défaut ou appeler le package à l'aide de Python 3. 
@@ -1891,7 +1814,7 @@ Notre campagne de tests comporte les démarches suivantes :
 
 
 % TESTS UNITAIRES ---------
-\section{Les tests unitaires}
+\section{Les tests unitaires, le module unittest}
 
 Les tests unitaires consistent à évaluer individuellement les composants de l'application (parties de code autonomes, fonctions, ...), en terme de qualité et validation des résultats attendus.
 
@@ -1906,7 +1829,7 @@ TODO - EXPLICATIONS unittest
 
 
 % LES TESTS D'INTEGRATION -----------------------------
-\section{les tests d'intégration}
+\section{les tests d'intégration, le module pylint}
 
 Les tests d'intégration permettent de valider l'inter-utilisabilité des différents modules entre eux dans leur environnement d'exploitation définitif. Nous réalisons également les tests d'intégration dans l'environnement de développement que nous avons construit.
 
@@ -1974,7 +1897,7 @@ La gestion des exceptions avec des blocs \textbf{try ... except FileNotFoundErro
 
 
 % LES TESTS DE NON REGRESSION ---------------------------------
-\section{Les tests de non-régression}
+\section{Les tests de non-régression, le versioning avec Git}
 
 Ce type de tests permet de vérifier que les modifications apportées au programme durant l'ensemble de la phase de test n'ont pas altérées le fonctionnement du package.
 
@@ -1988,19 +1911,24 @@ et
 
 pour procéder aux vérifications aprés modification de code.
 
-L'utilisation de l'outil de versioning Git a constitué une aide précieuse au cours de chaque modification significative de code. Ce stage a été l'occasion de manipuler quotidiennement les principales commandes Git. A noter que l'utilisation conjointe de \textit{Poetry} et de Git qui construisent tous les deux un dossier \textbf{crisprbuilder\_tb} au moment de la création d'un package par
+L'utilisation de l'outil de versioning \textit{Git} a constitué une aide précieuse au cours de chaque modification significative du code. Ce stage a été l'occasion de manipuler régulièrement les principales commandes \textit{Git}. 
+
+Notons à ce propos que \textit{Poetry} construit un dossier \textbf{crisprbuilder\_tb} au moment de la création du package avec l'instruction
 
  \begin{verbatim}  poetry new crisprbuilder_tb}\end{verbatim}
 
-et au moment de la création d'un répertoire Git par
+et que \textit{Git} construit également un autre dossier \textbf{crisprbuilder\_tb} au moment de la création d'un répertoire \textit{Git} avec l'instruction
 
 \begin{verbatim}  git clone https://github.com/stephane-robin/crisprbuilder_tb.git}\end{verbatim}
 
-nécessite de créer d'abord le package avec \textit{Poetry} puis d'initaliser ce répertoire en liaison avec un dépôt Git avec l'instruction
+Il est donc nécessaire de créer d'abord le package avec \textit{Poetry} puis d'initaliser ce répertoire en liaison avec un dépôt \textit{Git}, en se plaçant à la racine de ce répertoire eten utilisant l'instruction
 
 \begin{verbatim}
   git init
-  git XXX
+  git remote https://github.com/stephane-robin/crisprbuilder_tb.git
+  git add .
+  git commit -m "first commit"
+  git push origin master
 \end{verbatim} 
 
 
@@ -2122,59 +2050,155 @@ DEFINIR GIL
 % LES TESTS D'INSTALLATION -----------------------------
 \section{Les tests d'installation}
 
-Ce type de tests permet de s'assurer que l'utilisateur sera en mesure d'installer le package si il dispose d'un système d'exploitation Linux, MacOS ou Microsoft Windows. Pour simuler le fonctionnement de ces systèmes, nous utilisons des machines virtuelles créées par \textit{VirtualBox}, toutes fonctionnant en 64 bits : 
+Avant de publier le package, il faut tester son comportement à l'installation en dehors de l'environnement de développement. Pour cela, il est possible de le publier officieusement sur la plateforme de test testPyPI. Il faut alors se placer à la racine du package et lancer en ligne de commande l'instruction
+\begin{verbatim}  twine upload --repository testpypi dist/*\end{verbatim}
+
+On peut donc télécharger un package à partir d'index différents de PyPI, comme par exemple testPyPI. Toutefois, les dépendances ne sont pas nécessairement répertoriées dans cet index. Cela induit dans ce cas une erreur au téléchargement et interdit l'installation du package. il faut donc faire référence à PyPI pour le téléchargement des dépendances. Par exemple, l'installation de CRISPRbuilder\_TB à partir de testPyPI se fait à l'aide de l'instruction suivante, après s'être assuré que \textit{pip} s'exécute avec une version 3 de Python
+
+\begin{verbatim}  pip install --index-url https://test.pypi.org/simple/ --extra-index-url 
+  https://pypi.org/simple/ crisprbuilder_tb\end{verbatim} 
+
+Attention à bien respecter l'espace entre \texttt{ simple/} et \texttt{crisprbuilder\_tb}.
+
+L'instruction \texttt{ \textemdash \textemdash index \textemdash url} permet l'installation du package à partir de textPyPI alors que l'instruction \texttt{ \textemdash \textemdash extra \textemdash index \textemdash url} permet l'installation des dépendances à partir de PyPI.
+
+Il peut arriver que testPyPI n'installe pas la dernière version. Dans ce cas, il convient de préciser la version souhaitée du package, par exemple pour la version 0.1.2, il faut écrire
+
+\begin{verbatim}  pip install --index-url https://test.pypi.org/simple/ --extra-index-url 
+  https://pypi.org/simple/ crisprbuilder_tb==0.1.2\end{verbatim} 
+
+A noter qu'il ne faut utiliser de guillemets autour de la version du package.
+
+Il est fréquent qu'il s'affiche à ce moment-là le message d'erreur suivant
+
+\begin{verbatim}  ERROR: Could not find a version that satisfies the requirement crisprbuilder_tb==0.1.2 (from versions: 0.0.1, 0.0.2, 0.0.3, 0.0.4, 0.0.5, 0.1.0, 0.1.1)
+ERROR: No matching distribution found for crisprbuilder_tb==0.1.2\end{verbatim}
+
+Dans ce cas, la répétition de l'instruction précédente résout souvent le problème.
+
+Une fois que l'installation est validée à partir de testPyPI et que les modifications nécessaires ont été effectuées dans le code du package, on peut publier le package sur PyPI et procéder aux tests sur la version proposée aux utilisateurs avec la commande
+
+\begin{verbatim}
+  pip install crisprbuilder_tb
+\end{verbatim}
+
+Lorsqu'une version antérieure de CRISPRbuilder\_TB existe déjà sur l'ordinateur, il peut arriver que l'installation d'une version plus récente échoue. Il est possible de la mettre à niveau de la façon suivante
+\begin{verbatim}
+  pip install --upgrade crisprbuilder_tb
+\end{verbatim}
+
+En cas de difficulté rencontrée, on peut forcer la mise à niveau en supprimant d'abord le package \textit{crisprbuilder\_tb}
+\begin{verbatim}
+  pip uninstall crisprbuilder_tb
+  pip install crisprbuilder_tb
+\end{verbatim}
+
+Les tests d'installation permettent de s'assurer que l'utilisateur sera en mesure d'installer le package si il dispose d'un système d'exploitation Linux, MacOS ou Microsoft Windows. Pour simuler le fonctionnement de ces systèmes, nous choisissons de travailler sur les quatre machines virtuelles suivantes créées par \textit{VirtualBox}, toutes fonctionnant en 64 bits : 
 \begin{itemize}
 \item Ubuntu 18.04 LTS, 
 \item Ubuntu 20.04 LTS, 
-\item Debian,
 \item MacOS 10.12 Sierra, 
 \item Microsoft Windows 10.
 \end{itemize}
 
 
 
-
-
+% L'UTILISATION DE VIRTUALBOX
 \subsubsection{L'utilisation de VirtualBox}
 
-Il est nécessaire de tester le comportement de l'application à l'installation et au fonctionnement au sein de différents systèmes d'exploitation. Nous choisissons de tester CRISPRbuilder\_TB avec les systèmes Linux Ubuntu 20.04 LTS, MacOS Sierra et Microsoft Windows 10 et un environnement de travail vierge. Pour cela nous utilisons une machine virtuelle VirtualBox qui va créer artificiellement ces plateformes.
-
-Nous commençons par télécharger l'image \text{.iso} de Ubuntu 18.04 LTS. Nous choisissons la version 64-bit Server Install Image car nous n'avons pas besoin d'interface graphique pour réaliser nos tests. La version de Python par défaut de ce système est 2.7.17. Il existe également une version 3.6.9 de Python. Nous installons python3-pip puis nous effectuons notre test d'installation en utilisant   
-
-Nous commençons par télécharger l'image \textit{.iso} de Ubuntu 20.04 LTS. La version de Python par défaut de ce système est 3.8.2.
-Nous nous assurons que le système utilise bien Python 3
-
-Nous clonons Il faut ensuite cloner chaque version vierge et commencer les tests en rajoutant dans la description toutes les modifications nécessaires afin que le package fonctionne sur une environnement vierge de toutes les dépendances requises.
-
-Les premiers tests de fonctionnement avec un système Linux montrent que
-
-
-TODO NOUVELLES COMMANDES TWINE
-TODO - COMMANDES D'INSTALLATION
-
-Dans l'environnement de test, nous avons exécuté 
+Afin de tester le comportement de l'application à l'installation et au fonctionnement au sein de différents systèmes d'exploitation, nous créons artificiellement des plateformes de test vierges grâce à \textit{VirtualBox}. Nous configurons systématiquement Python dans sa dernière version qui est la 3.8 et nous installons \textit{pip}.
 
 \begin{verbatim}
-pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ cripsrbuilder_tb
+MISE A JOUR PYTHON
+  /usr/ A VERIFIER
+  apt-get install pip
 \end{verbatim}
 
-Le même procédé a finalement été appliqué au package publié sur PyPI.
+Nous commençons par télécharger des images \textit{.iso} des différents systèmes d'exploitation, que nous clonons avant de commencer les tests afin de conserver une version vierge pour pouvoir revenir en arrière en cas de besoin :
+\begin{itemize}
+\item pour Ubuntu 18.04 LTS, nous choisissons la version 64-bit Server Install Image car nous n'avons pas besoin d'interface graphique pour réaliser nos tests. La version de Python par défaut de ce système est 2.7.17. Il existe également une version 3.6.9 de Python,
+\item pour Ubuntu 20.04 LTS, la version de Python par défaut de ce système est 3.8.2,
+\item pour MacOS 10.12 Sierra, 
+\item pour Microsoft Windows 10, 
+\end{itemize}
+
+Nous commençons les tests en rajoutant dans la description de chaque système toutes les installations effectuées afin que le package fonctionne correctement.
+
+Les premiers tests d'installation avec Ubuntu 18.04 LTS s'avèrent défaillants car nous n'avons pas précisé l'adresse de PyPI pour l'installation des dépendances, ce qui a entraîné des difficultés d'installation automatique des modules au regard des contraintes imposées par le fichier \textbf{poetry.lock}. Pour s'assurer que les dépendances soient bien installées, nous avons dans un premier temps proposé que l'utilisateur le fasse manuellement en suivant les consignes données dans la documentation et à l'aide de l'instruction \texttt{pip install nom\_module}. Pour simplifier le travail de l'utilisateur, nous avons pensé inclure un fichier \textbf{requirements.txt} dans le package et demander à l'utilisateur d'exécuter \texttt{XXX}. Toutefois, cela suppose que l'utilisateur soit en mesure de trouver l'emplacement de son package dans son système avant d'utiliser le fichier \textbf{requirements.txt}, ce qui n'est pas nécessairement évident sur MacOS par exemple. Cela ne nous semble pas être conforme à l'esprit d'un package dont les dépendances doivent s'installer automatiquement grâce qu fichier \textbf{poetry.lock}. De ce fait, nous avons abandonné cette idée, et après avoir compris que les dépendances pouvaient être téléchargées sur PyPI, nous avons correctement effectué l'installation de CRISPRbuilder\_TB. Malheureusement l'exécution de l'instruction
+
+\begin{verbatim}
+  python -m crisprbuilder_tb --collect ERR2704808
+\end{verbatim}
+
+conduit au message d'erreur suivant
+
+\begin{verbatim}
+XXX
+\end{verbatim}
+
+ce qui montre qu'un système vierge ne parvienne pas à exécuter \textit{parallel-fastq-dump}, même si ce module a été préalablement installé par \textit{Poetry}, probablement car il n'en connaît pas le chemin d'accès.
+
+Pour que l'installation fonctionne correctement, il faut donc s'assurer que l'utilisateur dispose d'un version fonctionnelle de \textit{parallel-fastq-dump} avant l'installation de CRISPRbuilder\_TB, en la testant avec la commande 
+
+\begin{verbatim}
+  parallel-fastq-dump --sra-id SRR1219899 --threads 4 --outdir out/ --split-files --gzip
+\end{verbatim} 
+
+Notons que dans le cas où une version de \textit{parallel-fastq-dump} existe déjà dans le système, \textit{Poetry} ne cherche pas à en installer une nouvelle version \texttt{  requirements already satisfied}.
+
+On retient qu' il n'est donc pas nécessaire pour l'utilisateur d'installer manuellement les dépendances du projet, à l'exception de \textit{parallel-fastq-dump}. 
 
 
-TODO PROBLEM AVEC REQUIREMENTS.TXT
-
-PROBLEME LE PACKAGE NE S'INSTALLE PAS
 
 
 
-Dès la première installation effectuée sur une machine Ubuntu vierge sont apparues des difficultés d'installation automatique des modules au regard des contraintes imposées par le fichier \textbf{poetry.lock}. Pour s'assurer que les dépendances soient bien installées, nous avons proposé que l'utilisateur le fasse manuellement en suivant les consignes données dans la documentation et à l'aide de l'instruction \texttt{pip install nom\_module}. Toutefois, le module \textit{parallel-fastq-dump} même installé ne 
+
 
 
 
 
 Une fois que l'application a été validée et publiée sur testPyPI, nous avons contrôlé la documentation au sein des modules et des fonctions, dans le fichier \textbf{README.md} et surtout dans le fichier \textbf{crisprbuilder\_tb.md}. 
 
-Nous avons également vérifié le bon fonctionnement de l'installation sur un système Ubuntu 18.04 LTS, un MacOS Sierra et un Windows Vista. Les ordinateurs utilisés ne disposaient pas de l'environnement de travail nécessaire à l'application avant l'installation de celle-ci. Les installations ont été testées de bout en bout avec les commandes
+
+
+
+CHOIX DU NOM SUR PYPI A USAGE UNIQUE
+
+L’installation du package par n'importe quel utilisateur se fait grâce à l’instruction
+\begin{verbatim}  pip install crisprbuilder_tb\end{verbatim}
+après s'être assuré que \textit{pip} est bien configuré pour s'exécuter avec Python 3.
+
+
+A RAJOUTER DANS LE NOTEBOOK
+Dans le cas contraire, il convient de préciser
+\begin{verbatim}  pip3 install crisprbuilder_tb\end{verbatim}
+
+
+
+A RAJOUTER DANS LE NOTEBOOK AVEC LES SPOLIGO
+ATTENTION A L'ESPACE AVANT CRISPRBUILDER LORS DE L'INSTALLATION A RAJOUTER AU NOTEBOOK
+
+Au moment de l'installation, que ce soit à partir de PyPI ou d'un autre index tel que
+testPyPI, l'utilisateur ne choisit pas l'emplacement d'installation. Celui-ci est défini automatiquement par le système en fonction des variables d'environnement. Par exemple, si on utilise une version particulière de Python avec \textit{pyenv}, alors le package pourra se trouver dans \textbf{\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6/}. Il est également fréquent de le retrouver dans \textbf{\raisebox{-1ex}{\textasciitilde}/.local/lib/python3.6/site-packages/} avec la plupart des différentes packages. Comme on ne connaît pas avec certitude l'emplacement dans lequel le package va s'installer, il convient de définir une variable d'environnement qui pointe vers l'emplacement d'installation.
+
+Lors de l'exécution du package, il est nécessaire de l'appeler par son nom en utilisant l'indice "-m" signifiant "module". Il n'est pas utile de préciser l'utilisation de Python3 si le répertoire courant travaille déjà avec cette version. En revanche, les chemins relatifs dans les modules du package ne devront pas utiliser le nom crisprbuilder\_tb car celui-ci ne sera pas reconnu, une fois à la racine du package. EXPLICATIONS A CHANGER
+
+Par défaut, Python cherche ses modules et packages dans la variable d'environnement \$PYTHONPATH. On peut alors consulter les différents chemins connus par cette variable d'environnement en exécutant l'instruction
+\begin{verbatim}  python
+  >>> import sys
+  >>> print(sys.path)\end{verbatim}
+
+afin d'obtenir une réponse sous forme de liste du type
+\begin{verbatim}  ['',
+  '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python36.zip',
+  '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6',
+  '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6/lib-dynload',    
+  '\raisebox{-1ex}{\textasciitilde}/.local/lib/python3.6/site-packages',
+  '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6/site-packages']\end{verbatim}
+
+On pourrait donc utiliser \texttt{sys.path[3]} comme chemin permettant d'accéder au répertoire parent de \textbf{crisprbuilder\_tb}. Toutefois, en fonction du système d'exploitation,  le 4ème élément de cette liste pour
+
+Lorsque l'installation est réussie
 
 
 % LES TESTS DE CONFIGURATION --------------------------------
