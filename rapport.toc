@@ -28,32 +28,32 @@
 \contentsline {section}{\numberline {2.}L'outil d'empaquetage}{27}{section.4.2}
 \contentsline {chapter}{\numberline {5}Construction du package avec Poetry}{28}{chapter.5}
 \contentsline {section}{\numberline {1.}Cr\IeC {\'e}ation du package et gestion des d\IeC {\'e}pendances}{28}{section.5.1}
-\contentsline {section}{\numberline {2.}Construction du package et publication}{31}{section.5.2}
-\contentsline {section}{\numberline {3.}La structure du package construit par Poetry}{33}{section.5.3}
+\contentsline {section}{\numberline {2.}Construction du package et publication}{30}{section.5.2}
+\contentsline {section}{\numberline {3.}La structure du package construit par Poetry}{32}{section.5.3}
 \contentsline {chapter}{\numberline {6}La documentation du package \\(version originale)}{34}{chapter.6}
-\contentsline {section}{\numberline {1.}Purpose of this package}{34}{section.6.1}
+\contentsline {section}{\numberline {1.}Purpose of this package}{35}{section.6.1}
 \contentsline {section}{\numberline {2.}How to install the package ?}{35}{section.6.2}
 \contentsline {section}{\numberline {3.}How to use the Command Line Interface ?}{36}{section.6.3}
-\contentsline {subsection}{\numberline {3.1.}Executing CRISPRbuilder\_TB with a SRA reference}{36}{subsection.6.3.1}
+\contentsline {subsection}{\numberline {3.1.}Executing CRISPRbuilder\_TB with a SRA reference}{37}{subsection.6.3.1}
 \contentsline {subsection}{\numberline {3.2.}Executing CRISPRbuilder\_TB with a list of SRA references}{37}{subsection.6.3.2}
 \contentsline {subsection}{\numberline {3.3.}Printing the database lineage.csv}{37}{subsection.6.3.3}
 \contentsline {subsection}{\numberline {3.4.}Adding a record to lineage.csv}{38}{subsection.6.3.4}
 \contentsline {subsection}{\numberline {3.5.}Removing a record from lineage.csv}{38}{subsection.6.3.5}
-\contentsline {subsection}{\numberline {3.6.}Changing a record from lineage.csv}{38}{subsection.6.3.6}
+\contentsline {subsection}{\numberline {3.6.}Changing a record from lineage.csv}{39}{subsection.6.3.6}
 \contentsline {section}{\numberline {4.}Composition of the package and dependencies}{39}{section.6.4}
-\contentsline {section}{\numberline {5.}Retrieving the genome information dictionary}{40}{section.6.5}
-\contentsline {chapter}{\numberline {7}Tester le package}{48}{chapter.7}
-\contentsline {section}{\numberline {1.}Les tests unitaires, le module unittest}{48}{section.7.1}
-\contentsline {section}{\numberline {2.}les tests d'int\IeC {\'e}gration, le module pylint}{49}{section.7.2}
-\contentsline {subsection}{\numberline {2.1.}Le respect des r\IeC {\`e}gles du PEP avec pylint}{49}{subsection.7.2.1}
-\contentsline {subsection}{\numberline {2.2.}Les probl\IeC {\`e}mes rencontr\IeC {\'e}s}{50}{subsection.7.2.2}
-\contentsline {section}{\numberline {3.}Les tests de non-r\IeC {\'e}gression, le versioning avec Git}{51}{section.7.3}
-\contentsline {subsection}{\numberline {3.1.}Les probl\IeC {\`e}mes li\IeC {\'e}s aux chemins d'acc\IeC {\`e}s}{51}{subsection.7.3.1}
-\contentsline {section}{\numberline {4.}Les tests fonctionnels}{51}{section.7.4}
-\contentsline {section}{\numberline {5.}Les tests de performance}{52}{section.7.5}
-\contentsline {subsection}{\numberline {5.1.}Am\IeC {\'e}lioration des performances}{54}{subsection.7.5.1}
-\contentsline {section}{\numberline {6.}Les tests d'installation}{54}{section.7.6}
-\contentsline {subsubsection}{\numberline {6.0.1.}L'utilisation de VirtualBox}{55}{subsubsection.7.6.0.1}
-\contentsline {section}{\numberline {7.}Les tests de configuration}{57}{section.7.7}
-\contentsline {chapter}{\numberline {8}Conclusion}{58}{chapter.8}
+\contentsline {section}{\numberline {5.}Retrieving the genome information dictionary}{41}{section.6.5}
+\contentsline {chapter}{\numberline {7}Tester le package}{49}{chapter.7}
+\contentsline {section}{\numberline {1.}Les tests unitaires, le module unittest}{49}{section.7.1}
+\contentsline {section}{\numberline {2.}les tests d'int\IeC {\'e}gration, le module pylint}{50}{section.7.2}
+\contentsline {subsection}{\numberline {2.1.}Le respect des r\IeC {\`e}gles du PEP avec pylint}{50}{subsection.7.2.1}
+\contentsline {subsection}{\numberline {2.2.}Les probl\IeC {\`e}mes rencontr\IeC {\'e}s}{51}{subsection.7.2.2}
+\contentsline {section}{\numberline {3.}Les tests de non-r\IeC {\'e}gression, le versioning avec Git}{52}{section.7.3}
+\contentsline {subsection}{\numberline {3.1.}Les probl\IeC {\`e}mes li\IeC {\'e}s aux chemins d'acc\IeC {\`e}s}{52}{subsection.7.3.1}
+\contentsline {section}{\numberline {4.}Les tests fonctionnels}{52}{section.7.4}
+\contentsline {section}{\numberline {5.}Les tests de performance}{53}{section.7.5}
+\contentsline {subsection}{\numberline {5.1.}Am\IeC {\'e}lioration des performances}{55}{subsection.7.5.1}
+\contentsline {section}{\numberline {6.}Les tests d'installation}{55}{section.7.6}
+\contentsline {subsubsection}{\numberline {6.0.1.}L'utilisation de VirtualBox}{56}{subsubsection.7.6.0.1}
+\contentsline {section}{\numberline {7.}Les tests de configuration}{58}{section.7.7}
+\contentsline {chapter}{\numberline {8}Conclusion}{59}{chapter.8}
 \contentsfinish 

@@ -802,20 +802,12 @@ Nous avons donc décidé de construire notre package en utilisant \textit{Poetry
 % CREATION DU PACKAGE ---------------
 \section{Création du package et gestion des dépendances}
 
-Pour créer notre package, il ne faut pas commencer par définir un dossier du nom du package, car cela sera automatiquement fait par \textit{Poetry}. En revanche, il faut bien s'assurer que Python utilise bien la version 3 pour tout le travail de construction, ce qui se traduit par exemple par une variable d'environnement du type \textbf{\raisebox{-1ex}{\textasciitilde}/.poetry/\_vendor/py3.6} en réponse à l'instruction 
-\begin{verbatim}  poetry build\end{verbatim}
-Pour parvenir à un tel résultat, et comme expliqué précédemment, on commence par choisir une version appropriée de Python dans le répertoire parent dans lequel on souhaite créer notre package (ici la version 3.6.2)
- \begin{verbatim}    cd parent
-    pyenv versions
-  * system
-    2.7.10
-    3.6.2
-    3.8.0
-    pyenv local 3.6.2
-    python --version\end{verbatim}
+Pour créer notre projet, il ne faut pas commencer par définir un dossier du nom du package, car cela sera automatiquement fait par \textit{Poetry}. Il suffit d'exécuter l'instruction
 
-Puis la création du projet se fait à l'aide de la commande
-\texttt{poetry new crisprbuilder\_tb}
+\begin{verbatim}
+  poetry new crisprbuilder_tb
+\end{verbatim}
+
 qui permet de générer le squelette de l'application contenant les éléments suivants.
 
 \includegraphics[width=6cm]{nom_package_tree.png}
@@ -844,7 +836,7 @@ Il faut donc ajouter les dépendances suivantes au projet :
   poetry add biopython
   poetry add parallel-fastq-dump \end{verbatim}
 
-Le fichier pyproject.toml comporte maintenant les versions suivantes
+Le fichier \textbf{pyproject.toml} comporte maintenant les versions suivantes
 
 \begin{verbatim}  [tool.poetry.dependencies]
   python = "^3.7"
@@ -853,7 +845,7 @@ Le fichier pyproject.toml comporte maintenant les versions suivantes
   biopython = "^1.77"
   parallel-fastq-dump = "^0.6.5"\end{verbatim}
 
-On peut ensuite compléter manuellement ce fichier pour fournir des informations d'ordre général du type
+Notons que la version de Python se complète automatiquement d'après celle utilisée par défaut lors de l'appel au module \textit{Poetry}. On peut toutefois le changer manuellement dans le fichier \textbf{pyproject.toml}. On peut également compléter manuellement ce fichier pour fournir des informations d'ordre général du type
 
 \begin{verbatim}  [tool.poetry]
   name = "crisprbuilder_tb"
@@ -898,6 +890,9 @@ Lors de l'exécution du code \texttt{ poetry install}, on constate que \textit{P
     - Installing xmltodict (0.12.0)
     - Installing parallel-fastq-dump (0.6.5)
     - Installing crisprbuilder_tb (0.1.26)\end{verbatim}
+
+Notons qu'on peut s'assurer à ce moment-là de la version de Python utilisée pour tout le travail de construction, à savoir dans cet exemple Python 3.8 qui apparaît à la fin de \texttt{crisprbuilder-tb-oJzk4q3N-py3.8}.
+
 
 
 
@@ -946,7 +941,7 @@ Lorsque le package est finalement prêt pour être publié sur PyPI, on utilise 
 \begin{verbatim}  poetry publish\end{verbatim}
 Pour cela, l'auteur du package doit être enregistré sur PyPI avec un identifiant et un mot de passe. A partir de ce moment-là, le package est rendu disponible publiquement.
 
-Notons que par mesure de sécurité, on ne peut pas supprimer une version du package en vue de la modifier. On peut uniquement créer une nouvelle version et la publier, ou encore supprimer le package. Dans ce cas, il n'est plus possible de créer un package du même nom. On peut simplement créer une nouvelle version
+Notons qu'on peut publier une nouvelle version du package et on peut bien entendu supprimer le package sur PyPI. En revanche, par mesure de sécurité, il n'est pas possible de re-créer un package du même nom que celui déjà supprimé et encore moins de modifier une version déjà publiée. 
 
 On pourra retrouver un cas concret simple de publication de package avec \textit{Poetry} dans le tutoriel que nous venons de publier sur YouTube : \href{http://www.youtube.com}{http://www.youtube.com}
 
@@ -962,8 +957,6 @@ Le fichier \textbf{crisprbuilder\_tb-0.1.2.tar.gz} est une archive qui, une fois
 \includegraphics[width=7cm]{tar.png}
 
 On constate la même arborescence que celle obtenue lors de la création du package, avec en supplément les fichiers \textbf{PKG.INFO} et \textbf{setup.py}
-
-
 
 \begin{itemize}
 \item un répertoire \textbf{doc} comprenant la documentation nécessaire pour comprendre et utiliser convenablement le package,
@@ -988,8 +981,8 @@ La création d'un package nécessite l'élaboration d'une documentation détaill
 Cette documentation doit comporter trois volets :
 \begin{itemize}
 \item une \textit{docstring} inclue dans le code au début de chaque fonction et de chaque module,
-\item un fichier \textbf{README.md} servant à la fois de description succincte du package sur PyPI et de manuel d'instruction pour les utilisateurs les plus pressés,
-\item une documentation détaillée \textbf{crisprbuilder\_tb.md} inclue dans le répertoire \textbf{doc} du package.
+\item un fichier \textbf{README.md} servant à la fois de description succincte du package pour le site de PyPI et de manuel d'instruction pour les utilisateurs les plus pressés,
+\item une documentation détaillée \textbf{crisprbuilder\_tb.ipynb} qu'on peut retrouver sur \\ \url{https://github.com/stephane-robin/crisprbuilder_tb/blob/master/crisprbuilder_tb/doc/crisprbuilder_tb.ipynb}, et qui est également inclue dans le package sous le répertoire \textbf{doc}.
 \end{itemize}   
 
 Nous présentons ci-dessous cette documentation détaillée dans sa version originale en anglais.
