@@ -1815,7 +1815,7 @@ Notre campagne de tests comporte les démarches suivantes :
 
 Les tests unitaires consistent à évaluer individuellement les composants de l'application (parties de code autonomes, fonctions, ...), en terme de qualité et validation des résultats attendus.
 
-Les tests unitaires sont d'abord effectués manuellement fonction par fonction en évaluant chaque résultat obtenu.
+Les tests unitaires sont d'abord effectués manuellement, fonction par fonction, en évaluant chaque résultat obtenu.
 
 Puis nous utilisons le framework \index{unittest}\textit{unittest} intégré dans la distribution standard de Python3.
 
@@ -1833,7 +1833,6 @@ Les tests d'intégration permettent de valider l'inter-utilisabilité des diffé
 Pour cela, nous avons créé le package, nous nous sommes placés à la racine de l'application et avons exécuté le code du module \textbf{\_\_main\_\_.py} directement.
 
 Dans le module \_\_main\_\_.py, il faut d'abord importer le package \textit{crisprbuilder\_tb}, puis importer les modules crisprbuilder\_tb.fonctions.py et crisprbuilder\_tb.bdd.py sans oublier le nom du package sans quoi l'interpréteur ne parviendra pas à trouver ces modules même s'ils se situent à la racine du package.  
-
 
 Il faut donc comprendre le fonctionnement, puis tester chaque portion de code et chaque fonction individuellement avec des paramètres choisis avant de l'incorporer dans le module \_\_main\_\_.py. Il est donc nécessaire d'adapter au reste du code les fonctions déjà écrites, les documenter en anglais en vue d'une utilisation ultérieure, les rendre performantes en utilisant des compréhensions de listes, éviter les erreurs potentielles en rajoutant des blocs \textbf{try ... except} et des méthodes \textbf{.setdefault} et \textbf{.get}. Il faut également créer de nouvelles fonctions pour éviter la répétition de code.
 
@@ -1912,7 +1911,9 @@ et
 
 pour procéder aux vérifications aprés modification de code.
 
-L'utilisation de l'outil de versioning \textit{Git} a constitué une aide précieuse au cours de chaque modification significative du code. Ce stage a été l'occasion de manipuler régulièrement les principales commandes \textit{Git}. 
+\subsection{L'utilité du versioning}
+
+L'utilisation de l'outil de versioning \textit{Git} a constitué une aide précieuse au cours de chaque modification significative du code, permettant de revenir en arrière en cas de besoin et de ne pas perdre le travail effectué. Ce stage a été l'occasion de manipuler régulièrement les principales commandes \textit{Git}. 
 
 Notons à ce propos que \textit{Poetry} construit un dossier \textbf{crisprbuilder\_tb} au moment de la création du package avec l'instruction
 
@@ -2194,6 +2195,73 @@ afin d'obtenir une réponse sous forme de liste du type
 On pourrait donc utiliser \texttt{sys.path[3]} comme chemin permettant d'accéder au répertoire parent de \textbf{crisprbuilder\_tb}. Toutefois, en fonction du système d'exploitation,  le 4ème élément de cette liste pour
 
 Lorsque l'installation est réussie
+
+\subsection{L'utilité de Anaconda}
+
+Une fois l'installation réussie, le premier test de fonctionnement avec l'instruction
+
+\begin{verbatim}
+  python -m crisprbuilder_tb --print 0
+\end{verbatim}
+
+fournit le bon résultat.
+
+En revanche, l'instruction
+
+\begin{verbatim}
+  python -m crisprbuilder_tb --collect ERR2704812
+\end{verbatim}
+
+produit une erreur dont voici le résumé
+
+\begin{verbatim}
+  File "~/.local/bin/parallel-fastq-dump" line 112, in <module> main()
+  p = subprocess.Popen(["sra-stat", "--meta", "--quick", sra_id], stdout=subprocess.PIPE)
+  File "/usr/lib/python3.8/subprocess.py", line 1364, in _execute_child raise child_exception_type(errno_num, err_msg, err_filename)
+  FileNotFoundError: [Errno2] No such file or directory: 'sra-stat': 'sra-stat'
+\end{verbatim}
+
+Il semble au début qu'il faille installer le \textit{SRA Toolkit}. Pourtant, après configuration du \textit{Toolkit} suivant les recommandations du NCBI sur le site \url{https://ncbi.github.io/sra-tools/install_config.html}, le problème persiste.
+
+Au cours des premiers tests d'installation, il est apparu qu'une fois les dépendances installées, elles n'étaient pas pour autant reconnues par un système vierge. Ainsi, l'erreur suivante s'affichait systématiquement
+
+\begin{verbatim}
+
+\end{verbatim}
+
+puis l'erreur suivante s'affichait également
+
+\begin{verbatim}
+
+\end{verbatim}
+
+Après avoir cherché du côté des chemins d'accès des différents fichiers support, il est apparu que le problème venait plutôt des variables d'environnement qui devaient être configurées. Ainsi, il est nécessaire que l'utilisateur ait convenablement répertorié les chemins d'accès vers ses fichiers exécutables et dans le cas présent les modules \textit{parallel-fastq-dump} et \textit{blastn}.
+
+Renan Valieris sur son dépôt \url{https://github.com/rvalieris/parallel-fastq-dump} recommande l'utilisation de \textit{bioconda} pour installer le package \textit{parallel-fastq-dump}. En effet, nous nous sommes rendus compte sur le système Ubuntu 20.04 LTS, que l'installation à partir de \textit{  pip install parallel-fastq-dump} se fait correctement mais le package se trouve à la fois dans XXX et dans XXX, ce qui empêche le bon fonctionnement de l'instruction de test suivante
+
+\begin{verbatim}
+  parallel-fastq-dump -s ERR2704812
+\end{verbatim} 
+
+et lève l'erreur suivante
+
+\begin{verbatim}
+XXX
+\end{verbatim}
+
+Après vérification que la variable d'environnement \texttt{\$PATH} est bien configurée, le problème reste présent. Malgré le fait qu'il existe sûrement une solution à ce problème, l'installation de \textit{parallel-fastq-dump} par la commande \texttt{  conda install -c bioconda parallel-fastq-dump} le résout immédiatement. 
+
+il est donc nécessaire d'interroger la variable d'environnement \texttt{\$PATH} avec la commande
+
+\begin{verbatim}
+  echo $PATH
+\end{verbatim}
+
+On doit obtenir un résultat du type
+\begin{verbatim}
+
+\end{verbatim}
+
 
 
 % LES TESTS DE CONFIGURATION --------------------------------
