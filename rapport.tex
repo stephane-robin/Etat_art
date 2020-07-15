@@ -308,9 +308,9 @@ Toutes les explications données dans ce rapport de stage ne concernent que les 
 
 Définissons par ailleurs le vocabulaire que nous allons utiliser dans ce rapport de stage :
 \begin{itemize}
-\item module : un fichier contenant du code Python,
+\item \index{module}module : un fichier contenant du code Python,
 \item package : un répertoire contenant des modules Python,
-\item distribution : une archive de modules ou packages (au format tar, whl, ...)
+\item \index{distribution}distribution : une archive de modules ou packages (au format tar, whl, ...)
 \end{itemize}
 
 
@@ -590,7 +590,7 @@ Un tableau comparatif de différents spoligotypes en fonction des lignées de \t
 % COMPOSITION D'UN PACKAGE STANDARD ------------------
 \section{Composition d'un package standard}
 
-Un package standard comporte obligatoirement un fichier \textbf{\_\_init\_\_.py} qui va définir la version du projet et le nom du module de lancement du programme (souvent \textbf{\_\_main\_\_.py}). Il est toutefois acceptable et parfois même recommandé de conserver un fichier \textbf{\_\_init\_\_.py} vide. Par ailleurs, chaque sous dossier vide ou contenant des modules Python devra également contenir un fichier \textbf{\_\_init\_\_.py}.
+Un \index{package}package standard comporte obligatoirement un fichier \textbf{\_\_init\_\_.py} qui va définir la version du projet et le nom du module de lancement du programme (souvent \textbf{\_\_main\_\_.py}). Il est toutefois acceptable et parfois même recommandé de conserver un fichier \textbf{\_\_init\_\_.py} vide. Par ailleurs, chaque sous dossier vide ou contenant des modules Python devra également contenir un fichier \textbf{\_\_init\_\_.py}.
 
 Les fichiers \textbf{setup.py}, \textbf{requirements.txt}, \textbf{LICENSE},  \textbf{README.md} et \textbf{MANIFEST.in} sont également nécessaires.  
 \begin{itemize}
@@ -614,7 +614,7 @@ Avec la PEP-518\footnote{\index{PEP-518}\textbf{PEP-518:} specifying minimum bui
 % QUELLE LICENCE CHOISIR ------------------
 \section{Quelle licence choisir ?}
 	
-Trois licences retiennent notre attention. En voici les principales caractéristiques :
+Trois \index{licence}licences retiennent notre attention. En voici les principales caractéristiques :
 \begin{itemize}
 \item	la licence MIT, courte et permissive, préserve exclusivement le copyright et les avis de licence. Toute modification ultérieure peut être distribuée suivant une licence différente et notamment utilisée à des fins personnelles ou commerciales, sans obligation de publication des codes source,
 \item	la licence Apache (2.0) est également permissive et sensiblement similaire dans ses conditions à la licence MIT. Toutefois, elle requiert de préciser les modifications effectuées lors de nouvelles distributions,
@@ -670,9 +670,9 @@ l'interpréteur va chercher le package à son emplacement de stockage XXX et l'e
 
 TODO EXPLICATIONS REAL PYTHON
 
-Avant de créer le package, il faut commencer par construire localement un programme fonctionnel. Pour cela, nous définissons un environnement de développement, qui nous sert à exécuter le code et à le tester au fur et à mesure de son élaboration. Cet environnement contient tous les modules et packages nécessaires à son bon fonctionnement, c'est à dire les dépendances du projet.
+Avant de créer le package, il faut commencer par construire localement un programme fonctionnel. Pour cela, nous définissons un \index{environnement de développement}environnement de développement, qui nous sert à exécuter le code et à le tester au fur et à mesure de son élaboration. Cet environnement contient tous les modules et packages nécessaires à son bon fonctionnement, c'est à dire les dépendances du projet.
  
-L'outil de création d'environnement virtuel \textit{venv} nous permet de créer cet environnement de développement afin de tester les codes du projet. \textit{venv} commence par constituer un dossier contenant tous les exécutables nécessaires à l'utilisation des modules d'un projet Python. 
+L'outil de création d'environnement virtuel \index{venv}\textit{venv} nous permet de créer cet environnement de développement afin de tester les codes du projet. \textit{venv} commence par constituer un dossier contenant tous les exécutables nécessaires à l'utilisation des modules d'un projet Python. 
 
 Dans le cadre de notre étude, nous créons un répertoire \textbf{biologie}, nous nous plaçons dedans puis nous créons, à l'aide de \textit{venv}, un environnement de développement \textbf{env\_bio}. 
 \begin{verbatim}  cd biologie
@@ -802,7 +802,7 @@ Nous avons donc décidé de construire notre package en utilisant \textit{Poetry
 % CREATION DU PACKAGE ---------------
 \section{Création du package et gestion des dépendances}
 
-Pour créer notre projet, il ne faut pas commencer par définir un dossier du nom du package, car cela sera automatiquement fait par \textit{Poetry}. Il suffit d'exécuter l'instruction
+Pour créer notre projet, il ne faut pas commencer par définir un dossier du nom du package, car cela sera automatiquement fait par \index{Poetry}\textit{Poetry}. Il suffit d'exécuter l'instruction
 
 \begin{verbatim}
   poetry new crisprbuilder_tb
@@ -1913,7 +1913,7 @@ pour procéder aux vérifications aprés modification de code.
 
 \subsection{L'utilité du versioning}
 
-L'utilisation de l'outil de versioning \textit{Git} a constitué une aide précieuse au cours de chaque modification significative du code, permettant de revenir en arrière en cas de besoin et de ne pas perdre le travail effectué. Ce stage a été l'occasion de manipuler régulièrement les principales commandes \textit{Git}. 
+L'utilisation de l'outil de versioning \index{Git}\textit{Git} a constitué une aide précieuse au cours de chaque modification significative du code, permettant de revenir en arrière en cas de besoin et de ne pas perdre le travail effectué. Ce stage a été l'occasion de manipuler régulièrement les principales commandes \textit{Git}. 
 
 Notons à ce propos que \textit{Poetry} construit un dossier \textbf{crisprbuilder\_tb} au moment de la création du package avec l'instruction
 
@@ -1966,7 +1966,7 @@ Les tests fonctionnels comprennent la validation de l'interface en ligne de comm
 \texttt{  \$ python -m crisprbuilder\_tb \textemdash \textemdash add 0}
 
 
-
+NOUS CONSIDERONS QUE LUTILISATEUR A DEJOA INSTALLE LES OUTILS DU NCBI
 
 
 
@@ -1978,15 +1978,30 @@ Les tests fonctionnels comprennent la validation de l'interface en ligne de comm
 % LES TESTS DE PERFORMANCE ------------------------------------
 \section{Les tests de performance}
 
+L'objectif des tests de performance serait de valider la capacité des serveurs et réseaux pour supporter les charges d'accès importantes. Ceci ne s'applique pas vraiment à notre package, qui utilise lors de ses requêtes \textit{fastq} et \textit{blast} les serveurs du \index{NCBI}NCBI\footnote{\textbf{NCBI:} National Center for Biotechnology Information} et non pas ses propres serveurs. Si les serveurs de NCBI sont occupés, les réponses obtenues n'en seront que différées. CRISPRbuilder\_TB n'est pas une application Web, l'utilisation simultanée de plusieurs ordinateurs exécutant le package n'a pas d'incidence sur celui-ci.
 
-L'objectif des tests de performance serait de valider la capacité des serveurs et réseaux pour supporter les charges d'accès importantes. Ceci ne s'applique pas vraiment à notre package, qui n'utilise, lors de ses requêtes fastq et blast, que les serveurs de NCBI.
+En revanche, l'optimisation des performances de traitement des données doit être pris en compte car les fichiers de type \textit{.fasta} ont une taille comprise entre 1 et 3 Go, ce qui génère des délais importants lors de l'exécution du package.
 
-Ne s'agissant pas d'une application Web, l'utilisation simultanée de plusieurs ordinateurs exécutant le package n'a pas d'incidence sur celui-ci. Si les serveurs de NCBI sont occupés, les réponses obtenues n'en seront que différées.
-
-En revanche, augmentation des performances
+Le package utilise les modules Python de téléchargement et traitement de données provenant du NCBI \textit{fastq-dump} et \textit{blastn}. 
 
 
-La taille importante des fichiers sur lesquels nous travaillons génère des délais importants de traitement. Au début de notre travail sur le code, nous avons cherché à transformer les instructions Linux appelées par les méthodes Python \textbf{subprocess.run} et \textbf{os.system} en fonctions Python pour améliorer la portabilité de l'application en évitant de se limiter aux systèmes Linux. Lors des premiers tests d'intégration, le temps de réponse du programme était tellement élevé que nous avons Nous avons constaté lors des premiers tests d'intégration un fort ralentissement du programme lorsque ces modifications étaient effectuées sur l'ensemble du code. fortement le code lors des premiers tests de fonctionnement global de l'application, au vu de la taille importante des fichiers à lire par l'interpréteur. Nous avons donc décidé de revenir à l'utilisation de \textbf{subprocess.run} et \textbf{os.system}. Si cette démarche n'a aucune incidence pour la plateforme MacOS, elle imposerait en revanche un changement de code pour la plateforme Windows. Or, en fonction des versions du systéme Windows, l'utilisateur dispose d'une invite de commandes ou d'un PowerShell dont les instructions diffèrent. Nous avons donc choisi de conserver les appels aux instructions en lignes de commande pour les système Posix et d'utiliser des fonctions Python pour les systèmes Windows. Cela entraîne une relative lenteur de traitement pour ces derniers. 
+
+% PARALLEL FASTQ DUMP ----------------
+\subsection{parallel-fastq-dump}
+
+\textit{fastq-dump} est un module archaïque permettant de transformer des données du format \textit{.sra} au format \textit{.fastq}. Il est contenu dans le \textit{SRA Toolkit} du NCBI. Il peut s'avérer très lent en fonction de l'utilisation de la base de données en temps réel. L'utilisation de plusieurs threads devrait permettre de diviser le travail en différentes tâches effectuées simultanément, et donc de gagner du temps. Malheureusement, Python n'accepte pas nativement le travail multi-threads, ce qui ne permet pas de tirer profit de systèmes multi-coeurs. C'est en fait une caractéristique de CPython. Le GIL\footnote{\index{GIL}\textbf{GIL:} Global Interpreter Lock} est un mutex qui n'autorise le travail que d'un unique thread à la fois. Il protège l'accès aux objets Python, pour empêcher de multiples threads d'exécuter du code Python simultanément. Ce verrou est rendu nécessaire parce que la gestion de la mémoire sous CPython n'est pas thread-safe. Le module \textit{parallel-fastq-dump} résout partiellement ce problème de multi-threading et utilise l'implémentation CPython en incorporant du langage C dans son contenu. Il semble être à l'heure actuelle un bon compromis gratuit pour optimiser le traitement des données du format \textit{.sra} au format \textit{.fastq}. Notons que le \textit{sratookit} est installé automatiquement au moment de l'installation de \textit{parallel-fastq-dump}.
+
+
+% BLAST -------------
+\subsection{blast+}
+
+les performances de \textit{blast} sont optimisées avec la suite \textit{blast+} qui utilise le Toolkit C++ du NCBI. Le package utilise également le module \textit{blastn} 
+
+
+% SUBPROCESS RUN-------------
+\subsection{subprocess.run}
+
+Au début de notre travail sur le code, nous avons cherché à transformer les instructions Linux appelées par les méthodes Python \textbf{subprocess.run} et \textbf{os.system} en fonctions Python pour améliorer la portabilité de l'application en évitant de se limiter aux systèmes Linux. Lors des premiers tests d'intégration, le temps de réponse du programme était tellement élevé que nous avons Nous avons constaté lors des premiers tests d'intégration un fort ralentissement du programme lorsque ces modifications étaient effectuées sur l'ensemble du code. fortement le code lors des premiers tests de fonctionnement global de l'application, au vu de la taille importante des fichiers à lire par l'interpréteur. Nous avons donc décidé de revenir à l'utilisation de \textbf{subprocess.run} et \textbf{os.system}. Si cette démarche n'a aucune incidence pour la plateforme MacOS, elle imposerait en revanche un changement de code pour la plateforme Windows. Or, en fonction des versions du systéme Windows, l'utilisateur dispose d'une invite de commandes ou d'un PowerShell dont les instructions diffèrent. Nous avons donc choisi de conserver les appels aux instructions en lignes de commande pour les système Posix et d'utiliser des fonctions Python pour les systèmes Windows. Cela entraîne une relative lenteur de traitement pour ces derniers. 
 
 Pour mieux comprendre ce ralentissement, prenons un exemple sur un traitement simple consistant à concaténer deux fichiers \textit{.fasta}. L'instruction suivante
 
@@ -2033,14 +2048,9 @@ os.system (ms) & 27403 & 21099 & 21884 & 19798 & 21624 & 22838 & 21549 & 20971 &
 Cette différence de quelques secondes pour une seule fonction entraîne par conséquence de nombreuses minutes de retard sur l'ensemble du code lors de son exécution.
 
 
-% AMELIORATION DES PERFORMANCES -----------------------
-\subsection{Amélioration des performances}
 
-Le module \textit{fastq-dump} permettant le téléchargement à partir du NCBI peut s'avérer très lent en fonction de l'utilisation de la base de données en temps réel. L'utilisation de plusieurs threads devrait permettre de diviser le travail en plusieurs tâches effectuées simultanément. Malheureusement, Python n'accepte pas nativement le recours à  plusieurs threads. C'est en fait le GIL\footnote{\index{GIL}\textbf{GIL:} } qui interdit cette pratique en autorisant le travail d'un unique thread Python à la fois. Pour résoudre ce problème, on utilise à la place de \textit{fastq-dump} le module \textit{parallel-fastq-dump} qui utilise l'implémentation CPython et donc incorpore du langage C dans son contenu.
 
- 
 
-DEFINIR GIL
 
 
 % LES TESTS D'INSTALLATION -----------------------------
@@ -2102,7 +2112,7 @@ Les tests d'installation permettent de s'assurer que l'utilisateur sera en mesur
 % L'UTILISATION DE VIRTUALBOX
 \subsubsection{L'utilisation de VirtualBox}
 
-Afin de tester le comportement de l'application à l'installation et au fonctionnement au sein de différents systèmes d'exploitation, nous créons artificiellement des plateformes de test vierges grâce à \textit{VirtualBox}. Nous configurons systématiquement Python dans sa dernière version qui est la 3.8 et nous installons \textit{pip}.
+Afin de tester le comportement de l'application à l'installation et au fonctionnement au sein de différents systèmes d'exploitation, nous créons artificiellement des plateformes de test vierges grâce à \index{VirtualBox}\textit{VirtualBox}. Nous configurons systématiquement Python dans sa dernière version qui est la 3.8 et nous installons \textit{pip}.
 
 \begin{verbatim}
 MISE A JOUR PYTHON

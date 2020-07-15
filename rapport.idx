@@ -1,39 +1,49 @@
-\indexentry{SRA|hyperpage}{3}
-\indexentry{PEP|hyperpage}{3}
-\indexentry{PyPI|hyperpage}{3}
-\indexentry{Paire de bases|hyperpage}{5}
-\indexentry{Codon|hyperpage}{5}
-\indexentry{Homoplasie|hyperpage}{5}
-\indexentry{Phylog\IeC {\'e}nie|hyperpage}{5}
-\indexentry{G\IeC {\'e}nome|hyperpage}{6}
-\indexentry{Mitochondrie|hyperpage}{6}
-\indexentry{MTBC|hyperpage}{6}
-\indexentry{Haplogroupe|hyperpage}{6}
-\indexentry{Approche bay\IeC {\'e}sienne|hyperpage}{8}
-\indexentry{Isolat|hyperpage}{8}
-\indexentry{Sous-unit\IeC {\'e} $\beta $|hyperpage}{9}
-\indexentry{ARN polym\IeC {\'e}rase|hyperpage}{9}
-\indexentry{Macrophage|hyperpage}{10}
-\indexentry{Promoteur|hyperpage}{10}
-\indexentry{Marqueur MIRU|hyperpage}{11}
-\indexentry{Marqueur VNTR|hyperpage}{11}
-\indexentry{All\IeC {\`e}le|hyperpage}{11}
-\indexentry{Base de donn\IeC {\'e}es SITVIT|hyperpage}{11}
-\indexentry{Enzyme de restriction|hyperpage}{12}
-\indexentry{PCR|hyperpage}{12}
-\indexentry{Puce \IeC {\`a} ADN|hyperpage}{13}
-\indexentry{Reads|hyperpage}{15}
-\indexentry{BLAST|hyperpage}{17}
-\indexentry{Epid\IeC {\'e}miologie|hyperpage}{17}
-\indexentry{Contig|hyperpage}{17}
-\indexentry{S\IeC {\'e}quen\IeC {\c c}age du g\IeC {\'e}nome|hyperpage}{17}
-\indexentry{Base de donn\IeC {\'e}es SITVIT2|hyperpage}{17}
-\indexentry{PEP-518|hyperpage}{20}
-\indexentry{PyPA|hyperpage}{20}
-\indexentry{pyenv|hyperpage}{23}
-\indexentry{pip|hyperpage}{24}
-\indexentry{unittest|hyperpage}{48}
-\indexentry{pylint|hyperpage}{49}
-\indexentry{PEP-8|hyperpage}{49}
-\indexentry{PEP-257|hyperpage}{49}
+\indexentry{SRA|hyperpage}{4}
+\indexentry{PEP|hyperpage}{4}
+\indexentry{PyPI|hyperpage}{4}
+\indexentry{module|hyperpage}{5}
+\indexentry{distribution|hyperpage}{5}
+\indexentry{Paire de bases|hyperpage}{6}
+\indexentry{Codon|hyperpage}{6}
+\indexentry{Homoplasie|hyperpage}{6}
+\indexentry{Phylog\IeC {\'e}nie|hyperpage}{6}
+\indexentry{G\IeC {\'e}nome|hyperpage}{7}
+\indexentry{Mitochondrie|hyperpage}{7}
+\indexentry{MTBC|hyperpage}{7}
+\indexentry{Haplogroupe|hyperpage}{7}
+\indexentry{Approche bay\IeC {\'e}sienne|hyperpage}{9}
+\indexentry{Isolat|hyperpage}{9}
+\indexentry{Sous-unit\IeC {\'e} $\beta $|hyperpage}{10}
+\indexentry{ARN polym\IeC {\'e}rase|hyperpage}{10}
+\indexentry{Macrophage|hyperpage}{11}
+\indexentry{Promoteur|hyperpage}{11}
+\indexentry{Marqueur MIRU|hyperpage}{12}
+\indexentry{Marqueur VNTR|hyperpage}{12}
+\indexentry{All\IeC {\`e}le|hyperpage}{12}
+\indexentry{Base de donn\IeC {\'e}es SITVIT|hyperpage}{12}
+\indexentry{Enzyme de restriction|hyperpage}{13}
+\indexentry{PCR|hyperpage}{13}
+\indexentry{Puce \IeC {\`a} ADN|hyperpage}{14}
+\indexentry{Reads|hyperpage}{16}
+\indexentry{BLAST|hyperpage}{18}
+\indexentry{Epid\IeC {\'e}miologie|hyperpage}{18}
+\indexentry{Contig|hyperpage}{18}
+\indexentry{S\IeC {\'e}quen\IeC {\c c}age du g\IeC {\'e}nome|hyperpage}{18}
+\indexentry{Base de donn\IeC {\'e}es SITVIT2|hyperpage}{18}
+\indexentry{package|hyperpage}{21}
+\indexentry{PEP-518|hyperpage}{21}
+\indexentry{PyPA|hyperpage}{21}
+\indexentry{licence|hyperpage}{22}
+\indexentry{environnement de d\IeC {\'e}veloppement|hyperpage}{24}
+\indexentry{venv|hyperpage}{24}
+\indexentry{pyenv|hyperpage}{24}
+\indexentry{pip|hyperpage}{25}
+\indexentry{Poetry|hyperpage}{28}
+\indexentry{unittest|hyperpage}{49}
+\indexentry{pylint|hyperpage}{50}
+\indexentry{PEP-8|hyperpage}{50}
+\indexentry{PEP-257|hyperpage}{50}
+\indexentry{Git|hyperpage}{52}
+\indexentry{NCBI|hyperpage}{53}
 \indexentry{GIL|hyperpage}{54}
+\indexentry{VirtualBox|hyperpage}{57}
