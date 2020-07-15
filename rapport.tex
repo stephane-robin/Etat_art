@@ -1899,7 +1899,7 @@ Une fois que le code a été testé individuellement avec comme valeur pour le S
 % LES TESTS DE NON REGRESSION ---------------------------------
 \section{Les tests de non-régression, le versioning avec Git}
 
-Ce type de tests permet de vérifier que les modifications apportées au programme durant l'ensemble de la phase de test n'ont pas altérées le fonctionnement du package.
+Les tests de non-régression permettent de vérifier que les modifications apportées au programme durant l'ensemble de la phase de test n'ont pas altérées le fonctionnement du package.
 
 Pour cela, lorsqu'un changement est effectué, les résultats obtenus doivent être comparés aux résultats pécédemment obtenus. Nous nous sommes alors exclusivement basé sur les commandes
 
@@ -1907,7 +1907,7 @@ Pour cela, lorsqu'un changement est effectué, les résultats obtenus doivent ê
 
 et 
 
-\begin{verbatim}  python -m crisprbuilder_tb --collect ERR2704808\end{verbatim}
+\begin{verbatim}  python -m crisprbuilder_tb --collect ERR2704812\end{verbatim}
 
 pour procéder aux vérifications aprés modification de code.
 
@@ -1932,123 +1932,6 @@ Il est donc nécessaire de créer d'abord le package avec \textit{Poetry} puis d
   git commit -m "first commit"
   git push origin master
 \end{verbatim} 
-
-
-% LES PROBLEMES LIES AUX CHEMINS D'ACCES ----------------------
-\subsection{Les problèmes liés aux chemins d'accès}
-
-L'incompatibilité des chemins d'accès entre les systèmes Posix et Windows a nécessité l'utilisation du module PurePath permettant de construire des chemins sans recourir aux caractères "/" ou "\textbackslash".
-
-
-
-% LES TESTS FONCTIONNELS ------------------------------------
-\section{Les tests fonctionnels}
-
-Les tests fonctionnels permettent de vérifier la conformité du package développé par rapport à l'objectif et aux fonctionnalités initiales. A partir des tests fonctionnels, nous n'utilisons plus l'environnement de développement, mais un environnement de test qui peut être soit une machine virtuelle, soit un environnement neutre dénué de toute spécification, mais capable d'installer le package.
-
-L'objectif initial était de fournir un package qui fournit des informations au \textit{SRA} dont la référence serait saisie en ligne de commande par un utilisateur. Ce dernier pourrait également fournir une liste de \textit{SRA} dans un fichier texte avec un \textit{SRA} par ligne. Il pourrait également consulter et modifier la base de données lineage.csv.
-
-Nous fournissons au package un fichier au format \textit{.txt} comprenant plus qu'un \textit{SRA} par ligne. RESULTATS  
-
-\begin{verbatim}
-  $ python -m crisprbuilder_tb --collect ERR2704808 ne parvient pas à trouver les modules ...
-\end{verbatim}
-
-Les tests fonctionnels comprennent la validation de l'interface en ligne de commande. Il s'agit donc de vérifier que les lignes de commandes prévues pour l'exécution du code fournissent bien le résultat escompté. Pour cela, nous testons successivement les commandes
-
-\begin{itemize}
-\item \texttt{  \$ python -m crisprbuilder\_tb \textemdash \textemdash help} qui fournit bien les informations relatives aux options du package,
-\texttt{  \$ python -m crisprbuilder\_tb \textemdash \textemdash print 0} qui affiche bien la liste demandée,
-\item \texttt{  \$ python -m crisprbuilder\_tb \textemdash \textemdash collect ERR2704808}
-\item \texttt{  \$ python -m crisprbuilder\_tb \textemdash \textemdash change 0}
-\item \texttt{  \$ python -m crisprbuilder\_tb \textemdash \textemdash remove 0}
-\end{itemize}
-\texttt{  \$ python -m crisprbuilder\_tb \textemdash \textemdash add 0}
-
-
-NOUS CONSIDERONS QUE LUTILISATEUR A DEJOA INSTALLE LES OUTILS DU NCBI
-
-
-
-
-
-
-
-
-% LES TESTS DE PERFORMANCE ------------------------------------
-\section{Les tests de performance}
-
-L'objectif des tests de performance serait de valider la capacité des serveurs et réseaux pour supporter les charges d'accès importantes. Ceci ne s'applique pas vraiment à notre package, qui utilise lors de ses requêtes \textit{fastq} et \textit{blast} les serveurs du \index{NCBI}NCBI\footnote{\textbf{NCBI:} National Center for Biotechnology Information} et non pas ses propres serveurs. Si les serveurs de NCBI sont occupés, les réponses obtenues n'en seront que différées. CRISPRbuilder\_TB n'est pas une application Web, l'utilisation simultanée de plusieurs ordinateurs exécutant le package n'a pas d'incidence sur celui-ci.
-
-En revanche, l'optimisation des performances de traitement des données doit être pris en compte car les fichiers de type \textit{.fasta} ont une taille comprise entre 1 et 3 Go, ce qui génère des délais importants lors de l'exécution du package.
-
-Le package utilise les modules Python de téléchargement et traitement de données provenant du NCBI \textit{fastq-dump} et \textit{blastn}. 
-
-
-
-% PARALLEL FASTQ DUMP ----------------
-\subsection{parallel-fastq-dump}
-
-\textit{fastq-dump} est un module archaïque permettant de transformer des données du format \textit{.sra} au format \textit{.fastq}. Il est contenu dans le \textit{SRA Toolkit} du NCBI. Il peut s'avérer très lent en fonction de l'utilisation de la base de données en temps réel. L'utilisation de plusieurs threads devrait permettre de diviser le travail en différentes tâches effectuées simultanément, et donc de gagner du temps. Malheureusement, Python n'accepte pas nativement le travail multi-threads, ce qui ne permet pas de tirer profit de systèmes multi-coeurs. C'est en fait une caractéristique de CPython. Le GIL\footnote{\index{GIL}\textbf{GIL:} Global Interpreter Lock} est un mutex qui n'autorise le travail que d'un unique thread à la fois. Il protège l'accès aux objets Python, pour empêcher de multiples threads d'exécuter du code Python simultanément. Ce verrou est rendu nécessaire parce que la gestion de la mémoire sous CPython n'est pas thread-safe. Le module \textit{parallel-fastq-dump} résout partiellement ce problème de multi-threading et utilise l'implémentation CPython en incorporant du langage C dans son contenu. Il semble être à l'heure actuelle un bon compromis gratuit pour optimiser le traitement des données du format \textit{.sra} au format \textit{.fastq}. Notons que le \textit{sratookit} est installé automatiquement au moment de l'installation de \textit{parallel-fastq-dump}.
-
-
-% BLAST -------------
-\subsection{blast+}
-
-les performances de \textit{blast} sont optimisées avec la suite \textit{blast+} qui utilise le Toolkit C++ du NCBI. Le package utilise également le module \textit{blastn} 
-
-
-% SUBPROCESS RUN-------------
-\subsection{subprocess.run}
-
-Au début de notre travail sur le code, nous avons cherché à transformer les instructions Linux appelées par les méthodes Python \textbf{subprocess.run} et \textbf{os.system} en fonctions Python pour améliorer la portabilité de l'application en évitant de se limiter aux systèmes Linux. Lors des premiers tests d'intégration, le temps de réponse du programme était tellement élevé que nous avons Nous avons constaté lors des premiers tests d'intégration un fort ralentissement du programme lorsque ces modifications étaient effectuées sur l'ensemble du code. fortement le code lors des premiers tests de fonctionnement global de l'application, au vu de la taille importante des fichiers à lire par l'interpréteur. Nous avons donc décidé de revenir à l'utilisation de \textbf{subprocess.run} et \textbf{os.system}. Si cette démarche n'a aucune incidence pour la plateforme MacOS, elle imposerait en revanche un changement de code pour la plateforme Windows. Or, en fonction des versions du systéme Windows, l'utilisateur dispose d'une invite de commandes ou d'un PowerShell dont les instructions diffèrent. Nous avons donc choisi de conserver les appels aux instructions en lignes de commande pour les système Posix et d'utiliser des fonctions Python pour les systèmes Windows. Cela entraîne une relative lenteur de traitement pour ces derniers. 
-
-Pour mieux comprendre ce ralentissement, prenons un exemple sur un traitement simple consistant à concaténer deux fichiers \textit{.fasta}. L'instruction suivante
-
-\begin{verbatim}os.system("cat SRR8368696_1.fasta SRR8368696_2.fasta > SRR8368696_shuffled_system.fasta")\end{verbatim}
-
-est bien plus rapide qu'une fonction Python que nous pourrions définir pour concaténer et qui permettrait d'améliorer la portabilité du programme. En effet, nous constatons que le code ci-dessous exécuté 10 fois sur un système Ubuntu 18.04 LTS avec un processus Intel Pentium de 1,6 GHz 64 bits 4 coeurs
-
-\begin{verbatim}
-  import time
-  import os
-
-  def concat(p_f1, p_f2, p_shuffled):
-      with open(p_f1, 'r') as file_1, open(p_f2, 'r') as file_2, \
-              open(p_shuffled, 'w') as f_shuffled:
-          lignes_1 = file_1.readlines()
-          for elt in lignes_1:
-              f_shuffled.write(elt)
-          lignes_2 = file_2.readlines()
-          for elt in lignes_2:
-              f_shuffled.write(elt)
-
-  debut_concat = int(round(time.time() * 1000))
-  concat('SRR8368696_1.fasta', 'SRR8368696_2.fasta', 'SRR8368696_shuffled_concat.fasta')
-  fin_concat = int(round(time.time() * 1000))
-  temps_concat = fin_concat - debut_concat
-  print(temps_concat)
-
-  debut_system = int(round(time.time() * 1000))
-  os.system("cat SRR8368696_1.fasta SRR8368696_2.fasta > SRR8368696_shuffled_system.fasta")
-  fin_system = int(round(time.time() * 1000))
-  temps_system = fin_system - debut_system
-  print(temps_system)
-\end{verbatim}
-
-affiche un temps moyen d'exécution de l'instruction \textbf{os.system} de 19,3 secondes, alors qu'il est de 26,7 secondes lorsqu'on exécute la fonction \textit{concat}.
-
-\includegraphics[width=10cm]{comparaison_concat.png}
-
-\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c}
-concat (ms) & 31881 & 29452 & 31104 & 29307 & 28984 & 29330 & 28374 & 29775 & 30129 & 30608 \\
-os.system (ms) & 27403 & 21099 & 21884 & 19798 & 21624 & 22838 & 21549 & 20971 & 21947 & 21502
-\end{tabular}
-
-Cette différence de quelques secondes pour une seule fonction entraîne par conséquence de nombreuses minutes de retard sur l'ensemble du code lors de son exécution.
-
-
-
 
 
 
@@ -2103,7 +1986,7 @@ Les tests d'installation permettent de s'assurer que l'utilisateur sera en mesur
 \begin{itemize}
 \item Ubuntu 18.04 LTS, 
 \item Ubuntu 20.04 LTS, 
-\item MacOS 10.12 Sierra, 
+\item macOS 10.12 Sierra, 
 \item Microsoft Windows 10.
 \end{itemize}
 
@@ -2274,6 +2157,132 @@ On doit obtenir un résultat du type
 
 
 
+% LES TESTS FONCTIONNELS ------------------------------------
+\section{Les tests fonctionnels}
+
+Les tests fonctionnels permettent de vérifier la conformité du package développé par rapport à l'objectif et aux fonctionnalités initiales. A partir des tests fonctionnels, nous n'utilisons plus l'environnement de développement, mais un environnement de test qui peut être soit une machine virtuelle, soit un environnement neutre dénué de toute spécification, mais capable d'installer le package.
+
+L'objectif initial était de fournir un package qui fournit des informations au \textit{SRA} dont la référence serait saisie en ligne de commande par un utilisateur. Ce dernier pourrait également fournir une liste de \textit{SRA} dans un fichier texte avec un \textit{SRA} par ligne. Il pourrait également consulter et modifier la base de données lineage.csv.
+
+Nous fournissons au package un fichier au format \textit{.txt} comprenant plus qu'un \textit{SRA} par ligne. RESULTATS  
+
+\begin{verbatim}
+  python -m crisprbuilder_tb --collect ERR2704808 ne parvient pas à trouver les modules ...
+\end{verbatim}
+
+Les tests fonctionnels comprennent la validation de l'interface en ligne de commande. Il s'agit donc de vérifier que les lignes de commandes prévues pour l'exécution du code fournissent bien le résultat escompté. Pour cela, nous testons successivement les commandes
+
+\begin{itemize}
+\item \texttt{  python -m crisprbuilder\_tb \textemdash \textemdash help} qui fournit bien les informations relatives aux options du package,
+\texttt{  python -m crisprbuilder\_tb \textemdash \textemdash print 0} qui affiche bien la liste demandée,
+\item \texttt{  python -m crisprbuilder\_tb \textemdash \textemdash collect ERR2704808}
+\item \texttt{  python -m crisprbuilder\_tb \textemdash \textemdash change 0}
+\item \texttt{  python -m crisprbuilder\_tb \textemdash \textemdash remove 0}
+\end{itemize}
+\texttt{  python -m crisprbuilder\_tb \textemdash \textemdash add 0}
+
+
+Nous considérons donc que l'utilisateur dispose déjà sur sa machine d'un SRA Toolkit fonctionnel, notamment des modules \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn} produisant les résultats escomptés avant d'installer de CRISPRbuilder\_TB.
+
+% LES PROBLEMES LIES AUX CHEMINS D'ACCES ----------------------
+\subsection{Les problèmes liés aux chemins d'accès}
+
+L'incompatibilité des chemins d'accès entre les systèmes Posix et Windows nécessite la définition des chemins sans recourir aux caractères "/" ou "\textbackslash". Par ailleurs, comme le package va s'installer à des emplacements différents en fonction du système d'exploitation et des environnements de travail installés sur la machine (\textit{venv, anaconda, ...}), on ne peut pas définir d'adresse absolue mais privilégier plutôt des adresses relatives. Il est possible d'utiliser le module pahtlib, le module PurePath qui dépend du premier ou encore \_\_file\_\_. Ainsi, l'adresse  \textbf{crisprbuilder\_tb/REP/sequences} s'écrit :
+\begin{itemize}
+\item \textbf{pathlib.PurePath(crisprbuilder\_tb.\_\_path\_\_[0], 'REP', 'sequences')}
+\item \textbf{os.path.join(path.dirname(\_\_file\_\_), 'REP', 'sequences)}
+\end{itemize}
+
+
+
+
+
+
+% LES TESTS DE PERFORMANCE ------------------------------------
+\section{Les tests de performance}
+
+L'objectif des tests de performance serait de valider la capacité des serveurs et réseaux pour supporter les charges d'accès importantes. Ceci ne s'applique pas vraiment à notre package, qui utilise lors de ses requêtes \textit{fastq} et \textit{blast} les serveurs du \index{NCBI}NCBI\footnote{\textbf{NCBI:} National Center for Biotechnology Information} et non pas ses propres serveurs. Si les serveurs de NCBI sont occupés, les réponses obtenues n'en seront que différées. CRISPRbuilder\_TB n'est pas une application Web, l'utilisation simultanée de plusieurs ordinateurs exécutant le package n'a pas d'incidence sur celui-ci.
+
+En revanche, l'optimisation des performances de traitement des données doit être pris en compte car les fichiers de type \textit{.fasta} ont une taille comprise entre 1 et 3 Go, ce qui génère des délais importants lors de l'exécution du package.
+
+
+
+% SUBPROCESS RUN-------------
+\subsection{subprocess.run et os.system}
+
+Au début de notre travail sur le code, nous avons transformé les lignes de commande Linux appelées par les méthodes Python \textbf{subprocess.run} et \textbf{os.system} en fonctions entièrement écrites en Python afin d'améliorer la portabilité de l'application, sans se limiter aux systèmes Linux. Nous avons constaté lors des premiers tests d'intégration un fort ralentissement du programme lorsque ces modifications étaient appliquées à l'ensemble du code, au vu de la taille importante des fichiers à lire par l'interpréteur. Nous avons donc décidé de revenir à l'utilisation de \textbf{subprocess.run} et \textbf{os.system}. Si cette démarche n'a aucune incidence pour la plateforme macOS, elle imposera en revanche un changement de lignes de commandes pour la plateforme Windows. Or, en fonction des versions du systéme Windows, l'utilisateur dispose d'une invite de commandes ou d'un PowerShell dont les instructions diffèrent. Nous avons donc choisi de tester dans le programme si le système est Posix ou Windows, puis de conserver les lignes de commande pour les système Posix et d'utiliser des fonctions Python pour les systèmes Windows. Cela entraîne de ce fait un réel manque de performance dans le traitement des données pour Windows. 
+
+Pour mieux comprendre ce ralentissement, prenons un exemple sur un traitement simple consistant à concaténer deux fichiers \textit{.fasta}. L'instruction suivante
+
+\begin{verbatim}os.system("cat SRR8368696_1.fasta SRR8368696_2.fasta > SRR8368696_shuffled_system.fasta")\end{verbatim}
+
+est bien plus rapide qu'une fonction Python que nous pourrions définir pour concaténer et qui permettrait d'améliorer la portabilité du programme. En effet, nous constatons que le code ci-dessous exécuté 10 fois sur un système Ubuntu 18.04 LTS avec un processus Intel Pentium de 1,6 GHz 64 bits 4 coeurs
+
+\begin{verbatim}
+  import time
+  import os
+
+  def concat(p_f1, p_f2, p_shuffled):
+      with open(p_f1, 'r') as file_1, open(p_f2, 'r') as file_2, \
+              open(p_shuffled, 'w') as f_shuffled:
+          lignes_1 = file_1.readlines()
+          for elt in lignes_1:
+              f_shuffled.write(elt)
+          lignes_2 = file_2.readlines()
+          for elt in lignes_2:
+              f_shuffled.write(elt)
+
+  debut_concat = int(round(time.time() * 1000))
+  concat('SRR8368696_1.fasta', 'SRR8368696_2.fasta', 'SRR8368696_shuffled_concat.fasta')
+  fin_concat = int(round(time.time() * 1000))
+  temps_concat = fin_concat - debut_concat
+  print(temps_concat)
+
+  debut_system = int(round(time.time() * 1000))
+  os.system("cat SRR8368696_1.fasta SRR8368696_2.fasta > SRR8368696_shuffled_system.fasta")
+  fin_system = int(round(time.time() * 1000))
+  temps_system = fin_system - debut_system
+  print(temps_system)
+\end{verbatim}
+
+affiche un temps moyen d'exécution de l'instruction \textbf{os.system} de 19,3 secondes, alors qu'il est de 26,7 secondes lorsqu'on exécute la fonction \textit{concat}.
+
+\includegraphics[width=10cm]{comparaison_concat.png}
+
+\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c}
+concat (ms) & 31881 & 29452 & 31104 & 29307 & 28984 & 29330 & 28374 & 29775 & 30129 & 30608 \\
+os.system (ms) & 27403 & 21099 & 21884 & 19798 & 21624 & 22838 & 21549 & 20971 & 21947 & 21502
+\end{tabular}
+
+Cette différence de quelques secondes pour une seule fonction entraîne par conséquence de nombreuses minutes de retard sur l'ensemble du code lors de son exécution. Les temps moyens d'exécution du programme pour chaque système d'exploitation sont relevés dans la rubrique \textit{Les tests de configuration}.
+
+
+
+
+% PARALLEL FASTQ DUMP ----------------
+\subsection{parallel-fastq-dump}
+
+Le package utilise les modules Python de téléchargement et traitement de données provenant du NCBI \textit{fastq-dump} et \textit{blastn}. 
+
+\textit{fastq-dump} est un module archaïque permettant de transformer des données du format \textit{.sra} au format \textit{.fastq}. Il est contenu dans le \textit{SRA Toolkit} du NCBI. Il peut s'avérer très lent en fonction de l'utilisation de la base de données en temps réel. 
+
+L'utilisation de plusieurs threads devrait permettre de diviser le travail en différentes tâches effectuées simultanément, et donc de gagner du temps. Malheureusement, Python n'accepte pas nativement le travail multi-threads, ce qui ne permet pas de tirer profit de systèmes multi-coeurs. C'est en fait une caractéristique de CPython. Le GIL\footnote{\index{GIL}\textbf{GIL:} Global Interpreter Lock} est un mutex qui n'autorise le travail que d'un unique thread à la fois. Il protège l'accès aux objets Python, pour empêcher de multiples threads d'exécuter du code Python simultanément. Ce verrou est rendu nécessaire parce que la gestion de la mémoire sous CPython n'est pas thread-safe. Le module \textit{parallel-fastq-dump} résout partiellement ce problème de multi-threading et utilise l'implémentation CPython en incorporant du langage C dans son contenu. Il semble être à l'heure actuelle un bon compromis gratuit pour optimiser le traitement des données du format \textit{.sra} au format \textit{.fastq}. Notons que le \textit{SRA Tookit} est installé automatiquement au moment de l'installation de \textit{parallel-fastq-dump}.
+
+REAL PYTHON ABOUT PYTHON THREADING
+
+
+
+
+% BLAST -------------
+\subsection{blast+}
+
+\textit{blast} est également un outil du NCBI. Il permet de trouver des régions similaires entre plusieurs séquences génomiques. Il traite donc une quantité importante de données et ralentit de façon significative l'exécution du programme. Il compare des séquences de nucléotides ou de protéines à des séquences déjà présentes dans la base de données NCBI, puis calcule la signification statistique. \textit{blast} existe sous plusieurs formes \textit{blastx, tblastn, blastn, Primer-blast, smartblast, igblast, moleblast, ...}. Nous package utilise \textit{blastn} qui effectue des comparaisons entre nucléotides et dépend de la librairie \textit{blast}. Les performances de \textit{blast} sont par ailleurs optimisées avec la suite \textit{blast+} qui utilise le Toolkit C++ du NCBI. Le package utilise également le module \textit{blastn} 
+
+
+
+
+
+
 % LES TESTS DE CONFIGURATION --------------------------------
 \section{Les tests de configuration}
 
@@ -2298,7 +2307,7 @@ Ce stage m'a ouvert l'esprit vers le domaine de la bioinformatique et m'a permis
 Notons qu'à terme, l'objectif du package sera de proposer une reconstitution du \textit{CRISPR}.
 	
 
-
+Ce stage m'a permis de pratiquer ... et de comprendre l'importance du test dans le développement d'un logiciel ou d'un package, car il a représenté une grande partie du travail.
 
 
 	
