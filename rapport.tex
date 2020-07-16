@@ -626,12 +626,12 @@ Dans le cadre de ce projet, aucune spécification restrictive n'étant requise, 
 
 
 
-% FONCTIONNEMENT D'UN PACKAGE
+% FONCTIONNEMENT D'UN PACKAGE -----------------
 \section{Fonctionnement d'un package}
 
-La bonne compréhension des chemins d'accès est au coeur du fonctionnement d'un package.
+Certains packages sont importés partiellement ou entièrement en début de code afin d'en appeler une ou plusieurs méthodes. D'autres packages sont exécutables suivant une interface graphique. CRISPRbuilder\_TB est exécutable suivant une interface en lignes de commandes. Cette interface fait bien évedemment référence à des modules et fichiers se trouvant à l'intérieur du package. La bonne compréhension des chemins d'accès est au coeur du fonctionnement d'un package. Essayons de voir pourquoi.
 
-Un programme s'exécute dans un répertoire courant et accède aux différents fichiers support en utilisant un chemin relatif par rapport à ce répertoire ou encore en utilisant un chemin absolu. Les différentes dépendances sont importées en début de code, sans référence à un chemin d'accès car elles ont préalablement été installées dans l'environnement de développement que va utiliser l'interpréteur Python. Elles sont en plus installées dans l'environnement de développement intégré dans le cas où on utilise un tel outil.
+Un programme local s'exécute dans un répertoire courant et accède aux différents fichiers support en utilisant un chemin relatif par rapport à ce répertoire ou encore en utilisant un chemin absolu. Les différentes dépendances sont importées en début de code, sans référence à un chemin d'accès car elles ont préalablement été installées dans l'environnement de développement que va utiliser l'interpréteur Python. Elles sont en plus installées dans l'environnement de développement intégré dans le cas où on utilise un tel outil.
 
 Un package en revanche, n'est pas défini par rapport au répertoire courant. Il va s'installer à un emplacement spécifique défini par le système d'exploitation. Par défaut cet emplacement est \textbf{~/.local/lib/python3.8/site-packages} ou \textbf{~/.local/lib/python3.8/dist-packages} sur Linux. Lorsque \textit{Anaconda} est installé et que son environnement est activé par défaut au démarrage de la machine, cet emplacement devient \textbf{~/anaconda3/bin}. On peut chercher son emplacement exact et déplacer ensuite le package mais ceci n'a aucun d'intérêt vu que le système connaît l'emplacement de ses packages.
 
@@ -770,7 +770,7 @@ Cette méthode fonctionne bien pour construire un environnement de développemen
 % PARAMETRAGE DE L'ENVIRONNEMENT ------------------
 \section{Le choix d'Anaconda, une alternative à l'environnement de développement}
 
-Nous venons de voir qu'il est possible de créer un environnement de développement adapté à notre projet, sans modifier le reste de la structure de notre machine. Toutefois, cet environnement nécessite un paramétrage de la variable d'environnement \$PATH afin que les modules recherchés puissent être trouvés par le système au moment de l'exécution du package. Afin que ce paramétrage reste permanent, il faut modifier cette variable d'environnement à l'intérieur même du \textbf{~/.bashrc}
+Nous venons de voir qu'il est possible de créer un environnement de développement adapté à notre projet, sans modifier le reste de la structure de notre machine. C'est d'ailleurs cette méthode que nous avons initialement utilisée. Toutefois, cet environnement nécessite un paramétrage de la variable d'environnement \$PATH afin que les modules recherchés puissent être trouvés par le système au moment de l'exécution du package. Afin que ce paramétrage reste permanent, il faut modifier cette variable d'environnement à l'intérieur même du \textbf{~/.bashrc}
 
 \begin{verbatim}
   echo $PATH
@@ -804,7 +804,7 @@ L'installation de \textit{Anaconda} est décrite sur le site \url{https://docs.a
   conda install -c bioconda blast
   conda install -c kantorlab blastn\end{verbatim}
 
-Notons que, contrairement au choix de créer un environnement de développement, \textit{Anaconda} propose un environnement de travail à tendance scientifique pour l'ensemble de la machine.
+Notons que, contrairement au choix de créer un environnement de développement, \textit{Anaconda} propose un environnement de travail scientifique pour l'ensemble de la machine. Par ailleurs, il s'installe avec sa propre version de Python, qui est nécessairement récente. Lorsqu'il est paramétré pour être exécuté par défaut, les packages se placent dans son environnement à l'adresse \textbf{~/anaconda3/bin}.
 
 
 
@@ -827,9 +827,9 @@ Notons que, contrairement au choix de créer un environnement de développement,
 
 Au regard de ces recommandations, nous avons testé les outils suivants dans le but de définir un environnement de développement et de construire un package incorporant les dépendances requises.
 
-\textit{pipenv} est un gestionnaire de haut niveau pour les environnements, les dépendances et les packages Python. Contrairement à \textit{virtualenv}, \textit{pipenv} distingue les dépendances du projet et les dépendances des dépendances du projet. Par ailleurs, \textit{pipenv} différencie le mode développement du mode production. Il offre l'avantage de bien fonctionner sur Windows. Toutefois, la communauté Python l'a peu mis à jour depuis 2018.
+\textit{pipenv} est un gestionnaire de haut niveau pour les environnements, les dépendances et les packages Python. Contrairement à \textit{virtualenv}, \textit{pipenv} distingue les dépendances du projet et les dépendances du projet. Par ailleurs, \textit{pipenv} différencie le mode développement du mode production. Il offre l'avantage de bien fonctionner sur Windows. Toutefois, la communauté Python l'a peu mis à jour depuis 2018.
 
-\textit{Anaconda} est une distribution de logiciels multiplateformes (Windows, Linux, macOS) qui facilite l'installation des librairies scientifiques \textit{Numpy} et \textit{Scipy}, ce qui est particulièrement intéressant dans le cas des plateformes Windows où ce processus est plus complexe. Elle incorpore une librairie open-source appelée \textit{conda} permettant la gestion des dépendances, de l'environnement de travail ainsi que la création de packages. \textit{Anaconda} semble être approprié au projet, mais c'est une distribution trop lourde pour être intégrée à notre package et \textit{Miniconda}, qui ne comporte que Python, \textit{conda} et \textit{pip}, ne répond pas aux besoins du projet. Nous n'abandonnerons pas pour autant la distribution \textit{Anaconda}, car son utilité va se révéler au cours des tests d'installation. 
+\textit{Anaconda} est une distribution de logiciels multiplateformes (Windows, Linux, macOS) qui comprend une version de Python et facilite l'installation des librairies scientifiques \textit{Numpy, Pandas, Matplotlib} et \textit{Scipy}, ce qui est particulièrement intéressant dans le cas des plateformes Windows où ce processus est plus complexe. Elle incorpore une librairie open-source appelée \textit{conda} permettant la gestion des dépendances, de l'environnement de travail ainsi que la création de packages. \textit{Anaconda} évite les problèmes d'installation de packages et de dépendances qui sont gérées de façon plus individualisée avec \textit{pip}. \textit{Anaconda} semble donc être appropriée au projet, mais c'est une distribution trop lourde pour être intégrée à notre package. \textit{Miniconda} en revanche est une distribution plus légère, mais elle ne comporte que Python, \textit{conda} et \textit{pip}, et ne permet pas d'installer toutes les dépendances du package comme nous le verrons ultérieurement. L'utilité d\textit{Anaconda} va se révéler ultérieurement durant la création de l'environnement de développement et au cours des tests d'installation, mais nous ne pouvons pas l'intégrer au package.
 
 Nous avons tout d'abord cherché à construire le package manuellement, à partir de \textit{pipenv} associé à \textit{pip}, puis de \textit{conda} qui dispose d'une riche bibliothèque. Cet effort s'est avéré laborieux et a révélé des incompatibilités lors du \textit{build} qui n'ont pas permis de valider les exigences de la plateforme \textit{testPyPI}.
 
