@@ -28,8 +28,8 @@
   \indexspace
 
   \item G\IeC {\'e}nome, \hyperpage{7}
-  \item GIL, \hyperpage{60}
-  \item Git, \hyperpage{52}
+  \item GIL, \hyperpage{61}
+  \item Git, \hyperpage{53}
 
   \indexspace
 
@@ -55,7 +55,7 @@
 
   \indexspace
 
-  \item NCBI, \hyperpage{58}
+  \item NCBI, \hyperpage{59}
 
   \indexspace
 
@@ -63,16 +63,16 @@
   \item Paire de bases, \hyperpage{6}
   \item PCR, \hyperpage{13}
   \item PEP, \hyperpage{4}
-  \item PEP-257, \hyperpage{50}
+  \item PEP-257, \hyperpage{52}
   \item PEP-518, \hyperpage{21}
-  \item PEP-8, \hyperpage{50}
+  \item PEP-8, \hyperpage{52}
   \item Phylog\IeC {\'e}nie, \hyperpage{6}
   \item pip, \hyperpage{25}
-  \item Poetry, \hyperpage{28}
+  \item Poetry, \hyperpage{29}
   \item Promoteur, \hyperpage{11}
   \item Puce \IeC {\`a} ADN, \hyperpage{14}
   \item pyenv, \hyperpage{24}
-  \item pylint, \hyperpage{50}
+  \item pylint, \hyperpage{52}
   \item PyPA, \hyperpage{21}
   \item PyPI, \hyperpage{4}
 
@@ -89,11 +89,11 @@
 
   \indexspace
 
-  \item unittest, \hyperpage{49}
+  \item unittest, \hyperpage{51}
 
   \indexspace
 
   \item venv, \hyperpage{24}
-  \item VirtualBox, \hyperpage{54}
+  \item VirtualBox, \hyperpage{55}
 
 \end{theindex}

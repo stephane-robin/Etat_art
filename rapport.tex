@@ -238,7 +238,7 @@ ntheorem=true]{lemma}{Lemme}
 % CONCERNE LA TABLE DES MATIERES
 %\renewcommand{\@chapapp}{}  % le mot `chapitre'' n'apparait plus en titre de chapitre
 \renewcommand\l@section{\@dottedtocline{1}{0em}{1.5em}}  % espacement dans le titre d'une section
-%\renewcommand\l@subsection{\@dottedtocline{1}{2.5em}{2.5em}}  % espacement dans le titre d'une sous-section
+\renewcommand\l@subsection{\@dottedtocline{1}{2.5em}{2.5em}}  % espacement dans le titre d'une sous-section
 %\renewcommand\l@subsubsection{\@dottedtocline{1}{5em}{2.5em}}  % espacement dans le titre d'une sous-sous-section
 
 \makeatother
@@ -631,18 +631,14 @@ Dans le cadre de ce projet, aucune spécification restrictive n'étant requise, 
 
 La bonne compréhension des chemins d'accès est au coeur du fonctionnement d'un package.
 
-Un programme s'exécute dans un répertoire courant et accède aux différents fichiers support en utilisant un chemin relatif par rapport à ce répertoire ou encore en utilisant un chemin absolu. Les différentes dépendances sont importées en début de code, sans référence à un chemin d'accès car elles ont préalablement été installées dans l'environnement de développement puis dans la version de Python utilisée. Elles sont en plus installées dans l'environnement de développement intégré dans le cas où on utilise un tel outil.
+Un programme s'exécute dans un répertoire courant et accède aux différents fichiers support en utilisant un chemin relatif par rapport à ce répertoire ou encore en utilisant un chemin absolu. Les différentes dépendances sont importées en début de code, sans référence à un chemin d'accès car elles ont préalablement été installées dans l'environnement de développement que va utiliser l'interpréteur Python. Elles sont en plus installées dans l'environnement de développement intégré dans le cas où on utilise un tel outil.
 
-Un package en revanche, n'est pas défini par rapport au répertoire courant. Il va s'installer à un emplacement spécifique défini par le système d'exploitation. Par défaut cet emplacement serait, comme \textbf{~/.local/lib/python3.8/site-packages} ou \textbf{~/.local/lib/python3.8/dist-packages}. Lorsque \textit{Anaconda} est installé et que son environnement est activé par défaut au démarrage de la machine, cet emplacement devient \textbf{~/anaconda3/bin}. On peut chercher son emplacement exact et déplacer ensuite le package mais ceci n'a aucun d'intérêt vu que le système connaît l'emplacement de ses packages.
+Un package en revanche, n'est pas défini par rapport au répertoire courant. Il va s'installer à un emplacement spécifique défini par le système d'exploitation. Par défaut cet emplacement est \textbf{~/.local/lib/python3.8/site-packages} ou \textbf{~/.local/lib/python3.8/dist-packages} sur Linux. Lorsque \textit{Anaconda} est installé et que son environnement est activé par défaut au démarrage de la machine, cet emplacement devient \textbf{~/anaconda3/bin}. On peut chercher son emplacement exact et déplacer ensuite le package mais ceci n'a aucun d'intérêt vu que le système connaît l'emplacement de ses packages.
 
-On peut se poser la question de savoir comment accéder aux différents fichiers support, sachant que l'exécution se fait depuis un répertoire courant alors que le module \textbf{\_\_main\_\_.py} se trouve à l'emplacement prévu pour les packages. Quelle est donc la référence choisie pour définir un chemin d'accès relatif ? L'utilisation d'un chemin d'accès absolu ne semble pas non plus être la solution car ce chemin est dépendant des systèmes d'exploitation utilisés. \_file\_ TODO
+On peut se poser la question de savoir comment accéder aux différents fichiers support une fois que le code du package est exécuté, sachant que l'exécution se fait depuis un répertoire courant alors que le module \textbf{\_\_main\_\_.py} se trouve à l'emplacement prévu pour les packages. Quelle est donc la référence choisie pour définir le bon chemin d'accès ? L'utilisation d'un chemin d'accès absolu ne semble pas être une solution viable car ce chemin est dépendant de chaque système d'exploitation utilisé. \_file\_ TODO
 
 En fait, l'exécution d'un package se fait à partir d'un répertoire courant et tous les fichiers nécessaires à son fonctionnement sont atteints par rapport à une référence relative XXX. L'emplacement du package dans le système est donc transparente pour l'utilisateur. Lorsque celui-ci exécute \texttt{python -m crisprbuilder\_tb \textemdash \textemdash collect ERR2704808}, le système cherche le package dans \textbf{site-packages}, puis le fichier \textbf{\_\_init\_\_.py} et à partir de là exécute le module \textbf{\_\_main\_\_.py}. Les fichiers nécessaires au fonctionnement sont atteignables grâce à l'adresse relative qui ne contient pas le nom du répertoire \textbf{crisprbuilder\_tb} car lors de la lecture du fichier \textbf{\_\_main\_\_.py} l'exécution du code se trouve déjà dans le package. Il ne se trouve en fait aucun fichier ou répertoire à l'intérieur du répertoire courant où l'archive n'a pas été téléchargée contrairement à ce qu'on pourrait imaginer.
 
-
-
-% FONCTIONNEMENT DU PACKAGE -----------------------
-\section{Fonctionnement du package CRISPRbuilder\_TB}
 
 
 
@@ -670,7 +666,7 @@ l'interpréteur va chercher le package à son emplacement de stockage XXX et l'e
 
 TODO EXPLICATIONS REAL PYTHON
 
-Avant de créer le package, il faut commencer par construire localement un programme fonctionnel. Pour cela, nous définissons un \index{environnement de développement}environnement de développement, qui nous sert à exécuter le code et à le tester au fur et à mesure de son élaboration. Cet environnement contient tous les modules et packages nécessaires à son bon fonctionnement, c'est à dire les dépendances du projet.
+Avant de créer le package, il faut commencer par construire un programme qui fonctionne localement sur une machine bien paramétrée. Pour cela, nous définissons un \index{environnement de développement}environnement de développement, qui nous sert à exécuter le code et à l'évaluer au fur et à mesure de son élaboration. Cet environnement contient tous les modules et packages nécessaires à son bon fonctionnement, c'est à dire les dépendances du projet.
  
 L'outil de création d'environnement virtuel \index{venv}\textit{venv} nous permet de créer cet environnement de développement afin de tester les codes du projet. \textit{venv} commence par constituer un dossier contenant tous les exécutables nécessaires à l'utilisation des modules d'un projet Python. 
 
@@ -683,7 +679,7 @@ Cette activation ne peut se faire qu'à partir du répertoire parent \textbf{bio
  \begin{verbatim}  source env_bio/bin/activate
   (env_bio)  cd env_bio\end{verbatim}
 
-De nombreux systèmes d'exploitation incorporent Python2.7 par défaut. Il convient donc de définir une version 3 de Python dans cet environnement de développement, et plus précisément une version 3.6 ou supérieure. Pour cela, le module \textit{pyenv} \index{pyenv} nous permet de définir une version de Python comme version locale de travail dans l'environnement. 
+De nombreux systèmes d'exploitation incorporent Python2.7 par défaut. Il convient donc de définir une version 3 de Python dans cet environnement de développement, et plus précisément une version 3.7 ou supérieure. Pour cela, le module \textit{pyenv} \index{pyenv} nous permet de définir une version de Python comme version locale de travail dans l'environnement. 
 
 On peut ainsi choisir parmi les versions disponibles, grâce à l'instruction
 \begin{verbatim}  pyenv install --list\end{verbatim}
@@ -724,7 +720,6 @@ qui renvoie \textbf{\raisebox{-1ex}{\textasciitilde}/.pyenv/shims/python} au lie
 
 Finalement, nous installons dans notre environnement de développement les dépendances nécessaires à l'aide de l'outil \textit{pip}\index{pip} :
 \begin{itemize}
-%\item pkg-resources==0.0.0 (installé automatiquement)
 \item \begin{verbatim}  pip install xmltodict\end{verbatim}
 le module \textit{xmltodict} permet de lire du code XML comme si il s'agissait de code JSON. Il permet donc une lecture plus rapide des fichiers.
 \item  \begin{verbatim}  pip install openpyxl\end{verbatim}
@@ -734,11 +729,8 @@ le module \textit{xlrd} extrait des données d'un tableur Excel à partir de la 
 \item  \begin{verbatim}  pip install biopython\end{verbatim}
 le package \textit{biopython} regroupe un ensemble d'outils Python pour le traitement informatique de la biologie moléculaire et comprend le module numpy.
 \item \begin{verbatim}  pip install parallel-fastq-dump\end{verbatim}
-le package \textit{parallel-fastq-dump} permet de téléchargement de fichiers fasta en utilisant plusieurs threads simultanément. Il procure donc un gain de temps à l'application. 
-%\item DateTime==4.3\\
-%Le module datetime permet de manipuler des dates et heures en gérant des objets de type DateTime. 
-%\item pytz==2019.3 (installé avec le module datetime)
-%\item zope.interface==5.0.1 (installé avec le module datetime)
+le package \textit{parallel-fastq-dump} permet de téléchargement de fichiers fasta en utilisant plusieurs threads simultanément. Il procure donc un gain de temps à l'application.
+\item \begin{verbatim}  pip install blast\end{verbatim}
 \end{itemize}
 
 Notons que certains modules utilisés dans ce package sont nativement présents dans la librairie standard Python3. C'est le cas par exemple :
@@ -752,7 +744,7 @@ Notons que certains modules utilisés dans ce package sont nativement présents 
 \item du module \textit{argparse} qui gère la création et l'utilisation d'interfaces en ligne de commande.
 \end{itemize}
 
-Le package, une fois installé par l'utilisateur, devra fournir un environnement de travail similaire à celui que nous venons de construire, c'est à dire que les dépendances nécessaires à son bon fonctionnement devront également être installées. Ce processus devrait rester transparent pour l'utilisateur et être pris en charge par un gestionnaire de package tel que \textit{Poetry} qui regroupe ces modules dans un fichier appelé pyproject.toml. Nous verrons au cours des tests d'installation que les dépendances ne sont pas toujours reconnues à partir de \textit{Poetry} et qu'il est plus sûr de les installer séparément. 
+Le package, une fois installé par l'utilisateur, devra fournir un environnement de travail similaire à celui que nous venons de construire, c'est à dire que les dépendances nécessaires à son bon fonctionnement devront également être installées. Ce processus devrait rester transparent pour l'utilisateur et être pris en charge par un gestionnaire de package tel que \textit{Poetry} qui regroupe ces modules dans un fichier appelé \textbf{pyproject.toml}. Nous verrons au cours des tests de fonctionnement que les dépendances ne sont pas toujours reconnues à partir de \textit{Poetry} et qu'il est nécessaire que l'utilisateur ait préalablement installé et paramétré les outils du SRA Toolkit \textit{parallel-fastq-dump} et \textit{blast}. 
 
 On pourrait par exemple retrouver les modules installés via \textit{pip} dans un fichier \textit{requirements.txt} construit en gelant l'état de l'environnement à un moment précis grâce à une instruction du type
 \begin{verbatim}  pip freeze > requirements.txt\end{verbatim}.
@@ -764,7 +756,38 @@ Cette méthode fonctionne bien pour construire un environnement de développemen
 
 
 
-	
+% PARAMETRAGE DE L'ENVIRONNEMENT ------------------
+\section{Le choix d'Anaconda, une alternative à l'environnement de développement}
+
+Nous venons de voir qu'il est possible de créer un environnement de développement adapté à notre projet, sans modifier le reste de la structure de notre machine. Toutefois, cet environnement nécessite un paramétrage de la variable d'environnement \$PATH afin que les modules recherchés puissent être trouvés par le système au moment de l'exécution du package.
+
+PARAMETRAGE PATH
+
+Il existe un autre moyen qui a retenu notre attention uniquement à la fin du projet, car il s'avère plus simple. Il consiste tout d'abord à mettre à jour Python dans une version récente (supérieure ou égale à 3.7), puis à installer le package \textit{Anaconda}, qui comprend notamment l'outil \texttt{  conda} et le module \textit{bioconda} dont nous aurons besoin. Il faut ensuite installer toutes les dépendances du projet à l'aide de \texttt{  conda}. Ces dépendances s'installent systématiquement dans XXX et la variable d'environnement \$PATH se met automatiquement à jour.
+
+Attention toutefois de ne pas installer conjointement \textit{Anaconda} avec \textit{Miniconda}. En effet, dans ce cas certaines dépendances s'installent dans XXX et d'autres dans XXX. C'est tentant au début car \textit{Miniconda} donne accès à l'outil \texttt{  conda} et au module \textit{bioconda}, mais ce dernier nécessite \textit{Anaconda} pour installer certaines dépendances. Pour éviter tout problème de chemin d'accès, il faut donc désinstaller \textit{Miniconda} avant d'installer \textit{Anaconda}. 
+
+L'installation de \textit{Anaconda} est décrite sur le site \url{https://docs.anaconda.com/anaconda/install/linux/}. Il faut penser à ordonner les priorités des différents \textit{channels}, dont notamment \textit{bioconda} en ajoutant dans l'ordre
+
+\begin{verbatim}
+  conda config --add channels defaults
+  conda config --add channels bioconda
+  conda config --add channels conda-forge
+\end{verbatim}
+
+ Il convient ensuite d'installer toutes les dépendances 
+\begin{verbatim}  conda install -c conda-forge xmltodict
+  conda install -c anaconda openpyxl
+  conda install -c anaconda xlrd
+  conda install -c anaconda biopython
+  conda install -c bioconda parallel-fastq-dump
+  conda install -c bioconda blast
+  conda install -c kantorlab blastn\end{verbatim}
+
+Notons que, contrairement au choix de créer un environnement de développement, \textit{Anaconda} propose un environnement de travail à tendance scientifique pour l'ensemble de la machine.
+
+
+
 
 % L'OUTIL D'EMPAQUETAGE --------------------
 \section{L'outil d'empaquetage}
@@ -1817,6 +1840,8 @@ Les tests unitaires consistent à évaluer individuellement les composants de l'
 
 Les tests unitaires sont d'abord effectués manuellement, fonction par fonction, en évaluant chaque résultat obtenu.
 
+Il faut donc comprendre le fonctionnement, puis tester chaque portion de code et chaque fonction individuellement avec des paramètres choisis avant de l'incorporer dans le module \_\_main\_\_.py. Il est donc nécessaire d'adapter au reste du code les fonctions déjà écrites, les documenter en anglais en vue d'une utilisation ultérieure, les rendre performantes en utilisant des compréhensions de listes, éviter les erreurs potentielles en rajoutant des blocs \textbf{try ... except} et des méthodes \textbf{.setdefault} et \textbf{.get}. Il faut également créer de nouvelles fonctions pour éviter la répétition de code.
+
 Puis nous utilisons le framework \index{unittest}\textit{unittest} intégré dans la distribution standard de Python3.
 
 TODO - EXPLICATIONS unittest
@@ -1826,15 +1851,34 @@ TODO - EXPLICATIONS unittest
 
 
 % LES TESTS D'INTEGRATION -----------------------------
-\section{les tests d'intégration, le module pylint}
+\section{les tests d'intégration}
 
-Les tests d'intégration permettent de valider l'inter-utilisabilité des différents modules entre eux dans leur environnement d'exploitation définitif. Nous réalisons également les tests d'intégration dans l'environnement de développement que nous avons construit.
+Les tests d'intégration permettent de valider l'inter-utilisabilité des différentes unités de programmes  et des différents modules entre eux. Nous réalisons les tests d'intégration directement dans l'environnement de développement que nous avons construit.
 
-Pour cela, nous avons créé le package, nous nous sommes placés à la racine de l'application et avons exécuté le code du module \textbf{\_\_main\_\_.py} directement.
+Pour cela, nous nous plaçons à la racine du package et nous exécutons directement le code du module \textbf{\_\_main\_\_.py} par la commande 
 
-Dans le module \_\_main\_\_.py, il faut d'abord importer le package \textit{crisprbuilder\_tb}, puis importer les modules crisprbuilder\_tb.fonctions.py et crisprbuilder\_tb.bdd.py sans oublier le nom du package sans quoi l'interpréteur ne parviendra pas à trouver ces modules même s'ils se situent à la racine du package.  
+\begin{verbatim}
+  cd crisprbuilder_tb
+  python __main__.py
+\end{verbatim}
 
-Il faut donc comprendre le fonctionnement, puis tester chaque portion de code et chaque fonction individuellement avec des paramètres choisis avant de l'incorporer dans le module \_\_main\_\_.py. Il est donc nécessaire d'adapter au reste du code les fonctions déjà écrites, les documenter en anglais en vue d'une utilisation ultérieure, les rendre performantes en utilisant des compréhensions de listes, éviter les erreurs potentielles en rajoutant des blocs \textbf{try ... except} et des méthodes \textbf{.setdefault} et \textbf{.get}. Il faut également créer de nouvelles fonctions pour éviter la répétition de code.
+
+
+% LES PROBLEMES RENCONTRES -----------------------
+\subsection{Les problèmes rencontrés}
+
+Une fois que le code a été testé individuellement avec comme valeur pour le SRA ERR2704808, qu'il a été rendu compatible pour chaque fonction, chaque variable et chaque paramètre, qu'il a passé avec succès l'analyse de pylint et les tests statiques de l'EPI PyCharm, nous avons rencontré les problèmes suivants :  
+\begin{itemize}
+\item subprocess.run : au moment de l'exécution du code, une erreur de type \texttt{  XX} apparaît. Nous nous rendons compte que l'installation manuelle de \textit{subprocess.run}, loin de résoudre le problème, empêche la bonne exécution du code. Il est donc recommandé de ne pas l'installer et de se contenter de la version native présente dans Python.
+\item parallel-fastq-dump :
+\item la gestion des exceptions : la gestion des exceptions avec des blocs \textbf{try ... except FileNotFoundError} ne permet pas au programme de déplacer un fichier vers un répertoire contenant déjà ce fichier. Ce problème est plus sensible au moment des tests car nous utilisons à plusieurs reprises le même SRA. Toutefois, il pourrait également advenir à un utilisateur qui aurait inscrit plusieurs fois sur une liste le même SRA. Il convient donc de tester la présence d'un fichier dans un répertoire avant de le déplacer.
+\end{itemize}
+
+
+La première erreur qui apparaît est l'impossibilité pour l'interpréteur Python de trouver les modules \textbf{fonctions.py} et \textbf{bdd.py}. Dans le module \textbf{\_\_main\_\_.py}, il faut donc importer le package \textit{crisprbuilder\_tb}, puis importer les modules \textbf{crisprbuilder\_tb.fonctions.py} et \textbf{crisprbuilder\_tb.bdd.py} sans oublier à chaque fois le nom du package, pour que l'interpréteur parvienne à trouver ces modules. Ceci est un peu surprenant car ces modules se situent également à la racine du package, et devraient donc être reconnus automatiquement.
+
+
+
 
 % PYLINT --------------
 \subsection{Le respect des règles du PEP avec pylint}
@@ -1843,8 +1887,8 @@ Il faut donc comprendre le fonctionnement, puis tester chaque portion de code et
 
 L'exécution de \textit{pylint} se fait directement en ligne de commande en se plaçant dans le package, à hauteur du dossier parent du fichier à tester (par exemple ici \_\_main\_\_.py) suivant l'instruction
 
-\begin{verbatim}  $ cd crisprbuilder_tb
-  $ pylint __main__.py\end{verbatim}
+\begin{verbatim}  cd crisprbuilder_tb
+  pylint __main__.py\end{verbatim}
 
 Comme \textit{pylint} considère que les modules ne devraient pas excéder 1000 lignes, nous avons développé notre module initial \_\_main\_\_.py en trois modules \_\_main\_\_.py, fonctions.py et bdd.py. Nous nous sommes par ailleurs astreints aux règles du PEP pour obtenir une note de 9.72 / 10 avec les commentaires suivants concernant le module \_\_main\_\_.py. 
 
@@ -1884,20 +1928,11 @@ S'agissant d'un test statique, le code n'est pas exécuté et la performance du 
 TODO PROBLEME PASSAGE PACKAGE
 CHEMINS D'ACCES
 
-\subsection{Les problèmes rencontrés}
-
-Une fois que le code a été testé individuellement avec comme valeur pour le SRA ERR2704808, qu'il a été rendu compatible pour chaque fonction, chaque variable et chaque paramètre, qu'il a passé avec succès l'analyse de pylint et les tests statiques de l'EPI PyCharm, nous avons rencontré les problèmes suivants :  
-\begin{itemize}
-\item subprocess.run : au moment de l'exécution du code, une erreur de type \texttt{  XX} apparaît. Nous nous rendons compte que l'installation manuelle de \textit{subprocess.run}, loin de résoudre le problème, empêche la bonne exécution du code. Il est donc recommandé de ne pas l'installer et de se contenter de la version native présente dans Python.
-\item parallel-fastq-dump :
-\item la gestion des exceptions : la gestion des exceptions avec des blocs \textbf{try ... except FileNotFoundError} ne permet pas au programme de déplacer un fichier vers un répertoire contenant déjà ce fichier. Ce problème est plus sensible au moment des tests car nous utilisons à plusieurs reprises le même SRA. Toutefois, il pourrait également advenir à un utilisateur qui aurait inscrit plusieurs fois sur une liste le même SRA. Il convient donc de tester la présence d'un fichier dans un répertoire avant de le déplacer.
-\end{itemize}
-
 
 
 
 % LES TESTS DE NON REGRESSION ---------------------------------
-\section{Les tests de non-régression, le versioning avec Git}
+\section{Les tests de non-régression}
 
 Les tests de non-régression permettent de vérifier que les modifications apportées au programme durant l'ensemble de la phase de test n'ont pas altérées le fonctionnement du package.
 
@@ -1911,7 +1946,10 @@ et
 
 pour procéder aux vérifications aprés modification de code.
 
-\subsection{L'utilité du versioning}
+
+
+% LE VERSIONING AVEC GIT -------------------------
+\subsection{Le versioning avec Git}
 
 L'utilisation de l'outil de versioning \index{Git}\textit{Git} a constitué une aide précieuse au cours de chaque modification significative du code, permettant de revenir en arrière en cas de besoin et de ne pas perdre le travail effectué. Ce stage a été l'occasion de manipuler régulièrement les principales commandes \textit{Git}. 
 
@@ -2157,10 +2195,10 @@ On doit obtenir un résultat du type
 
 
 
-% LES TESTS FONCTIONNELS ------------------------------------
-\section{Les tests fonctionnels}
+% LES TESTS DE VALIDATION ------------------------------------
+\section{Les tests de validation}
 
-Les tests fonctionnels permettent de vérifier la conformité du package développé par rapport à l'objectif et aux fonctionnalités initiales. A partir des tests fonctionnels, nous n'utilisons plus l'environnement de développement, mais un environnement de test qui peut être soit une machine virtuelle, soit un environnement neutre dénué de toute spécification, mais capable d'installer le package.
+Les tests de validation permettent de vérifier la conformité du package développé par rapport à l'objectif et aux fonctionnalités initiales. A partir des tests fonctionnels, nous n'utilisons plus l'environnement de développement, mais un environnement de test qui peut être soit une machine virtuelle, soit un environnement neutre dénué de toute spécification, mais capable d'installer le package.
 
 L'objectif initial était de fournir un package qui fournit des informations au \textit{SRA} dont la référence serait saisie en ligne de commande par un utilisateur. Ce dernier pourrait également fournir une liste de \textit{SRA} dans un fichier texte avec un \textit{SRA} par ligne. Il pourrait également consulter et modifier la base de données lineage.csv.
 
@@ -2276,7 +2314,7 @@ REAL PYTHON ABOUT PYTHON THREADING
 % BLAST -------------
 \subsection{blast+}
 
-\textit{blast} est également un outil du NCBI. Il permet de trouver des régions similaires entre plusieurs séquences génomiques. Il traite donc une quantité importante de données et ralentit de façon significative l'exécution du programme. Il compare des séquences de nucléotides ou de protéines à des séquences déjà présentes dans la base de données NCBI, puis calcule la signification statistique. \textit{blast} existe sous plusieurs formes \textit{blastx, tblastn, blastn, Primer-blast, smartblast, igblast, moleblast, ...}. Nous package utilise \textit{blastn} qui effectue des comparaisons entre nucléotides et dépend de la librairie \textit{blast}. Les performances de \textit{blast} sont par ailleurs optimisées avec la suite \textit{blast+} qui utilise le Toolkit C++ du NCBI. Le package utilise également le module \textit{blastn} 
+\textit{blast} est également un outil du NCBI. Il permet de trouver des régions similaires entre plusieurs séquences génomiques. Il traite donc une quantité importante de données et ralentit de façon significative l'exécution du programme. Il compare des séquences de nucléotides ou de protéines à des séquences déjà présentes dans la base de données NCBI, puis calcule la signification statistique. \textit{blast} existe sous plusieurs formes \textit{blastx, tblastn, blastn, Primer-blast, smartblast, igblast, moleblast, ...}. Notre package utilise \textit{blastn} qui effectue des comparaisons entre nucléotides et dépend de la librairie \textit{blast}. Les performances de \textit{blast} sont optimisées avec la suite \textit{blast+} qui utilise le Toolkit C++ du NCBI. Ainsi notre package utilise l'outil \texttt{  makeblastdb} qui appartient à \textit{blast+}.
 
 
 
