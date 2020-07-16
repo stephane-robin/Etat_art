@@ -25,39 +25,39 @@
 \contentsline {chapter}{\numberline {4}Le choix des outils}{24}{chapter.4}
 \contentsline {section}{\numberline {1.}L'environnement de d\IeC {\'e}veloppement}{24}{section.4.1}
 \contentsline {section}{\numberline {2.}Le choix d'Anaconda, une alternative \IeC {\`a} l'environnement de d\IeC {\'e}veloppement}{27}{section.4.2}
-\contentsline {section}{\numberline {3.}L'outil d'empaquetage}{27}{section.4.3}
-\contentsline {chapter}{\numberline {5}Construction du package avec Poetry}{29}{chapter.5}
-\contentsline {section}{\numberline {1.}Cr\IeC {\'e}ation du package et gestion des d\IeC {\'e}pendances}{29}{section.5.1}
-\contentsline {section}{\numberline {2.}Construction du package et publication}{31}{section.5.2}
-\contentsline {section}{\numberline {3.}La structure du package construit par Poetry}{33}{section.5.3}
-\contentsline {chapter}{\numberline {6}La documentation du package \\(version originale)}{35}{chapter.6}
-\contentsline {section}{\numberline {1.}Purpose of this package}{36}{section.6.1}
-\contentsline {section}{\numberline {2.}How to install the package ?}{36}{section.6.2}
-\contentsline {section}{\numberline {3.}How to use the Command Line Interface ?}{37}{section.6.3}
-\contentsline {subsection}{\numberline {3.1.}Executing CRISPRbuilder\_TB with a SRA reference}{38}{subsection.6.3.1}
-\contentsline {subsection}{\numberline {3.2.}Executing CRISPRbuilder\_TB with a list of SRA references}{38}{subsection.6.3.2}
-\contentsline {subsection}{\numberline {3.3.}Printing the database lineage.csv}{38}{subsection.6.3.3}
-\contentsline {subsection}{\numberline {3.4.}Adding a record to lineage.csv}{39}{subsection.6.3.4}
-\contentsline {subsection}{\numberline {3.5.}Removing a record from lineage.csv}{39}{subsection.6.3.5}
-\contentsline {subsection}{\numberline {3.6.}Changing a record from lineage.csv}{40}{subsection.6.3.6}
-\contentsline {section}{\numberline {4.}Composition of the package and dependencies}{40}{section.6.4}
-\contentsline {section}{\numberline {5.}Retrieving the genome information dictionary}{42}{section.6.5}
-\contentsline {chapter}{\numberline {7}Tester le package}{50}{chapter.7}
-\contentsline {section}{\numberline {1.}Les tests unitaires, le module unittest}{50}{section.7.1}
-\contentsline {section}{\numberline {2.}les tests d'int\IeC {\'e}gration}{51}{section.7.2}
-\contentsline {subsection}{\numberline {2.1.}Les probl\IeC {\`e}mes rencontr\IeC {\'e}s}{51}{subsection.7.2.1}
-\contentsline {subsection}{\numberline {2.2.}Le respect des r\IeC {\`e}gles du PEP avec pylint}{52}{subsection.7.2.2}
-\contentsline {section}{\numberline {3.}Les tests de non-r\IeC {\'e}gression}{53}{section.7.3}
-\contentsline {subsection}{\numberline {3.1.}Le versioning avec Git}{53}{subsection.7.3.1}
-\contentsline {section}{\numberline {4.}Les tests d'installation}{53}{section.7.4}
-\contentsline {subsubsection}{\numberline {4.0.1.}L'utilisation de VirtualBox}{55}{subsubsection.7.4.0.1}
-\contentsline {subsection}{\numberline {4.1.}L'utilit\IeC {\'e} de Anaconda}{57}{subsection.7.4.1}
-\contentsline {section}{\numberline {5.}Les tests de validation}{58}{section.7.5}
-\contentsline {subsection}{\numberline {5.1.}Les probl\IeC {\`e}mes li\IeC {\'e}s aux chemins d'acc\IeC {\`e}s}{59}{subsection.7.5.1}
-\contentsline {section}{\numberline {6.}Les tests de performance}{59}{section.7.6}
-\contentsline {subsection}{\numberline {6.1.}subprocess.run et os.system}{59}{subsection.7.6.1}
-\contentsline {subsection}{\numberline {6.2.}parallel-fastq-dump}{61}{subsection.7.6.2}
-\contentsline {subsection}{\numberline {6.3.}blast+}{61}{subsection.7.6.3}
-\contentsline {section}{\numberline {7.}Les tests de configuration}{61}{section.7.7}
-\contentsline {chapter}{\numberline {8}Conclusion}{62}{chapter.8}
+\contentsline {section}{\numberline {3.}L'outil d'empaquetage}{28}{section.4.3}
+\contentsline {chapter}{\numberline {5}Construction du package avec Poetry}{30}{chapter.5}
+\contentsline {section}{\numberline {1.}Cr\IeC {\'e}ation du package et gestion des d\IeC {\'e}pendances}{30}{section.5.1}
+\contentsline {section}{\numberline {2.}Construction du package et publication}{32}{section.5.2}
+\contentsline {section}{\numberline {3.}La structure du package construit par Poetry}{34}{section.5.3}
+\contentsline {chapter}{\numberline {6}La documentation du package \\(version originale)}{36}{chapter.6}
+\contentsline {section}{\numberline {1.}Purpose of this package}{37}{section.6.1}
+\contentsline {section}{\numberline {2.}How to install the package ?}{37}{section.6.2}
+\contentsline {section}{\numberline {3.}How to use the Command Line Interface ?}{38}{section.6.3}
+\contentsline {subsection}{\numberline {3.1.}Executing CRISPRbuilder\_TB with a SRA reference}{39}{subsection.6.3.1}
+\contentsline {subsection}{\numberline {3.2.}Executing CRISPRbuilder\_TB with a list of SRA references}{39}{subsection.6.3.2}
+\contentsline {subsection}{\numberline {3.3.}Printing the database lineage.csv}{39}{subsection.6.3.3}
+\contentsline {subsection}{\numberline {3.4.}Adding a record to lineage.csv}{40}{subsection.6.3.4}
+\contentsline {subsection}{\numberline {3.5.}Removing a record from lineage.csv}{40}{subsection.6.3.5}
+\contentsline {subsection}{\numberline {3.6.}Changing a record from lineage.csv}{41}{subsection.6.3.6}
+\contentsline {section}{\numberline {4.}Composition of the package and dependencies}{41}{section.6.4}
+\contentsline {section}{\numberline {5.}Retrieving the genome information dictionary}{43}{section.6.5}
+\contentsline {chapter}{\numberline {7}Tester le package}{51}{chapter.7}
+\contentsline {section}{\numberline {1.}Les tests unitaires, le module unittest}{51}{section.7.1}
+\contentsline {section}{\numberline {2.}les tests d'int\IeC {\'e}gration}{52}{section.7.2}
+\contentsline {subsection}{\numberline {2.1.}Les probl\IeC {\`e}mes rencontr\IeC {\'e}s}{52}{subsection.7.2.1}
+\contentsline {subsection}{\numberline {2.2.}Le respect des r\IeC {\`e}gles du PEP avec pylint}{53}{subsection.7.2.2}
+\contentsline {section}{\numberline {3.}Les tests de non-r\IeC {\'e}gression}{54}{section.7.3}
+\contentsline {subsection}{\numberline {3.1.}Le versioning avec Git}{54}{subsection.7.3.1}
+\contentsline {section}{\numberline {4.}Les tests d'installation}{54}{section.7.4}
+\contentsline {subsubsection}{\numberline {4.0.1.}L'utilisation de VirtualBox}{56}{subsubsection.7.4.0.1}
+\contentsline {subsection}{\numberline {4.1.}L'utilit\IeC {\'e} de Anaconda}{58}{subsection.7.4.1}
+\contentsline {section}{\numberline {5.}Les tests de validation}{59}{section.7.5}
+\contentsline {subsection}{\numberline {5.1.}Les probl\IeC {\`e}mes li\IeC {\'e}s aux chemins d'acc\IeC {\`e}s}{60}{subsection.7.5.1}
+\contentsline {section}{\numberline {6.}Les tests de performance}{60}{section.7.6}
+\contentsline {subsection}{\numberline {6.1.}subprocess.run et os.system}{60}{subsection.7.6.1}
+\contentsline {subsection}{\numberline {6.2.}parallel-fastq-dump}{62}{subsection.7.6.2}
+\contentsline {subsection}{\numberline {6.3.}blast+}{62}{subsection.7.6.3}
+\contentsline {section}{\numberline {7.}Les tests de configuration}{62}{section.7.7}
+\contentsline {chapter}{\numberline {8}Conclusion}{63}{chapter.8}
 \contentsfinish 

@@ -718,6 +718,17 @@ En fait, \textit{pyenv} s'insère dans la variable d'environnement PATH et devie
 \texttt{   which python}
 qui renvoie \textbf{\raisebox{-1ex}{\textasciitilde}/.pyenv/shims/python} au lieu de \textbf{/usr/bin/python}.
 
+On peut également choisir de mettre à jour la version de Python pour toute la machine, et de définir Python 3 comme étant la version par défaut. Cette méthode est certes plus facile, mais peut engendrer des problèmes de fonctionnement du système pour certaines applications qui utilisent la version 2 de Python ou encore une version plus spécifique. On utilise alors simplement les instructions
+
+\begin{verbatim}
+  sudo apt-get install python 3.8.0
+  alternatives --list | grep -i python
+  alternatives --install /usr/bin/python python /usr/bin/python3.8 1
+  alternatives --install /usr/bin/python python /usr/bin/python2.7 2
+  python --version
+  python 3.8.0
+\end{verbatim}
+
 Finalement, nous installons dans notre environnement de développement les dépendances nécessaires à l'aide de l'outil \textit{pip}\index{pip} :
 \begin{itemize}
 \item \begin{verbatim}  pip install xmltodict\end{verbatim}
@@ -759,9 +770,18 @@ Cette méthode fonctionne bien pour construire un environnement de développemen
 % PARAMETRAGE DE L'ENVIRONNEMENT ------------------
 \section{Le choix d'Anaconda, une alternative à l'environnement de développement}
 
-Nous venons de voir qu'il est possible de créer un environnement de développement adapté à notre projet, sans modifier le reste de la structure de notre machine. Toutefois, cet environnement nécessite un paramétrage de la variable d'environnement \$PATH afin que les modules recherchés puissent être trouvés par le système au moment de l'exécution du package.
+Nous venons de voir qu'il est possible de créer un environnement de développement adapté à notre projet, sans modifier le reste de la structure de notre machine. Toutefois, cet environnement nécessite un paramétrage de la variable d'environnement \$PATH afin que les modules recherchés puissent être trouvés par le système au moment de l'exécution du package. Afin que ce paramétrage reste permanent, il faut modifier cette variable d'environnement à l'intérieur même du \textbf{~/.bashrc}
 
-PARAMETRAGE PATH
+\begin{verbatim}
+  echo $PATH
+  export PATH=$PATH:~/.local/bin/python3.8/site-packages
+\end{verbatim}
+
+ou selon le chemin d'accès choisi
+
+\begin{verbatim}
+  export PATH=$PATH:~/venv/lib/python3.8/site-packages
+\end{verbatim}
 
 Il existe un autre moyen qui a retenu notre attention uniquement à la fin du projet, car il s'avère plus simple. Il consiste tout d'abord à mettre à jour Python dans une version récente (supérieure ou égale à 3.7), puis à installer le package \textit{Anaconda}, qui comprend notamment l'outil \texttt{  conda} et le module \textit{bioconda} dont nous aurons besoin. Il faut ensuite installer toutes les dépendances du projet à l'aide de \texttt{  conda}. Ces dépendances s'installent systématiquement dans XXX et la variable d'environnement \$PATH se met automatiquement à jour.
 
@@ -1977,10 +1997,18 @@ Il est donc nécessaire de créer d'abord le package avec \textit{Poetry} puis d
 % LES TESTS D'INSTALLATION -----------------------------
 \section{Les tests d'installation}
 
-Avant de publier le package, il faut tester son comportement à l'installation en dehors de l'environnement de développement. Pour cela, il est possible de le publier officieusement sur la plateforme de test testPyPI. Il faut alors se placer à la racine du package et lancer en ligne de commande l'instruction
+Les tests d'installation permettent de s'assurer que l'utilisateur sera en mesure d'installer le package en dehors de son environnement de développement, qu'il dispose d'un système d'exploitation Linux, macOS ou Windows. Pour simuler le fonctionnement de ces systèmes, nous choisissons de travailler sur les quatre machines virtuelles suivantes créées par \textit{VirtualBox}, toutes fonctionnant en 64 bits : 
+\begin{itemize}
+\item Ubuntu 18.04 LTS, 
+\item Ubuntu 20.04 LTS, 
+\item macOS 10.12 Sierra, 
+\item Windows 10.
+\end{itemize}
+
+Afin de tester le comportement du package à l'installation, il est possible de le publier officieusement sur la plateforme testPyPI. Il faut alors se placer à la racine du package et lancer en ligne de commande l'instruction
 \begin{verbatim}  twine upload --repository testpypi dist/*\end{verbatim}
 
-On peut donc télécharger un package à partir d'index différents de PyPI, comme par exemple testPyPI. Toutefois, les dépendances ne sont pas nécessairement répertoriées dans cet index. Cela induit dans ce cas une erreur au téléchargement et interdit l'installation du package. il faut donc faire référence à PyPI pour le téléchargement des dépendances. Par exemple, l'installation de CRISPRbuilder\_TB à partir de testPyPI se fait à l'aide de l'instruction suivante, après s'être assuré que \textit{pip} s'exécute avec une version 3 de Python
+On peut donc télécharger un package à partir d'index différents de PyPI, comme par exemple testPyPI. Toutefois, les dépendances ne sont pas nécessairement répertoriées dans cet index. Cela induit dans ce cas une erreur au téléchargement et interdit l'installation du package. Il faut donc faire référence à PyPI pour le téléchargement des dépendances. Par exemple, l'installation de CRISPRbuilder\_TB à partir de testPyPI se fait à l'aide de l'instruction suivante
 
 \begin{verbatim}  pip install --index-url https://test.pypi.org/simple/ --extra-index-url 
   https://pypi.org/simple/ crisprbuilder_tb\end{verbatim} 
@@ -1994,14 +2022,14 @@ Il peut arriver que testPyPI n'installe pas la dernière version. Dans ce cas, i
 \begin{verbatim}  pip install --index-url https://test.pypi.org/simple/ --extra-index-url 
   https://pypi.org/simple/ crisprbuilder_tb==0.1.2\end{verbatim} 
 
-A noter qu'il ne faut utiliser de guillemets autour de la version du package.
+A noter qu'il ne faut pas utiliser de guillemets autour de la version du package.
 
 Il est fréquent qu'il s'affiche à ce moment-là le message d'erreur suivant
 
 \begin{verbatim}  ERROR: Could not find a version that satisfies the requirement crisprbuilder_tb==0.1.2 (from versions: 0.0.1, 0.0.2, 0.0.3, 0.0.4, 0.0.5, 0.1.0, 0.1.1)
 ERROR: No matching distribution found for crisprbuilder_tb==0.1.2\end{verbatim}
 
-Dans ce cas, la répétition de l'instruction précédente résout souvent le problème.
+Dans ce cas, la répétition de l'instruction précédente résout le problème, sans raison apparente.
 
 Une fois que l'installation est validée à partir de testPyPI et que les modifications nécessaires ont été effectuées dans le code du package, on peut publier le package sur PyPI et procéder aux tests sur la version proposée aux utilisateurs avec la commande
 
@@ -2020,33 +2048,29 @@ En cas de difficulté rencontrée, on peut forcer la mise à niveau en suppriman
   pip install crisprbuilder_tb
 \end{verbatim}
 
-Les tests d'installation permettent de s'assurer que l'utilisateur sera en mesure d'installer le package si il dispose d'un système d'exploitation Linux, MacOS ou Microsoft Windows. Pour simuler le fonctionnement de ces systèmes, nous choisissons de travailler sur les quatre machines virtuelles suivantes créées par \textit{VirtualBox}, toutes fonctionnant en 64 bits : 
-\begin{itemize}
-\item Ubuntu 18.04 LTS, 
-\item Ubuntu 20.04 LTS, 
-\item macOS 10.12 Sierra, 
-\item Microsoft Windows 10.
-\end{itemize}
+
 
 
 
 % L'UTILISATION DE VIRTUALBOX
 \subsubsection{L'utilisation de VirtualBox}
 
-Afin de tester le comportement de l'application à l'installation et au fonctionnement au sein de différents systèmes d'exploitation, nous créons artificiellement des plateformes de test vierges grâce à \index{VirtualBox}\textit{VirtualBox}. Nous configurons systématiquement Python dans sa dernière version qui est la 3.8 et nous installons \textit{pip}.
+Afin d'effectuer les tests d'installation et de validation, nous créons artificiellement des plateformes de test vierges grâce à \index{VirtualBox}\textit{VirtualBox}. Nous configurons systématiquement Python dans sa dernière version qui est la 3.8 et nous installons \textit{Anaconda}, ce qui correspond sur Linux aux instructions suivantes
 
 \begin{verbatim}
-MISE A JOUR PYTHON
+  sudo apt-get install python 3.8.0
   /usr/ A VERIFIER
-  apt-get install pip
+  apt-get install libgl1-mesa-glx libegl1-mesa libxrandr2 libxrandr2 libxss1 libxcursor1 libxcomposite1 libasound2 libxi6 libxtst6
+  bash ~/Téléchargements/Anaconda3/-2020.02-Linux-x86_64.sh
+
 \end{verbatim}
 
-Nous commençons par télécharger des images \textit{.iso} des différents systèmes d'exploitation, que nous clonons avant de commencer les tests afin de conserver une version vierge pour pouvoir revenir en arrière en cas de besoin :
+Nous commençons par télécharger des images \textit{.iso} des différents systèmes d'exploitation, que nous clonons avant de commencer les tests, afin de conserver une version vierge pour pouvoir revenir en arrière en cas de besoin :
 \begin{itemize}
-\item pour Ubuntu 18.04 LTS, nous choisissons la version 64-bit Server Install Image car nous n'avons pas besoin d'interface graphique pour réaliser nos tests. La version de Python par défaut de ce système est 2.7.17. Il existe également une version 3.6.9 de Python,
-\item pour Ubuntu 20.04 LTS, la version de Python par défaut de ce système est 3.8.2,
-\item pour MacOS 10.12 Sierra, 
-\item pour Microsoft Windows 10, 
+\item pour Ubuntu 18.04 LTS, nous choisissons la version 64-bit Server Install Image car nous n'avons pas besoin d'interface graphique pour réaliser nos tests. La version de Python par défaut de ce système est 2.7.17. Il existe également une version 3.6.9 de Python.
+\item pour Ubuntu 20.04 LTS, nous choisissons la version 64-bit Server Install Image. La version de Python par défaut de ce système est 3.8.2.
+\item pour macOS 10.12 Sierra, 
+\item pour Windows 10, 
 \end{itemize}
 
 Nous commençons les tests en rajoutant dans la description de chaque système toutes les installations effectuées afin que le package fonctionne correctement.
