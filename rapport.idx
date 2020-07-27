@@ -2,6 +2,7 @@
 \indexentry{PEP|hyperpage}{4}
 \indexentry{PyPI|hyperpage}{4}
 \indexentry{module|hyperpage}{5}
+\indexentry{archive|hyperpage}{5}
 \indexentry{distribution|hyperpage}{5}
 \indexentry{Paire de bases|hyperpage}{6}
 \indexentry{Codon|hyperpage}{6}
@@ -31,9 +32,9 @@
 \indexentry{S\IeC {\'e}quen\IeC {\c c}age du g\IeC {\'e}nome|hyperpage}{18}
 \indexentry{Base de donn\IeC {\'e}es SITVIT2|hyperpage}{18}
 \indexentry{package|hyperpage}{21}
-\indexentry{PEP-518|hyperpage}{21}
-\indexentry{PyPA|hyperpage}{21}
 \indexentry{licence|hyperpage}{22}
+\indexentry{PEP-518|hyperpage}{22}
+\indexentry{PyPA|hyperpage}{22}
 \indexentry{environnement de d\IeC {\'e}veloppement|hyperpage}{24}
 \indexentry{venv|hyperpage}{24}
 \indexentry{pyenv|hyperpage}{24}

@@ -2,6 +2,7 @@
 
   \item All\IeC {\`e}le, \hyperpage{12}
   \item Approche bay\IeC {\'e}sienne, \hyperpage{9}
+  \item archive, \hyperpage{5}
   \item ARN polym\IeC {\'e}rase, \hyperpage{10}
 
   \indexspace
@@ -64,7 +65,7 @@
   \item PCR, \hyperpage{13}
   \item PEP, \hyperpage{4}
   \item PEP-257, \hyperpage{53}
-  \item PEP-518, \hyperpage{21}
+  \item PEP-518, \hyperpage{22}
   \item PEP-8, \hyperpage{53}
   \item Phylog\IeC {\'e}nie, \hyperpage{6}
   \item pip, \hyperpage{25}
@@ -73,7 +74,7 @@
   \item Puce \IeC {\`a} ADN, \hyperpage{14}
   \item pyenv, \hyperpage{24}
   \item pylint, \hyperpage{53}
-  \item PyPA, \hyperpage{21}
+  \item PyPA, \hyperpage{22}
   \item PyPI, \hyperpage{4}
 
   \indexspace
