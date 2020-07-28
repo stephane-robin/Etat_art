@@ -299,6 +299,9 @@ Il faut assurément se confronter au moins une fois à ces compétences pratique
 
 Nous allons voir en détail dans ce rapport les différentes étapes suivies.
 
+Le package CRISPRbuilder\_TB peut s'installer à partir de PyPI où il est répertorié sous le nom de crisprbuilder\_tb. Il est présent sous \textit{GitHub} à l'adresse suivante \url{https://github.com/stephane-robin/crisprbuilder_tb}.
+
+
 
 
 % PREALABLE -------------------------
@@ -313,6 +316,9 @@ Définissons par ailleurs le vocabulaire que nous allons utiliser dans ce rappor
 \item \index{archive}archive : représentation abstraite d'un ensemble de fichiers (au format \textit{.tar.gz}, \textit{.zip}, ...)
 \item \index{distribution}distribution : une version particulière de modules ou packages (au format \textit{.whl}, \textit{.exe}, ...)
 \end{itemize}
+
+
+Le code a été redéfini sous forme de modules, tel que préconisé par la programmation en Python.
 
 
 
@@ -586,7 +592,7 @@ Un tableau comparatif de différents spoligotypes en fonction des lignées de \t
 % LA NOTION DE PACKAGE ---------------------------
 \chapter{La notion de package}
 
-Le packaging ou distribution de programmes pose traditionnellement plus de problèmes en Python que dans d'autres langages. La documentation sur Internet est souvent obsolète et entraîne de nombreuses incompréhensions. Toutefois, des sites tels que \url{https://realpython.com/python-modules-packages/}, \url{https://realpython.com/pypi-publish-python-package/}, \url{https://packaging.python.org/overview/} ou \url{https://python-poetry.org/} permettent de mieux appréhender les difficultés.
+Le packaging ou distribution de programmes pose traditionnellement plus de problèmes en Python que dans d'autres langages. En effet, les standards ont évolué de façon concurrentielle plutôt que collaborative. Par ailleurs, la documentation sur Internet est parfois obsolète et entraîne de nombreuses incompréhensions. Nous verrons que l'arrivée de l'outil \textit{Poetry} a grandement facilité la création et la gestion des packages. Des sites tels que \url{https://realpython.com/python-modules-packages/}, \url{https://realpython.com/pypi-publish-python-package/}, \url{https://packaging.python.org/overview/} ou \url{https://python-poetry.org/} ont également contribué à rendre accessible le packaging au grand public.
 
 
 
@@ -595,7 +601,9 @@ Le packaging ou distribution de programmes pose traditionnellement plus de probl
 % COMPOSITION D'UN PACKAGE STANDARD ------------------
 \section{Composition d'un package standard}
 
-Un \index{package}package standard est un ensemble de modules Python, de modules en C, de métadonnées et de bases de données. Il comporte obligatoirement un fichier \textbf{\_\_init\_\_.py} dans chaque répertoire, même dans le cas d'un répertoire vide. En particulier, le répertoire racine du package contient un fichier \textbf{\_\_init\_\_.py} qui va définir la version du projet et le nom du module de lancement du programme \textbf{\_\_main\_\_.py}. Il est toutefois acceptable et parfois même recommandé de conserver ce fichier \textbf{\_\_init\_\_.py} vide. Nous avons ainsi choisi d'insérer des fichiers \textbf{\_\_init\_\_.py} vides dans CRISPRbuilder\_TB.
+Un package permet de fournir une structure hiérarchisée du programme, pour en faciliter la compréhension. Un \index{package}package standard est ainsi un ensemble de modules Python, de modules en C, de métadonnées et de bases de données. Il comporte traditionnellement un fichier \textbf{\_\_init\_\_.py} dans chaque répertoire, même dans le cas d'un répertoire vide. En particulier, le répertoire racine du package contient un fichier \textbf{\_\_init\_\_.py} qui peut définir la version du projet et le nom des modules à importer. Il est toutefois acceptable et parfois même recommandé de conserver ce fichier \textbf{\_\_init\_\_.py} vide. Notons que la version 3.3 de Python a introduit la notion de \textit{Implicit Namespace Packages}, qui permet la création de packages sans la présence de fichiers  \textbf{\_\_init\_\_.py}. Nous avons ainsi choisi d'insérer des fichiers \textbf{\_\_init\_\_.py} vides dans CRISPRbuilder\_TB.
+
+Dans le cas d'un package exécutable, il est important que celui-ci contienne un module de lancement du programme appelé  \textbf{\_\_main\_\_.py}.
 
 Les fichiers \textbf{setup.py}, \textbf{requirements.txt}, \textbf{LICENSE},  \textbf{README.md} et \textbf{MANIFEST.in} sont également nécessaires.  
 \begin{itemize}
@@ -620,9 +628,11 @@ Avant d'être installé, un package se retrouve sur PyPI sous deux formats :
 \item une distribution compilée \textit{wheel} au format \textit{.whl}. 
 \end{itemize}
 
-Le format \textit{.egg} en Python est l'équivalent du format \textit{.jar} en Java. \textit{pip} ne parvient généralement pas à installer les fichiers au format \textit{egg} qui ne sont pas standard et ne tiennent pas compte des différents interpréteurs CPython, jython, pypy, ...
+Il est possible de rencontrer le format \textit{.egg} développé par \textit{setuptools} à la place du format \textit{.whl} proposé par PEP. Le format \textit{.egg} en Python est l'équivalent du format \textit{.jar} en Java, mais \textit{pip} ne parvient généralement pas à installer les fichiers au format \textit{.egg} qui ne sont pas standard et ne tiennent pas compte des différents interpréteurs CPython, jython, pypy, ...
 
+On préfèrera donc le format \textit{.whl} pour la version compilée d'un package.
 
+QUE FAIT LARCHIVE, QUE FAIT LA DISTRI COMPILEE
 
 
 % QUELLE LICENCE CHOISIR ------------------
@@ -646,24 +656,24 @@ Dans le cadre de ce projet, aucune spécification restrictive n'étant requise, 
 Il est possible d'utiliser les packages de différentes manières. 
 \begin{itemize}
 \item certains packages peuvent \textit{s'importer} (partiellement ou en totalité) en début de code afin d'en appeler les méthodes dans un module. 
-\item certains packages sont \textit{exécutables} suivant une interface graphique. 
-\item d'autres packages sont \textit{exécutables} par une interface en lignes de commandes. C'est le cas de CRISPRbuilder\_TB qui s'installe et s'exécute en partant du répertoire courant. Ainsi, c'est à partir du répertoire courant qu'on appelle les modules et fichiers se trouvant à l'intérieur du package, lui-même installé à un emplacement spécifique. Ce processus est transparent pour l'utilisateur qui n'a nul besoin de connaître l'emplacement de téléchargement de ses packages. Il est toutefois essentiel pour le développeur de connaître les chemins d'accès vers les modules du package. Ces chemins sont en effet bien différents de ceux d'un programme local. On peut commencer par développer et tester le package en utilisant des chemins locaux, mais dès que celui-ci est prêt à être installé, il faut utiliser les chemins appropriés pour que n'importe quel ordinateur puisse exécuter le package.
+\item d'autres packages sont \textit{exécutables} suivant une interface graphique ou suivant une interface en lignes de commandes. C'est le cas de CRISPRbuilder\_TB qui s'installe et s'exécute en partant du répertoire courant. Ainsi, c'est à partir du répertoire courant qu'on appelle les modules et fichiers se trouvant à l'intérieur du package, lui-même installé à un emplacement spécifique. Ce processus est transparent pour l'utilisateur qui n'a nul besoin de connaître l'emplacement de téléchargement de ses packages. Il est toutefois essentiel pour le développeur de connaître les chemins d'accès vers les modules du package. Ces chemins sont en effet bien différents de ceux d'un programme local. On peut commencer par développer et tester le package en utilisant des chemins locaux, mais dès que celui-ci est prêt à être installé, il faut utiliser les chemins appropriés pour que n'importe quel ordinateur puisse exécuter le package.
 \end{itemize}
 
 Dans un programme local, le code s'exécute dans un répertoire courant et accède aux différents fichiers support en utilisant un chemin relatif à ce répertoire ou encore en utilisant un chemin absolu. Les différentes dépendances sont importées en début de code, sans référence à un chemin d'accès car elles ont préalablement été installées dans l'environnement de développement de l'interpréteur Python. Elles sont en plus installées dans l'environnement de développement intégré dans le cas où on utilise un tel outil.
 
-Dans un package en revanche, le module \textbf{\_\_main\_\_.py} se trouve à un emplacement défini par le système au moment du téléchargement, indépendamment du répertoire courant. Cette opération est transparente pour l'utilisateur qui n'a pas besoin d'en connaître le chemin d'accès : \textbf{~/.local/lib/python3.8/site-packages} ou \textbf{~/.local/lib/python3.8/dist-packages} sur Linux. Lorsque \textit{Anaconda} est installé et que son environnement est activé par défaut au démarrage de la machine, cet emplacement devient \textbf{~/anaconda3/bin}. L'utilisateur ne trouvera aucun dossier du nom de \textbf{crisprbuilder\_tb} dans le répertoire courant après installation du package, bien qu'il l'ait installé à partir du répertoire courant. On peut chercher l'emplacement exact du package et le déplacer ensuite, mais ceci n'a aucun intérêt vu que le système mémorise l'emplacement de ses packages.
+Dans un package en revanche, le module \textbf{\_\_main\_\_.py} se trouve à un emplacement défini par le système au moment du téléchargement, indépendamment du répertoire courant, c'est à dire la plupart du temps \textbf{~/.local/lib/python3.8/site-packages} ou \textbf{~/.local/lib/python3.8/dist-packages} sur Linux. Lorsque \textit{Anaconda} est installé et que son environnement est activé par défaut au démarrage de la machine, cet emplacement devient \textbf{~/anaconda3/bin}. L'utilisateur ne trouvera aucun dossier du nom de \textbf{crisprbuilder\_tb} dans le répertoire courant après installation du package, bien qu'il l'ait installé à partir du répertoire courant. On peut chercher l'emplacement exact du package et le déplacer ensuite, mais ceci n'a aucun intérêt vu que le système mémorise l'emplacement de ses packages.
 
-Afin d'expliquer le fonctionnement interne d'un package, nous prenons l'exemple de CRISPRbuilder\_TB. L'utilisateur se place dans son répertoire courant, exécute \texttt{python -m crisprbuilder\_tb \textemdash \textemdash collect ERR2704808}, qui va chercher le package CRISPRbuilder\_TB à son emplacement de stockage \textbf{~/anaconda3/bin} et l'exécute comme si celui-ci se trouvait dans le répertoire courant. Ainsi le module \textbf{\_\_main\_\_.py} s'exécute et appelle les modules \textbf{fonctions.py}, \textbf{bdd.py} et les fichiers du répertoire \textbf{data}. On pourrait définir des chemins d'accès absolus vers ces modules et fichiers, mais ces chemins seraient différents pour chaque système d'exploitation. On définit plutôt des chemins relatifs au répertoire contenant le module \textbf{\_\_main\_\_.py}, c'est à dire \textbf{crisprbuilder\_tb}, qui sert de référence pour les chemins d'accès. Ainsi, les fichiers nécessaires au fonctionnement sont atteignables grâce à une adresse relative commençant par une variable d'environnement et ne contenant pas le nom du package \textbf{crisprbuilder\_tb}, car l'exécution du code se trouve déjà dans le package lors de la lecture du fichier \textbf{\_\_main\_\_.py}. 
+Afin d'expliquer le fonctionnement interne d'un package, nous prenons l'exemple de CRISPRbuilder\_TB. L'utilisateur se place dans son répertoire courant, exécute \texttt{  python -m crisprbuilder\_tb \textemdash \textemdash collect ERR2704808}, qui va chercher le package CRISPRbuilder\_TB à son emplacement de stockage \textbf{~/anaconda3/bin} et l'exécute comme si celui-ci se trouvait dans le répertoire courant. Ainsi le module \textbf{\_\_main\_\_.py} s'exécute et appelle les modules \textbf{fonctions.py}, \textbf{bdd.py} et les fichiers du répertoire \textbf{data}. On pourrait définir des chemins d'accès absolus vers ces modules et fichiers, mais ces chemins seraient différents pour chaque système d'exploitation. On définit plutôt des chemins relatifs au répertoire contenant le module \textbf{\_\_main\_\_.py}, c'est à dire \textbf{crisprbuilder\_tb}, qui sert de référence pour les chemins d'accès. Ainsi, les fichiers nécessaires au fonctionnement sont atteignables grâce à une adresse relative commençant par une variable d'environnement et ne contenant pas le nom du package \textbf{crisprbuilder\_tb}, car l'exécution du code se trouve déjà dans le package lors de la lecture du fichier \textbf{\_\_main\_\_.py}. En revanche, l'importation des modules tient compte du nom du package. Par exemple, pour importer XXX
 
-Par ailleurs, il n'est pas prévu que l'utilisateur se place dans le package pour exécuter directement le module \textbf{\_\_main\_\_.py} en écrivant en ligne de commande
-\texttt{ python crisprbuilder\_tb \textemdash \textemdash collect ERR2704808}
-sans le "-m", car dans ce cas l'exécution entraînerait la levée d'une exception due aux différents chemins d'accès qui seraient erronés.
+Il est important de comprendre que l'exécution du package :
+\begin{itemize}
+\item NE SE FAIT PAS depuis l'intérieur du package avec l'instruction \texttt{  python \_\_main\_\_.py} qui ne permet pas d'utiliser les options du package.
+\item NE SE FAIT PAS depuis le répertoire parent du package avec l'instruction \texttt{  python crisprbuilder\_tb \textemdash \textemdash collect ERR2704808} sans le "-m". Dans ce cas, l'interpréteur qui ne va pas considérer \texttt{crisprbuilder\_tb} comme un package et ne va pas chercher le fichier \textbf{\_\_main\_\_.py} pour l'exécuter.
+\item SE FAIT à partir du répertoire courant, quel qu'il soit, avec l'instruction \texttt{  python -m crisprbuilder\_tb \textemdash \textemdash collect ERR2704808}. C'est à l'ordinateur d'aller chercher le package à son emplacement. 
+\end{itemize}
 
 
-eggs
-wheel
-archive
+
 
 % CHOIX DES OUTILS -----------------------------
 \chapter{Le choix des outils}
