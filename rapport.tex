@@ -601,9 +601,17 @@ Le packaging ou distribution de programmes pose traditionnellement plus de probl
 % COMPOSITION D'UN PACKAGE STANDARD ------------------
 \section{Composition d'un package standard}
 
-Un package permet de fournir une structure hiérarchisée du programme, pour en faciliter la compréhension. Un \index{package}package standard est ainsi un ensemble de modules Python, de modules en C, de métadonnées et de bases de données. Il comporte traditionnellement un fichier \textbf{\_\_init\_\_.py} dans chaque répertoire, même dans le cas d'un répertoire vide. En particulier, le répertoire racine du package contient un fichier \textbf{\_\_init\_\_.py} qui peut définir la version du projet et le nom des modules à importer. Il est toutefois acceptable et parfois même recommandé de conserver ce fichier \textbf{\_\_init\_\_.py} vide. Notons que la version 3.3 de Python a introduit la notion de \textit{Implicit Namespace Packages}, qui permet la création de packages sans la présence de fichiers  \textbf{\_\_init\_\_.py}. Nous avons ainsi choisi d'insérer des fichiers \textbf{\_\_init\_\_.py} vides dans CRISPRbuilder\_TB.
+Un package permet de fournir une structure hiérarchisée du programme, pour en faciliter la compréhension et l'utilisation. Un \index{package}package standard est ainsi un ensemble de modules Python, de modules écrits en C, de métadonnées et de bases de données.
 
-Dans le cas d'un package exécutable, il est important que celui-ci contienne un module de lancement du programme appelé  \textbf{\_\_main\_\_.py}.
+Il comporte traditionnellement un fichier \textbf{\_\_init\_\_.py} dans chaque répertoire, même si ce répertoire est vide. En particulier, le répertoire racine du package contient un fichier \textbf{\_\_init\_\_.py} qui peut définir la version du projet et le nom des modules à importer. Il est toutefois acceptable et parfois même recommandé de conserver ce fichier \textbf{\_\_init\_\_.py} vide.
+
+Dans le cas d'un package exécutable, il est essentiel que celui-ci contienne un module de lancement du programme appelé  \textbf{\_\_main\_\_.py}.
+
+Ainsi, une fois installé, le package présente la structure suivante pour l'utilisateur :
+
+\includegraphics[width=4.5cm]{mon_package1.png}
+
+Du point de vue du développeur, il est nécessaire de rajouter des fichiers comportant les métadonnées du package.
 
 Les fichiers \textbf{setup.py}, \textbf{requirements.txt}, \textbf{LICENSE},  \textbf{README.md} et \textbf{MANIFEST.in} sont également nécessaires.  
 \begin{itemize}
@@ -616,36 +624,85 @@ pour commencer ces installations.
 \item \textbf{MANIFEST.in} permet d'inclure dans le package certains fichiers qui ne sont pas automatiquement intégrés. 
 \end{itemize}
 
-Avec la PEP-518\footnote{\index{PEP-518}\textbf{PEP-518:} specifying minimum build system requirements for Python projects}, le PyPA\footnote{\index{PyPA}\textbf{PyPA:} Python Packaging Authority} a proposé un nouveau standard au format \textit{.toml}, qui remplace les fichiers \textbf{setup.py}, \textbf{requirements.txt}, \textbf{setup.cfg} et \textbf{MANIFEST.in}. C'est ce nouveau standard qui est utilisé lors de la création d'un package avec \textit{Poetry} dans le fichier \textbf{pyproject.toml}.
+L'ensemble des modules nécessaires au fonctionnement du package sont regroupés dans un répertoire portant le même nom que celui du package. C'est ce répertoire qui sera archivé et distribué en mettant à jour le numéro de version dans les fichiers \textbf{\_\_init\_\_.py} et \textbf{setup.py}. Si au lieu de stocker les modules dans ce répertoire, on les place à la racine du package, alors la distribution du package se construit à vide, l'installation à partir de PyPI fonctionne quand même, mais l'exécution du package ne produit rien.
 
- Par ailleurs, les packages construits pour des systèmes Linux et MacOS nécessitent l'incorporation de fichiers \textbf{build.sh} et \textbf{meta.yaml} alors que les packages construits pour les systèmes Windows nécessitent l'incorporation des fichiers \textbf{bld.bat} et \textbf{meta.yaml}. Ces différents formats sont également incorporés dans le fichier \textbf{pyproject.toml}.
+Ainsi, un package standard présente initialement la structure suivante pour le développeur :
 
-Finalement, l'ensemble des modules nécessaires au fonctionnement du package sont regroupés dans un répertoire portant le même nom que ce package (accompagné d'un fichier \textbf{\_\_init\_\_.py}). C'est ce répertoire qui sera archivé et distribué. Notons que la création de ce répertoire est automatique avec \textit{Poetry}. Si les tous modules du package sont stockés à la racine de ce package, comme cela pourrait paraître naturel, alors l'archive et la distribution du package se construisent à vide, l'installation à partir de PyPI fonctionne quand même, mais l'exécution du package ne produit rien.
+\includegraphics[width=5.5cm]{mon_package2.png}
 
-Avant d'être installé, un package se retrouve sur PyPI sous deux formats :
+Par ailleurs, les packages construits pour des systèmes Linux et MacOS nécessitent l'incorporation de fichiers \textbf{build.sh} et \textbf{meta.yaml} alors que les packages construits pour les systèmes Windows nécessitent l'incorporation des fichiers \textbf{bld.bat} et \textbf{meta.yaml}.
+
+Il faut également rajouter l'archive et la distribution compilée en vue de publier le package. Nous entrerons dans le détail de ce processus dans la rubrique suivante avec un package construit par \textit{Poetry}.
+
+
+
+
+
+% COMPOSITION D'UN PACKAGE SOUS POETRY ----------------------
+\section{Composition d'un package sous poetry}
+
+Avec la PEP-518\footnote{\index{PEP-518}\textbf{PEP-518:} specifying minimum build system requirements for Python projects}, le PyPA\footnote{\index{PyPA}\textbf{PyPA:} Python Packaging Authority} a proposé un nouveau standard au format \textit{.toml} pour créer des packages sous \textit{Poetry}. Ainsi le fichier \textbf{pyproject.toml} remplace les fichiers \textbf{setup.py}, \textbf{setup.cfg} et \textbf{MANIFEST.in}. Il gère également l'installation des dépendances et remplace donc le fichier \textbf{requirements.txt}.
+
+Si l'utilisateur télécharge l'archive du package à partir de PyPI, sa structure sera la suivante :
+
+\includegraphics[width=4.5cm]{mon_package_poetry_archive.png}
+
+Dans ce cas l'archive du package sera, en fonction des réglages par défaut, présente dans le dossier \textbf{Téléchargements} de l'ordinateur, mais ne sera pas installée. Cela signifie que l'instruction
+
+\begin{verbatim}
+  python -m  mon_package
+\end{verbatim} 
+
+ne fonctionnera pas car le système n'est pas en mesure de trouver le package à l'emplacement dédié des packages.
+
+A partir du dossier \textbf{Téléchargements}, l'utilisation de l'instruction 
+
+\begin{verbatim}
+  python mon_package
+\end{verbatim}
+
+sans le "-m" ne fonctionnera pas non plus, car l'interpréteur qui ne va pas considérer \texttt{  mon\_package} comme un package et ne va pas chercher le fichier \textbf{\_\_main\_\_.py} pour l'exécuter.
+
+Finalement, en se plaçant à l'intérieur de l'archive, l'utilisation de l'instruction
+
+\begin{verbatim}
+  python __main__.py
+\end{verbatim}
+
+ne fonctionnera pas car XXX A TESTER
+
+On remarque la présence du fichier \textbf{setup.py} qui devait être remplacé par \textbf{pyproject.toml}. En fait, le fichier \textbf{setup.py} est automatiquement construit par \textbf{pyproject.toml}, et s'occupe par la suite de la construction du package.
+
+Une fois installé, le package construit par \textit{Poetry} présente la structure suivante pour l'utilisateur :
+
+\includegraphics[width=4.5cm]{mon_package_poetry.png}
+
+Notons que pour l'utilisateur, la racine du package se trouve au niveau du module \textbf{\_\_main\_\_.py}.
+
+Du point de vue du développeur, il faut rajouter les métadonnées du package ainsi que d'autres éléments qui permettent de construire la distribution suivant un numéro de version choisi, et de tester la conformité de cette distribution.
+
 \begin{itemize}
-\item une archive contenant les sources au format \textit{.tar.gz}.
-\item une distribution compilée \textit{wheel} au format \textit{.whl}. 
+\item la création du répertoire portant le nom du package est automatique avec \textit{Poetry}, de même que celle des fichiers \textbf{\_\_init\_\_.py}. 
+\item le répertoire \textbf{dist} créé au moment de la construction du package contient d'une part l'archive du package \textbf{mon\_package-0.1.0.tar.gz} construite à partir du répertoire \textbf{mon\_package} contenant tous les modules et bases de données nécessaire à l'exécution du programme. C'est une copie du fichier \textbf{mon\_package-0.1.0.tar.gz} qui est téléchargée et stockée dans l'ordinateur de l'utilisateur sous le nom de \textbf{mon\_package} au moment de l'installation du package. Le répertoire \textbf{dist} contient d'autre part la distribution compilée \textbf{mon\_package-0.1.0-py3-none-any.whl} est le format standard proposé par PEP. Elle permet de décompresser l'archive du format \textit{.tar.gz} et de rendre le package exécutable.
+\item le répertoire \textbf{mon\_package.egg-info} contient des métadonnées nécessaires à l'installation du package. Le format \textit{.egg} développé par \textit{setuptools} est l'équivalent en Python du format \textit{.jar} en Java, mais \textit{pip} ne parvient généralement pas à installer les fichiers au format \textit{.egg} qui ne sont pas standardisés et ne tiennent pas compte des différents interpréteurs CPython, jython, pypy, ...
+\item le réperoire \textbf{tests} permet de valider la conformité de la distribution dont le numéro de version apparaît dans le fichier \textbf{\_\_init\_\_.py} qu'il contient.
+\item le fichier \textbf{pyproject.toml} précise les métadonnées du package et sert à la construction de celui-ci. Les différents formats \textbf{build.sh}, \textbf{meta.yaml} et \textbf{bld.bat}, sont également incorporés dans le fichier \textbf{pyproject.toml}. 
+\item le fichier \textbf{poetry.lock} empêche les dépendances de télécharger la dernière version au moment de l'installation, en fixant la version utilisable par le package.
 \end{itemize}
 
-Il est possible de rencontrer le format \textit{.egg} développé par \textit{setuptools} à la place du format \textit{.whl} proposé par PEP. Le format \textit{.egg} en Python est l'équivalent du format \textit{.jar} en Java, mais \textit{pip} ne parvient généralement pas à installer les fichiers au format \textit{.egg} qui ne sont pas standard et ne tiennent pas compte des différents interpréteurs CPython, jython, pypy, ...
+Ainsi, le package construit par \textit{Poetry} présente la structure suivante pour le développeur :
 
-On préfèrera donc le format \textit{.whl} pour la version compilée d'un package.
+\includegraphics[width=9cm]{mon_package_poetry_complet.png}
 
-QUE FAIT LARCHIVE, QUE FAIT LA DISTRI COMPILEE
+Notons que pour le développeur, la racine du package se trouve au niveau du fichier \textbf{pyproject.toml}, ce qui est important afin que les métadonnées du package puissent être interprétées.
 
-
-% QUELLE LICENCE CHOISIR ------------------
-\section{Quelle licence choisir ?}
-	
-Trois \index{licence}licences retiennent notre attention. En voici les principales caractéristiques :
+Une fois que le package est publié dans l'index PyPI, sa distribution est en fait une copie du dossier \textbf{dist} et on peut télécharger à partir de PyPI les deux fichiers :
 \begin{itemize}
-\item	la licence MIT, courte et permissive, préserve exclusivement le copyright et les avis de licence. Toute modification ultérieure peut être distribuée suivant une licence différente et notamment utilisée à des fins personnelles ou commerciales, sans obligation de publication des codes source,
-\item	la licence Apache (2.0) est également permissive et sensiblement similaire dans ses conditions à la licence MIT. Toutefois, elle requiert de préciser les modifications effectuées lors de nouvelles distributions,
-\item	la licence GNU (GPL v3.0) préserve également le copyright et les avis de licence. Elle peut être utilisée à des fins personnelles et commerciales. Elle impose en outre, en cas de modification, la publication complète des codes et l'utilisation de la licence GNU pour les nouvelles distributions.
+\item une archive contenant les sources \textbf{mon\_package-0.1.0.tar.gz}.
+\item une distribution compilée \textbf{mon\_package-0.1.0-py3-none-any.whl}.
 \end{itemize}
 
-Dans le cadre de ce projet, aucune spécification restrictive n'étant requise, nous avons choisi la licence MIT qui est simple et peu contraignante.
+
 
 
 
@@ -661,16 +718,38 @@ Il est possible d'utiliser les packages de différentes manières.
 
 Dans un programme local, le code s'exécute dans un répertoire courant et accède aux différents fichiers support en utilisant un chemin relatif à ce répertoire ou encore en utilisant un chemin absolu. Les différentes dépendances sont importées en début de code, sans référence à un chemin d'accès car elles ont préalablement été installées dans l'environnement de développement de l'interpréteur Python. Elles sont en plus installées dans l'environnement de développement intégré dans le cas où on utilise un tel outil.
 
-Dans un package en revanche, le module \textbf{\_\_main\_\_.py} se trouve à un emplacement défini par le système au moment du téléchargement, indépendamment du répertoire courant, c'est à dire la plupart du temps \textbf{~/.local/lib/python3.8/site-packages} ou \textbf{~/.local/lib/python3.8/dist-packages} sur Linux. Lorsque \textit{Anaconda} est installé et que son environnement est activé par défaut au démarrage de la machine, cet emplacement devient \textbf{~/anaconda3/bin}. L'utilisateur ne trouvera aucun dossier du nom de \textbf{crisprbuilder\_tb} dans le répertoire courant après installation du package, bien qu'il l'ait installé à partir du répertoire courant. On peut chercher l'emplacement exact du package et le déplacer ensuite, mais ceci n'a aucun intérêt vu que le système mémorise l'emplacement de ses packages.
+Dans un package en revanche, c'est le module \textbf{\_\_main\_\_.py} qui est cherché par l'interpréteur et exécuté prioritairement. Il se trouve à un emplacement défini par le système au moment du téléchargement, indépendamment du répertoire courant, c'est à dire la plupart du temps \textbf{~/.local/lib/python3.8/site-packages} ou \textbf{~/.local/lib/python3.8/dist-packages} sur Linux. Lorsque \textit{Anaconda} est installé et que son environnement est activé par défaut au démarrage de la machine, cet emplacement devient \textbf{~/anaconda3/bin}. L'utilisateur ne trouvera aucun dossier du nom de \textbf{crisprbuilder\_tb} dans le répertoire courant après installation du package, bien qu'il l'ait installé à partir du répertoire courant. On peut chercher l'emplacement exact du package et le déplacer ensuite, mais ceci n'a aucun intérêt vu que le système mémorise l'emplacement de ses packages.
 
-Afin d'expliquer le fonctionnement interne d'un package, nous prenons l'exemple de CRISPRbuilder\_TB. L'utilisateur se place dans son répertoire courant, exécute \texttt{  python -m crisprbuilder\_tb \textemdash \textemdash collect ERR2704808}, qui va chercher le package CRISPRbuilder\_TB à son emplacement de stockage \textbf{~/anaconda3/bin} et l'exécute comme si celui-ci se trouvait dans le répertoire courant. Ainsi le module \textbf{\_\_main\_\_.py} s'exécute et appelle les modules \textbf{fonctions.py}, \textbf{bdd.py} et les fichiers du répertoire \textbf{data}. On pourrait définir des chemins d'accès absolus vers ces modules et fichiers, mais ces chemins seraient différents pour chaque système d'exploitation. On définit plutôt des chemins relatifs au répertoire contenant le module \textbf{\_\_main\_\_.py}, c'est à dire \textbf{crisprbuilder\_tb}, qui sert de référence pour les chemins d'accès. Ainsi, les fichiers nécessaires au fonctionnement sont atteignables grâce à une adresse relative commençant par une variable d'environnement et ne contenant pas le nom du package \textbf{crisprbuilder\_tb}, car l'exécution du code se trouve déjà dans le package lors de la lecture du fichier \textbf{\_\_main\_\_.py}. En revanche, l'importation des modules tient compte du nom du package. Par exemple, pour importer XXX
+Afin d'expliquer le fonctionnement interne d'un package, nous prenons l'exemple de CRISPRbuilder\_TB. L'utilisateur se place dans son répertoire courant, exécute \texttt{  python -m crisprbuilder\_tb \textemdash \textemdash collect ERR2704808}, qui va chercher le package CRISPRbuilder\_TB à son emplacement de stockage \textbf{~/anaconda3/bin} et l'exécute comme si celui-ci se trouvait dans le répertoire courant. Ainsi le module \textbf{\_\_main\_\_.py} s'exécute et appelle les modules \textbf{fonctions.py}, \textbf{bdd.py} et les fichiers du répertoire \textbf{data}. On pourrait définir des chemins d'accès absolus vers ces modules et fichiers, mais ces chemins seraient différents pour chaque système d'exploitation. On définit plutôt des chemins relatifs au répertoire contenant le module \textbf{\_\_main\_\_.py}, c'est à dire \textbf{crisprbuilder\_tb}, qui sert de référence pour les chemins d'accès. Ainsi, les fichiers nécessaires au fonctionnement sont atteignables grâce à une adresse relative commençant par une variable d'environnement et ne contenant pas le nom du package \textbf{crisprbuilder\_tb}, car l'exécution du code se trouve déjà dans le package lors de la lecture du fichier \textbf{\_\_main\_\_.py}. En revanche, l'importation des différents modules en début de code tient compte du nom du package. Ainsi, on trouve dans les premières lignes du module \textbf{\_\_main\_\_.py}
+
+\begin{verbatim}
+  import crisprbuilder_tb
+  import crisprbuilder_tb.fonctions as fonctions
+  import crisprbuilder_tb.bdd as bdd
+\end{verbatim}
 
 Il est important de comprendre que l'exécution du package :
 \begin{itemize}
-\item NE SE FAIT PAS depuis l'intérieur du package avec l'instruction \texttt{  python \_\_main\_\_.py} qui ne permet pas d'utiliser les options du package.
-\item NE SE FAIT PAS depuis le répertoire parent du package avec l'instruction \texttt{  python crisprbuilder\_tb \textemdash \textemdash collect ERR2704808} sans le "-m". Dans ce cas, l'interpréteur qui ne va pas considérer \texttt{crisprbuilder\_tb} comme un package et ne va pas chercher le fichier \textbf{\_\_main\_\_.py} pour l'exécuter.
-\item SE FAIT à partir du répertoire courant, quel qu'il soit, avec l'instruction \texttt{  python -m crisprbuilder\_tb \textemdash \textemdash collect ERR2704808}. C'est à l'ordinateur d'aller chercher le package à son emplacement. 
+\item \textbf{ne se fait pas} depuis l'intérieur du package avec l'instruction \texttt{  python \_\_main\_\_.py} qui ne permet pas d'utiliser les options du package.
+\item \textbf{ne se fait pas} depuis le répertoire parent du package avec l'instruction \texttt{  python crisprbuilder\_tb \textemdash \textemdash collect ERR2704808} sans le "-m". Dans ce cas, l'interpréteur qui ne va pas considérer \texttt{crisprbuilder\_tb} comme un package et ne va pas chercher le fichier \textbf{\_\_main\_\_.py} pour l'exécuter.
+\item \textbf{se fait} à partir du répertoire courant, quel qu'il soit, avec l'instruction \texttt{  python -m crisprbuilder\_tb \textemdash \textemdash collect ERR2704808}. C'est à l'ordinateur d'aller chercher le package à son emplacement. 
 \end{itemize}
+
+
+
+
+
+% QUELLE LICENCE CHOISIR ------------------
+\section{Quelle licence choisir ?}
+	
+Trois \index{licence}licences retiennent notre attention. En voici les principales caractéristiques :
+\begin{itemize}
+\item	la licence MIT, courte et permissive, préserve exclusivement le copyright et les avis de licence. Toute modification ultérieure peut être distribuée suivant une licence différente et notamment utilisée à des fins personnelles ou commerciales, sans obligation de publication des codes source,
+\item	la licence Apache (2.0) est également permissive et sensiblement similaire dans ses conditions à la licence MIT. Toutefois, elle requiert de préciser les modifications effectuées lors de nouvelles distributions,
+\item	la licence GNU (GPL v3.0) préserve également le copyright et les avis de licence. Elle peut être utilisée à des fins personnelles et commerciales. Elle impose en outre, en cas de modification, la publication complète des codes et l'utilisation de la licence GNU pour les nouvelles distributions.
+\end{itemize}
+
+Dans le cadre de ce projet, aucune spécification restrictive n'étant requise, nous avons choisi la licence MIT qui est simple et peu contraignante.
 
 
 
@@ -867,6 +946,12 @@ Nous avons donc décidé de construire notre package en utilisant \textit{Poetry
 % CREATION DU PACKAGE ---------------
 \section{Création du package et gestion des dépendances}
 
+WWWWW
+
+ Notons que la version 3.3 de Python a introduit la notion de \textit{Implicit Namespace Packages}, qui permet la création de packages sans la présence de fichiers  \textbf{\_\_init\_\_.py}. Nous choisissons d'insérer des fichiers \textbf{\_\_init\_\_.py} vides dans CRISPRbuilder\_TB, car nous verrons qu'ils sont créés automatiquement lors de la construction du package..
+
+WWWWW
+
 Pour créer notre projet, il ne faut pas commencer par définir un dossier du nom du package, car cela sera automatiquement fait par \index{Poetry}\textit{Poetry}. Il suffit d'exécuter l'instruction
 
 \begin{verbatim}
@@ -878,10 +963,10 @@ qui permet de générer le squelette de l'application contenant les éléments s
 \includegraphics[width=6cm]{nom_package_tree.png}
 
 \begin{itemize}
-\item le répertoire \textbf{crisprbuilder\_tb} contient initialement le fichier \textbf{\_\_init\_\_.py} et c'est dans ce répertoire que nous allons rajouter tous les composants principaux du code  \textbf{\_\_main\_\_.py}, \textbf{fonctions.py}, \textbf{bdd.py} et les répertoires \textbf{data}, \textbf{doc}, \textbf{REP} et \textbf{tmp} avec leurs contenus. En effet, la création de l'archive va compresser ce répertoire \textbf{crisprbuilder\_tb} afin de le publier. Il devra contenir tout ce qui est nécessaire au fonctionnement de l'application. Lors de sa création, le fichier\textbf{\_\_init\_\_.py} contenait uniquement la version du package. Pour éviter tout conflit de version avec le fichier \textbf{pyproject.toml}, nous vidons le fichier \textbf{\_\_init\_\_.py} du répertoire \textbf{crisprbuilder\_tb}
+\item le répertoire \textbf{crisprbuilder\_tb} contient initialement le fichier \textbf{\_\_init\_\_.py} et c'est dans ce répertoire que nous allons rajouter tous les composants principaux du code, à savoir  \textbf{\_\_main\_\_.py}, \textbf{fonctions.py}, \textbf{bdd.py} et les répertoires \textbf{data}, \textbf{doc}, \textbf{REP} et \textbf{tmp} avec leurs contenus. En effet, la création de l'archive va compresser ce répertoire \textbf{crisprbuilder\_tb} afin de le publier. Il devra contenir tout ce qui est nécessaire au fonctionnement de l'application. Lors de sa création, le fichier\textbf{\_\_init\_\_.py} contenait uniquement la version du package. Pour éviter tout conflit de version avec le fichier \textbf{pyproject.toml}, nous vidons le fichier \textbf{\_\_init\_\_.py} du répertoire \textbf{crisprbuilder\_tb}
 \item le répertoire \textbf{tests} contient les tests unitaires relatifs au bon fonctionnement du package
 \item le fichier \textbf{README.rst} fournit une brève description du package, et nous le modifions au format markdown \textbf{README.md} à l'usage plus répandu
-\item le fichier \textbf{pyproject.toml} remplace les anciens standards de définition de packages : \textbf{setup.exe} et \textbf{requirements.txt}. Il précise notamment le nom du package, sa version, sa description, l’emplacement de son dépôt (par exemple sur GitHub), l’adresse email de l’auteur du package, et la version des dépendances
+\item le fichier \textbf{pyproject.toml} remplace les anciens standards de définition de packages : \textbf{setup.exe} et \textbf{requirements.txt}. Il précise notamment les métadonnées du package telles que son nom, sa version, sa description, l’emplacement de son dépôt (par exemple sur GitHub), l’adresse email de l’auteur du package, et la version des dépendances. Le fichier \textbf{pyproject.toml} doit obligatoirement être placé à la racine du package au moment de sa création.
 \item nous rajoutons à la racine du package un fichier \textbf{LICENSE}, un fichier \textbf{.gitignore} pour la gestion des versions. 
 \end{itemize}
 
