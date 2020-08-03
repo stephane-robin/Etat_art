@@ -3,65 +3,65 @@
 \contentsline {section}{\numberline {1.}Remerciements}{4}{section.1.1}
 \contentsline {section}{\numberline {2.}Pr\IeC {\'e}sentation du projet}{4}{section.1.2}
 \contentsline {section}{\numberline {3.}Remarque pr\IeC {\'e}alable}{5}{section.1.3}
-\contentsline {chapter}{\numberline {2}Etat de l'art}{6}{chapter.2}
-\contentsline {section}{\numberline {1.}Evolution de la branche humaine de la tuberculose}{6}{section.2.1}
-\contentsline {subsection}{\numberline {1.1.}Diversit\IeC {\'e} g\IeC {\'e}n\IeC {\'e}tique de la tuberculose}{6}{subsection.2.1.1}
-\contentsline {subsection}{\numberline {1.2.}Co-\IeC {\'e}volution de la tuberculose avec l'homme moderne}{7}{subsection.2.1.2}
-\contentsline {section}{\numberline {2.}Le d\IeC {\'e}veloppement de souches r\IeC {\'e}sistantes aux antibiotiques}{9}{section.2.2}
-\contentsline {subsection}{\numberline {2.1.}L'expansion de la lign\IeC {\'e}e 4 de \textit {M. tuberculosis}}{9}{subsection.2.2.1}
-\contentsline {subsection}{\numberline {2.2.}L'adaptation de la lign\IeC {\'e}e 4 pour devenir r\IeC {\'e}sistante aux antibiotiques}{10}{subsection.2.2.2}
-\contentsline {section}{\numberline {3.}Le locus CRISPR-Cas}{12}{section.2.3}
-\contentsline {subsection}{\numberline {3.1.}Quelques caract\IeC {\'e}ristiques du g\IeC {\'e}nome de \textit {M. tuberculosis}}{12}{subsection.2.3.1}
-\contentsline {subsection}{\numberline {3.2.}Description du locus CRISPR-Cas}{12}{subsection.2.3.2}
-\contentsline {subsection}{\numberline {3.3.}Fonctionnement du syst\IeC {\`e}me CRISPR-Cas}{13}{subsection.2.3.3}
-\contentsline {section}{\numberline {4.}Le spoligotypage}{13}{section.2.4}
-\contentsline {subsection}{\numberline {4.1.}Vers une normalisation des spoligotypes}{15}{subsection.2.4.1}
-\contentsline {subsection}{\numberline {4.2.}Quel outil informatique pour le spoligotypage ?}{16}{subsection.2.4.2}
-\contentsline {subsection}{\numberline {4.3.}Comparaison de spoligotypes}{19}{subsection.2.4.3}
-\contentsline {chapter}{\numberline {3}La notion de package}{21}{chapter.3}
-\contentsline {section}{\numberline {1.}Composition d'un package standard}{21}{section.3.1}
-\contentsline {section}{\numberline {2.}Composition d'un package sous poetry}{22}{section.3.2}
-\contentsline {section}{\numberline {3.}Fonctionnement d'un package}{25}{section.3.3}
-\contentsline {section}{\numberline {4.}Quelle licence choisir ?}{26}{section.3.4}
-\contentsline {chapter}{\numberline {4}Le choix des outils}{27}{chapter.4}
-\contentsline {section}{\numberline {1.}L'environnement de d\IeC {\'e}veloppement}{27}{section.4.1}
-\contentsline {section}{\numberline {2.}L'environnement de d\IeC {\'e}veloppement avec Anaconda}{30}{section.4.2}
-\contentsline {section}{\numberline {3.}L'outil d'empaquetage}{31}{section.4.3}
-\contentsline {chapter}{\numberline {5}Construction du package avec Poetry}{33}{chapter.5}
-\contentsline {section}{\numberline {1.}Cr\IeC {\'e}ation du package}{33}{section.5.1}
-\contentsline {section}{\numberline {2.}Gestion des d\IeC {\'e}pendances}{34}{section.5.2}
-\contentsline {section}{\numberline {3.}Construction du package}{36}{section.5.3}
-\contentsline {section}{\numberline {4.}Publication du package}{37}{section.5.4}
-\contentsline {section}{\numberline {5.}La structure de l'archive du package \IeC {\`a} t\IeC {\'e}l\IeC {\'e}charger}{38}{section.5.5}
-\contentsline {section}{\numberline {6.}La structure du package install\IeC {\'e}}{39}{section.5.6}
-\contentsline {chapter}{\numberline {6}La documentation du package \\(version originale)}{40}{chapter.6}
-\contentsline {section}{\numberline {1.}Purpose of this package}{41}{section.6.1}
-\contentsline {section}{\numberline {2.}How to install the package ?}{41}{section.6.2}
-\contentsline {section}{\numberline {3.}How to use the Command Line Interface ?}{42}{section.6.3}
-\contentsline {subsection}{\numberline {3.1.}Executing CRISPRbuilder\_TB with a SRA reference}{43}{subsection.6.3.1}
-\contentsline {subsection}{\numberline {3.2.}Executing CRISPRbuilder\_TB with a list of SRA references}{43}{subsection.6.3.2}
-\contentsline {subsection}{\numberline {3.3.}Printing the database lineage.csv}{43}{subsection.6.3.3}
-\contentsline {subsection}{\numberline {3.4.}Adding a record to lineage.csv}{44}{subsection.6.3.4}
-\contentsline {subsection}{\numberline {3.5.}Removing a record from lineage.csv}{44}{subsection.6.3.5}
-\contentsline {subsection}{\numberline {3.6.}Changing a record from lineage.csv}{45}{subsection.6.3.6}
-\contentsline {section}{\numberline {4.}Composition of the package and dependencies}{45}{section.6.4}
-\contentsline {section}{\numberline {5.}Retrieving the genome information dictionary}{47}{section.6.5}
-\contentsline {chapter}{\numberline {7}Tester le package}{55}{chapter.7}
-\contentsline {section}{\numberline {1.}Les tests unitaires, le module unittest}{55}{section.7.1}
-\contentsline {section}{\numberline {2.}les tests d'int\IeC {\'e}gration}{56}{section.7.2}
-\contentsline {subsection}{\numberline {2.1.}Les probl\IeC {\`e}mes rencontr\IeC {\'e}s}{56}{subsection.7.2.1}
-\contentsline {subsection}{\numberline {2.2.}Le respect des r\IeC {\`e}gles du PEP avec pylint}{57}{subsection.7.2.2}
-\contentsline {section}{\numberline {3.}Les tests de non-r\IeC {\'e}gression}{58}{section.7.3}
-\contentsline {subsection}{\numberline {3.1.}Le versioning avec Git}{58}{subsection.7.3.1}
-\contentsline {section}{\numberline {4.}Les tests d'installation}{58}{section.7.4}
-\contentsline {subsubsection}{\numberline {4.0.1.}L'utilisation de VirtualBox}{60}{subsubsection.7.4.0.1}
-\contentsline {subsection}{\numberline {4.1.}L'utilit\IeC {\'e} de Anaconda}{62}{subsection.7.4.1}
-\contentsline {section}{\numberline {5.}Les tests de validation}{63}{section.7.5}
-\contentsline {subsection}{\numberline {5.1.}Les probl\IeC {\`e}mes li\IeC {\'e}s aux chemins d'acc\IeC {\`e}s}{64}{subsection.7.5.1}
-\contentsline {section}{\numberline {6.}Les tests de performance}{64}{section.7.6}
-\contentsline {subsection}{\numberline {6.1.}subprocess.run et os.system}{64}{subsection.7.6.1}
-\contentsline {subsection}{\numberline {6.2.}parallel-fastq-dump}{66}{subsection.7.6.2}
-\contentsline {subsection}{\numberline {6.3.}blast+}{66}{subsection.7.6.3}
-\contentsline {section}{\numberline {7.}Les tests de configuration}{66}{section.7.7}
-\contentsline {chapter}{\numberline {8}Conclusion}{67}{chapter.8}
+\contentsline {chapter}{\numberline {2}Etat de l'art}{7}{chapter.2}
+\contentsline {section}{\numberline {1.}Evolution de la branche humaine de la tuberculose}{7}{section.2.1}
+\contentsline {subsection}{\numberline {1.1.}Diversit\IeC {\'e} g\IeC {\'e}n\IeC {\'e}tique de la tuberculose}{7}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {1.2.}Co-\IeC {\'e}volution de la tuberculose avec l'homme moderne}{8}{subsection.2.1.2}
+\contentsline {section}{\numberline {2.}Le d\IeC {\'e}veloppement de souches r\IeC {\'e}sistantes aux antibiotiques}{10}{section.2.2}
+\contentsline {subsection}{\numberline {2.1.}L'expansion de la lign\IeC {\'e}e 4 de \textit {M. tuberculosis}}{10}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.}L'adaptation de la lign\IeC {\'e}e 4 pour devenir r\IeC {\'e}sistante aux antibiotiques}{11}{subsection.2.2.2}
+\contentsline {section}{\numberline {3.}Le locus CRISPR-Cas}{13}{section.2.3}
+\contentsline {subsection}{\numberline {3.1.}Quelques caract\IeC {\'e}ristiques du g\IeC {\'e}nome de \textit {M. tuberculosis}}{13}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {3.2.}Description du locus CRISPR-Cas}{13}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {3.3.}Fonctionnement du syst\IeC {\`e}me CRISPR-Cas}{14}{subsection.2.3.3}
+\contentsline {section}{\numberline {4.}Le spoligotypage}{14}{section.2.4}
+\contentsline {subsection}{\numberline {4.1.}Vers une normalisation des spoligotypes}{16}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {4.2.}Quel outil informatique pour le spoligotypage ?}{17}{subsection.2.4.2}
+\contentsline {subsection}{\numberline {4.3.}Comparaison de spoligotypes}{20}{subsection.2.4.3}
+\contentsline {chapter}{\numberline {3}La notion de package}{22}{chapter.3}
+\contentsline {section}{\numberline {1.}Composition d'un package standard}{22}{section.3.1}
+\contentsline {section}{\numberline {2.}Composition d'un package sous poetry}{23}{section.3.2}
+\contentsline {section}{\numberline {3.}Fonctionnement d'un package}{26}{section.3.3}
+\contentsline {section}{\numberline {4.}Quelle licence choisir ?}{27}{section.3.4}
+\contentsline {chapter}{\numberline {4}Le choix des outils}{28}{chapter.4}
+\contentsline {section}{\numberline {1.}L'environnement de d\IeC {\'e}veloppement}{28}{section.4.1}
+\contentsline {section}{\numberline {2.}L'environnement de d\IeC {\'e}veloppement avec Anaconda}{31}{section.4.2}
+\contentsline {section}{\numberline {3.}L'outil d'empaquetage}{32}{section.4.3}
+\contentsline {chapter}{\numberline {5}Construction du package avec Poetry}{34}{chapter.5}
+\contentsline {section}{\numberline {1.}Cr\IeC {\'e}ation du package}{34}{section.5.1}
+\contentsline {section}{\numberline {2.}Gestion des d\IeC {\'e}pendances}{35}{section.5.2}
+\contentsline {section}{\numberline {3.}Construction du package}{37}{section.5.3}
+\contentsline {section}{\numberline {4.}Publication du package}{38}{section.5.4}
+\contentsline {section}{\numberline {5.}La structure de l'archive du package \IeC {\`a} t\IeC {\'e}l\IeC {\'e}charger}{39}{section.5.5}
+\contentsline {section}{\numberline {6.}La structure du package install\IeC {\'e}}{40}{section.5.6}
+\contentsline {chapter}{\numberline {6}La documentation du package \\(version originale)}{41}{chapter.6}
+\contentsline {section}{\numberline {1.}Purpose of this package}{42}{section.6.1}
+\contentsline {section}{\numberline {2.}How to install the package ?}{42}{section.6.2}
+\contentsline {section}{\numberline {3.}How to use the Command Line Interface ?}{43}{section.6.3}
+\contentsline {subsection}{\numberline {3.1.}Executing CRISPRbuilder\_TB with a SRA reference}{44}{subsection.6.3.1}
+\contentsline {subsection}{\numberline {3.2.}Executing CRISPRbuilder\_TB with a list of SRA references}{44}{subsection.6.3.2}
+\contentsline {subsection}{\numberline {3.3.}Printing the database lineage.csv}{44}{subsection.6.3.3}
+\contentsline {subsection}{\numberline {3.4.}Adding a record to lineage.csv}{45}{subsection.6.3.4}
+\contentsline {subsection}{\numberline {3.5.}Removing a record from lineage.csv}{45}{subsection.6.3.5}
+\contentsline {subsection}{\numberline {3.6.}Changing a record from lineage.csv}{46}{subsection.6.3.6}
+\contentsline {section}{\numberline {4.}Composition of the package and dependencies}{46}{section.6.4}
+\contentsline {section}{\numberline {5.}Retrieving the genome information dictionary}{48}{section.6.5}
+\contentsline {chapter}{\numberline {7}Tester le package}{56}{chapter.7}
+\contentsline {section}{\numberline {1.}Les tests unitaires, le module unittest}{56}{section.7.1}
+\contentsline {section}{\numberline {2.}les tests d'int\IeC {\'e}gration}{57}{section.7.2}
+\contentsline {subsection}{\numberline {2.1.}Les probl\IeC {\`e}mes rencontr\IeC {\'e}s}{57}{subsection.7.2.1}
+\contentsline {subsection}{\numberline {2.2.}Le respect des r\IeC {\`e}gles du PEP avec pylint}{58}{subsection.7.2.2}
+\contentsline {section}{\numberline {3.}Les tests de non-r\IeC {\'e}gression}{59}{section.7.3}
+\contentsline {subsection}{\numberline {3.1.}Le versioning avec Git}{59}{subsection.7.3.1}
+\contentsline {section}{\numberline {4.}Les tests d'installation}{59}{section.7.4}
+\contentsline {subsubsection}{\numberline {4.0.1.}L'utilisation de VirtualBox}{61}{subsubsection.7.4.0.1}
+\contentsline {subsection}{\numberline {4.1.}L'utilit\IeC {\'e} de Anaconda}{63}{subsection.7.4.1}
+\contentsline {section}{\numberline {5.}Les tests de validation}{64}{section.7.5}
+\contentsline {subsection}{\numberline {5.1.}Les probl\IeC {\`e}mes li\IeC {\'e}s aux chemins d'acc\IeC {\`e}s}{65}{subsection.7.5.1}
+\contentsline {section}{\numberline {6.}Les tests de performance}{65}{section.7.6}
+\contentsline {subsection}{\numberline {6.1.}subprocess.run et os.system}{65}{subsection.7.6.1}
+\contentsline {subsection}{\numberline {6.2.}parallel-fastq-dump}{67}{subsection.7.6.2}
+\contentsline {subsection}{\numberline {6.3.}blast+}{67}{subsection.7.6.3}
+\contentsline {section}{\numberline {7.}Les tests de configuration}{67}{section.7.7}
+\contentsline {chapter}{\numberline {8}Conclusion}{68}{chapter.8}
 \contentsfinish 

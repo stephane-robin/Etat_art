@@ -1,20 +1,20 @@
 \begin{theindex}
 
-  \item All\IeC {\`e}le, \hyperpage{12}
-  \item Approche bay\IeC {\'e}sienne, \hyperpage{9}
+  \item All\IeC {\`e}le, \hyperpage{13}
+  \item Approche bay\IeC {\'e}sienne, \hyperpage{10}
   \item archive, \hyperpage{5}
-  \item ARN polym\IeC {\'e}rase, \hyperpage{10}
+  \item ARN polym\IeC {\'e}rase, \hyperpage{11}
 
   \indexspace
 
-  \item Base de donn\IeC {\'e}es SITVIT, \hyperpage{12}
-  \item Base de donn\IeC {\'e}es SITVIT2, \hyperpage{18}
-  \item BLAST, \hyperpage{18}
+  \item Base de donn\IeC {\'e}es SITVIT, \hyperpage{13}
+  \item Base de donn\IeC {\'e}es SITVIT2, \hyperpage{19}
+  \item BLAST, \hyperpage{19}
 
   \indexspace
 
-  \item Codon, \hyperpage{6}
-  \item Contig, \hyperpage{18}
+  \item Codon, \hyperpage{7}
+  \item Contig, \hyperpage{19}
 
   \indexspace
 
@@ -22,79 +22,79 @@
 
   \indexspace
 
-  \item environnement de d\IeC {\'e}veloppement, \hyperpage{27}
-  \item Enzyme de restriction, \hyperpage{13}
-  \item Epid\IeC {\'e}miologie, \hyperpage{18}
+  \item environnement de d\IeC {\'e}veloppement, \hyperpage{28}
+  \item Enzyme de restriction, \hyperpage{14}
+  \item Epid\IeC {\'e}miologie, \hyperpage{19}
 
   \indexspace
 
-  \item G\IeC {\'e}nome, \hyperpage{7}
-  \item GIL, \hyperpage{66}
-  \item Git, \hyperpage{58}
+  \item G\IeC {\'e}nome, \hyperpage{8}
+  \item GIL, \hyperpage{67}
+  \item Git, \hyperpage{59}
 
   \indexspace
 
-  \item Haplogroupe, \hyperpage{7}
-  \item Homoplasie, \hyperpage{6}
+  \item Haplogroupe, \hyperpage{8}
+  \item Homoplasie, \hyperpage{7}
 
   \indexspace
 
-  \item Isolat, \hyperpage{9}
+  \item Isolat, \hyperpage{10}
 
   \indexspace
 
-  \item licence, \hyperpage{26}
+  \item licence, \hyperpage{27}
 
   \indexspace
 
-  \item Macrophage, \hyperpage{11}
-  \item Marqueur MIRU, \hyperpage{12}
-  \item Marqueur VNTR, \hyperpage{12}
-  \item Mitochondrie, \hyperpage{7}
+  \item Macrophage, \hyperpage{12}
+  \item Marqueur MIRU, \hyperpage{13}
+  \item Marqueur VNTR, \hyperpage{13}
+  \item Mitochondrie, \hyperpage{8}
   \item module, \hyperpage{5}
-  \item MTBC, \hyperpage{7}
+  \item MTBC, \hyperpage{8}
 
   \indexspace
 
-  \item NCBI, \hyperpage{64}
+  \item NCBI, \hyperpage{65}
 
   \indexspace
 
-  \item package, \hyperpage{21}
-  \item Paire de bases, \hyperpage{6}
-  \item PCR, \hyperpage{13}
+  \item package, \hyperpage{22}
+  \item Paire de bases, \hyperpage{7}
+  \item PCR, \hyperpage{14}
   \item PEP, \hyperpage{4}
-  \item PEP-257, \hyperpage{57}
-  \item PEP-518, \hyperpage{22}
-  \item PEP-8, \hyperpage{57}
-  \item Phylog\IeC {\'e}nie, \hyperpage{6}
-  \item pip, \hyperpage{28}
-  \item Poetry, \hyperpage{33}
-  \item Promoteur, \hyperpage{11}
-  \item Puce \IeC {\`a} ADN, \hyperpage{14}
-  \item pyenv, \hyperpage{27}
-  \item pylint, \hyperpage{57}
-  \item PyPA, \hyperpage{22}
+  \item PEP-257, \hyperpage{58}
+  \item PEP-518, \hyperpage{23}
+  \item PEP-8, \hyperpage{58}
+  \item Phylog\IeC {\'e}nie, \hyperpage{7}
+  \item pip, \hyperpage{29}
+  \item Poetry, \hyperpage{34}
+  \item Promoteur, \hyperpage{12}
+  \item Puce \IeC {\`a} ADN, \hyperpage{15}
+  \item pyenv, \hyperpage{28}
+  \item pylint, \hyperpage{58}
+  \item PyPA, \hyperpage{23}
   \item PyPI, \hyperpage{4}
 
   \indexspace
 
-  \item Reads, \hyperpage{16}
+  \item Reads, \hyperpage{17}
 
   \indexspace
 
   \item S\IeC {\'e}quen\IeC {\c c}age du g\IeC {\'e}nome, 
-		\hyperpage{18}
-  \item Sous-unit\IeC {\'e} $\beta $, \hyperpage{10}
+		\hyperpage{19}
+  \item Sous-unit\IeC {\'e} $\beta $, \hyperpage{11}
   \item SRA, \hyperpage{4}
 
   \indexspace
 
-  \item unittest, \hyperpage{56}
+  \item unittest, \hyperpage{57}
 
   \indexspace
 
-  \item venv, \hyperpage{27}
-  \item VirtualBox, \hyperpage{60}
+  \item venv, \hyperpage{28}
+  \item VirtualBox, \hyperpage{61}
 
 \end{theindex}

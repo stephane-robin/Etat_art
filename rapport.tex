@@ -270,6 +270,8 @@ Je tiens à exprimer mes plus sincères remerciements à Messieurs Christophe Gu
 
 Je voudrais également souligner la patience dont ils ont fait preuve pour m'expliquer les notions de bioinformatique que j'ai été amené à découvrir durant ce projet. Il en ressort que j'ai particulièrement apprécié de travailler sous leur direction.
 
+Je tiens également à remercier Jean Marc Gervais qui a eu la gentillesse de bien vouloir relire le présent rapport de stage et me proposer des commentaires pertinents à ce sujet.
+
 usr: ufc
 pw: uni25frcomte
 
@@ -592,7 +594,7 @@ Un tableau comparatif de différents spoligotypes en fonction des lignées de \t
 % LA NOTION DE PACKAGE ---------------------------
 \chapter{La notion de package}
 
-Le packaging ou distribution de programmes pose traditionnellement plus de problèmes en Python que dans d'autres langages. En effet, les standards ont évolué de façon concurrentielle plutôt que collaborative. Par ailleurs, la documentation sur Internet est parfois obsolète et entraîne de nombreuses incompréhensions. Nous verrons que l'arrivée de l'outil \textit{Poetry} a grandement facilité la création et la gestion des packages. Des sites tels que \url{https://realpython.com/python-modules-packages/}, \url{https://realpython.com/pypi-publish-python-package/}, \url{https://packaging.python.org/overview/} ou \url{https://python-poetry.org/} ont également contribué à rendre accessible le packaging au grand public.
+Le packaging ou distribution de programmes pose traditionnellement plus de problèmes en Python que dans d'autres langages. En effet, les standards ont évolué de façon concurrentielle plutôt que collaborative. Par ailleurs, la documentation sur Internet est parfois obsolète et entraîne de nombreuses incompréhensions. Nous verrons que l'arrivée de l'outil \textit{Poetry} a grandement facilité la création et la gestion des packages. Des sites tels que \url{https://realpython.com/python-modules-packages/}, \url{https://realpython.com/pypi-publish-python-package/}, ~\url{https://python-poetry.org/} ou \\ \url{https://packaging.python.org/overview/} ont également contribué à rendre accessible le packaging au grand public.
 
 
 
@@ -601,19 +603,13 @@ Le packaging ou distribution de programmes pose traditionnellement plus de probl
 % COMPOSITION D'UN PACKAGE STANDARD ------------------
 \section{Composition d'un package standard}
 
-Un package permet de fournir une structure hiérarchisée du programme, pour en faciliter la compréhension et l'utilisation. Un \index{package}package standard est ainsi un ensemble de modules Python, de modules écrits en C, de métadonnées et de bases de données.
+Un \index{package} permet de fournir une structure hiérarchisée du programme, pour en faciliter la compréhension et l'utilisation. Il s'agit en fait d'un ensemble de modules Python, de modules écrits en C, de métadonnées et de bases de données.
 
-Il comporte traditionnellement un fichier \textbf{\_\_init\_\_.py} dans chaque répertoire, même si ce répertoire est vide. En particulier, le répertoire racine du package contient un fichier \textbf{\_\_init\_\_.py} qui peut définir la version du projet et le nom des modules à importer. Il est toutefois acceptable et parfois même recommandé de conserver ce fichier \textbf{\_\_init\_\_.py} vide.
+Un package standard comporte traditionnellement un fichier \textbf{\_\_init\_\_.py} dans chaque répertoire, même si ce répertoire est vide. En particulier, le répertoire racine du package contient un fichier \textbf{\_\_init\_\_.py} qui peut définir la version du projet et le nom des modules à importer. Il est toutefois acceptable et parfois même recommandé de conserver ce fichier \textbf{\_\_init\_\_.py} vide.
 
-Dans le cas d'un package exécutable, il est essentiel que celui-ci contienne un module de lancement du programme appelé  \textbf{\_\_main\_\_.py}.
+Par ailleurs, dans le cas d'un package exécutable, il est essentiel que celui-ci contienne un module de lancement du programme appelé  \textbf{\_\_main\_\_.py}.
 
-Ainsi, lorsqu'un utilisateur installe un package, celui-ci présente la structure suivante 
-
-\includegraphics[width=4.5cm]{mon_package1.png}
-
-Du point de vue du développeur, il est nécessaire de rajouter des fichiers comportant les métadonnées du package.
-
-Les fichiers \textbf{setup.py}, \textbf{requirements.txt}, \textbf{LICENSE},  \textbf{README.md} et \textbf{MANIFEST.in} sont également nécessaires.  
+Du point de vue du développeur, il est nécessaire de rajouter des fichiers permettant la construction du package et comportant les métadonnées du package. Ainsi, les fichiers \textbf{setup.py}, \textbf{requirements.txt}, \textbf{LICENSE},  \textbf{README.md} et \textbf{MANIFEST.in} sont nécessaires.  
 \begin{itemize}
 \item \textbf{setup.py} est le script de construction et configuration destiné au \textit{setuptools}. Il définit notamment le nom et la version du package, ainsi que les fichiers qu'il contient. Il sert également d'interface en ligne de commande relative aux différentes fonctionnalités du package. \textbf{setup.cfg} est un fichier d'initialisation qui contient les options par défaut des commandes du \textbf{setup.py}.
 \item \textbf{requirements.txt} permet l'installation des dépendances à l'aide d'un unique fichier contenant un module à installer par ligne. Il nécessite l'instruction 
@@ -626,13 +622,17 @@ pour commencer ces installations.
 
 L'ensemble des modules nécessaires au fonctionnement du package sont regroupés dans un répertoire portant le même nom que celui du package. C'est ce répertoire qui sera archivé et distribué en mettant à jour le numéro de version dans les fichiers \textbf{\_\_init\_\_.py} et \textbf{setup.py}. Si au lieu de stocker les modules dans ce répertoire, on les place à la racine du package, alors la distribution du package se construit à vide, l'installation à partir de PyPI fonctionne quand même, mais l'exécution du package ne produit rien.
 
-Par ailleurs, les packages construits pour des systèmes Linux et MacOS nécessitent l'incorporation de fichiers \textbf{build.sh} et \textbf{meta.yaml} alors que les packages construits pour les systèmes Windows nécessitent l'incorporation des fichiers \textbf{bld.bat} et \textbf{meta.yaml}.
+Par ailleurs, les packages construits pour des systèmes Linux et macOS nécessitent l'incorporation de fichiers \textbf{build.sh} et \textbf{meta.yaml} alors que les packages construits pour les systèmes Windows nécessitent l'incorporation des fichiers \textbf{bld.bat} et \textbf{meta.yaml}.
 
 Il faut également rajouter l'archive et la distribution compilée en vue de publier le package.
 
 Ainsi, lorsqu'un utilisateur télécharge l'archive d'un package à partir de PyPI, celui-ci présente la structure suivante 
 
-\includegraphics[width=5.5cm]{mon_package2.png}
+\includegraphics[width=5.5cm]{mon_package1.png}
+
+Nous ne rentrerons pas plus dans le détail de la création d'un package standard, car nous avons choisi de construire CRISPRbuilder\_TB avec l'outil \textit{Poetry}. En effet, nous avons commencé par construire manuellement notre package en incorporant les fichiers ci-dessus un par un, jusqu'à ce que les discordances rencontrées entre les contenus de ces fichiers orientent nos recherches vers un outil permettant l'automatisation du processus et la gestion des incompatibilités.
+
+
 
 
 
