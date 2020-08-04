@@ -22,15 +22,15 @@
 
   \indexspace
 
-  \item environnement de d\IeC {\'e}veloppement, \hyperpage{28}
+  \item environnement de d\IeC {\'e}veloppement, \hyperpage{30}
   \item Enzyme de restriction, \hyperpage{14}
   \item Epid\IeC {\'e}miologie, \hyperpage{19}
 
   \indexspace
 
   \item G\IeC {\'e}nome, \hyperpage{8}
-  \item GIL, \hyperpage{67}
-  \item Git, \hyperpage{59}
+  \item GIL, \hyperpage{69}
+  \item Git, \hyperpage{61}
 
   \indexspace
 
@@ -43,7 +43,7 @@
 
   \indexspace
 
-  \item licence, \hyperpage{27}
+  \item licence, \hyperpage{28}
 
   \indexspace
 
@@ -56,24 +56,25 @@
 
   \indexspace
 
-  \item NCBI, \hyperpage{65}
+  \item NCBI, \hyperpage{67}
 
   \indexspace
 
   \item package, \hyperpage{22}
+  \item packaging, \hyperpage{30}
   \item Paire de bases, \hyperpage{7}
   \item PCR, \hyperpage{14}
   \item PEP, \hyperpage{4}
-  \item PEP-257, \hyperpage{58}
+  \item PEP-257, \hyperpage{60}
   \item PEP-518, \hyperpage{23}
-  \item PEP-8, \hyperpage{58}
+  \item PEP-8, \hyperpage{60}
   \item Phylog\IeC {\'e}nie, \hyperpage{7}
-  \item pip, \hyperpage{29}
-  \item Poetry, \hyperpage{34}
+  \item pip, \hyperpage{32}
+  \item Poetry, \hyperpage{36}
   \item Promoteur, \hyperpage{12}
   \item Puce \IeC {\`a} ADN, \hyperpage{15}
-  \item pyenv, \hyperpage{28}
-  \item pylint, \hyperpage{58}
+  \item pyenv, \hyperpage{31}
+  \item pylint, \hyperpage{60}
   \item PyPA, \hyperpage{23}
   \item PyPI, \hyperpage{4}
 
@@ -90,11 +91,11 @@
 
   \indexspace
 
-  \item unittest, \hyperpage{57}
+  \item unittest, \hyperpage{59}
 
   \indexspace
 
-  \item venv, \hyperpage{28}
-  \item VirtualBox, \hyperpage{61}
+  \item venv, \hyperpage{30}
+  \item VirtualBox, \hyperpage{63}
 
 \end{theindex}

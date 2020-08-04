@@ -34,17 +34,18 @@
 \indexentry{package|hyperpage}{22}
 \indexentry{PEP-518|hyperpage}{23}
 \indexentry{PyPA|hyperpage}{23}
-\indexentry{licence|hyperpage}{27}
-\indexentry{environnement de d\IeC {\'e}veloppement|hyperpage}{28}
-\indexentry{venv|hyperpage}{28}
-\indexentry{pyenv|hyperpage}{28}
-\indexentry{pip|hyperpage}{29}
-\indexentry{Poetry|hyperpage}{34}
-\indexentry{unittest|hyperpage}{57}
-\indexentry{pylint|hyperpage}{58}
-\indexentry{PEP-8|hyperpage}{58}
-\indexentry{PEP-257|hyperpage}{58}
-\indexentry{Git|hyperpage}{59}
-\indexentry{VirtualBox|hyperpage}{61}
-\indexentry{NCBI|hyperpage}{65}
-\indexentry{GIL|hyperpage}{67}
+\indexentry{licence|hyperpage}{28}
+\indexentry{packaging|hyperpage}{30}
+\indexentry{environnement de d\IeC {\'e}veloppement|hyperpage}{30}
+\indexentry{venv|hyperpage}{30}
+\indexentry{pyenv|hyperpage}{31}
+\indexentry{pip|hyperpage}{32}
+\indexentry{Poetry|hyperpage}{36}
+\indexentry{unittest|hyperpage}{59}
+\indexentry{pylint|hyperpage}{60}
+\indexentry{PEP-8|hyperpage}{60}
+\indexentry{PEP-257|hyperpage}{60}
+\indexentry{Git|hyperpage}{61}
+\indexentry{VirtualBox|hyperpage}{63}
+\indexentry{NCBI|hyperpage}{67}
+\indexentry{GIL|hyperpage}{69}
