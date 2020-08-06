@@ -30,11 +30,11 @@
 \contentsline {chapter}{\numberline {5}Construction du package avec Poetry}{36}{chapter.5}
 \contentsline {section}{\numberline {1.}Cr\IeC {\'e}ation du package}{36}{section.5.1}
 \contentsline {section}{\numberline {2.}Gestion des d\IeC {\'e}pendances}{37}{section.5.2}
-\contentsline {section}{\numberline {3.}Construction du package}{40}{section.5.3}
-\contentsline {section}{\numberline {4.}Publication du package}{41}{section.5.4}
-\contentsline {section}{\numberline {5.}La structure de l'archive du package \IeC {\`a} t\IeC {\'e}l\IeC {\'e}charger}{41}{section.5.5}
+\contentsline {section}{\numberline {3.}Construction du package}{39}{section.5.3}
+\contentsline {section}{\numberline {4.}Publication du package}{40}{section.5.4}
+\contentsline {section}{\numberline {5.}La structure de l'archive du package}{41}{section.5.5}
 \contentsline {section}{\numberline {6.}La structure du package install\IeC {\'e}}{42}{section.5.6}
-\contentsline {section}{\numberline {7.}R\IeC {\'e}sum\IeC {\'e} de l'effet des instructions Poetry}{42}{section.5.7}
+\contentsline {section}{\numberline {7.}R\IeC {\'e}sum\IeC {\'e} des instructions Poetry}{42}{section.5.7}
 \contentsline {chapter}{\numberline {6}La documentation du package \\(version originale)}{43}{chapter.6}
 \contentsline {section}{\numberline {1.}Purpose of this package}{44}{section.6.1}
 \contentsline {section}{\numberline {2.}How to install the package ?}{44}{section.6.2}
