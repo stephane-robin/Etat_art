@@ -284,7 +284,7 @@ Lorsque nous avons défini les objectifs du stage, il est immédiatement ressort
 
 Ainsi, l'élaboration de ce package a nécessité de passer par différentes étapes permettant de développer les compétences suivantes :
 \begin{itemize}
-\item amélioration des connaissances Python car il a fallu reconstruire le programme à partir d'éléments de code et chercher à optimiser les performances de traitement,
+\item amélioration des connaissances Python, car il a fallu reconstruire le programme à partir d'éléments de code, chercher à optimiser les performances de traitement, gérer les entrées/sorties vers des fichiers \textit{.csv}, \textit{.fasta}, \textit{.xls} et \textit{.txt} à l'aide de modules adaptés, 
 \item création d'un notebook de documentation en anglais et d'une docstring pour le package dans le respect des conventions du PEP-257,
 \item travail de portabilité du code en le modifiant en fonction des différents systèmes d'exploitation Posix ou Windows,
 \item création d'un environnement de développement car il a fallu tester le code durant son élaboration,
@@ -294,7 +294,8 @@ Ainsi, l'élaboration de ce package a nécessité de passer par différentes ét
 \item choix de l'outil empaquetage et de gestion des dépendances. Création et publication d'un package sur PyPI, impliquant la bonne compréhension du fonctionnement des packages ainsi que des chemins d'accès aux différents fichiers, 
 \item création d'une campagne de tests du package (tests unitaires, d'intégration, de non-régression, de validation, de performance, de configuration),
 \item création de machines virtuelles pour effectuer des tests sur différents systèmes d'exploitation, et création d'un environnement de test sur ces machines virtuelles
-\item travail de compréhension des mots-clés en bio-informatique afin de pouvoir exercer dans ce cadre métier particulier. Ceci a conduit à une synthèse de l'état de l'art fortement orientée vers la biologie et plus particulièrement le CRISPR.
+\item travail de compréhension des mots-clés en bio-informatique afin de pouvoir exercer dans ce cadre métier particulier. Ceci a conduit à une synthèse de l'état de l'art fortement orientée vers la biologie et plus particulièrement le CRISPR,
+\item amélioration des connaissances relatives aux commandes bash sous Linux.
 \end{itemize}
 
 Il faut se confronter au moins une fois aux compétences pratiques énumérées ci-dessus afin d'en découvrir les dysfonctionnements et d'en appréhender les difficultés. Nous allons voir en détail dans ce rapport de stage les différentes étapes suivies, et nous allons expliquer en détail la construction et le fonctionnement d'un package en prenant bien évidemment l'exemple de CRISPRbuilder\_TB.
@@ -977,7 +978,7 @@ L'utilisateur pourrait alors installer ces modules à l'identique en utilisant l
 
 Cette méthode fonctionne bien pour construire un environnement de développement à partir d'un répertoire courant où se trouve le fichier \textbf{requirements.txt}. C'est d'ailleurs la technique que nous avons utilisée pour construire notre environnement. Toutefois, elle n'est pas adaptée à l'installation des dépendances de CRISPRbuilder\_TB par un utilisateur,  car celui-ci devrait trouver l'emplacement du package, s'y rendre pour ensuite exécuter \texttt{pip install -r requirements.txt}.
 
-Ce processus d'installation devrait rester transparent pour l'utilisateur. C'est pourquoi, il devrait être pris en charge par un gestionnaire de package tel que \textit{Poetry} regroupant les versions des dépendances dans un fichier \textbf{pyproject.toml} qui remplace \textbf{requirements.txt}. Nous verrons au cours des tests de fonctionnement que les dépendances ne sont pas toujours reconnues à partir de \textit{Poetry} et qu'il est quand même nécessaire pour l'utilisateur d'avoir préalablement installé et paramétré sur sa machine les outils du SRA Toolkit \textit{parallel-fastq-dump} et \textit{blast}. CRISPRbuilder\_TB étant destiné à un public de bio-informaticiens, ce prérequis devrait déjà être installé sur l'ordinateur des utilisateurs du package. Il convient toutefois de le préciser dans la documentation d'installation \textbf{crisprbuilder\_tb.ipynb}.
+Ce processus d'installation devrait rester transparent pour l'utilisateur. C'est pourquoi, il devrait être pris en charge par un gestionnaire de package tel que \textit{Poetry} regroupant les versions des dépendances dans un fichier \textbf{pyproject.toml} qui remplace \textbf{requirements.txt}. Nous verrons au cours des tests d'installation que les dépendances ne sont pas toujours reconnues à partir de \textit{Poetry} et qu'il est quand même nécessaire pour l'utilisateur d'avoir préalablement installé et paramétré sur sa machine les outils du SRA Toolkit \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn}. CRISPRbuilder\_TB étant destiné à un public de bio-informaticiens, ce prérequis devrait déjà être installé sur l'ordinateur des utilisateurs du package. Il convient toutefois de le préciser dans la documentation d'installation \textbf{crisprbuilder\_tb.ipynb}.
 
 
 
@@ -2145,7 +2146,7 @@ Notre campagne de tests comporte les démarches suivantes :
 \item durant la création de chaque fonction, les \textbf{tests unitaires} sont effectués à l'aide de l'environnement de développement et du module \textit{Unittest},
 \item au moment du regroupement du code et des différents modules, les \textbf{tests d'intégration} utilisent l'environnement de développement et la notation fournie par le module \textit{pylint},
 \item lors d'une modification de code, les \textbf{tests de non-régression} utilisent l'environnement de développement, et notre travail est facilité par l'utilisation de l'outil de versioning \textit{Git},
-\item lorsque le package est construit, les \textbf{tests de performance} et les \textbf{tests fonctionnels} s'appuient également sur l'environnement de développement
+\item lorsque le package est construit, les \textbf{tests de performance} et les \textbf{tests de validation} s'appuient également sur l'environnement de développement
 \item les \textbf{tests d'installation} dépendent de chaque système d'exploitation et nécessitent autant d'environnements de tests que de systèmes. Nous simulerons les différents systèmes à l'aide de l'application \textit{VirtualBox}.
 \item les \textbf{tests de configuration} pour déterminer les systèmes les mieux adaptés utilisent également un environnement de test.
 \end{itemize}
@@ -2319,230 +2320,6 @@ Pour éviter tout conflit entre les deux dossiers créés, il est nécessaire de
 
 
 
-% LES TESTS D'INSTALLATION -----------------------------
-\section{Les tests d'installation}
-
-Les tests d'installation permettent de s'assurer que l'utilisateur sera en mesure d'installer le package en dehors de son environnement de développement, qu'il dispose d'un système d'exploitation Linux, macOS ou Windows. Pour simuler le fonctionnement de ces systèmes, nous choisissons de travailler sur les quatre machines virtuelles suivantes créées par \textit{VirtualBox}, toutes fonctionnant en 64 bits : 
-\begin{itemize}
-\item Ubuntu 18.04 LTS, 
-\item Ubuntu 20.04 LTS, 
-\item macOS 10.12 Sierra, 
-\item Windows 10.
-\end{itemize}
-
-Afin de tester le comportement du package à l'installation, il est possible de le publier officieusement sur la plateforme testPyPI. Il faut alors se placer à la racine du package et lancer en ligne de commande l'instruction
-\begin{verbatim}  twine upload --repository testpypi dist/*\end{verbatim}
-
-On peut donc télécharger un package à partir d'index différents de PyPI, comme par exemple testPyPI. Toutefois, les dépendances ne sont pas nécessairement répertoriées dans cet index. Cela induit dans ce cas une erreur au téléchargement et interdit l'installation du package. Il faut donc faire référence à PyPI pour le téléchargement des dépendances. Par exemple, l'installation de CRISPRbuilder\_TB à partir de testPyPI se fait à l'aide de l'instruction suivante
-
-\begin{verbatim}  pip install --index-url https://test.pypi.org/simple/ --extra-index-url 
-  https://pypi.org/simple/ crisprbuilder_tb\end{verbatim} 
-
-Attention à bien respecter l'espace entre \texttt{simple/} et \texttt{crisprbuilder\_tb}.
-
-L'instruction \texttt{\textemdash \textemdash index \textemdash url} permet l'installation du package à partir de textPyPI alors que l'instruction \texttt{\textemdash \textemdash extra \textemdash index \textemdash url} permet l'installation des dépendances à partir de PyPI.
-
-Il peut arriver que testPyPI n'installe pas la dernière version. Dans ce cas, il convient de préciser la version souhaitée du package, par exemple pour la version 0.1.2, il faut écrire
-
-\begin{verbatim}  pip install --index-url https://test.pypi.org/simple/ --extra-index-url 
-  https://pypi.org/simple/ crisprbuilder_tb==0.1.2\end{verbatim} 
-
-A noter qu'il ne faut pas utiliser de guillemets autour de la version du package.
-
-Il est fréquent qu'il s'affiche à ce moment-là le message d'erreur suivant
-
-\begin{verbatim}  ERROR: Could not find a version that satisfies the requirement crisprbuilder_tb==0.1.2 (from versions: 0.0.1, 0.0.2, 0.0.3, 0.0.4, 0.0.5, 0.1.0, 0.1.1)
-ERROR: No matching distribution found for crisprbuilder_tb==0.1.2\end{verbatim}
-
-Dans ce cas, la répétition de l'instruction précédente résout le problème, sans raison apparente.
-
-Une fois que l'installation est validée à partir de testPyPI et que les modifications nécessaires ont été effectuées dans le code du package, on peut publier le package sur PyPI et procéder aux tests sur la version proposée aux utilisateurs avec la commande
-
-\begin{verbatim}
-  pip install crisprbuilder_tb
-\end{verbatim}
-
-Lorsqu'une version antérieure de CRISPRbuilder\_TB existe déjà sur l'ordinateur, il peut arriver que l'installation d'une version plus récente échoue. Il est possible de la mettre à niveau de la façon suivante
-\begin{verbatim}
-  pip install --upgrade crisprbuilder_tb
-\end{verbatim}
-
-En cas de difficulté rencontrée, on peut forcer la mise à niveau en supprimant d'abord le package \textit{crisprbuilder\_tb}
-\begin{verbatim}
-  pip uninstall crisprbuilder_tb
-  pip install crisprbuilder_tb
-\end{verbatim}
-
-
-
-
-
-% L'UTILISATION DE VIRTUALBOX
-\subsubsection{L'utilisation de VirtualBox}
-
-Afin d'effectuer les tests d'installation et de validation, nous créons artificiellement des plateformes de test vierges grâce à \index{VirtualBox}\textit{VirtualBox}. Nous configurons systématiquement Python dans sa dernière version qui est la 3.8 et nous installons \textit{Anaconda}, ce qui correspond sur Linux aux instructions suivantes
-
-\begin{verbatim}
-  sudo apt-get install python 3.8.0
-  /usr/ A VERIFIER
-  apt-get install libgl1-mesa-glx libegl1-mesa libxrandr2 libxrandr2 libxss1 libxcursor1 libxcomposite1 libasound2 libxi6 libxtst6
-  bash ~/Téléchargements/Anaconda3/-2020.02-Linux-x86_64.sh
-
-\end{verbatim}
-
-Nous commençons par télécharger des images \textit{.iso} des différents systèmes d'exploitation, que nous clonons avant de commencer les tests, afin de conserver une version vierge pour pouvoir revenir en arrière en cas de besoin :
-\begin{itemize}
-\item pour Ubuntu 18.04 LTS, nous choisissons la version 64-bit Server Install Image car nous n'avons pas besoin d'interface graphique pour réaliser nos tests. La version de Python par défaut de ce système est 2.7.17. Il existe également une version 3.6.9 de Python.
-\item pour Ubuntu 20.04 LTS, nous choisissons la version 64-bit Server Install Image. La version de Python par défaut de ce système est 3.8.2.
-\item pour macOS 10.12 Sierra, 
-\item pour Windows 10, 
-\end{itemize}
-
-Nous commençons les tests en rajoutant dans la description de chaque système toutes les installations effectuées afin que le package fonctionne correctement.
-
-Les premiers tests d'installation avec Ubuntu 18.04 LTS s'avèrent défaillants car nous n'avons pas précisé l'adresse de PyPI pour l'installation des dépendances, ce qui a entraîné des difficultés d'installation automatique des modules au regard des contraintes imposées par le fichier \textbf{poetry.lock}. Pour s'assurer que les dépendances soient bien installées, nous avons dans un premier temps proposé que l'utilisateur le fasse manuellement en suivant les consignes données dans la documentation et à l'aide de l'instruction \texttt{pip install nom\_module}. Pour simplifier le travail de l'utilisateur, nous avons pensé inclure un fichier \textbf{requirements.txt} dans le package et demander à l'utilisateur d'exécuter \texttt{XXX}. Toutefois, cela suppose que l'utilisateur soit en mesure de trouver l'emplacement de son package dans son système avant d'utiliser le fichier \textbf{requirements.txt}, ce qui n'est pas nécessairement évident sur MacOS par exemple. Cela ne nous semble pas être conforme à l'esprit d'un package dont les dépendances doivent s'installer automatiquement grâce qu fichier \textbf{poetry.lock}. De ce fait, nous avons abandonné cette idée, et après avoir compris que les dépendances pouvaient être téléchargées sur PyPI, nous avons correctement effectué l'installation de CRISPRbuilder\_TB. Malheureusement l'exécution de l'instruction
-
-\begin{verbatim}
-  python -m crisprbuilder_tb --collect ERR2704808
-\end{verbatim}
-
-conduit au message d'erreur suivant
-
-\begin{verbatim}
-XXX
-\end{verbatim}
-
-ce qui montre qu'un système vierge ne parvienne pas à exécuter \textit{parallel-fastq-dump}, même si ce module a été préalablement installé par \textit{Poetry}, probablement car il n'en connaît pas le chemin d'accès.
-
-Pour que l'installation fonctionne correctement, il faut donc s'assurer que l'utilisateur dispose d'un version fonctionnelle de \textit{parallel-fastq-dump} avant l'installation de CRISPRbuilder\_TB, en la testant avec la commande 
-
-\begin{verbatim}
-  parallel-fastq-dump --sra-id SRR1219899 --threads 4 --outdir out/ --split-files --gzip
-\end{verbatim} 
-
-Notons que dans le cas où une version de \textit{parallel-fastq-dump} existe déjà dans le système, \textit{Poetry} ne cherche pas à en installer une nouvelle version \texttt{requirements already satisfied}.
-
-On retient qu' il n'est donc pas nécessaire pour l'utilisateur d'installer manuellement les dépendances du projet, à l'exception de \textit{parallel-fastq-dump}. 
-
-
-
-
-
-
-
-
-
-
-Une fois que l'application a été validée et publiée sur testPyPI, nous avons contrôlé la documentation au sein des modules et des fonctions, dans le fichier \textbf{README.md} et surtout dans le fichier \textbf{crisprbuilder\_tb.md}. 
-
-
-
-
-
-
-L’installation du package par n'importe quel utilisateur se fait grâce à l’instruction
-\begin{verbatim}  pip install crisprbuilder_tb\end{verbatim}
-après s'être assuré que \textit{pip} est bien configuré pour s'exécuter avec Python 3.
-
-
-A RAJOUTER DANS LE NOTEBOOK
-Dans le cas contraire, il convient de préciser
-\begin{verbatim}  pip3 install crisprbuilder_tb\end{verbatim}
-
-
-
-A RAJOUTER DANS LE NOTEBOOK AVEC LES SPOLIGO
-ATTENTION A L'ESPACE AVANT CRISPRBUILDER LORS DE L'INSTALLATION A RAJOUTER AU NOTEBOOK
-
-Au moment de l'installation, que ce soit à partir de PyPI ou d'un autre index tel que
-testPyPI, l'utilisateur ne choisit pas l'emplacement d'installation. Celui-ci est défini automatiquement par le système en fonction des variables d'environnement. Par exemple, si on utilise une version particulière de Python avec \textit{pyenv}, alors le package pourra se trouver dans \textbf{\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6/}. Il est également fréquent de le retrouver dans \textbf{\raisebox{-1ex}{\textasciitilde}/.local/lib/python3.6/site-packages/} avec la plupart des différentes packages. Comme on ne connaît pas avec certitude l'emplacement dans lequel le package va s'installer, il convient de définir une variable d'environnement qui pointe vers l'emplacement d'installation.
-
-Lors de l'exécution du package, il est nécessaire de l'appeler par son nom en utilisant l'indice "-m" signifiant "module". Il n'est pas utile de préciser l'utilisation de Python3 si le répertoire courant travaille déjà avec cette version. En revanche, les chemins relatifs dans les modules du package ne devront pas utiliser le nom crisprbuilder\_tb car celui-ci ne sera pas reconnu, une fois à la racine du package. EXPLICATIONS A CHANGER
-
-Par défaut, Python cherche ses modules et packages dans la variable d'environnement \$PYTHONPATH. On peut alors consulter les différents chemins connus par cette variable d'environnement en exécutant l'instruction
-\begin{verbatim}  python
-  >>> import sys
-  >>> print(sys.path)\end{verbatim}
-
-afin d'obtenir une réponse sous forme de liste du type
-\begin{verbatim}  ['',
-  '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python36.zip',
-  '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6',
-  '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6/lib-dynload',    
-  '\raisebox{-1ex}{\textasciitilde}/.local/lib/python3.6/site-packages',
-  '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6/site-packages']\end{verbatim}
-
-On pourrait donc utiliser \texttt{sys.path[3]} comme chemin permettant d'accéder au répertoire parent de \textbf{crisprbuilder\_tb}. Toutefois, en fonction du système d'exploitation,  le 4ème élément de cette liste pour
-
-Lorsque l'installation est réussie
-
-\subsection{L'utilité de Anaconda}
-
-Une fois l'installation réussie, le premier test de fonctionnement avec l'instruction
-
-\begin{verbatim}
-  python -m crisprbuilder_tb --print 0
-\end{verbatim}
-
-fournit le bon résultat.
-
-En revanche, l'instruction
-
-\begin{verbatim}
-  python -m crisprbuilder_tb --collect ERR2704812
-\end{verbatim}
-
-produit une erreur dont voici le résumé
-
-\begin{verbatim}
-  File "~/.local/bin/parallel-fastq-dump" line 112, in <module> main()
-  p = subprocess.Popen(["sra-stat", "--meta", "--quick", sra_id], stdout=subprocess.PIPE)
-  File "/usr/lib/python3.8/subprocess.py", line 1364, in _execute_child raise child_exception_type(errno_num, err_msg, err_filename)
-  FileNotFoundError: [Errno2] No such file or directory: 'sra-stat': 'sra-stat'
-\end{verbatim}
-
-Il semble au début qu'il faille installer le \textit{SRA Toolkit}. Pourtant, après configuration du \textit{Toolkit} suivant les recommandations du NCBI sur le site \url{https://ncbi.github.io/sra-tools/install_config.html}, le problème persiste.
-
-Au cours des premiers tests d'installation, il est apparu qu'une fois les dépendances installées, elles n'étaient pas pour autant reconnues par un système vierge. Ainsi, l'erreur suivante s'affichait systématiquement
-
-\begin{verbatim}
-
-\end{verbatim}
-
-puis l'erreur suivante s'affichait également
-
-\begin{verbatim}
-
-\end{verbatim}
-
-Après avoir cherché du côté des chemins d'accès des différents fichiers support, il est apparu que le problème venait plutôt des variables d'environnement qui devaient être configurées. Ainsi, il est nécessaire que l'utilisateur ait convenablement répertorié les chemins d'accès vers ses fichiers exécutables et dans le cas présent les modules \textit{parallel-fastq-dump} et \textit{blastn}.
-
-Renan Valieris sur son dépôt \url{https://github.com/rvalieris/parallel-fastq-dump} recommande l'utilisation de \textit{bioconda} pour installer le package \textit{parallel-fastq-dump}. En effet, nous nous sommes rendus compte sur le système Ubuntu 20.04 LTS, que l'installation à partir de \textit{  pip install parallel-fastq-dump} se fait correctement mais le package se trouve à la fois dans XXX et dans XXX, ce qui empêche le bon fonctionnement de l'instruction de test suivante
-
-\begin{verbatim}
-  parallel-fastq-dump -s ERR2704812
-\end{verbatim} 
-
-et lève l'erreur suivante
-
-\begin{verbatim}
-XXX
-\end{verbatim}
-
-Après vérification que la variable d'environnement \texttt{\$PATH} est bien configurée, le problème reste présent. Malgré le fait qu'il existe sûrement une solution à ce problème, l'installation de \textit{parallel-fastq-dump} par la commande \texttt{conda install -c bioconda parallel-fastq-dump} le résout immédiatement. 
-
-il est donc nécessaire d'interroger la variable d'environnement \texttt{\$PATH} avec la commande
-
-\begin{verbatim}
-  echo $PATH
-\end{verbatim}
-
-On doit obtenir un résultat du type
-\begin{verbatim}
-
-\end{verbatim}
-
-
 
 % LES TESTS DE VALIDATION ------------------------------------
 \section{Les tests de validation}
@@ -2585,10 +2362,223 @@ L'incompatibilité des chemins d'accès entre les systèmes Posix et Windows né
 
 
 
+% LES TESTS D'INSTALLATION -----------------------------
+\section{Les tests d'installation}
+
+Les tests d'installation permettent de s'assurer que l'utilisateur sera en mesure d'installer le package, quel que soit son système d'exploitation Linux, macOS ou Windows. Pour simuler le fonctionnement de ces systèmes, nous choisissons de travailler sur les quatre machines virtuelles suivantes créées par \textit{VirtualBox}, toutes fonctionnant en 64 bits : 
+\begin{itemize}
+\item Ubuntu 18.04 LTS, 
+\item Ubuntu 20.04 LTS, 
+\item macOS 10.12 Sierra, 
+\item Windows 10.
+\end{itemize}
+
+Afin de tester le comportement du package à l'installation, il est possible de le publier officieusement sur la plateforme testPyPI. Il faut alors se placer à la racine du package et lancer en ligne de commande l'instruction
+\begin{verbatim}  twine upload --repository testpypi dist/*\end{verbatim}
+
+On peut ainsi télécharger un package à partir d'autres index que PyPI, comme par exemple testPyPI. Toutefois, toutes les dépendances du package ne sont pas nécessairement répertoriées dans l'index testPyPI. Cela induit dans ce cas une erreur au téléchargement et interdit l'installation du package. Il faut donc faire référence à PyPI pour le téléchargement des dépendances. Par exemple, l'installation de CRISPRbuilder\_TB à partir de testPyPI se fait à l'aide de l'instruction suivante
+
+\begin{verbatim}  pip install --index-url https://test.pypi.org/simple/ --extra-index-url 
+  https://pypi.org/simple/ crisprbuilder_tb\end{verbatim} 
+
+où l'instruction \texttt{\textemdash \textemdash index\textemdash url} permet l'installation du package à partir de testPyPI alors que l'instruction \texttt{\textemdash \textemdash extra\textemdash index\textemdash url} permet l'installation des dépendances à partir de PyPI, si celles-ci n'ont pas été trouvée dans testPyPI. Attention à bien respecter l'espace entre \texttt{simple/} et \texttt{crisprbuilder\_tb}.
+
+Il peut arriver que testPyPI n'installe pas la dernière version du package. Dans ce cas, il convient de préciser la version souhaitée. Par exemple pour la version 0.1.2, il faut écrire
+
+\begin{verbatim}  pip install --index-url https://test.pypi.org/simple/ --extra-index-url 
+  https://pypi.org/simple/ crisprbuilder_tb==0.1.2\end{verbatim} 
+
+A noter qu'il ne faut pas utiliser de guillemets autour de la version du package, contrairement à ce qui est souvent suggéré sur Internet.
+
+Il est fréquent qu'il s'affiche à ce moment-là le message d'erreur suivant
+
+\begin{verbatim}  ERROR: Could not find a version that satisfies the requirement crisprbuilder_tb==
+  0.1.2 (from versions: 0.0.1, 0.0.2, 0.0.3, 0.0.4, 0.0.5, 0.1.0, 0.1.1)
+  ERROR: No matching distribution found for crisprbuilder_tb==0.1.2\end{verbatim}
+
+Dans ce cas, la répétition de l'instruction précédente résout le problème, sans aucune raison apparente.
+
+Une fois que l'installation est validée à partir de testPyPI et que les modifications nécessaires ont été effectuées dans le code du package, on peut publier le package sur PyPI et procéder aux tests sur la version proposée aux utilisateurs avec la commande
+
+\begin{verbatim}
+  pip install crisprbuilder_tb
+\end{verbatim}
+
+Lorsqu'une version antérieure de CRISPRbuilder\_TB existe déjà sur l'ordinateur, il peut arriver que l'installation d'une version plus récente échoue. Il est possible de la mettre à niveau de la façon suivante
+\begin{verbatim}
+  pip install --upgrade crisprbuilder_tb
+\end{verbatim}
+
+En cas de difficulté rencontrée, on peut forcer la mise à niveau en supprimant d'abord le package \textit{crisprbuilder\_tb}
+\begin{verbatim}
+  pip uninstall crisprbuilder_tb
+  pip install crisprbuilder_tb
+\end{verbatim}
+
+
+
+
+
+% L'UTILISATION DE VIRTUALBOX
+\subsection{L'utilisation de VirtualBox}
+
+Afin d'effectuer les tests d'installation et de validation, nous créons artificiellement des plateformes de test vierges grâce à \index{VirtualBox}\textit{VirtualBox}. Nous installons systématiquement \textit{Anaconda}, et configurons \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn} à l'aide de cet outil. Une version récente de Python, à savoir 3.7.0, se lie automatiquement à l'environnement de \textit{Anaconda}. Ceci correspond sur Linux aux instructions suivantes
+
+\begin{verbatim}
+  apt-get install libgl1-mesa-glx libegl1-mesa libxrandr2 libxrandr2 libxss1 
+  libxcursor1 libxcomposite1 libasound2 libxi6 libxtst6
+  bash ~/Téléchargements/Anaconda3/-2020.02-Linux-x86_64.sh
+  conda install -c conda-forge xmltodict
+  conda install -c anaconda xlrd
+  conda install -c anaconda biopython
+  conda install -c bioconda parallel-fastq-dump
+  conda install -c bioconda blast
+  conda install -c kantorlab blastn
+\end{verbatim}
+
+Nous commençons par télécharger des images \textit{.iso} des différents systèmes d'exploitation, que nous clônons avant de commencer les tests, afin de conserver une version vierge pour pouvoir revenir en arrière en cas de besoin :
+\begin{itemize}
+\item pour Ubuntu 18.04 LTS, nous choisissons la version 64-bit Server Install Image, car nous n'avons pas besoin d'interface graphique pour réaliser nos tests. La version de Python par défaut de ce système est 2.7.17. Il existe également une version 3.6.9 de Python.
+\item pour Ubuntu 20.04 LTS, nous choisissons la version 64-bit Server Install Image. La version de Python par défaut de ce système est 3.8.2.
+\item pour macOS 10.12 Sierra, 
+\item pour Windows 10, 
+\end{itemize}
+
+Nous commençons les tests en rajoutant dans la description de chaque système sur \textit{VirtualBox} toutes les installations effectuées afin que le package fonctionne correctement.
+
+
+
+
+
+% TESTS AVEC UBUNTU 18.04 ----------
+\subsection{Tests d'installation avec Ubuntu 18.04}
+
+L’installation du package par n'importe quel utilisateur se fait grâce à l’instruction
+\begin{verbatim}  pip install crisprbuilder_tb\end{verbatim}
+
+Les premiers tests d'installation avec Ubuntu 18.04 LTS s'avèrent défaillants, car nous avons uniquement donné l'adresse de testPyPI dans l'instruction \texttt{pip install -i https://test.pypi.org/\\simple/ crisprbuilder\_tb}, et nous ne savions pas que les dépendances n'étaient pas présentes sur l'index testPyPI. Cela a entraîné des difficultés d'installation des modules au regard des contraintes imposées par le fichier \textbf{poetry.lock}, mais n'a imposé aucun correctif de code dès lors que nous avons rajouté l'adresse de PyPi pour installer les dépendances.
+
+Une fois l'installation de CRISPRbuilder\_TB et de ses dépendances effectuée, nous cherchons à vérifier qu'elle soit bien réussie. Le premier test avec l'instruction
+
+\begin{verbatim}
+  python -m crisprbuilder_tb --print 0
+\end{verbatim}
+
+fournit le bon résultat.
+
+En revanche, l'instruction
+
+\begin{verbatim}
+  python -m crisprbuilder_tb --collect ERR2704808
+\end{verbatim}
+
+produit une erreur dont voici le résumé
+
+\begin{verbatim}
+  File "~/.local/bin/parallel-fastq-dump" line 112, in <module> main()
+  p = subprocess.Popen(["sra-stat", "--meta", "--quick", sra_id], 
+  stdout=subprocess.PIPE)
+  File "/usr/lib/python3.8/subprocess.py", line 1364, in _execute_child raise 
+  child_exception_type(errno_num, err_msg, err_filename)
+  FileNotFoundError: [Errno2] No such file or directory: 'sra-stat': 'sra-stat'
+\end{verbatim}
+
+Il semble au début qu'il faille installer le \textit{SRA Toolkit}. Pourtant, après configuration du \textit{Toolkit} suivant les recommandations du NCBI sur le site \url{https://ncbi.github.io/sra-tools/install_config.html}, le problème persiste.
+
+Un système vierge ne parvient pas à utiliser \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn}, même si ces dépendances ont été correctement installées par \textit{Poetry}, 
+
+Après avoir cherché du côté des chemins d'accès des différents fichiers support, il est apparu que le problème venait plutôt de la variable d'environnement \$PATH qui devaient être configurées correctement après une installation via \texttt{pip install}. Ainsi, il est nécessaire que l'utilisateur ait convenablement répertorié les chemins d'accès vers ses fichiers exécutables et dans le cas présent les modules \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn}. Il peut interroger la variable d'environnement \$PATH avec la commande
+
+\begin{verbatim}
+  echo $PATH
+\end{verbatim}
+
+qui doit fournir un résultat du type
+\begin{verbatim}
+  ~/.pyenv/plugins/pyenv-virtualenv/shims:~/.pyenv/shims:~/.pyenv/bin:
+  ~/anaconda3/bin:~/.poetry/bin:~/bin:~/.local/bin:/usr/local/sbin:/usr/local/bin:
+  /usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+\end{verbatim}
+
+Pour que l'installation fonctionne correctement, il faut donc s'assurer que l'utilisateur dispose d'un version fonctionnelle de \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn} avant l'installation de CRISPRbuilder\_TB. On peut par exemple tester le bon fonctionnement de \textit{parallel-fastq-dump} avec la commande 
+
+\begin{verbatim}
+  parallel-fastq-dump --sra-id SRR1219899 --threads 4 --outdir out/ --split-files 
+  --gzip
+\end{verbatim} 
+
+Dans le cas où une version de \textit{parallel-fastq-dump} existe déjà dans le système, \textit{Poetry} ne cherche pas à en installer une nouvelle version et le message suivant apparaît
+
+\begin{verbatim}
+  requirements already satisfied
+\end{verbatim}
+
+permettant à l'utilisateur de conserver une version correctement paramétrée et fonctionnelle.
+
+Il persiste toutefois une difficulté liée à \textit{pip} plutôt qu'aux dépendances. En fonction de l'environnement de développement choisi par l'utilisateur pour installer \textit{parallel-fastq-dump} avec l'instruction \texttt{pip install parallel-fastq-dump}, le module \textit{parallel-fastq-dump} peut se retrouver à plusieurs emplacements différents, comme par exemple \textbf{$\sim$/.pyenv/shims/} ou \textbf{$\sim$/.local/bin/}. Lors de l'exécution de CRISPRbuilder\_TB, si l'environnement dans lequel travaille l'utilisateur est différent de celui qu'il a choisi pour installer \textit{parallel-fastq-dump}, le système pourra quand même trouver cette dépendance dès lors que la variable d'environnement a été correctement configurée, mais, si il en existe plusieurs versions, celles-ci peuvent entrer mutuellement en conflit. Dans le cadre de notre projet, cela a donné lieu à de nombreux dysfonctionnements et tentatives infructueuses. Notons que dans son dépôt \url{https://github.com/rvalieris/parallel-fastq-dump}, Renan Valieris recommande l'utilisation de \textit{bioconda} pour installer le package \textit{parallel-fastq-dump}. Nous décidons de suivre ce conseil et de privilégier \textit{Anaconda} dans tous les environnements de tests afin de résoudre le problème mentionné ci-dessus. Puis nous installons \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn} en utilisant \textit{conda} comme il est préconisé dans la littérature. Par souci de simplicité, nous conseillons également à l'utilisateur d'installer ces dépendances avec \textit{conda} et nous le mentionnons dans la documentation de CRISPRbuilder\_TB.
+
+
+
+
+
+WWWWW
+
+Au moment de l'installation, que ce soit à partir de PyPI ou d'un autre index tel que
+testPyPI, l'utilisateur ne choisit pas l'emplacement d'installation. Celui-ci est défini automatiquement par le système en fonction des variables d'environnement. Par exemple, si on utilise une version particulière de Python avec \textit{pyenv}, alors le package pourra se trouver dans \textbf{\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6/}. Il est également fréquent de le retrouver dans \textbf{\raisebox{-1ex}{\textasciitilde}/.local/lib/python3.6/site-packages/} avec la plupart des différentes packages. Comme on ne connaît pas avec certitude l'emplacement dans lequel le package va s'installer, il convient de définir une variable d'environnement qui pointe vers l'emplacement d'installation.
+
+Lors de l'exécution du package, il est nécessaire de l'appeler par son nom en utilisant l'indice "-m" signifiant "module".  En revanche, les chemins relatifs dans les modules du package ne devront pas utiliser le nom crisprbuilder\_tb car celui-ci ne sera pas reconnu, une fois à la racine du package. EXPLICATIONS A CHANGER
+
+Par défaut, Python cherche ses modules et packages dans la variable d'environnement \$PYTHONPATH. On peut alors consulter les différents chemins connus par cette variable d'environnement en exécutant l'instruction
+\begin{verbatim}  python
+  >>> import sys
+  >>> print(sys.path)\end{verbatim}
+
+afin d'obtenir une réponse sous forme de liste du type
+\begin{verbatim}  ['',
+  '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python36.zip',
+  '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6',
+  '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6/lib-dynload',    
+  '\raisebox{-1ex}{\textasciitilde}/.local/lib/python3.6/site-packages',
+  '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6/site-packages']\end{verbatim}
+
+On pourrait donc utiliser \texttt{sys.path[3]} comme chemin permettant d'accéder au répertoire parent de \textbf{crisprbuilder\_tb}. Toutefois, en fonction du système d'exploitation,  le 4ème élément de cette liste pour
+
+
+
+
+
+
+
+
+
+
+
+% TESTS AVEC MACOS ----------
+\subsection{Tests d'installation avec macOS 10.12 Sierra}
+
+
+
+
+
+
+
+
+% TESTS AVEC WINDOWS 10 -------
+\subsection{Tests d'installation avec Windows 10}
+
+
+
+
+
+
+
+
+
+
 % LES TESTS DE PERFORMANCE ------------------------------------
 \section{Les tests de performance}
 
-L'objectif des tests de performance serait de valider la capacité des serveurs et réseaux pour supporter les charges d'accès importantes. Ceci ne s'applique pas vraiment à notre package, qui utilise lors de ses requêtes \textit{fastq} et \textit{blast} les serveurs du \index{NCBI}NCBI\footnote{\textbf{NCBI:} National Center for Biotechnology Information} et non pas ses propres serveurs. Si les serveurs de NCBI sont occupés, les réponses obtenues n'en seront que différées. CRISPRbuilder\_TB n'est pas une application Web, l'utilisation simultanée de plusieurs ordinateurs exécutant le package n'a pas d'incidence sur celui-ci.
+L'objectif des tests de performance serait de valider la capacité des serveurs et réseaux pour supporter les charges d'accès importantes. Ceci ne s'applique pas à notre package, qui utilise uniquement lors de ses requêtes \textit{fastq} et \textit{blast} les serveurs du \index{NCBI}NCBI\footnote{\textbf{NCBI:} National Center for Biotechnology Information} et ne dispose pas de ses propres serveurs. Si les serveurs de NCBI sont occupés, les réponses obtenues n'en seront que différées. CRISPRbuilder\_TB n'est pas une application Web, l'utilisation simultanée de plusieurs ordinateurs exécutant le package n'a pas d'incidence sur celui-ci.
 
 En revanche, l'optimisation des performances de traitement des données doit être pris en compte car les fichiers de type \textit{.fasta} ont une taille comprise entre 1 et 3 Go, ce qui génère des délais importants lors de l'exécution du package.
 
@@ -2597,13 +2587,16 @@ En revanche, l'optimisation des performances de traitement des données doit êt
 % SUBPROCESS RUN-------------
 \subsection{subprocess.run et os.system}
 
-Au début de notre travail sur le code, nous avons transformé les lignes de commande Linux appelées par les méthodes Python \textbf{subprocess.run} et \textbf{os.system} en fonctions entièrement écrites en Python afin d'améliorer la portabilité de l'application, sans se limiter aux systèmes Linux. Nous avons constaté lors des premiers tests d'intégration un fort ralentissement du programme lorsque ces modifications étaient appliquées à l'ensemble du code, au vu de la taille importante des fichiers à lire par l'interpréteur. Nous avons donc décidé de revenir à l'utilisation de \textbf{subprocess.run} et \textbf{os.system}. Si cette démarche n'a aucune incidence pour la plateforme macOS, elle imposera en revanche un changement de lignes de commandes pour la plateforme Windows. Or, en fonction des versions du systéme Windows, l'utilisateur dispose d'une invite de commandes ou d'un PowerShell dont les instructions diffèrent. Nous avons donc choisi de tester dans le programme si le système est Posix ou Windows, puis de conserver les lignes de commande pour les système Posix et d'utiliser des fonctions Python pour les systèmes Windows. Cela entraîne de ce fait un réel manque de performance dans le traitement des données pour Windows. 
+Au début de notre travail sur le code, nous avons transformé les lignes de commande Linux appelées par les méthodes Python \textit{subprocess.run} et \textit{os.system} en fonctions entièrement écrites en Python, afin d'améliorer la portabilité de l'application au-delà des aux systèmes Linux. Nous avons constaté lors des premiers tests d'intégration un fort ralentissement du programme lorsque ces modifications étaient appliquées à l'ensemble du code. Nous avons donc décidé de revenir à l'utilisation de \textit{subprocess.run} et \textit{os.system} au vu de la taille importante des fichiers à lire par l'interpréteur. Si cette démarche n'a aucune incidence pour la plateforme macOS, elle impose en revanche un changement de lignes de commandes pour la plateforme Windows. Or, en fonction des versions du systéme Windows, l'utilisateur dispose d'une invite de commandes ou d'un PowerShell dont les instructions diffèrent. Nous choisissons dans un premier temps de tester dans le programme si le système est Posix ou Windows, puis ensuite de conserver les lignes de commande pour les système Posix et d'utiliser des fonctions Python pour les systèmes Windows. Cela entraîne, de ce fait, un réel manque de performance dans le traitement des données pour les plateformes Windows. 
 
 Pour mieux comprendre ce ralentissement, prenons un exemple sur un traitement simple consistant à concaténer deux fichiers \textit{.fasta}. L'instruction suivante
 
-\begin{verbatim}os.system("cat SRR8368696_1.fasta SRR8368696_2.fasta > SRR8368696_shuffled_system.fasta")\end{verbatim}
+\begin{verbatim}  os.system("cat SRR8368696_1.fasta SRR8368696_2.fasta > SRR8368696_shuffled_system.
+  fasta")\end{verbatim}
 
-est bien plus rapide qu'une fonction Python que nous pourrions définir pour concaténer et qui permettrait d'améliorer la portabilité du programme. En effet, nous constatons que le code ci-dessous exécuté 10 fois sur un système Ubuntu 18.04 LTS avec un processus Intel Pentium de 1,6 GHz 64 bits 4 coeurs
+est bien plus rapide qu'une fonction Python que nous définissons pour concaténer deux fichiers et dont l'unique intérêt est d'améliorer la portabilité du programme. 
+
+Pour cela, nous exécutons 10 fois le code suivant sur un système Ubuntu 18.04 LTS avec un processus Intel Pentium de 1,6 GHz 64 bits 4 coeurs
 
 \begin{verbatim}
   import time
@@ -2620,21 +2613,21 @@ est bien plus rapide qu'une fonction Python que nous pourrions définir pour con
               f_shuffled.write(elt)
 
   debut_concat = int(round(time.time() * 1000))
-  concat('SRR8368696_1.fasta', 'SRR8368696_2.fasta', 'SRR8368696_shuffled_concat.fasta')
+  concat('SRR8368696_1.fasta', 'SRR8368696_2.fasta', 'SRR8368696_shuffled_concat.
+  fasta')
   fin_concat = int(round(time.time() * 1000))
   temps_concat = fin_concat - debut_concat
   print(temps_concat)
 
   debut_system = int(round(time.time() * 1000))
-  os.system("cat SRR8368696_1.fasta SRR8368696_2.fasta > SRR8368696_shuffled_system.fasta")
+  os.system("cat SRR8368696_1.fasta SRR8368696_2.fasta > SRR8368696_shuffled_system.
+  fasta")
   fin_system = int(round(time.time() * 1000))
   temps_system = fin_system - debut_system
   print(temps_system)
 \end{verbatim}
 
-affiche un temps moyen d'exécution de l'instruction \textbf{os.system} de 19,3 secondes, alors qu'il est de 26,7 secondes lorsqu'on exécute la fonction \textit{concat}.
-
-\includegraphics[width=10cm]{comparaison_concat.png}
+Nous constatons alors un temps moyen pour chaque exécution de l'instruction \textit{os.system} de 19,3 secondes, alors qu'il est de 26,7 secondes lorsqu'on exécute la fonction \textit{concat}, comme indiqué ci-dessous
 
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
@@ -2644,7 +2637,11 @@ os.system (ms) & 27403 & 21099 & 21884 & 19798 & 21624 & 22838 & 21549 & 20971 &
 \hline
 \end{tabular}
 
-Cette différence de quelques secondes pour une seule fonction entraîne par conséquence de nombreuses minutes de retard sur l'ensemble du code lors de son exécution. Les temps moyens d'exécution du programme pour chaque système d'exploitation sont relevés dans la rubrique \textit{Les tests de configuration}.
+Cette différence de quelques secondes pour une seule fonction entraîne de nombreuses minutes de retard sur l'ensemble du code lors de son exécution. 
+
+\includegraphics[width=10cm]{comparaison_concat.png}
+
+Notons que les temps moyens d'exécution du programme complet de CRISPRbuilder\_TB pour différents systèmes d'exploitation sont relevés dans la rubrique \textit{Les tests de configuration}.
 
 
 

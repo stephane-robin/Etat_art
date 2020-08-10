@@ -2,7 +2,7 @@
 \indexentry{PEP|hyperpage}{4}
 \indexentry{PyPI|hyperpage}{4}
 \indexentry{module|hyperpage}{5}
-\indexentry{archive|hyperpage}{5}
+\indexentry{archive|hyperpage}{6}
 \indexentry{distribution|hyperpage}{6}
 \indexentry{Paire de bases|hyperpage}{7}
 \indexentry{Codon|hyperpage}{7}
@@ -46,6 +46,6 @@
 \indexentry{PEP-8|hyperpage}{60}
 \indexentry{PEP-257|hyperpage}{60}
 \indexentry{Git|hyperpage}{62}
-\indexentry{VirtualBox|hyperpage}{64}
+\indexentry{VirtualBox|hyperpage}{65}
 \indexentry{NCBI|hyperpage}{68}
 \indexentry{GIL|hyperpage}{70}
