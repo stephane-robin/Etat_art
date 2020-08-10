@@ -2,7 +2,7 @@
 \indexentry{PEP|hyperpage}{4}
 \indexentry{PyPI|hyperpage}{4}
 \indexentry{module|hyperpage}{5}
-\indexentry{archive|hyperpage}{6}
+\indexentry{archive|hyperpage}{5}
 \indexentry{distribution|hyperpage}{6}
 \indexentry{Paire de bases|hyperpage}{7}
 \indexentry{Codon|hyperpage}{7}
@@ -41,11 +41,11 @@
 \indexentry{pyenv|hyperpage}{31}
 \indexentry{pip|hyperpage}{32}
 \indexentry{Poetry|hyperpage}{36}
-\indexentry{unittest|hyperpage}{59}
+\indexentry{unittest|hyperpage}{60}
 \indexentry{pylint|hyperpage}{60}
 \indexentry{PEP-8|hyperpage}{60}
 \indexentry{PEP-257|hyperpage}{60}
-\indexentry{Git|hyperpage}{61}
-\indexentry{VirtualBox|hyperpage}{63}
-\indexentry{NCBI|hyperpage}{67}
-\indexentry{GIL|hyperpage}{69}
+\indexentry{Git|hyperpage}{62}
+\indexentry{VirtualBox|hyperpage}{64}
+\indexentry{NCBI|hyperpage}{68}
+\indexentry{GIL|hyperpage}{70}

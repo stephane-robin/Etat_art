@@ -270,7 +270,7 @@ Je tiens à exprimer mes plus sincères remerciements à Messieurs Christophe Gu
 
 Je voudrais souligner la patience dont ils ont fait preuve pour m'expliquer les notions de bioinformatique que j'ai été amené à découvrir durant ce projet. Il en ressort que j'ai particulièrement apprécié de travailler sous leur direction.
 
-Je tiens également à remercier Jean Marc Gervais qui a eu la gentillesse de bien vouloir relire le présent rapport de stage et me proposer des commentaires pertinents à son sujet.
+%Je tiens également à remercier Jean Marc Gervais qui a eu la gentillesse de bien vouloir relire le présent rapport de stage et me proposer des commentaires pertinents à son sujet.
 
 
 
@@ -318,7 +318,6 @@ Définissons par ailleurs le vocabulaire que nous allons utiliser dans ce rappor
 \end{itemize}
 
 
-Le code de ce projet a été organisé sous forme de modules, tel que préconisé par le PEP.
 
 
 
@@ -719,8 +718,8 @@ Au moment de la construction du package
 
 Il est possible d'utiliser les packages de différentes manières. 
 \begin{itemize}
-\item certains packages peuvent \textit{s'importer} (partiellement ou en totalité) en début de code afin d'en appeler les méthodes dans un module. 
-\item d'autres packages sont \textit{exécutables} suivant une interface graphique ou suivant une interface en lignes de commandes. C'est le cas de CRISPRbuilder\_TB qui s'installe et s'exécute en lignes de commandes à partir du répertoire courant. Ainsi, c'est à partir du répertoire courant qu'on appelle les modules et fichiers se trouvant à l'intérieur du package, lui-même installé à l'emplacement prévu pour les packages. Ce processus est transparent pour l'utilisateur qui n'a nul besoin de connaître l'emplacement de téléchargement de ses packages. Il est toutefois essentiel pour le développeur de connaître les chemins d'accès vers les modules d'un package, qui sont différentes des chemins d'accès vers les modules d'un programme local. On peut commencer par développer et tester le package en utilisant des chemins locaux, mais dès que celui-ci est prêt à être installé, il faut modifier ces chemins pour que n'importe quel ordinateur puisse exécuter le package convenablement.
+\item certains packages peuvent \textit{s'importer} (partiellement ou en totalité) en début de code afin d'en appeler les méthodes dans un module. On parle de \textit{import packages}.
+\item d'autres packages sont \textit{exécutables} suivant une interface graphique ou suivant une interface en lignes de commandes. On parle de \textit{distribution packages}. C'est le cas de CRISPRbuilder\_TB qui s'installe et s'exécute en lignes de commandes à partir du répertoire courant. Ainsi, c'est à partir du répertoire courant qu'on appelle les modules et fichiers se trouvant à l'intérieur du package, lui-même installé à l'emplacement prévu pour les packages. Ce processus est transparent pour l'utilisateur qui n'a nul besoin de connaître l'emplacement de téléchargement de ses packages. Il est toutefois essentiel pour le développeur de connaître les chemins d'accès vers les modules d'un package, qui sont différentes des chemins d'accès vers les modules d'un programme local. On peut commencer par développer et tester le package en utilisant des chemins locaux, mais dès que celui-ci est prêt à être installé, il faut modifier ces chemins pour que n'importe quel ordinateur puisse exécuter le package convenablement.
 \end{itemize}
 
 Dans un programme local, le code s'exécute dans un répertoire courant et accède aux différents modules et fichiers support en utilisant un chemin relatif à ce répertoire courant ou encore en utilisant un chemin absolu. Les différentes dépendances sont importées en début de code, sans référence à un chemin d'accès car elles ont préalablement été installées dans l'environnement de développement de l'interpréteur Python. Dans le cas où on utilise un environnement de développement intégré tel que PyCharm, Spyder, Pydev, Wing, ..., il faut en plus les installer dans cet environnement.
@@ -909,7 +908,7 @@ le module \textit{xlrd} extrait des données d'un tableur Excel à partir de la 
 \item  \begin{verbatim}  pip install biopython\end{verbatim}
 le package \textit{biopython} regroupe un ensemble d'outils Python pour le traitement informatique de la biologie moléculaire et comprend le module numpy.
 \item \begin{verbatim}  pip install parallel-fastq-dump\end{verbatim}
-le package \textit{parallel-fastq-dump} permet de téléchargement de fichiers fasta en utilisant plusieurs threads simultanément. Il procure donc un gain de temps à l'application.
+le package \textit{parallel-fastq-dump} permet de téléchargement de fichiers fasta en utilisant plusieurs threads simultanément. Il procure donc un gain de temps à l'application. Le dépôt \url{https://github.com/rvalieris/parallel-fastq-dump} préconise l'installation de \textit{parallel-fastq-dump} via l'outil \textit{conda}.
 \item \begin{verbatim}  pip install blastn+\end{verbatim}
 le package \textit{blast} permet de trouver des régions similaires entre plusieurs séquences biologiques. Le programme compare en fait des séquences de protéines ou de nucléotides à une base de données du NCBI afin d'en calculer la signification statistique.
 \end{itemize}
@@ -1169,10 +1168,6 @@ Notre projet dispose maintenant de la structure suivante
 
 
 
-
-
-
-
 % CONSTRUCTION DU PACKAGE -----
 \section{Construction du package}
 
@@ -1251,7 +1246,13 @@ On constate une arborescence assez semblable à celle obtenue lors de la créati
 %  LA STRUCTURE DU PACKAGE INSTALLE ----
 \section{La structure du package installé}
 
-Il n'est pas nécessaire pour l'utilisateur de se rendre à l'emplacement prévu pour les packages. Toutefois, afin de connaître la structure du package une fois installé, nous nous rendons à l'adresse \textbf{$\sim$/anaconda3/bin/cripsrbuilder\_tb} où la structure suivante apparaît
+Une \textit{built distribution} est une distribution pré-construite contenant des fichiers et méta-données qui ne nécessite pas d'étape supplémentaire pour s'installer dès lors qu'on l'enregistre au bon emplacement. Il ne s'agit pourtant pas d'une distribution pré-compilée. Les formats \textit{egg} et \textit{wheel} sont des \textit{built distributions}.
+
+Une \textit{source distribution} est une distribution au format \textit{sdist} contenant des fichiers et méta-données qui génère une \textit{built distribution} au moment de l'installer avec \textit{pip}.
+
+Ainsi, \textit{pip} va installer CRISPRbuilder\_TB en cherchant préférentiellement un fichier au format \textit{wheel}, c'est à dire dans le cas présent \textbf{crisprbuilder\_tb-0.1.2-py3-none-any.whl}. Si un tel fichier n'existait pas, \textit{pip} en construirait un à partir d'une \textit{source distribution} puis le conserverait en mémoire en vue d'une prochaine installation, pour éviter d'avoir à le reconstruire. Les fichiers au format \textit{wheel} permettent donc une installation plus rapide du package.
+
+Afin de connaître la structure de CRISPRbuilder\_TB une fois installé, et bien qu'il ne soit pas nécessaire pour l'utilisateur de se rendre à l'emplacement prévu pour les packages, nous nous rendons à l'adresse \textbf{$\sim$/anaconda3/bin/cripsrbuilder\_tb} où la structure suivante apparaît
 
 \includegraphics[width=7cm]{crispr_installe.png}
 
@@ -2137,16 +2138,16 @@ directly from NCBI, according to the code:
 
 Les tests font partie du processus de développement et sont effectués dans chacune des phases de création du code afin de pouvoir continuer à l'étape suivante.
 
-Plusieurs niveaux de tests doivent être effectués pour valider le package avant publication. Ils nécessitent un environnement de développement dont nous avons déjà parlé et un environnement de test. Celui-ci est re-créé pour chaque système d'exploitation faisant partie de la campagne de tests. Il doit simuler le cas le plus défavorable, c'est à dire qu'il doit être représentatif d'un système d'exploitation "vierge" ne disposant pas des dépendances nécessaires à l'exécution du package. Il doit toutefois fonctionner avec Python 3 par défaut ou appeler le package à l'aide de Python 3. 
+Plusieurs niveaux de tests doivent être effectués pour valider le package avant publication. Ils nécessitent un environnement de développement dont nous avons déjà parlé et un environnement de test. Celui-ci est re-créé pour chaque système d'exploitation faisant partie de la campagne de tests. Il ne doit pas contenir les dépendances de CRISPRbuilder\_TB, à l'exception de \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn} que nous installons à partir de \textit{Anaconda} par souci de simplicité. L'environnement de test intègre ainsi Python 3.7 qui est installé en même temps que \textit{Anaconda}.
 
 Notre campagne de tests comporte les démarches suivantes :
 \begin{itemize}
-\item durant la création de chaque fonction, les tests unitaires sont effectués à l'aide de l'environnement de développement,
-\item au moment du regroupement du code et des différents modules, les tests d'intégration utilisent l'environnement de développement
-\item lors d'une modification de code, les tests de non-régression utilisent l'environnement de développement,
-\item lorsque le package est construit, les tests de performance et les tests fonctionnels s'appuient également sur l'environnement de développement
-\item en dernier lieu, les tests d'installation en fonction de différents systèmes d'exploitation nécessitent un environnement de test,
-\item finalement, les tests de configuration pour déterminer les systèmes les mieux adaptés utilisent également un environnement de test.
+\item durant la création de chaque fonction, les \textbf{tests unitaires} sont effectués à l'aide de l'environnement de développement et du module \textit{Unittest},
+\item au moment du regroupement du code et des différents modules, les \textbf{tests d'intégration} utilisent l'environnement de développement et la notation fournie par le module \textit{pylint},
+\item lors d'une modification de code, les \textbf{tests de non-régression} utilisent l'environnement de développement, et notre travail est facilité par l'utilisation de l'outil de versioning \textit{Git},
+\item lorsque le package est construit, les \textbf{tests de performance} et les \textbf{tests fonctionnels} s'appuient également sur l'environnement de développement
+\item les \textbf{tests d'installation} dépendent de chaque système d'exploitation et nécessitent autant d'environnements de tests que de systèmes. Nous simulerons les différents systèmes à l'aide de l'application \textit{VirtualBox}.
+\item les \textbf{tests de configuration} pour déterminer les systèmes les mieux adaptés utilisent également un environnement de test.
 \end{itemize}
 
 
@@ -2160,11 +2161,9 @@ Notre campagne de tests comporte les démarches suivantes :
 
 Les tests unitaires consistent à évaluer individuellement les composants de l'application (parties de code autonomes, fonctions, ...), en terme de qualité et validation des résultats attendus.
 
-Les tests unitaires sont d'abord effectués manuellement, fonction par fonction, en évaluant chaque résultat obtenu.
+Il faut donc comprendre le fonctionnement, puis tester chaque portion de code et chaque fonction individuellement avec des paramètres choisis avant de l'incorporer dans le module \textbf{\_\_main\_\_.py}. Il est donc nécessaire d'adapter les fonctions déjà écrites au reste du code, les documenter en anglais en vue d'une utilisation ultérieure, les rendre performantes en utilisant des compréhensions de listes, éviter les erreurs potentielles en rajoutant des blocs \textbf{try ... except} et des méthodes \textbf{.setdefault} et \textbf{.get}. Il faut également éviter la répétition de code en créant de nouvelles fonctions.
 
-Il faut donc comprendre le fonctionnement, puis tester chaque portion de code et chaque fonction individuellement avec des paramètres choisis avant de l'incorporer dans le module \_\_main\_\_.py. Il est donc nécessaire d'adapter au reste du code les fonctions déjà écrites, les documenter en anglais en vue d'une utilisation ultérieure, les rendre performantes en utilisant des compréhensions de listes, éviter les erreurs potentielles en rajoutant des blocs \textbf{try ... except} et des méthodes \textbf{.setdefault} et \textbf{.get}. Il faut également créer de nouvelles fonctions pour éviter la répétition de code.
-
-Puis nous utilisons le framework \index{unittest}\textit{unittest} intégré dans la distribution standard de Python3.
+Pour effectuer ces tests, nous utilisons le framework \index{unittest}\textit{unittest} intégré dans la distribution standard de Python3.
 
 TODO - EXPLICATIONS unittest
 
@@ -2177,27 +2176,33 @@ TODO - EXPLICATIONS unittest
 
 Les tests d'intégration permettent de valider l'inter-utilisabilité des différentes unités de programmes  et des différents modules entre eux. Nous réalisons les tests d'intégration directement dans l'environnement de développement que nous avons construit.
 
-Pour cela, nous nous plaçons à la racine du package et nous exécutons directement le code du module \textbf{\_\_main\_\_.py} par la commande 
+Pour cela, nous assignons la valeur "ERR2704808" à la variable "item", puis nous nous plaçons à la racine du package et nous exécutons directement le code du module \textbf{\_\_main\_\_.py} avec la commande 
 
 \begin{verbatim}
   cd crisprbuilder_tb
   python __main__.py
 \end{verbatim}
 
+Nous devons obtenir le résultat suivant 
 
+XXX
 
-% LES PROBLEMES RENCONTRES -----------------------
-\subsection{Les problèmes rencontrés}
+Puis, nous cherchons à intégrer la \textit{Command Line Interface} à notre test. Pour cela, nous nous plaçons à l'extérieur du package et nous exécutions l'instruction
 
-Une fois que le code a été testé individuellement avec comme valeur pour le SRA ERR2704808, qu'il a été rendu compatible pour chaque fonction, chaque variable et chaque paramètre, qu'il a passé avec succès l'analyse de pylint et les tests statiques de l'EPI PyCharm, nous avons rencontré les problèmes suivants :  
-\begin{itemize}
-\item subprocess.run : au moment de l'exécution du code, une erreur de type \texttt{  XX} apparaît. Nous nous rendons compte que l'installation manuelle de \textit{subprocess.run}, loin de résoudre le problème, empêche la bonne exécution du code. Il est donc recommandé de ne pas l'installer et de se contenter de la version native présente dans Python.
-\item parallel-fastq-dump :
-\item la gestion des exceptions : la gestion des exceptions avec des blocs \textbf{try ... except FileNotFoundError} ne permet pas au programme de déplacer un fichier vers un répertoire contenant déjà ce fichier. Ce problème est plus sensible au moment des tests car nous utilisons à plusieurs reprises le même SRA. Toutefois, il pourrait également advenir à un utilisateur qui aurait inscrit plusieurs fois sur une liste le même SRA. Il convient donc de tester la présence d'un fichier dans un répertoire avant de le déplacer.
-\end{itemize}
+\begin{verbatim}
+  python crisprbuilder_tb --print 0
+\end{verbatim}
 
+qui doit afficher le contenu du fichier \textbf{lineage.csv}.
 
-La première erreur qui apparaît est l'impossibilité pour l'interpréteur Python de trouver les modules \textbf{fonctions.py} et \textbf{bdd.py}. Dans le module \textbf{\_\_main\_\_.py}, il faut donc importer le package \textit{crisprbuilder\_tb}, puis importer les modules \textbf{crisprbuilder\_tb.fonctions.py} et \textbf{crisprbuilder\_tb.bdd.py} sans oublier à chaque fois le nom du package, pour que l'interpréteur parvienne à trouver ces modules. Ceci est un peu surprenant car ces modules se situent également à la racine du package, et devraient donc être reconnus automatiquement.
+Nous exécutons ensuite l'instruction
+
+\begin{verbatim}
+  python crisprbuilder_tb --collect ERR2704808
+\end{verbatim}
+
+qui doit produire le même résultat que lorsque nous exécutons le traitement directement sur le module \textbf{\_\_main\_\_.py}.
+
 
 
 
@@ -2205,23 +2210,26 @@ La première erreur qui apparaît est l'impossibilité pour l'interpréteur Pyth
 % PYLINT --------------
 \subsection{Le respect des règles du PEP avec pylint}
 
-\index{pylint}\textit{pylint} fournit une note entre 0 et 10 qui reflète le respect des règles du PEP-8\footnote{\index{PEP-8}\textbf{PEP-8:} style guide for Python code} et du PEP-257\footnote{\index{PEP-257}\textbf{PEP-257:} docstring conventions}, notamment en ce qui concerne la lisibilité du code en terme d'espaces entre les signes, de longueur maximale pour chaque ligne (80 caractères) et d'indentation pour assurer la compréhension lors d'un retour à la ligne. \textit{pylint} reprend également les erreurs de structure de code, les manques de définition de variables ou les ambiguïtés dans l'utilisation de variables locales portant le même nom. Toutefois, il comprend mal l'utilisation des compréhensions de listes et des méthodes telles que .setdefault pour récupérer la valeur d'une variable dans un dictionnaire.
+\index{pylint}\textit{pylint} fournit une note entre 0 et 10 qui reflète le respect des règles du PEP-8\footnote{\index{PEP-8}\textbf{PEP-8:} style guide for Python code} et du PEP-257\footnote{\index{PEP-257}\textbf{PEP-257:} docstring conventions}, notamment en ce qui concerne la lisibilité du code en terme d'espaces entre les signes, de longueur maximale pour chaque ligne (80 caractères), d'indentation pour assurer la compréhension lors d'un retour à la ligne, de documentation des méthodes et des modules. \textit{pylint} reprend également les erreurs de structure de code, les manques de définition de variables ou les ambiguïtés dans l'utilisation de variables locales portant le même nom. Ces dernières fonctionnalités sont également assurées par le correcteur statique de code intégré dans \textit{PyCharm}. \textit{pylint} permet donc de clarifier et nettoyer le code pour en faciliter la lecture. Toutefois, il comprend mal l'utilisation des compréhensions de listes et des méthodes telles que \textit{.setdefault} pour récupérer la valeur d'une variable dans un dictionnaire. 
 
-L'exécution de \textit{pylint} se fait directement en ligne de commande en se plaçant dans le package, à hauteur du dossier parent du fichier à tester (par exemple ici \_\_main\_\_.py) suivant l'instruction
+L'exécution de \textit{pylint} se fait directement en ligne de commande en se plaçant dans le package, au niveau du fichier à tester (par exemple ici \textbf{\_\_main\_\_.py}) en utilisant l'instruction
 
 \begin{verbatim}  cd crisprbuilder_tb
-  pylint __main__.py\end{verbatim}
+  pylint __main__.py
+\end{verbatim}
 
-Comme \textit{pylint} considère que les modules ne devraient pas excéder 1000 lignes, nous avons développé notre module initial \_\_main\_\_.py en trois modules \_\_main\_\_.py, fonctions.py et bdd.py. Nous nous sommes par ailleurs astreints aux règles du PEP pour obtenir une note de 9.72 / 10 avec les commentaires suivants concernant le module \_\_main\_\_.py. 
+Le code de ce projet a été organisé sous forme de modules, tel que préconisé par le PEP. Comme \textit{pylint} considère que chaque module ne devrait pas excéder 1000 lignes, nous avons découpé notre module initial \textbf{\_\_main\_\_.py} en trois modules \textbf{\_\_main\_\_.py}, \textbf{fonctions.py} et \textbf{bdd.py}.
+
+Nous nous sommes par ailleurs astreints aux règles du PEP pour obtenir une note de 9.72 / 10 avec les commentaires suivants concernant le module \textbf{\_\_main\_\_.py}. 
 
 \begin{verbatim}  pylint __main__.py
   ************* Module __main__
   __main__.py:36:0: R0914: Too many local variables (57/15) (too-many-locals)
   __main__.py:152:23: W0123: Use of eval (eval-used)
   __main__.py:160:23: W0123: Use of eval (eval-used)
-  __main__.py:606:0: R1721: Unnecessary use of a comprehension (unnecessary-comprehension)
-  __main__.py:643:0: R1721: Unnecessary use of a comprehension (unnecessary-comprehension)
-  __main__.py:679:0: R1721: Unnecessary use of a comprehension (unnecessary-comprehension)
+  __main__.py:606:0: R1721: Unnecessary use of a comprehension
+  __main__.py:643:0: R1721: Unnecessary use of a comprehension
+  __main__.py:679:0: R1721: Unnecessary use of a comprehension
   __main__.py:585:16: W0612: Unused variable 'item2' (unused-variable)
   __main__.py:36:0: R0912: Too many branches (88/12) (too-many-branches)
   __main__.py:36:0: R0915: Too many statements (317/50) (too-many-statements)
@@ -2232,23 +2240,38 @@ Comme \textit{pylint} considère que les modules ne devraient pas excéder 1000 
   ------------------------------------------------------------------
   Your code has been rated at 9.72/10\end{verbatim}
 
-De la même façon, le module fonctions.py a obtenu la note de 9.80 / 10 avec les commentaires suivants
+De la même façon, le module \textbf{fonctions.py} a obtenu la note de 9.80 / 10 avec les commentaires suivants
 
 \begin{verbatim}  pylint fonctions.py
   ************* Module fonctions
-  fonctions.py:372:13: W1510: Using subprocess.run without explicitly set `check` is not recommended. (subprocess-run-check)
+  fonctions.py:372:13: W1510: Using subprocess.run without explicitly set `check
+  ` is not recommended. (subprocess-run-check)
   fonctions.py:380:0: R0913: Too many arguments (6/5) (too-many-arguments)
   fonctions.py:400:0: R0913: Too many arguments (7/5) (too-many-arguments)
 
   -----------------------------------
   Your code has been rated at 9.80/10\end{verbatim}
 
-Le module bdd.py ne contenant que le dictionnaire Origines n'a pas été évalué par \textit{pylint}.
+Le module \textbf{bdd.py}, ne contenant que le dictionnaire \textit{Origines}, n'a pas été évalué par \textit{pylint}.
 
-S'agissant d'un test statique, le code n'est pas exécuté et la performance du code n'est pas prise en compte lors de l'évaluation faite par \textit{pylint}. Ceci explique que \textit{pylint} peut reprocher l'utilisation injustifiée de listes compréhensives, sans tenir compte de l'efficacité d'un tel traitement.
+S'agissant d'un test statique, le code n'est pas exécuté et la performance du code n'est pas prise en compte lors de l'évaluation faite par \textit{pylint}. Ceci explique que \textit{pylint} peut reprocher l'utilisation injustifiée de listes compréhensives, sans nécessairement tenir compte de l'efficacité d'un tel traitement.
 
-TODO PROBLEME PASSAGE PACKAGE
-CHEMINS D'ACCES
+
+
+INPUT OUTPUT PYTHON
+
+
+% LES PROBLEMES RENCONTRES -----------------------
+\subsection{Les premiers problèmes d'intégration}
+
+Une fois que le code a été testé bloc par bloc, que nous avons modifié le nom des variables, paramètres et fonctions en vue de l'intégration du code, les premiers problèmes que nous avons rencontrés sont les suivants :  
+\begin{itemize}
+\item nous avons initialement installé le module \textit{subprocess.run} avec l'instruction \\\texttt{pip install subprocess.run} afin de pouvoir l'utiliser. Or, au moment de l'exécution du code, ce module s'avère défectueux et incompatible avec la version de \textit{subprocess} déjà présente sur l'ordinateur. Nous remarquons que la version native présente dans Python ne contrarie pas l'exécution du code et nous choisissons donc de désinstaller \textit{subprocess.run} et de ne pas l'incorporer dans le fichier \textbf{pyproject.toml} de \textit{Poetry}.
+\item la gestion des exceptions avec des blocs \textit{try ... except FileNotFoundError} ne permet pas au programme de déplacer un fichier vers un répertoire contenant déjà ce fichier. Ce problème est plus sensible au moment des tests car nous utilisons à plusieurs reprises la même valeur de SRA. Toutefois, il pourrait également advenir à un utilisateur qui aurait inscrit plusieurs fois sur une liste le même SRA. Il convient donc de rajouter dans le code un test de présence d'un fichier dans un répertoire avant de le déplacer.
+\item l'interpréteur Python ne parvient pas à trouver les modules \textbf{fonctions.py} et \textbf{bdd.py} à partir du module \textbf{\_\_main\_\_.py}. Il faut donc importer le package \textit{crisprbuilder\_tb}, puis importer les modules \textbf{crisprbuilder\_tb.fonctions.py} et \textbf{crisprbuilder\_tb.bdd.py} (sans oublier à chaque fois le nom du package), pour que l'interpréteur parvienne à trouver ces modules alors qu'ils se trouvent tous dans le même dossier que \textbf{\_\_main\_\_.py}.
+\end{itemize}
+
+
 
 
 
@@ -2256,9 +2279,9 @@ CHEMINS D'ACCES
 % LES TESTS DE NON REGRESSION ---------------------------------
 \section{Les tests de non-régression}
 
-Les tests de non-régression permettent de vérifier que les modifications apportées au programme durant l'ensemble de la phase de test n'ont pas altérées le fonctionnement du package.
+Les tests de non-régression permettent de vérifier que les modifications apportées au programme durant chaque phase de test n'ont pas altéré le fonctionnement du package.
 
-Pour cela, lorsqu'un changement est effectué, les résultats obtenus doivent être comparés aux résultats pécédemment obtenus. Nous nous sommes alors exclusivement basé sur les commandes
+Pour cela, lorsqu'un changement est effectué, les résultats obtenus sont comparés aux résultats pécédemment obtenus. Nous nous sommes donc exclusivement basé sur les deux commandes suivantes dont nous avons conservé les résultats en mémoire
 
 \begin{verbatim}  python -m crisprbuilder_tb --print 0\end{verbatim}
 
@@ -2279,11 +2302,11 @@ Notons à ce propos que \textit{Poetry} construit un dossier \textbf{crisprbuild
 
  \begin{verbatim}  poetry new crisprbuilder_tb\end{verbatim}
 
-et que \textit{Git} construit également un autre dossier \textbf{crisprbuilder\_tb} au moment de la création d'un répertoire \textit{Git} avec l'instruction
+et que \textit{Git} construit également un autre dossier \textbf{crisprbuilder\_tb} au moment de la création d'un dépôt \textit{GitHub} avec l'instruction
 
 \begin{verbatim}  git clone https://github.com/stephane-robin/crisprbuilder_tb.git\end{verbatim}
 
-Il est donc nécessaire de créer d'abord le package avec \textit{Poetry} puis d'initaliser ce répertoire en liaison avec un dépôt \textit{Git}, en se plaçant à la racine de ce répertoire eten utilisant l'instruction
+Pour éviter tout conflit entre les deux dossiers créés, il est nécessaire de d'abord créer le package avec \textit{Poetry}, puis d'initaliser ce dossier en liaison avec le dépôt \textit{GitHub}. Pour cela, on se place à la racine du dossier et on utilise les instructions
 
 \begin{verbatim}
   git init
@@ -2415,7 +2438,7 @@ Une fois que l'application a été validée et publiée sur testPyPI, nous avons
 
 
 
-CHOIX DU NOM SUR PYPI A USAGE UNIQUE
+
 
 L’installation du package par n'importe quel utilisateur se fait grâce à l’instruction
 \begin{verbatim}  pip install crisprbuilder_tb\end{verbatim}
@@ -2613,9 +2636,12 @@ affiche un temps moyen d'exécution de l'instruction \textbf{os.system} de 19,3 
 
 \includegraphics[width=10cm]{comparaison_concat.png}
 
-\begin{tabular}{c|c|c|c|c|c|c|c|c|c|c}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
 concat (ms) & 31881 & 29452 & 31104 & 29307 & 28984 & 29330 & 28374 & 29775 & 30129 & 30608 \\
-os.system (ms) & 27403 & 21099 & 21884 & 19798 & 21624 & 22838 & 21549 & 20971 & 21947 & 21502
+\hline
+os.system (ms) & 27403 & 21099 & 21884 & 19798 & 21624 & 22838 & 21549 & 20971 & 21947 & 21502\\
+\hline
 \end{tabular}
 
 Cette différence de quelques secondes pour une seule fonction entraîne par conséquence de nombreuses minutes de retard sur l'ensemble du code lors de son exécution. Les temps moyens d'exécution du programme pour chaque système d'exploitation sont relevés dans la rubrique \textit{Les tests de configuration}.
@@ -2672,7 +2698,7 @@ Le temps passé à réfléchir aux nombreux dysfonctionnements de l'application,
 
 En particulier, ce stage a mis l'accent sur les trois domaines suivants :
 \begin{itemize}
-\item la création d'un package et la gestion des dépendances,
+\item la création d'un package Python et la gestion des dépendances,
 \item la nécessité d'un campagne de tests et de validation du code,
 \item la connaissance de notions clés concernant le séquençage du génome. 
 \end{itemize}
