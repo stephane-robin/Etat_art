@@ -1032,7 +1032,7 @@ Notons que, contrairement au choix de créer un environnement local de développ
 \chapter{Construction du package avec Poetry}
 
 
-
+Pour construire notre package, nous avons suivi les explications fournies par le site \url{https://python-poetry.org/} qui fait référence. Nous nous sommes également inspiré du dépôt \url{https://github.com/python-poetry/poetry}.
 
 
 % CREATION DU PACKAGE --------
@@ -1306,7 +1306,7 @@ Cette documentation doit comporter trois volets :
 \begin{itemize}
 \item une \textit{docstring} inclue dans le code au début de chaque fonction et de chaque module,
 \item un fichier \textbf{README.md} servant de description succincte du package pour le site de PyPI,
-\item une documentation détaillée \textbf{crisprbuilder\_tb.ipynb} qu'on peut retrouver sur \\ \url{https://github.com/stephane-robin/crisprbuilder_tb/blob/master/crisprbuilder_tb/doc/crisprbuilder_tb.ipynb}, et qui est également inclue dans le package sous le répertoire \textbf{doc}.
+\item une documentation détaillée \textbf{crisprbuilder\_tb.ipynb} qu'on peut retrouver sur le dépôt \url{https://github.com/stephane-robin/crisprbuilder_tb/blob/master/crisprbuilder_tb/doc/crisprbuilder_tb.ipynb}, et qui est également inclue dans le package sous le répertoire \textbf{doc}.
 \end{itemize}   
 
 Nous présentons ci-dessous cette documentation détaillée dans sa version originale en anglais.
@@ -1362,7 +1362,7 @@ genome information dictionary comprising the following elements:
     \section{How to install the package
 ?}\label{how-to-install-the-package}
 
-Make sure your system is set to \textbf{Python 3} in your current directory and \textit{pip} is set to work with Python 3, before using the \texttt{pip} instruction and executing the package. The default version of Python on your computer might be different. You can also check that \textit{pip} is linked to Python3 by writing \texttt{pip \textemdash \textemdash version}, which will display a line similar to
+Make sure your system is set to Python 3 in your current directory and \textit{pip} is set to work with Python 3, before using the \texttt{pip} instruction and executing the package. The default version of Python on your computer might be different. You can also check that \textit{pip} is linked to Python3 by writing \texttt{pip \textemdash \textemdash version}, which will display a line similar to
 
 \begin{verbatim}
 pip 20.1.1 from ~/pyenv/versions/3.8.0/lib/python3.8/site-packages/pip (python 3.8)
@@ -1405,8 +1405,10 @@ First the program will download the last version of CRISPRbuilder\_TB, and the d
   Collecting parallel-fastq-dump<0.7.0,>=0.6.5 (from crisprbuilder_tb)
   Collecting biopython <2.0,>=1.77 (from crisprbuilder_tb)
   Collecting numpy (from biopython<2.0,>=1.77->crisprbuilder_tb)
-  Installing collected packages: xmltodict, xlrd, parallel-fastq-dump, numpy, biopython, crisprbuilder_tb
-  Successfully installed biopython-1.77 crisprbuilder_tb-1.2.0 numpy-1.19.0 parallel-fastq-dump-0.6.5 xlrd-1.2.0 xmltodict-0.12.0
+  Installing collected packages: xmltodict, xlrd, parallel-fastq-dump, numpy, 
+  biopython, crisprbuilder_tb
+  Successfully installed biopython-1.77 crisprbuilder_tb-1.2.0 numpy-1.19.0 
+  parallel-fastq-dump-0.6.5 xlrd-1.2.0 xmltodict-0.12.0
 \end{verbatim}
 
  It is not necessary to first install the dependencies, since CRISPRbuilder\_TB will deal with them on its own.
@@ -1462,8 +1464,8 @@ command prompt:
   for CRISPR investigation.
 
   positional arguments:
-    sra         requires the reference of a SRA, the path to a file of SRA references
-                or 0. See doc.
+    sra         requires the reference of a SRA, the path to a file of SRA 
+                references or 0. See doc.
 
   optional arguments:
     -h, --help  show this help message and exit
@@ -1493,13 +1495,13 @@ specific SRA. From your current directory, write in the command prompt:
   python -m crisprbuilder_tb --collect {SRA_reference}
 \end{verbatim}
 
-    Please note the importance of "-m" to run crisprbuilder\_tb as a
-package, otherwise the interpreter will look at crisprbuilder\_tb as a folder inside the current folder and not a package. CRISPRbuilder\_TB uses version 3 of Python, so make sure your system is set to Python 3 in your current directory before using the
-\texttt{python}instruction. The default version on your computer might
+    Please note the importance of "-m" to run \texttt{crisprbuilder\_tb} as a
+package, otherwise the interpreter will look at \texttt{crisprbuilder\_tb} as a folder inside the current folder and not a package. CRISPRbuilder\_TB uses version 3 of Python, so make sure your system is set to Python 3 in your current directory before using the
+\texttt{python} instruction. The default version on your computer might
 be different.
 
 \textbf{Caution:} it is not recommanded to find the location of the
-package and go to the directory containing CRISPRbuilder\_TB in order to
+package and go to the directory containing \textbf{crisprbuilder\_tb} in order to
 execute it. If you are doing so, the instruction above won't work.
 
     \textbf{Exemple:} to find information about SRR8368696, write:
@@ -1514,7 +1516,7 @@ execute it. If you are doing so, the instruction above won't work.
 references}\label{executing-crisprbuilder_tb-with-a-list-of-sra-references}
 
     To run the package with a list of SRA references, this list must be
-composed of one SRA reference per line in a txt format file. Then, if
+composed of one SRA reference per line in a \textit{.txt} format file. Then, if
 you wish to find information regarding a list of specific SRAs, stay in
 the directory containing the package and write in the command prompt:
 
@@ -1675,7 +1677,9 @@ dependencies}\label{composition-of-the-package-and-dependencies}
 \item
   parallel-fastq-dump
 \item
-  balstn+
+  blast
+\item
+  blastn
 \end{itemize}
 
 These different versions are automatically downloaded when installing
@@ -1696,17 +1700,15 @@ CRISPRbuilder\_TB. Please note that this package doesn't support Python
 \item
   The \textbf{REP/sequences} directory contains the different result
   database for each execution of the code. For example, you can find a
-  directory ERR2704808 containing the fasta files ERR2704808\_1.fasta,
-  ERR2704808\_2.fasta and ERR2704808\_shuffled.fasta along with the
-  files ERR2704808.00.nhr, ERR2704808.00.nin, ERR2704808.00.nsq,
-  ERR2704808.nal and the directory ERR2704808 containing the blast
+  directory \textbf{ERR2704808} containing the fasta files \textbf{ERR2704808\_1.fasta},
+  \textbf{ERR2704808\_2.fasta} and \textbf{ERR2704808\_shuffled.fasta} along with the
+  files \textbf{ERR2704808.00.nhr}, \textbf{ERR2704808.00.nin}, \textbf{ERR2704808.00.nsq},\\
+  \textbf{ERR2704808.nal} and the directory \textbf{ERR2704808} containing the blast
   database. That's typically where you can find the files
-  ERR2704808\_old.blast and ERR2704808\_new.blast.
+  \textbf{ERR2704808\_old.blast} and \textbf{ERR2704808\_new.blast}.
 \item
   The \textbf{doc} directory contains the necessary documentation to
-  explain how this package works. It includes a \textbf{README.md} file
-  explaining how to install the package for those who just need the
-  essential, the copyright conditions for this package with the
+  explain how this package works. It includes the copyright conditions for this package with the
   \textbf{LICENSE} file and the present documentation.
 \end{itemize}
 
@@ -1720,7 +1722,7 @@ dictionary}\label{retrieving-the-genome-information-dictionary}
 
     Let's assume you're looking for information regarding ERR2704808. After
 writing \texttt{python3\ -m\ crisprbuilder\_tb\ -\/-collect\ ERR2704808}
-in the command prompt, a directory called \textbf{ERR2704808} will be
+in the command prompt, a directory called\\ \textbf{ERR2704808} will be
 created in \textbf{REP/sequences} and the item ERR2704808 will be added
 to the database. The following message will be displayed:
 
@@ -1759,9 +1761,9 @@ to the database. The following message will be displayed:
           print("Failed to download fasta files.")
 \end{verbatim}
 
-    If ERR2704808\_shuffled.fasta is not in the \textbf{ERR2704808}
-directory, then the ERR2704808\_1.fasta and ERR2704808\_2.fasta files
-will be mixed in a new ERR2704808\_shuffled.fasta file in the
+    If \textbf{ERR2704808\_shuffled.fasta} is not in the \textbf{ERR2704808}
+directory, then the\\ \textbf{ERR2704808\_1.fasta} and \textbf{ERR2704808\_2.fasta} files
+will be mixed in a new\\ \textbf{ERR2704808\_shuffled.fasta} file in the
 \textbf{ERR2704808} directory, as in the following code:
 
 \begin{verbatim}
@@ -1788,7 +1790,7 @@ will be mixed in a new ERR2704808\_shuffled.fasta file in the
 \end{verbatim}
 
     The number of reads represented by '\textgreater{}' in
-ERR2704808\_shuffled.fasta will be counted and assigned to nb\_reads, as
+\textbf{ERR2704808\_shuffled.fasta} will be counted and assigned to nb\_reads, as
 in the following code:
 
 \begin{verbatim}
@@ -1809,7 +1811,7 @@ in the following code:
 \end{verbatim}
 
     The length of the reads will be evaluated from
-ERR2704808\_shuffled.fasta as in the following code:
+\textbf{ERR2704808\_shuffled.fasta} as in the following code:
 
 \begin{verbatim}
   if 'len_reads' not in dico_afr[item]:
@@ -1832,14 +1834,18 @@ ERR2704808\_shuffled.fasta as in the following code:
   extra args: ['--split-files', '--fasta']
   tempdir: /tmp/pfd_1a9adanv
   ERR2704808 spots: 7152349
-  blocks: [[1, 894043], [894044, 1788086], [1788087, 2682129], [2682130, 3576172], [3576173, 4470215], [4470216, 5364258], [5364259, 6258301], [6258302, 7152349]]
+  blocks: [[1, 894043], [894044, 1788086], [1788087, 2682129], [2682130, 3576172], 
+  [3576173, 4470215], [4470216, 5364258], [5364259, 6258301], [6258302, 7152349]]
 \end{verbatim}
 
     If the NCBI server is busy or your connection unstable, the following
 message could show up:
 
     \begin{verbatim}
-  2020-05-09T09:25:58 fastq-dump.2.8.2 sys: libs/kns/unix/syssock.c:606:KSocketTimedRead: timeout exhausted while reading file within network system module - mbedtls_ssl_read returned -76 ( NET - Reading information from the socket failed )
+  2020-05-09T09:25:58 fastq-dump.2.8.2 sys: libs/kns/unix/syssock.c:606:
+  KSocketTimedRead: timeout exhausted while reading file within network system 
+  module - mbedtls_ssl_read returned -76 ( NET - Reading information from the 
+  socket failed )
 \end{verbatim}
 
     Ignore the message and let the program run. It might take a while, but
@@ -1876,7 +1882,7 @@ will be cancelled:
 \end{verbatim}
 
     Then, a database for blast will be created in
-\textbf{REP/sequences/ERR2704808/ERR2704808}, as in the code:
+\textbf{REP/sequences/ERR2704808/ERR2704808}, \\as in the code:
 
 \begin{verbatim}
   if item+'.nal' not in listdir(rep) and item+'.nin' not in listdir(rep):
@@ -1895,7 +1901,8 @@ will be cancelled:
     \begin{verbatim}
   We're creating a database for Blast
   Building a new DB, current time: 05/09/2020 12:18:30
-  New DB name:   /home/stephane/Biologie/env_bio/CRISPRbuilder-TB/REP/sequences/  ERR2704808/ERR2704808
+  New DB name:   /home/stephane/Biologie/env_bio/CRISPRbuilder-TB/REP/sequences/
+  ERR2704808/ERR2704808
   New DB title:  ERR2704808
   Sequence type: Nucleotide
   Keep MBits: T
@@ -1997,7 +2004,7 @@ be blasted, as in the code:
   The spoligo-vitro are being blasted
 \end{verbatim}
 
-    The different files ERR2704808\_*.blast will then be moved to
+    The different files \textbf{ERR2704808\_*.blast} will then be moved to
 \textbf{REP/sequences/ERR2704808}
 
     As a result, the programm will display the following information:
@@ -2116,17 +2123,20 @@ directly from NCBI, according to the code:
     which will produce the following result:
 
     \begin{verbatim}
-  Source: Unexpected Genomic and Phenotypic Diversity of Mycobacterium africanum   Lineage 5 Affects Drug Resistance, Protein Secretion, and Immunogenicity
+  Source: Unexpected Genomic and Phenotypic Diversity of Mycobacterium africanum   
+  Lineage 5 Affects Drug Resistance, Protein Secretion, and Immunogenicity
   Author: Ates et al. 2018
   study accession number: PRJEB25506
   location: France
   date: 2007
   SRA: ERS2280688
-  center: DST/NRF Centre of Excellence for Biomedical TB research, SAMRC Centre for TB   Research
+  center: DST/NRF Centre of Excellence for Biomedical TB research, SAMRC 
+  Centre for TB Research
   strain: 
   taxid: 33894
   name: Mycobacterium tuberculosis variant africanum
-  study: ena-STUDY-DST/NRF Centre of Excellence for Biomedical TB research, SAMRC Centre for TB Research-10-03-2018-12:26:21:907-341
+  study: ena-STUDY-DST/NRF Centre of Excellence for Biomedical TB research, SAMRC 
+  Centre for TB Research-10-03-2018-12:26:21:907-341
   bioproject: PRJEB25506
 \end{verbatim}
 
@@ -2162,13 +2172,27 @@ Notre campagne de tests comporte les démarches suivantes :
 
 Les tests unitaires consistent à évaluer individuellement les composants de l'application (parties de code autonomes, fonctions, ...), en terme de qualité et validation des résultats attendus.
 
-Il faut donc comprendre le fonctionnement, puis tester chaque portion de code et chaque fonction individuellement avec des paramètres choisis avant de l'incorporer dans le module \textbf{\_\_main\_\_.py}. Il est donc nécessaire d'adapter les fonctions déjà écrites au reste du code, les documenter en anglais en vue d'une utilisation ultérieure, les rendre performantes en utilisant des compréhensions de listes, éviter les erreurs potentielles en rajoutant des blocs \textbf{try ... except} et des méthodes \textbf{.setdefault} et \textbf{.get}. Il faut également éviter la répétition de code en créant de nouvelles fonctions.
+Il faut donc comprendre le fonctionnement, puis tester chaque portion de code et chaque fonction individuellement avec des paramètres choisis avant de l'incorporer dans le module \textbf{\_\_main\_\_.py}. 
 
-Pour effectuer ces tests, nous utilisons le framework \index{unittest}\textit{unittest} intégré dans la distribution standard de Python3.
+Ce projet est également l'occasion de mieux comprendre la gestion des entrées/sorties en Python à partir de fichiers aux formats \textit{.fasta}, \textit{.xls}, \textit{.csv} et \textit{txt}. Avant de pouvoir traiter les données du répertoire \textbf{data}, il est nécessaire d'en changer le format de stockage, de les regrouper en un unique fichier, de les télécharger en vue d'écrire sur un fichier ou de lire ce fichier. Les tests unitaires se font souvent à partir de bases de données de tests temporaires pour éviter d'endommager les bases de données du package. 
 
-TODO - EXPLICATIONS unittest
+Pour effectuer ces tests, nous utilisons le module \index{unittest}\textit{unittest} intégré dans la distribution standard de Python 3 qui fournit des outils pour construire et lancer les tests.
 
 
+
+
+
+% UNITTEST ------
+\section{unittest}
+
+\textit{unittest} utilise une approche orientée objet et propose les caractéristiques suivantes :
+
+\begin{itemize}
+\item gère l'automatisation et l'aménagement des tests, c'est à dire la création de bases de données temporaires, de répertoires, le démarrage de serveurs, le nettoyage des processus.
+\item crée des scenari de tests, qui attendent des réponses spécifiques pour certaines entrées. La classe \textit{TestCase} permet de créer ces scenari.
+\item organise les tests en collections de scenari de tests, et gère le partage de code pour la finalisation des tests.
+\item utilise des lanceurs de tests sous forme d'interface graphique ou d'interface en lignes de commandes. Ces lanceurs de tests dirigent l'exécution des tests et fournissent les résultats.
+\end{itemize}
 
 
 
@@ -2204,6 +2228,7 @@ Nous exécutons ensuite l'instruction
 
 qui doit produire le même résultat que lorsque nous exécutons le traitement directement sur le module \textbf{\_\_main\_\_.py}.
 
+Nous choisissons d'adapter les fonctions déjà écrites au reste du code, d'en créer de nouvelles pour éviter la répétition du code, de les documenter en anglais, de les rendre performantes en utilisant des compréhensions de listes, d'éviter les erreurs potentielles en rajoutant des blocs \textit{try ... except}, des méthodes \textit{.setdefault} et \textit{.get}, avant de procéder aux tests d'intégration.
 
 
 
@@ -2258,8 +2283,6 @@ Le module \textbf{bdd.py}, ne contenant que le dictionnaire \textit{Origines}, n
 S'agissant d'un test statique, le code n'est pas exécuté et la performance du code n'est pas prise en compte lors de l'évaluation faite par \textit{pylint}. Ceci explique que \textit{pylint} peut reprocher l'utilisation injustifiée de listes compréhensives, sans nécessairement tenir compte de l'efficacité d'un tel traitement.
 
 
-
-INPUT OUTPUT PYTHON
 
 
 % LES PROBLEMES RENCONTRES -----------------------
@@ -2348,6 +2371,8 @@ Les tests fonctionnels comprennent la validation de l'interface en ligne de comm
 
 Nous considérons donc que l'utilisateur dispose déjà sur sa machine d'un SRA Toolkit fonctionnel, notamment des modules \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn} produisant les résultats escomptés avant d'installer de CRISPRbuilder\_TB.
 
+
+
 % LES PROBLEMES LIES AUX CHEMINS D'ACCES ----------------------
 \subsection{Les problèmes liés aux chemins d'accès}
 
@@ -2368,7 +2393,6 @@ L'incompatibilité des chemins d'accès entre les systèmes Posix et Windows né
 Les tests d'installation permettent de s'assurer que l'utilisateur sera en mesure d'installer le package, quel que soit son système d'exploitation Linux, macOS ou Windows. Pour simuler le fonctionnement de ces systèmes, nous choisissons de travailler sur les quatre machines virtuelles suivantes créées par \textit{VirtualBox}, toutes fonctionnant en 64 bits : 
 \begin{itemize}
 \item Ubuntu 18.04 LTS, 
-\item Ubuntu 20.04 LTS, 
 \item macOS 10.12 Sierra, 
 \item Windows 10.
 \end{itemize}
@@ -2439,7 +2463,6 @@ Afin d'effectuer les tests d'installation et de validation, nous créons artific
 Nous commençons par télécharger des images \textit{.iso} des différents systèmes d'exploitation, que nous clônons avant de commencer les tests, afin de conserver une version vierge pour pouvoir revenir en arrière en cas de besoin :
 \begin{itemize}
 \item pour Ubuntu 18.04 LTS, nous choisissons la version 64-bit Server Install Image, car nous n'avons pas besoin d'interface graphique pour réaliser nos tests. La version de Python par défaut de ce système est 2.7.17. Il existe également une version 3.6.9 de Python.
-\item pour Ubuntu 20.04 LTS, nous choisissons la version 64-bit Server Install Image. La version de Python par défaut de ce système est 3.8.2.
 \item pour macOS 10.12 Sierra, 
 \item pour Windows 10, 
 \end{itemize}
@@ -2649,11 +2672,17 @@ Notons que les temps moyens d'exécution du programme complet de CRISPRbuilder\_
 % PARALLEL FASTQ DUMP ----------------
 \subsection{parallel-fastq-dump}
 
-Le package utilise les modules Python de téléchargement et traitement de données provenant du NCBI \textit{fastq-dump} et \textit{blastn}. 
+CRISPRbuilder\_TB utilise le module Python \textit{fastq-dump} de téléchargement et traitement de données provenant du NCBI.
 
-\textit{fastq-dump} est un module archaïque permettant de transformer des données du format \textit{.sra} au format \textit{.fastq}. Il est contenu dans le \textit{SRA Toolkit} du NCBI. Il peut s'avérer très lent en fonction de l'utilisation de la base de données en temps réel. 
+\textit{fastq-dump} est un module archaïque permettant de télécharger des données relatives à un SRA dans un format \textit{.fastq} ou \textit{.fasta}. Il est contenu dans le \textit{SRA Toolkit} du NCBI. Il peut s'avérer très lent en fonction de l'utilisation en temps réel du serveur de la base de données NCBI. 
 
-L'utilisation de plusieurs threads devrait permettre de diviser le travail en différentes tâches effectuées simultanément, et donc de gagner du temps. Malheureusement, Python n'accepte pas nativement le travail multi-threads, ce qui ne permet pas de tirer profit de systèmes multi-coeurs. C'est en fait une caractéristique de CPython. Le GIL\footnote{\index{GIL}\textbf{GIL:} Global Interpreter Lock} est un mutex qui n'autorise le travail que d'un unique thread à la fois. Il protège l'accès aux objets Python, pour empêcher de multiples threads d'exécuter du code Python simultanément. Ce verrou est rendu nécessaire parce que la gestion de la mémoire sous CPython n'est pas thread-safe. Le module \textit{parallel-fastq-dump} résout partiellement ce problème de multi-threading et utilise l'implémentation CPython en incorporant du langage C dans son contenu. Il semble être à l'heure actuelle un bon compromis gratuit pour optimiser le traitement des données du format \textit{.sra} au format \textit{.fastq}. Notons que le \textit{SRA Tookit} est installé automatiquement au moment de l'installation de \textit{parallel-fastq-dump}.
+L'utilisation de plusieurs threads devrait permettre de diviser le travail en différentes tâches effectuées simultanément, et donc de gagner du temps. Malheureusement, Python n'accepte pas nativement le travail multi-threads, ce qui ne permet pas de tirer profit de systèmes multi-coeurs. C'est en fait une caractéristique de CPython. Le GIL\footnote{\index{GIL}\textbf{GIL:} Global Interpreter Lock} est un mutex qui n'autorise le travail que d'un unique thread à la fois. Il protège l'accès aux objets Python, pour empêcher de multiples threads d'exécuter du code Python simultanément. Ce verrou est rendu nécessaire parce que la gestion de la mémoire sous CPython n'est pas thread-safe. Le module \textit{parallel-fastq-dump} résout partiellement ce problème de multi-threading et utilise l'implémentation CPython en incorporant du langage C dans son contenu. Il semble être à l'heure actuelle un bon compromis gratuit pour optimiser le traitement des données vers un format \textit{.fastq} ou \textit{.fasta}. 
+
+CRISPRbuilder\_TB utilise le module \textit{parallel-fastq-dump} pour télécharger les données d'un SRA au format \textit{.fasta}.
+
+Notons que le \textit{SRA Tookit} est installé automatiquement au moment de l'installation de \textit{parallel-fastq-dump}.
+
+
 
 REAL PYTHON ABOUT PYTHON THREADING
 
@@ -2663,7 +2692,20 @@ REAL PYTHON ABOUT PYTHON THREADING
 % BLAST -------------
 \subsection{blast+}
 
-\textit{blast} est également un outil du NCBI. Il permet de trouver des régions similaires entre plusieurs séquences génomiques. Il traite donc une quantité importante de données et ralentit de façon significative l'exécution du programme. Il compare des séquences de nucléotides ou de protéines à des séquences déjà présentes dans la base de données NCBI, puis calcule la signification statistique. \textit{blast} existe sous plusieurs formes \textit{blastx, tblastn, blastn, Primer-blast, smartblast, igblast, moleblast, ...}. Notre package utilise \textit{blastn} qui effectue des comparaisons entre nucléotides et dépend de la librairie \textit{blast}. Les performances de \textit{blast} sont optimisées avec la suite \textit{blast+} qui utilise le Toolkit C++ du NCBI. Ainsi notre package utilise l'outil \texttt{makeblastdb} qui appartient à \textit{blast+}.
+CRISPRbuilder\_TB utilise également le module Python de téléchargement et traitement de données provenant du NCBI \textit{blast}.
+
+\textit{blast} permet de trouver des régions similaires entre plusieurs séquences génomiques.  Il compare des séquences de nucléotides ou de protéines à des séquences déjà présentes dans la base de données NCBI, puis calcule la signification statistique. Il traite donc une quantité importante de données et ralentit de façon significative l'exécution du programme. \textit{blast} propose différents outils et existe sous plusieurs formes \textit{blastx, tblastn, blastn, Primer-blast, smartblast, igblast, moleblast, ...}.
+
+Notre package effectue des comparaisons entre nucléotides. Il utilise \textit{blastn} et l'outil \texttt{makeblastdb} qui appartient à \textit{blast}. 
+
+Les performances de \textit{blast} sont optimisées avec la suite \textit{blast+} qui utilise le \textit{Toolkit C++} du NCBI. Par ailleurs, \textit{blastn} utilise plusieurs threads pour le traitement des données et améliore encore la vitesse d'exécution de \textit{blast+}. On constate ainsi 12 threads dans le code du module \textbf{\_\_main\_\_.py}
+
+\begin{verbatim}
+  completed = subprocess.run("blastn -num_threads 12 -query " + p_spoligo_old + 
+  " -evalue 1e-6 -task blastn -db " + repitem + " -outfmt '10 qseqid sseqid sstart 
+  send qlen length score evalue' -out " + p_old_blast, shell=True, check=True)
+\end{verbatim}
+
 
 
 
