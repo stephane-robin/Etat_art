@@ -2210,6 +2210,63 @@ Le module \textit{unittest} fonctionne essentiellement avec des méthodes d'asse
 \item \texttt{assertRaises(excp, fonct, arg)} qui vérifie que \texttt{fonct(arg)} lève bien l'exception \texttt{excp}.
 \end{itemize}
 
+Notre premier scénario de tests concerne le module \textbf{fonctions.py}.
+
+\begin{itemize}
+\item nous comparons le dictionnaire \texttt{get\_info("ERR2704808")} obtenu à partir des données du NCBI avec les valeurs attendues pour chaque clé suivant le code de test
+\begin{verbatim}
+  def test_get_info(self):
+    """
+    Fills out the data from NCBI into the dictionary dico0 and checks the 
+    content of the dictionary after processing.
+    """
+    self.assertEqual(get_info("ERR2704808")['location'], 'France')
+    self.assertEqual(get_info("ERR2704808")['date'], '2007')
+    self.assertEqual(get_info("ERR2704808")['SRA'], 'ERS2280688')
+    self.assertEqual(get_info("ERR2704808")['center'], 'DST/NRF Centre of 
+    Excellence for Biomedical TB research, SAMRC Centre for TB Research')
+    self.assertEqual(get_info("ERR2704808")['strain'], '')
+    self.assertEqual(get_info("ERR2704808")['taxid'], '33894')
+    self.assertEqual(get_info("ERR2704808")['name'], 'Mycobacterium ' \
+      'tuberculosis variant africanum')
+    self.assertEqual(get_info("ERR2704808")['study'], 'ena-STUDY-DST/NRF ' \
+       'Centre of Excellence for Biomedical TB research, SAMRC Centre for 
+        TB Research-10-03-2018-12:26:21:907-341')
+    self.assertEqual(get_info("ERR2704808")['bioproject'], 'PRJEB25506')
+\end{verbatim}
+\item nous créons une version test plus légère de \textbf{data/Brynildsrud\_Dataset\_S1.xls}, puis nous comparons le dictionnaire \texttt{to\_brynildsrud()['ERR760595']} obtenu à partir de ce fichier avec les valeurs attendues pour chaque clé suivant le code test
+\begin{verbatim}
+def test_to_brynildsrud(self):
+  """
+  Compares elements of the dictionary brynildsrud with the database from
+  the file data/Brynildsrud_Dataset_S1.xls.
+  """
+  self.assertEqual(to_brynildsrud()['ERR760595']['Source'], 'Eldholm (10.1038/ncomms8119)')
+  self.assertEqual(to_brynildsrud()['ERR760595']['Author'], '')
+  self.assertEqual(to_brynildsrud()['ERR760595']['study accession '
+                                                 'number'], 'PRJEB7669')
+  self.assertEqual(to_brynildsrud()['ERR760595']['location'], 'Argentina')
+  self.assertEqual(to_brynildsrud()['ERR760595']['date'], '2005')
+\end{verbatim}
+\item nous vérifions les reads de la lignée Shitikov 2.2 à la position 4280707, extraits de \textbf{lineage.csv}. Nous vérifions également que le résultat contient 3 éléments pour chaque position dans le dictionaire, en testant la fonction \texttt{to\_reads()}
+\begin{verbatim}
+  def test_to_reads(self):
+    """
+    Checks the reads of lineage Shitikov 2.2 at the position 4280707
+    extracted from lineage.csv.
+    Checks that the result contains 3 elements for each position in the
+    dictionary.
+    """
+    self.assertEqual(to_reads('Shiti')[4280707][0],
+                     'TCGGGCACATTCTCCTCGCCGACGTAGGTGATCCGGGTTCC')
+    self.assertEqual(to_reads('Shiti')[4280707][1],
+                     'TCGGGCACATTCTCCTCGCCAACGTAGGTGATCCGGGTTCC')
+    self.assertEqual(to_reads('Shiti')[4280707][2], '2.2')
+    for elt in to_reads('Shiti'):
+        self.assertEqual(len(to_reads('Shiti')[elt]), 3)
+\end{verbatim}
+\end{itemize}
+
 Nous commençons par analyser la fonction \texttt{collect\_sra()} du module \textbf{\_\_main\_\_.py} dans un permier scénario de tests.
 \begin{itemize}
 \item le téléchargement des fichiers \textit{.fasta} est déjà testé dans le code avec la ligne 
@@ -2294,44 +2351,7 @@ Nous commençons par analyser la fonction \texttt{collect\_sra()} du module \tex
 \item la récupération des données de la base NCBI vers le dictionnaire \texttt{dico\_afr} donne lieu au test de la fonction \texttt{get\_info()} dans le cadre d'un second scénario de tests pour le module \textbf{fonctions.py}. 
 \end{itemize}
 
-Le second scénario de tests concerne le module \textbf{fonctions.py}.
-\begin{itemize}
-\item nous commençons par analyser la fonction \texttt{get\_info()} avec le code
-\begin{verbatim}
-  def test_get_info(self):
-    """
-    Fills out the data from NCBI into the dictionary dico0 and checks the 
-    content of the dictionary after processing.
-    """
-    self.assertEqual(get_info("ERR2704808")['location'], 'France')
-    self.assertEqual(get_info("ERR2704808")['date'], '2007')
-    self.assertEqual(get_info("ERR2704808")['SRA'], 'ERS2280688')
-    self.assertEqual(get_info("ERR2704808")['center'], 'DST/NRF Centre of 
-    Excellence for Biomedical TB research, SAMRC Centre for TB Research')
-    self.assertEqual(get_info("ERR2704808")['strain'], '')
-    self.assertEqual(get_info("ERR2704808")['taxid'], '33894')
-    self.assertEqual(get_info("ERR2704808")['name'], 'Mycobacterium ' \
-      'tuberculosis variant africanum')
-    self.assertEqual(get_info("ERR2704808")['study'], 'ena-STUDY-DST/NRF ' \
-       'Centre of Excellence for Biomedical TB research, SAMRC Centre for 
-        TB Research-10-03-2018-12:26:21:907-341')
-    self.assertEqual(get_info("ERR2704808")['bioproject'], 'PRJEB25506')
-\end{verbatim}
-\item la récupération des données de la base \textbf{data/Brynildsrud\_Dataset\_S1.xls} vers le dictionnaire \texttt{brynildsrud} donne lieu au test suivant, où un nouveau fichier de test \textbf{data/Brynildsrud\_Dataset\_S1.xls} plus léger a été créé dans cet objectif
-\begin{verbatim}
-def test_to_brynildsrud(self):
-  """
-  Compares elements of the dictionary brynildsrud with the database from
-  the file data/Brynildsrud_Dataset_S1.xls.
-  """
-  self.assertEqual(to_brynildsrud()['ERR760595']['Source'], 'Eldholm (10.1038/ncomms8119)')
-  self.assertEqual(to_brynildsrud()['ERR760595']['Author'], '')
-  self.assertEqual(to_brynildsrud()['ERR760595']['study accession '
-                                                 'number'], 'PRJEB7669')
-  self.assertEqual(to_brynildsrud()['ERR760595']['location'], 'Argentina')
-  self.assertEqual(to_brynildsrud()['ERR760595']['date'], '2005')
-\end{verbatim}
-\end{itemize}
+
 
 
 % LES TESTS D'INTEGRATION -----------------------------
