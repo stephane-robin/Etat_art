@@ -2185,7 +2185,7 @@ Pour effectuer ces tests, nous utilisons le module \index{unittest}\textit{unitt
 % UNITTEST ------
 \section{unittest}
 
-\textit{unittest} utilise une approche orientée objet et propose les caractéristiques suivantes :
+Le module \textit{unittest} utilise une approche orientée objet et propose les caractéristiques suivantes :
 
 \begin{itemize}
 \item gère l'automatisation et l'aménagement des tests, c'est à dire la création de bases de données temporaires, de répertoires, le démarrage de serveurs, le nettoyage des processus.
@@ -2194,6 +2194,144 @@ Pour effectuer ces tests, nous utilisons le module \index{unittest}\textit{unitt
 \item utilise des lanceurs de tests sous forme d'interface graphique ou d'interface en lignes de commandes. Ces lanceurs de tests dirigent l'exécution des tests et fournissent les résultats.
 \end{itemize}
 
+Un scénario de tests est une classe fille de \texttt{unittest.TestCase}. On définit pour cela une classe \texttt{CrisprMethods(unittest.TestCase)} contenant des méthodes dont le nom commence par \texttt{test}, qui permettent de valider le comportement de chacune des fonctions utilisées dans le package CRISPRbuilder\_TB. Pour cela, on peut recopier les différentes fonctions de CRISPRbuilder\_TB dans un module \textbf{main.py} à l'intérieur d'un nouveau projet \textbf{crisprunittest}, ou alors intégrer les tests dans les modules \textbf{\_\_main\_\_.py} et \textbf{fonctions.py} de CRISPRbuilder\_TB. Nous avons choisi de séparer les tests du code de production dans le cadre de notre étude. 
+
+Il est également nécessaire de créer des fichiers simples et fonctionnels que nous passons en entrée de nos tests afin de valider chaque scenario. C'est par exemple le cas des fichiers \textbf{f1.txt}, \textbf{f2.txt}, \textbf{f.txt}, \textbf{f\_shuffled.txt}, \textbf{f\_greater.txt}, \textbf{sortie.txt}, ... 
+
+Le module \textit{unittest} fonctionne essentiellement avec des méthodes d'assertion du type :
+
+\begin{itemize}
+\item \texttt{assertEqual(x, y)} qui vérifie que \texttt{x} est bien égal à \texttt{y}. 
+\item \texttt{assertNotEqual(x, y)} qui vérifie que \texttt{x} est bien différent de \texttt{y}.
+\item \texttt{assertTrue(x)} qui vérifie que \texttt{x} est le booleen True.
+\item \texttt{assertFalse(x)} qui vérifie que \texttt{x} est le booleen False.
+\item \texttt{assertIn(x, y)} qui vérifie que \texttt{x} appartient à \texttt{y}.
+\item \texttt{assertNotIn(x, y)} qui vérifie que \texttt{x} n'appartient pas à \texttt{y}.
+\item \texttt{assertRaises(excp, fonct, arg)} qui vérifie que \texttt{fonct(arg)} lève bien l'exception \texttt{excp}.
+\end{itemize}
+
+Nous commençons par analyser la fonction \texttt{collect\_sra()} du module \textbf{\_\_main\_\_.py} dans un permier scénario de tests.
+\begin{itemize}
+\item le téléchargement des fichiers \textit{.fasta} est déjà testé dans le code avec la ligne 
+\begin{verbatim}  
+  completed.returncode == 0
+\end{verbatim}
+\item le changement dans un fichier d'un élément en rajoutant le suffixe "\_1" ou "\_2" donne lieu au test suivant
+\begin{verbatim}
+  def test_change_elt_file(self):
+    """
+    Applies change_elt_file() to the test file t.txt and check the content
+    of the file after processing.
+    """
+    change_elt_file("f.txt", "_1", "ERR2704808")
+    with open("f.txt", 'r') as f:
+        lignes = f.readlines()
+    self.assertEqual(['ERR2704808_1.fasta\n', 'ERR2200220.fasta\n',
+                      'ERR2704808_1.fasta\n'], lignes)
+\end{verbatim}
+\item la concaténation de fichiers donne lieu au test suivant
+\begin{verbatim}
+  def test_concat(self):
+    """
+    Applies concat() to the tests files f1.txt and f2.txt and check the
+    content of f_shuffled.txt after processing.
+    """
+    concat("f1.txt", "f2.txt", "f_shuffled.txt")
+    with open("f_shuffled.txt", 'r') as f:
+        lignes = f.readlines()
+    self.assertEqual(['ligne 1\n', 'ligne 2\n', 'ligne 3\n', 'ligne 4\n'],
+                      lignes)
+\end{verbatim}
+\item le comptage du nombre de signes ">" donne lieu au test suivant
+\begin{verbatim}
+  def test_count_greater(self):
+    """
+    Counts the number of '>' in f_greater.txt, writes this number in 
+    sortie.txt and compares it to 2 
+    """
+      with open("f_greater.txt", 'r') as f_in, open("sortie.txt", 'w') as \
+              f_out:
+          lignes = f_in.readlines()
+          cpt = 0
+          for elt in lignes:
+              cpt += elt.count('>')
+          f_out.write(str(cpt))
+      nb_reads = eval(open("sortie.txt").read().split('\n')[0])
+      self.assertEqual(nb_reads, 2)
+\end{verbatim}
+\item la création d'une base de données issue de Blast est déjà testé dans le code avec la ligne 
+\begin{verbatim}
+  completed.check_returncode()
+\end{verbatim}
+\item la récupération des données de la base \texttt{Origines} vers le dictionnaire \texttt{dico\_afr} donne lieu au test suivant, où un nouveau fichier de test \texttt{Origines} plus léger a été créé dans cet objectif
+\begin{verbatim}
+  def test_origines(self):
+    """
+    Fills out the data from Origines into the dictionary dico_afr[item]
+    and checks the content of the dictionary after processing.  
+    """
+    Origines = [
+        {'Source': "Requete SRA avec txid78331[Organism:exp]  (M.canettii)",
+         'Author': "NCBI",
+         'study accession number': '',
+         'run accessions': ['ERR1336824', 'ERR1336825', 'ERR1336823']}
+    ]
+    item = 'ERR1336825'
+    dico_afr = {}
+    dico_afr[item] = {}
+    for ref in Origines:
+        if item in ref['run accessions']:
+            for elt in ['Source', 'Author', 'study accession number',
+                        'location']:
+                dico_afr[item][elt] = ref.get(elt)
+    self.assertEqual(dico_afr[item]['Source'], 'Requete SRA avec '
+                                               'txid78331[Organism:exp] 
+                                               (M.canettii)')
+    self.assertEqual(dico_afr[item]['Author'], 'NCBI')
+    self.assertEqual(dico_afr[item]['study accession number'], '')
+    self.assertEqual(dico_afr[item]['location'], None)
+\end{verbatim}
+\item la récupération des données de la base NCBI vers le dictionnaire \texttt{dico\_afr} donne lieu au test de la fonction \texttt{get\_info()} dans le cadre d'un second scénario de tests pour le module \textbf{fonctions.py}. 
+\end{itemize}
+
+Le second scénario de tests concerne le module \textbf{fonctions.py}.
+\begin{itemize}
+\item nous commençons par analyser la fonction \texttt{get\_info()} avec le code
+\begin{verbatim}
+  def test_get_info(self):
+    """
+    Fills out the data from NCBI into the dictionary dico0 and checks the 
+    content of the dictionary after processing.
+    """
+    self.assertEqual(get_info("ERR2704808")['location'], 'France')
+    self.assertEqual(get_info("ERR2704808")['date'], '2007')
+    self.assertEqual(get_info("ERR2704808")['SRA'], 'ERS2280688')
+    self.assertEqual(get_info("ERR2704808")['center'], 'DST/NRF Centre of 
+    Excellence for Biomedical TB research, SAMRC Centre for TB Research')
+    self.assertEqual(get_info("ERR2704808")['strain'], '')
+    self.assertEqual(get_info("ERR2704808")['taxid'], '33894')
+    self.assertEqual(get_info("ERR2704808")['name'], 'Mycobacterium ' \
+      'tuberculosis variant africanum')
+    self.assertEqual(get_info("ERR2704808")['study'], 'ena-STUDY-DST/NRF ' \
+       'Centre of Excellence for Biomedical TB research, SAMRC Centre for 
+        TB Research-10-03-2018-12:26:21:907-341')
+    self.assertEqual(get_info("ERR2704808")['bioproject'], 'PRJEB25506')
+\end{verbatim}
+\item la récupération des données de la base \textbf{data/Brynildsrud\_Dataset\_S1.xls} vers le dictionnaire \texttt{brynildsrud} donne lieu au test suivant, où un nouveau fichier de test \textbf{data/Brynildsrud\_Dataset\_S1.xls} plus léger a été créé dans cet objectif
+\begin{verbatim}
+def test_to_brynildsrud(self):
+  """
+  Compares elements of the dictionary brynildsrud with the database from
+  the file data/Brynildsrud_Dataset_S1.xls.
+  """
+  self.assertEqual(to_brynildsrud()['ERR760595']['Source'], 'Eldholm (10.1038/ncomms8119)')
+  self.assertEqual(to_brynildsrud()['ERR760595']['Author'], '')
+  self.assertEqual(to_brynildsrud()['ERR760595']['study accession '
+                                                 'number'], 'PRJEB7669')
+  self.assertEqual(to_brynildsrud()['ERR760595']['location'], 'Argentina')
+  self.assertEqual(to_brynildsrud()['ERR760595']['date'], '2005')
+\end{verbatim}
+\end{itemize}
 
 
 % LES TESTS D'INTEGRATION -----------------------------
