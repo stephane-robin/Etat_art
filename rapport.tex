@@ -1316,7 +1316,7 @@ Nous présentons ci-dessous cette documentation détaillée dans sa version orig
 The CRISPRbuilder\_TB package is an open source software made available
 under generous terms. Please see the LICENSE file for further details.
 
-If you use CRISPRbuilder\_TB in work contributing to a scientific
+If you use CRISPRbuilder\_TB in a study contributing to a scientific
 publication, we ask that you cite the following application note:
 Femto-ST Institute, UMR 6174 CNRS, University of Bourgogne
 Franche-Comté, France.
@@ -1332,7 +1332,7 @@ Section \cite{guyeux2}.
     CRISPRbuilder\_TB will help you collect and annotate Mycobacterium
 tuberculosis whole genome sequencing data for CRISPR investigations.
 Given a Sequence Read Archive reference, the package will provide the
-genome information dictionary comprising the following elements:
+genome information dictionary comprised of the following elements:
 
 \begin{itemize}
 \item
@@ -1368,7 +1368,7 @@ Make sure your system is set to Python 3 in your current directory and \textit{p
 pip 20.1.1 from ~/pyenv/versions/3.8.0/lib/python3.8/site-packages/pip (python 3.8)
 \end{verbatim}
 
-When installing CRISPRbuilder\_TB, the following dependencies will be automatically installed, and you will have no further action to take:
+When installing CRISPRbuilder\_TB, the following dependencies will be automatically installed, and there will be no further action to take:
 \begin{itemize}
 \item xmltodict
 \item xlrd
@@ -1376,9 +1376,9 @@ When installing CRISPRbuilder\_TB, the following dependencies will be automatica
 \item numpy
 \end{itemize}
 
-Please note that CRISPRbuilder\_TB requires a recent version of Python (3.6 or higher), and the installation process will seek such a version.
+Please note that CRISPRbuilder\_TB requires a recent version of Python 3 (3.6 or higher), and the installation process will seek such a version.
 
-Prior to the installation, it is important that your system is correctly set for using NCBI tools \textit{parallel-fastq-dump} and \textit{blast}. The installation process will require these dependencies, but will not set the environment variable \$PATH to find them on your system. You will need to do it manually by updating the \textit{$\sim$/.bashrc} like it is explained in \url{https://opensource.com/article/17/6/set-path-linux}. We recommand that you use \textit{Anaconda}, which provides a simple way to update the \$PATH and download these packages with the command lines
+Prior to the installation, it is important that your system is correctly set to use NCBI tools \textit{parallel-fastq-dump} and \textit{blast}. The installation process will require these dependencies, but will not set the environment variable \$PATH to find them on your system. You will need to do it manually by updating the \textit{$\sim$/.bashrc} like it is explained in \url{https://opensource.com/article/17/6/set-path-linux}. We recommand that you use \textit{Anaconda}, which provides a simple way to update the \$PATH and download these packages using the command lines
 
 \begin{verbatim}
   conda install -c bioconda parallel-fastq-dump
@@ -1388,7 +1388,7 @@ Prior to the installation, it is important that your system is correctly set for
 
     This package comes with a Command Line Interface, so it should be
 installed and executed using your command prompt. For Linux, macOS or
-Windows platforms, the installation requires the same instruction. From your current directory, execute the following line:
+Windows platforms, the installation requires the same instructions. From your current directory, execute the following line
 
     \begin{verbatim}
   pip install crisprbuilder_tb
@@ -1419,7 +1419,7 @@ If a previous version of CRISPRbuilder\_TB already exists on your computer, you 
   pip install --upgrade crisprbuilder_tb
 \end{verbatim}
 
-If this instruction doesn't work, you can enforce the upgrade by first removing the package before installing it again
+If this instruction doesn't work, you can force the upgrade by first removing the package before installing it again
 
 \begin{verbatim}
   pip uninstall crisprbuilder_tb
@@ -1443,12 +1443,12 @@ CRISPRbuilder\_TB is not referrenced in the Anaconda Cloud. So it is not possibl
     \section{How to use the Command Line Interface
 ?}\label{how-to-use-the-command-line-interface}
 
-    After installing the package, you can find help with the command prompt,
+    After installing the package, you can find help by using the command prompt,
 listing the different available options, such as \texttt{-\/-collect},
 \texttt{-\/-list}, \texttt{-\/-add}, \texttt{-\/-print},
 \texttt{-\/-remove}, \texttt{-\/-change}, and their expected syntax.
-Stay in the directory containing the installed package and write in the
-command prompt:
+Stay in the current directory and write in the
+command prompt
 
     \begin{verbatim}
   python -m crisprbuilder_tb --help
@@ -1496,13 +1496,13 @@ specific SRA. From your current directory, write in the command prompt:
 \end{verbatim}
 
     Please note the importance of "-m" to run \texttt{crisprbuilder\_tb} as a
-package, otherwise the interpreter will look at \texttt{crisprbuilder\_tb} as a folder inside the current folder and not a package. CRISPRbuilder\_TB uses version 3 of Python, so make sure your system is set to Python 3 in your current directory before using the
+package, otherwise the interpreter will look at \texttt{crisprbuilder\_tb} as a folder inside the current folder and not as a package. CRISPRbuilder\_TB uses version 3 of Python, so make sure your system is set to Python 3 in your current directory before using the
 \texttt{python} instruction. The default version on your computer might
 be different.
 
 \textbf{Caution:} it is not recommanded to find the location of the
 package and go to the directory containing \textbf{crisprbuilder\_tb} in order to
-execute it. If you are doing so, the instruction above won't work.
+execute it. If you do so, the above instructions won't work.
 
     \textbf{Exemple:} to find information about SRR8368696, write:
 
@@ -1548,7 +1548,7 @@ directory containing the package and write in the command prompt:
     \textbf{Caution:} it is necessary to add the 0 after \texttt{-\/-print}.
 
 The program will then display the content of the database
-\textbf{lineage.csv} whose extract can be read below:
+\textbf{lineage.csv} whose extract can be found below:
 
 \includegraphics[width=16cm]{img_01.png}
 
@@ -1559,7 +1559,7 @@ The program will then display the content of the database
 lineage.csv}\label{adding-a-record-to-lineage.csv}
 
     If you want to add a record to the \textbf{lineage.csv} database, stay
-in the directory containing the package and write in the command line:
+in the current directory and write in the command prompt:
 
     \begin{verbatim}
   python -m crisprbuilder_tb --add 0
@@ -1568,10 +1568,10 @@ in the directory containing the package and write in the command line:
     \textbf{Caution:} it is necessary to add the 0 after \texttt{-\/-add}.
 
 You will then be asked the values of the different fields (lineage,
-position, gene coordinates, allege change, codon number, codon change,
+position, gene coordinates, allele change, codon number, codon change,
 amino acide change, locus ID, gene name, gene type, type of mutation, 5'
 gene, 3' gene, strand, sublineage surname, essential, origin of the
-study). In case you don't know the value of a particular field, just
+study). If you don't know the value of a particular field, just
 press enter.
 
 
@@ -1581,8 +1581,8 @@ press enter.
 lineage.csv}\label{removing-a-record-from-lineage.csv}
 
     If you want to remove a record from the \textbf{lineage.csv} database,
-stay in the directory containing the package and write in the command
-line:
+stay in the current directory and write in the command
+prompt:
 
     \begin{verbatim}
   python -m crisprbuilder_tb --remove 0
@@ -1591,7 +1591,7 @@ line:
     \textbf{Caution:} it is necessary to add the 0 after
 \texttt{-\/-remove}.
 
-After your confirmation for removal, you will be asked for the reference
+After confirming the removal, you will be asked for the reference
 of the line you wish to delete, which consists of the lineage and the
 position (see below). If you don't know this reference, you can always
 print the \textbf{lineage.csv} database beforehand to find it.
@@ -1618,8 +1618,8 @@ print the \textbf{lineage.csv} database beforehand to find it.
 lineage.csv}\label{changing-a-record-from-lineage.csv}
 
     If you want to change a record from the \textbf{lineage.csv} database,
-stay in the directory containing the package and write in the command
-line:
+stay in the current directory and write in the command
+prompt:
 
     \begin{verbatim}
   python -m crisprbuilder_tb --change 0
@@ -1628,7 +1628,7 @@ line:
     \textbf{Caution:} it is necessary to add the 0 after
 \texttt{-\/-change}.
 
-After confirmation for change, you will be asked for the reference of
+After confirming the change, you will be asked for the reference of
 the line you wish to delete, which consists of the lineage and the
 position (see below). If you don't know the reference, you can always
 print the \textbf{lineage.csv} database beforehand to find it.
@@ -1636,10 +1636,10 @@ print the \textbf{lineage.csv} database beforehand to find it.
 \includegraphics[width=16cm]{selection.png}
 
     You will then be asked the values of the different fields: lineage,
-position, gene coordinates, allege change, codon number, codon change,
+position, gene coordinates, allele change, codon number, codon change,
 amino acide change, locus ID, gene name, gene type, type of mutation, 5'
 gene, 3' gene, strand, sublineage surname, essential, origin of the
-study. In case you don't know the value of a particular field, just
+study. If you don't know the value of a particular field, just
 press enter.
 
     The execution of the code will end with:
@@ -2349,6 +2349,36 @@ Nous commençons par analyser la fonction \texttt{collect\_sra()} du module \tex
     self.assertEqual(dico_afr[item]['location'], None)
 \end{verbatim}
 \item la récupération des données de la base NCBI vers le dictionnaire \texttt{dico\_afr} donne lieu au test de la fonction \texttt{get\_info()} dans le cadre d'un second scénario de tests pour le module \textbf{fonctions.py}. 
+\item pour tester la fonction \texttt{to\_spol\_sit}, nous utilisons une version plus légère de \textbf{1\_3882\_SORTED.xls} pour le test et nous vérifions que '1' et '13' sont des valeurs du dictionnaire renvoyé par la fonction \texttt{to\_spol\_sit} alors que '3' n'en est pas une
+\begin{verbatim}
+  def test_to_spol_sit(self):
+    """
+    Uses a lighter version of 1_3882_SORTED.xls.
+    Checks that '1' and '13' belong to the values of the dictionary returned
+    after processing to_spol_sit(), but not '3'.
+    """
+    self.assertIn('1', to_spol_sit().values())
+    self.assertIn('13', to_spol_sit().values())
+    self.assertNotIn('3', to_spol_sit().values())
+\end{verbatim}
+\item pour tester la fonction \texttt{add\_spoligo\_dico}, nous utilisons une version plus légère de \textbf{1\_3882\_SORTED.xls} et \texttt{dico\_afr} pour le test et nous vérifions que la valeur de \texttt{dico\_afr['ERR2704808']['SIT']} est 'X' XXXXXXX
+\begin{verbatim}
+  def test_add_spoligo_dico(self):
+    """
+    Uses a lighter version of 1_3882_SORTED.xls for the test.
+    Uses a lighter version of dico_afr for the test.
+    Checks that the value of dico_afr['ERR2704808']['SIT'] is 'X' after
+    processing add_spoligo_dico.
+    """
+    dico_afr = {
+        'ERR2704808': {
+            'spoligo': '',
+            'SIT': ''
+        }
+    }
+    add_spoligo_dico("SIT", dico_afr, "ERR2704808", to_spol_sit())
+    self.assertEqual(dico_afr['ERR2704808']['SIT'], 'X')
+\end{verbatim}
 \end{itemize}
 
 
