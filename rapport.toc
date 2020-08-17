@@ -50,22 +50,22 @@
 \contentsline {chapter}{\numberline {7}Tester le package}{59}{chapter.7}
 \contentsline {section}{\numberline {1.}Les tests unitaires, le module unittest}{59}{section.7.1}
 \contentsline {section}{\numberline {2.}unittest}{60}{section.7.2}
-\contentsline {section}{\numberline {3.}les tests d'int\IeC {\'e}gration}{65}{section.7.3}
-\contentsline {subsection}{\numberline {3.1.}Le respect des r\IeC {\`e}gles du PEP avec pylint}{66}{subsection.7.3.1}
-\contentsline {subsection}{\numberline {3.2.}Les premiers probl\IeC {\`e}mes d'int\IeC {\'e}gration}{67}{subsection.7.3.2}
-\contentsline {section}{\numberline {4.}Les tests de non-r\IeC {\'e}gression}{67}{section.7.4}
-\contentsline {subsection}{\numberline {4.1.}Le versioning avec Git}{68}{subsection.7.4.1}
-\contentsline {section}{\numberline {5.}Les tests de validation}{68}{section.7.5}
-\contentsline {subsection}{\numberline {5.1.}Les probl\IeC {\`e}mes li\IeC {\'e}s aux chemins d'acc\IeC {\`e}s}{69}{subsection.7.5.1}
-\contentsline {section}{\numberline {6.}Les tests d'installation}{69}{section.7.6}
-\contentsline {subsection}{\numberline {6.1.}L'utilisation de VirtualBox}{70}{subsection.7.6.1}
-\contentsline {subsection}{\numberline {6.2.}Tests d'installation avec Ubuntu 18.04}{71}{subsection.7.6.2}
-\contentsline {subsection}{\numberline {6.3.}Tests d'installation avec macOS 10.12 Sierra}{73}{subsection.7.6.3}
-\contentsline {subsection}{\numberline {6.4.}Tests d'installation avec Windows 10}{73}{subsection.7.6.4}
-\contentsline {section}{\numberline {7.}Les tests de performance}{73}{section.7.7}
-\contentsline {subsection}{\numberline {7.1.}subprocess.run et os.system}{73}{subsection.7.7.1}
-\contentsline {subsection}{\numberline {7.2.}parallel-fastq-dump}{75}{subsection.7.7.2}
-\contentsline {subsection}{\numberline {7.3.}blast+}{76}{subsection.7.7.3}
-\contentsline {section}{\numberline {8.}Les tests de configuration}{76}{section.7.8}
-\contentsline {chapter}{\numberline {8}Conclusion}{77}{chapter.8}
+\contentsline {section}{\numberline {3.}les tests d'int\IeC {\'e}gration}{66}{section.7.3}
+\contentsline {subsection}{\numberline {3.1.}Le respect des r\IeC {\`e}gles du PEP avec pylint}{67}{subsection.7.3.1}
+\contentsline {subsection}{\numberline {3.2.}Les premiers probl\IeC {\`e}mes d'int\IeC {\'e}gration}{68}{subsection.7.3.2}
+\contentsline {section}{\numberline {4.}Les tests de non-r\IeC {\'e}gression}{68}{section.7.4}
+\contentsline {subsection}{\numberline {4.1.}Le versioning avec Git}{69}{subsection.7.4.1}
+\contentsline {section}{\numberline {5.}Les tests de validation}{69}{section.7.5}
+\contentsline {subsection}{\numberline {5.1.}Les probl\IeC {\`e}mes li\IeC {\'e}s aux chemins d'acc\IeC {\`e}s}{70}{subsection.7.5.1}
+\contentsline {section}{\numberline {6.}Les tests d'installation}{70}{section.7.6}
+\contentsline {subsection}{\numberline {6.1.}L'utilisation de VirtualBox}{71}{subsection.7.6.1}
+\contentsline {subsection}{\numberline {6.2.}Tests d'installation avec Ubuntu 18.04}{72}{subsection.7.6.2}
+\contentsline {subsection}{\numberline {6.3.}Tests d'installation avec macOS 10.12 Sierra}{74}{subsection.7.6.3}
+\contentsline {subsection}{\numberline {6.4.}Tests d'installation avec Windows 10}{74}{subsection.7.6.4}
+\contentsline {section}{\numberline {7.}Les tests de performance}{74}{section.7.7}
+\contentsline {subsection}{\numberline {7.1.}subprocess.run et os.system}{74}{subsection.7.7.1}
+\contentsline {subsection}{\numberline {7.2.}parallel-fastq-dump}{76}{subsection.7.7.2}
+\contentsline {subsection}{\numberline {7.3.}blast+}{77}{subsection.7.7.3}
+\contentsline {section}{\numberline {8.}Les tests de configuration}{77}{section.7.8}
+\contentsline {chapter}{\numberline {8}Conclusion}{78}{chapter.8}
 \contentsfinish 

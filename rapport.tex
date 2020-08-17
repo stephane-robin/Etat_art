@@ -2210,7 +2210,7 @@ Un scénario de tests est une classe fille de \texttt{unittest.TestCase}. On dé
 
 Nous choisissons de placer tous nos tests dans un unique scénario qui regroupe les modules  \textbf{fonctions.py} et \textbf{\_\_main\_\_.py}, car les fonctions du package sont bien souvent interdépendantes.
 
-Il est également nécessaire de créer des fichiers simples et fonctionnels que nous passons en entrée de nos tests. C'est par exemple le cas des fichiers \textbf{f1.txt}, \textbf{f2.txt}, \textbf{f.txt}, \textbf{f\_shuffled.txt}, \textbf{f\_greater.txt}, \textbf{sortie.txt}. Nous utilisons la structure du package CRISPRbuilder\_TB, et en particulier, nous définissons des fichiers \textbf{1\_3882\_SORTED.xls}, \textbf{Brynildsrud\_Dataset\_S1.xls} et \textbf{lineage.csv} plus légers pour accélérer l'exécution du scénario.
+Il est également nécessaire de créer des fichiers simples et fonctionnels que nous passons en entrée de nos tests. C'est par exemple le cas des fichiers \textbf{f1.txt}, \textbf{f2.txt}, \textbf{f.txt}, \textbf{f\_shuffled.txt}, \textbf{f\_greater.txt}, \textbf{sortie.txt}. Nous utilisons la structure du package CRISPRbuilder\_TB en modifiant toutefois les fichiers \textbf{1\_3882\_SORTED.xls}, \textbf{Brynildsrud\_Dataset\_S1.xls} et \textbf{lineage.csv}, que nous rendons plus légers pour accélérer l'exécution du scénario. Par ailleurs, nous récupérons les fichiers \textbf{ERR2704808.nhr}, \textbf{ERR2704808.nin}, \textbf{ERR2704808.nsq} et \textbf{ERR2704808.nal} obtenus grâce aux commandes \texttt{makeblastdb} et \texttt{blastn}, puis nous les plaçons dans le dossier \textbf{REP/sequences/ERR2704808}, afin de pouvoir tester les fonctions \texttt{to\_formatted\_results} et \texttt{to\_nb\_seq}. 
 
 Notre scénario de tests concerne les éléments de code suivants :
 
@@ -2223,7 +2223,7 @@ Notre scénario de tests concerne les éléments de code suivants :
 
     def test_get_info(self):
       """
-      Fills out the data from NCBI into the dictionary dico0 and checks the 
+      Fills out the data from NCBI into the dictionary dico0 and checks the
       content of the dictionary after processing.
       """
       self.assertEqual(get_info("ERR2704808")['location'], 'France')
@@ -2242,18 +2242,18 @@ Notre scénario de tests concerne les éléments de code suivants :
 \end{verbatim}
 \item \textit{test de la fonction to\_brynildsrud() :} nous comparons le dictionnaire \texttt{to\_brynildsrud()[\\'ERR760595']} obtenu à partir du fichier \textbf{data/Brynildsrud\_Dataset\_S1.xls} avec les valeurs attendues pour chaque clé, en utilisant le code test
 \begin{verbatim}
-def test_to_brynildsrud(self):
-  """
-  Compares elements of the dictionary brynildsrud with the database from
-  the file data/Brynildsrud_Dataset_S1.xls.
-  """
-  self.assertEqual(to_brynildsrud()['ERR760595']['Source'], 'Eldholm 
-  (10.1038/ncomms8119)')
-  self.assertEqual(to_brynildsrud()['ERR760595']['Author'], '')
-  self.assertEqual(to_brynildsrud()['ERR760595']['study accession '
-                                                 'number'], 'PRJEB7669')
-  self.assertEqual(to_brynildsrud()['ERR760595']['location'], 'Argentina')
-  self.assertEqual(to_brynildsrud()['ERR760595']['date'], '2005')
+  def test_to_brynildsrud(self):
+    """
+    Compares elements of the dictionary brynildsrud with the database from
+    the file data/Brynildsrud_Dataset_S1.xls.
+    """
+    self.assertEqual(to_brynildsrud()['ERR760595']['Source'], 'Eldholm 
+    (10.1038/ncomms8119)')
+    self.assertEqual(to_brynildsrud()['ERR760595']['Author'], '')
+    self.assertEqual(to_brynildsrud()['ERR760595']['study accession '
+                                                   'number'], 'PRJEB7669')
+    self.assertEqual(to_brynildsrud()['ERR760595']['location'], 'Argentina')
+    self.assertEqual(to_brynildsrud()['ERR760595']['date'], '2005')
 \end{verbatim}
 \item \textit{test de la fonction to\_reads() :} nous vérifions les reads de la lignée Shitikov 2.2 à la position 4280707, extraits de \textbf{lineage.csv}. Nous vérifions également que le résultat contient 3 éléments pour chaque position dans le dictionaire, en utilisant le code test
 \begin{verbatim}
@@ -2284,7 +2284,7 @@ De même, le téléchargement des fichiers \textit{.fasta} est déjà testé dan
 \begin{verbatim}
   def test_change_elt_file(self):
     """
-    Applies change_elt_file() to the test file f.txt and check the content
+    Applies change_elt_file() to the test file t.txt and checks the content
     of the file after processing.
     """
     change_elt_file("f.txt", "_1", "ERR2704808")
@@ -2297,7 +2297,7 @@ De même, le téléchargement des fichiers \textit{.fasta} est déjà testé dan
 \begin{verbatim}
   def test_concat(self):
     """
-    Applies concat() to the tests files f1.txt and f2.txt and check the
+    Applies concat() to the tests files f1.txt and f2.txt and checks the
     content of f_shuffled.txt after processing.
     """
     concat("f1.txt", "f2.txt", "f_shuffled.txt")
@@ -2310,8 +2310,8 @@ De même, le téléchargement des fichiers \textit{.fasta} est déjà testé dan
 \begin{verbatim}
   def test_count_greater(self):
     """
-    Counts the number of '>' in f_greater.txt, writes this number in 
-    sortie.txt and compares it to 2 
+    Counts the number of '>' in f_greater.txt, writes this number in
+    sortie.txt and compares it to 2
     """
       with open("f_greater.txt", 'r') as f_in, open("sortie.txt", 'w') as \
               f_out:
@@ -2325,10 +2325,10 @@ De même, le téléchargement des fichiers \textit{.fasta} est déjà testé dan
 \end{verbatim}
 \item nous vérifions que le dictionnaire \texttt{dico\_afr} contient certaines valeurs attendues après la récupération des données de la base \texttt{Origines}, en utilisant le code test
 \begin{verbatim}
-  def test_origines(self):
+  def test1_origines(self):
     """
     Fills out the data from Origines into the dictionary dico_afr[item]
-    and checks the content of the dictionary after processing.  
+    and checks the content of the dictionary after processing.
     """
     Origines = [
         {'Source': "Requete SRA avec txid78331[Organism:exp]  (M.canettii)",
@@ -2351,39 +2351,12 @@ De même, le téléchargement des fichiers \textit{.fasta} est déjà testé dan
     self.assertEqual(dico_afr[item]['study accession number'], '')
     self.assertEqual(dico_afr[item]['location'], None)
 \end{verbatim}
-\item \textit{test de la fonction to\_spol\_sit :} nous vérifions que '1' et '13' sont des valeurs du dictionnaire renvoyé par la fonction \texttt{to\_spol\_sit} alors que '3' n'en est pas une, en utilisant le code test
-\begin{verbatim}
-  def test_to_spol_sit(self):
-    """
-    Uses a lighter version of 1_3882_SORTED.xls.
-    Checks that '1' and '13' belong to the values of the dictionary returned
-    after processing to_spol_sit(), but not '3'.
-    """
-    self.assertIn('1', to_spol_sit().values())
-    self.assertIn('13', to_spol_sit().values())
-    self.assertNotIn('3', to_spol_sit().values())
-\end{verbatim}
-\item \textit{test de la fonction add\_spoligo\_dico :} nous vérifions que la valeur de \texttt{dico\_afr['ERR2704808']['SIT']} est 'X' après exécution de \texttt{add\_spoligo\_dico}, en utilisant le code test
-\begin{verbatim}
-  def test_add_spoligo_dico(self):
-    """
-    Uses a lighter version of 1_3882_SORTED.xls for the test.
-    Uses a lighter version of dico_afr for the test.
-    Checks that the value of dico_afr['ERR2704808']['SIT'] is 'X' after
-    processing add_spoligo_dico.
-    """
-    dico_afr = {
-        'ERR2704808': {
-            'spoligo': '',
-            'SIT': ''
-        }
-    }
-    add_spoligo_dico("SIT", dico_afr, "ERR2704808", to_spol_sit())
-    self.assertEqual(dico_afr['ERR2704808']['SIT'], 'X')
-\end{verbatim}
 \item nous vérifions que la variable \texttt{booleen\_origines} est vraie après la récupération des données de la base \texttt{Origines}, en utilisant le code test
 \begin{verbatim}
   def test2_Origines(self):
+    """
+    Checks that booleen_origines is True.
+    """
     Origines = [
         {'Source': "Requete SRA avec txid78331[Organism:exp] (M.canettii)",
          'Author': "NCBI",
@@ -2404,6 +2377,87 @@ De même, le téléchargement des fichiers \textit{.fasta} est déjà testé dan
         print(f"{item} is not in the database Origines")
     self.assertEqual(booleen_origines, True)
 \end{verbatim}
+\item \textit{test du nombre de reads :}
+\begin{verbatim}
+  def test_len_reads(self):
+    """
+    Compares dico_afr[item]['len_reads'] with 108
+    """
+    item = 'ERR2704808'
+    p_shuffled = path.join(path.dirname(__file__), 'REP', 'sequences',
+                           item, item + '_shuffled.fasta')
+    dico_afr = {}
+    dico_afr[item] = {}
+    if 'len_reads' not in dico_afr[item]:
+        nb_len = len(
+            ''.join(open(p_shuffled).read(10000).split('>')[1].split(
+                '\n')[1:]))
+        dico_afr[item]['len_reads'] = nb_len
+        self.assertEqual(dico_afr[item]['len_reads'], 108)
+\end{verbatim}
+\item \textit{test de la fonction change :}
+\begin{verbatim}
+  def test_change(self):
+    """
+    Compares change('A') with 'T', change('T') with 'A', change('C') with
+    'G', change('G') with 'C'
+    """
+    self.assertEqual(change("A"), "T")
+    self.assertEqual(change("T"), "A")
+    self.assertEqual(change("C"), "G")
+    self.assertEqual(change("G"), "C")
+\end{verbatim}
+\item \textit{test de la fonction to\_spol\_sit :} nous vérifions que '1' et '13' sont des valeurs du dictionnaire renvoyé par la fonction \texttt{to\_spol\_sit} alors que '3' n'en est pas une, en utilisant le code test
+\begin{verbatim}
+  def test_to_spol_sit(self):
+    """
+    Checks that '1' and '13' belong to the values of the dictionary returned
+    after processing to_spol_sit(), but not '3'.
+    """
+    self.assertIn('1', to_spol_sit().values())
+    self.assertIn('13', to_spol_sit().values())
+    self.assertNotIn('3', to_spol_sit().values())
+\end{verbatim}
+\item \textit{test de la fonction add\_spoligo\_dico :} nous vérifions que la valeur de \texttt{dico\_afr[\\'ERR2704808']['SIT']} est 'X' après exécution de \texttt{add\_spoligo\_dico}, en utilisant le code test
+\begin{verbatim}
+  def test_add_spoligo_dico(self):
+    """
+    Checks that the value of dico_afr['ERR2704808']['SIT'] is 'X' after
+    processing add_spoligo_dico.
+    """
+    dico_afr = {
+        'ERR2704808': {
+            'spoligo': '',
+            'SIT': ''
+        }
+    }
+    add_spoligo_dico("SIT", dico_afr, "ERR2704808", to_spol_sit())
+    self.assertEqual(dico_afr['ERR2704808']['SIT'], 'X')
+\end{verbatim}
+\item \textit{test de la fonction to\_formatted\_results :}
+\begin{verbatim}
+  def test_to_formatted_results(self):
+    """
+    Compares to_formatted_results(seq, 'REP/sequences/ERR2704808/ERR2704808',
+    '12')[2] and 'ACGTCGATGGTCGCGACCTCCGCGGCATAGTCGAA'
+    """
+    seq = 'ACGTCGATGGTCGCGACCTCCGCGGCATAGTCGAA'
+    self.assertEqual(to_formatted_results(seq, 'REP/sequences/ERR2704808/
+    ERR2704808', '12')[2], 'ACGTCGATGGTCGCGACCTCCGCGGCATAGTCGAA')
+\end{verbatim}
+\item \textit{test de la fonction to\_nb\_seq :}
+\begin{verbatim}
+  def test_to_nb_seq(self):
+    """
+    Compares to_nb_seq(seq, formatted_result, 13, 17, 18, 22) and 616
+    """
+    seq = 'ACGTCGATGGTCGCGACCTCCGCGGCATAGTCGAA'
+    formatted_result = to_formatted_results(seq, 'REP/sequences/ERR2704808/
+    ERR2704808', '12')
+    to_nb_seq(seq, formatted_result, 13, 17, 18, 22)
+    self.assertEqual(to_nb_seq(seq, formatted_result, 13, 17, 18, 22), 616)
+\end{verbatim}
+
 \item pour tester la Command Line Interface, nous choisissons d'utiliser directement les instructions suivantes plutôt que l'outil \textit{unittest}
 \begin{verbatim}
   python -m crisprbuilder_tb --help
@@ -2424,9 +2478,11 @@ En exécutant le scénario de tests avec l'instruction
 nous obtenons la réponse
 
 \begin{verbatim}
-  Ran 14 tests in 11.008s
+  Ran 14 tests in 18.667s
   OK
 \end{verbatim}
+
+
 
 
 % LES TESTS D'INTEGRATION -----------------------------
