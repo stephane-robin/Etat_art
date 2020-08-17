@@ -1721,7 +1721,7 @@ CRISPRbuilder\_TB. Please note that this package doesn't support Python
 dictionary}\label{retrieving-the-genome-information-dictionary}
 
     Let's assume you're looking for information regarding ERR2704808. After
-writing \texttt{python3\ -m\ crisprbuilder\_tb\ -\/-collect\ ERR2704808}
+writing \texttt{python\ -m\ \\crisprbuilder\_tb\ -\/-collect\ ERR2704808}
 in the command prompt, a directory called\\ \textbf{ERR2704808} will be
 created in \textbf{REP/sequences} and the item ERR2704808 will be added
 to the database. The following message will be displayed:
@@ -1790,7 +1790,7 @@ will be mixed in a new\\ \textbf{ERR2704808\_shuffled.fasta} file in the
 \end{verbatim}
 
     The number of reads represented by '\textgreater{}' in
-\textbf{ERR2704808\_shuffled.fasta} will be counted and assigned to nb\_reads, as
+\textbf{ERR2704808\_shuffled.fasta} will be counted and assigned to \texttt{nb\_reads}, as
 in the following code:
 
 \begin{verbatim}
@@ -1910,7 +1910,7 @@ will be cancelled:
   Adding sequences from FASTA; added 14304698 sequences in 1213.96 seconds.
 \end{verbatim}
 
-    Some research will eventually be made in the dataset Brynildsrud,
+    Some research will eventually be made in the dataset \texttt{Brynildsrud},
 according to the code:
 
 \begin{verbatim}
@@ -2016,7 +2016,7 @@ be blasted, as in the code:
 \includegraphics[width=16.5cm]{spoligo2.png}
 
     The Spoligotype International Type and Spoligotype International Type
-silico will be retrieved according to the following code:
+silico will be retrieved using the following code:
 
 \begin{verbatim}
   if 'SIT' not in dico_afr[item] or dico_afr[item]['SIT'] == '':
@@ -2097,8 +2097,8 @@ the code:
   Lignee_Stucki: ['4.10']
 \end{verbatim}
 
-    Some general information will be retrieved from the dataset Origines or
-directly from NCBI, according to the code:
+    Some general information will be retrieved from the dataset \texttt{Origines} or
+directly from NCBI, using the code:
 
 \begin{verbatim}
   if 'Source' not in dico_afr[item]:
@@ -2114,7 +2114,7 @@ directly from NCBI, according to the code:
           dico_afr[item][elt] = dicobis[elt]
 \end{verbatim}
 
-    If the SRA belongs to Origines, the following message will be displayed:
+    If the SRA belongs to \texttt{Origines}, the following message will be displayed:
 
     \begin{verbatim}
   ERR2704808 is in the database Origines
@@ -2679,7 +2679,7 @@ L'incompatibilité des chemins d'accès entre les systèmes Posix et Windows né
 % LES TESTS D'INSTALLATION -----------------------------
 \section{Les tests d'installation}
 
-Les tests d'installation permettent de s'assurer que l'utilisateur sera en mesure d'installer le package, quel que soit son système d'exploitation Linux, macOS ou Windows. Pour simuler le fonctionnement de ces systèmes, nous choisissons de travailler sur les quatre machines virtuelles suivantes créées par \textit{VirtualBox}, toutes fonctionnant en 64 bits : 
+Les tests d'installation permettent de s'assurer que l'utilisateur sera en mesure d'installer le package, quel que soit son système d'exploitation Linux, macOS ou Windows. Pour simuler le fonctionnement de ces systèmes, nous choisissons de travailler sur les machines virtuelles suivantes créées par \textit{VirtualBox}, toutes fonctionnant en 64 bits : 
 \begin{itemize}
 \item Ubuntu 18.04 LTS, 
 \item macOS 10.12 Sierra, 
@@ -2694,7 +2694,7 @@ On peut ainsi télécharger un package à partir d'autres index que PyPI, comme 
 \begin{verbatim}  pip install --index-url https://test.pypi.org/simple/ --extra-index-url 
   https://pypi.org/simple/ crisprbuilder_tb\end{verbatim} 
 
-où l'instruction \texttt{\textemdash \textemdash index\textemdash url} permet l'installation du package à partir de testPyPI alors que l'instruction \texttt{\textemdash \textemdash extra\textemdash index\textemdash url} permet l'installation des dépendances à partir de PyPI, si celles-ci n'ont pas été trouvée dans testPyPI. Attention à bien respecter l'espace entre \texttt{simple/} et \texttt{crisprbuilder\_tb}.
+où l'instruction \texttt{\textemdash \textemdash index\textemdash url} permet l'installation du package à partir de testPyPI alors que l'instruction \texttt{\textemdash \textemdash extra\textemdash index\textemdash url} permet l'installation des dépendances à partir de PyPI, si celles-ci n'ont pas été trouvées dans testPyPI. Attention à bien respecter l'espace entre \texttt{simple/} et \texttt{crisprbuilder\_tb}.
 
 Il peut arriver que testPyPI n'installe pas la dernière version du package. Dans ce cas, il convient de préciser la version souhaitée. Par exemple pour la version 0.1.2, il faut écrire
 
