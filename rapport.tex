@@ -2490,18 +2490,47 @@ nous obtenons la réponse
 
 Les tests d'intégration permettent de valider l'inter-utilisabilité des différentes unités de programmes  et des différents modules entre eux. Nous réalisons les tests d'intégration directement dans l'environnement de développement que nous avons construit.
 
-Pour cela, nous assignons la valeur "ERR2704808" à la variable "item", puis nous nous plaçons à la racine du package et nous exécutons directement le code du module \textbf{\_\_main\_\_.py} avec la commande 
+Avant de procéder à ces tests, nous adaptons les fonctions déjà écrites à l'ensemble du programme, nous les documentons en anglais, nous créons de nouvelles fonctions pour éviter la répétition du code, nous cherchons à accroître la performance en utilisant des compréhensions de listes, nous rajoutons des blocs \texttt{try ... except}, des méthodes \texttt{.setdefault} et \texttt{.get} pour éviter les erreurs potentielles.
+
+Nous effectuons les tests en assignant la valeur "ERR2704808" à la variable "item", puis nous nous plaçons à la racine du package et nous exécutons directement le code du module \textbf{\_\_main\_\_.py} avec la commande 
 
 \begin{verbatim}
   cd crisprbuilder_tb
   python __main__.py
 \end{verbatim}
 
-Nous devons obtenir le résultat suivant 
+Nous cherchons à obtenir le résultat suivant 
 
-XXX
+ \begin{verbatim}
+  Source: Unexpected Genomic and Phenotypic Diversity of Mycobacterium africanum   
+  Lineage 5 Affects Drug Resistance, Protein Secretion, and Immunogenicity
+  Author: Ates et al. 2018
+  study accession number: PRJEB25506
+  location: France
+  date: 2007
+  SRA: ERS2280688
+  center: DST/NRF Centre of Excellence for Biomedical TB research, SAMRC 
+  Centre for TB Research
+  strain: 
+  taxid: 33894
+  name: Mycobacterium tuberculosis variant africanum
+  study: ena-STUDY-DST/NRF Centre of Excellence for Biomedical TB research, SAMRC 
+  Centre for TB Research-10-03-2018-12:26:21:907-341
+  bioproject: PRJEB25506
+  lineage_L6+animal: 1
+  lineage_PGG_cp: ['1', 'X']
+  lineage_PGG: X
+  lineage_Coll: ['4', '4.9', '5']
+  lineage_Pali: ['1']
+  lineage_Shitikov: []
+  Lignee_Stucki: ['4.10']
+\end{verbatim}
 
-Puis, nous cherchons à intégrer la \textit{Command Line Interface} à notre test. Pour cela, nous nous plaçons à l'extérieur du package et nous exécutions l'instruction
+\includegraphics[width=16.5cm]{spoligo1.png}
+
+\includegraphics[width=16.5cm]{spoligo2.png}
+
+Puis, nous intégrons la \textit{Command Line Interface} à notre test. Pour cela, nous nous plaçons à l'extérieur du package et nous exécutions l'instruction
 
 \begin{verbatim}
   python crisprbuilder_tb --print 0
@@ -2517,7 +2546,7 @@ Nous exécutons ensuite l'instruction
 
 qui doit produire le même résultat que lorsque nous exécutons le traitement directement sur le module \textbf{\_\_main\_\_.py}.
 
-Nous choisissons d'adapter les fonctions déjà écrites au reste du code, d'en créer de nouvelles pour éviter la répétition du code, de les documenter en anglais, de les rendre performantes en utilisant des compréhensions de listes, d'éviter les erreurs potentielles en rajoutant des blocs \textit{try ... except}, des méthodes \textit{.setdefault} et \textit{.get}, avant de procéder aux tests d'intégration.
+
 
 
 
@@ -2525,7 +2554,9 @@ Nous choisissons d'adapter les fonctions déjà écrites au reste du code, d'en 
 % PYLINT --------------
 \subsection{Le respect des règles du PEP avec pylint}
 
-\index{pylint}\textit{pylint} fournit une note entre 0 et 10 qui reflète le respect des règles du PEP-8\footnote{\index{PEP-8}\textbf{PEP-8:} style guide for Python code} et du PEP-257\footnote{\index{PEP-257}\textbf{PEP-257:} docstring conventions}, notamment en ce qui concerne la lisibilité du code en terme d'espaces entre les signes, de longueur maximale pour chaque ligne (80 caractères), d'indentation pour assurer la compréhension lors d'un retour à la ligne, de documentation des méthodes et des modules. \textit{pylint} reprend également les erreurs de structure de code, les manques de définition de variables ou les ambiguïtés dans l'utilisation de variables locales portant le même nom. Ces dernières fonctionnalités sont également assurées par le correcteur statique de code intégré dans \textit{PyCharm}. \textit{pylint} permet donc de clarifier et nettoyer le code pour en faciliter la lecture. Toutefois, il comprend mal l'utilisation des compréhensions de listes et des méthodes telles que \textit{.setdefault} pour récupérer la valeur d'une variable dans un dictionnaire. 
+\index{pylint}\textit{pylint} fournit une note entre 0 et 10 qui reflète le respect des règles du PEP-8\footnote{\index{PEP-8}\textbf{PEP-8:} style guide for Python code} et du PEP-257\footnote{\index{PEP-257}\textbf{PEP-257:} docstring conventions}, notamment en ce qui concerne la lisibilité du code en terme d'espaces entre les signes, de longueur maximale pour chaque ligne (80 caractères), d'indentation pour assurer la compréhension lors d'un retour à la ligne, de documentation des méthodes et des modules. \textit{pylint} reprend également les erreurs de structure de code, les manques de définition de variables ou les ambiguïtés dans l'utilisation de variables locales portant le même nom. Ces dernières fonctionnalités sont également assurées par le correcteur statique de code intégré dans \textit{PyCharm}.
+
+\textit{pylint} permet donc de clarifier et nettoyer le code pour en faciliter la lecture. Toutefois, il comprend mal l'utilisation des compréhensions de listes et des méthodes telles que \textit{.setdefault} pour récupérer la valeur d'une variable dans un dictionnaire. 
 
 L'exécution de \textit{pylint} se fait directement en ligne de commande en se plaçant dans le package, au niveau du fichier à tester (par exemple ici \textbf{\_\_main\_\_.py}) en utilisant l'instruction
 
@@ -2533,7 +2564,7 @@ L'exécution de \textit{pylint} se fait directement en ligne de commande en se p
   pylint __main__.py
 \end{verbatim}
 
-Le code de ce projet a été organisé sous forme de modules, tel que préconisé par le PEP. Comme \textit{pylint} considère que chaque module ne devrait pas excéder 1000 lignes, nous avons découpé notre module initial \textbf{\_\_main\_\_.py} en trois modules \textbf{\_\_main\_\_.py}, \textbf{fonctions.py} et \textbf{bdd.py}.
+Le code de ce projet a été organisé sous forme de modules, tel que préconisé par le PEP. Comme \textit{pylint} considère que chaque module ne devrait pas excéder 1000 lignes, nous avons découpé notre module initial \textbf{\_\_main\_\_.py} en trois sous modules \textbf{\_\_main\_\_.py}, \textbf{fonctions.py} et \textbf{bdd.py}.
 
 Nous nous sommes par ailleurs astreints aux règles du PEP pour obtenir une note de 9.72 / 10 avec les commentaires suivants concernant le module \textbf{\_\_main\_\_.py}. 
 
@@ -2567,9 +2598,9 @@ De la même façon, le module \textbf{fonctions.py} a obtenu la note de 9.80 / 1
   -----------------------------------
   Your code has been rated at 9.80/10\end{verbatim}
 
-Le module \textbf{bdd.py}, ne contenant que le dictionnaire \textit{Origines}, n'a pas été évalué par \textit{pylint}.
+Le module \textbf{bdd.py}, ne contenant que le dictionnaire \textit{Origines}, n'est pas évalué à partir de \textit{pylint}.
 
-S'agissant d'un test statique, le code n'est pas exécuté et la performance du code n'est pas prise en compte lors de l'évaluation faite par \textit{pylint}. Ceci explique que \textit{pylint} peut reprocher l'utilisation injustifiée de listes compréhensives, sans nécessairement tenir compte de l'efficacité d'un tel traitement.
+Notons que l'évaluation faite par \textit{pylint} s'appuie sur un test statique, c'est à dire que le code n'est pas exécuté et la performance du code n'est pas prise en compte. Ceci explique que \textit{pylint} peut reprocher l'utilisation injustifiée de listes compréhensives, sans nécessairement tenir compte de l'efficacité d'un tel traitement.
 
 
 
@@ -2577,10 +2608,10 @@ S'agissant d'un test statique, le code n'est pas exécuté et la performance du 
 % LES PROBLEMES RENCONTRES -----------------------
 \subsection{Les premiers problèmes d'intégration}
 
-Une fois que le code a été testé bloc par bloc, que nous avons modifié le nom des variables, paramètres et fonctions en vue de l'intégration du code, les premiers problèmes que nous avons rencontrés sont les suivants :  
+Une fois que le code a été testé bloc par bloc, que nous avons modifié le nom des variables, paramètres et fonctions en vue de l'intégration du code, les premiers problèmes que nous rencontrons sont les suivants :  
 \begin{itemize}
-\item nous avons initialement installé le module \textit{subprocess.run} avec l'instruction \\\texttt{pip install subprocess.run} afin de pouvoir l'utiliser. Or, au moment de l'exécution du code, ce module s'avère défectueux et incompatible avec la version de \textit{subprocess} déjà présente sur l'ordinateur. Nous remarquons que la version native présente dans Python ne contrarie pas l'exécution du code et nous choisissons donc de désinstaller \textit{subprocess.run} et de ne pas l'incorporer dans le fichier \textbf{pyproject.toml} de \textit{Poetry}.
-\item la gestion des exceptions avec des blocs \textit{try ... except FileNotFoundError} ne permet pas au programme de déplacer un fichier vers un répertoire contenant déjà ce fichier. Ce problème est plus sensible au moment des tests car nous utilisons à plusieurs reprises la même valeur de SRA. Toutefois, il pourrait également advenir à un utilisateur qui aurait inscrit plusieurs fois sur une liste le même SRA. Il convient donc de rajouter dans le code un test de présence d'un fichier dans un répertoire avant de le déplacer.
+\item nous avons initialement installé le module \textit{subprocess.run} avec l'instruction \\\texttt{pip install subprocess.run} afin de pouvoir l'utiliser. Or, au moment de l'exécution du code, ce module s'avère défectueux et incompatible avec la version de \textit{subprocess} déjà présente sur l'ordinateur. Nous remarquons en revanche que la version native présente dans Python ne contrarie pas l'exécution du code, et nous choisissons donc de désinstaller \textit{subprocess.run} et de ne pas l'incorporer dans le fichier \textbf{pyproject.toml} de \textit{Poetry}.
+\item la gestion des exceptions avec des blocs \texttt{try ... except FileNotFoundError} ne permet pas au programme de déplacer un fichier vers un répertoire contenant déjà ce fichier. Ce problème est plus sensible au moment des tests car nous utilisons à plusieurs reprises la même valeur de SRA. Toutefois, il pourrait également advenir à un utilisateur qui aurait inscrit plusieurs fois sur une liste le même SRA. Il convient donc de rajouter dans le code un test de présence d'un fichier dans un répertoire avant de le déplacer.
 \item l'interpréteur Python ne parvient pas à trouver les modules \textbf{fonctions.py} et \textbf{bdd.py} à partir du module \textbf{\_\_main\_\_.py}. Il faut donc importer le package \textit{crisprbuilder\_tb}, puis importer les modules \textbf{crisprbuilder\_tb.fonctions.py} et \textbf{crisprbuilder\_tb.bdd.py} (sans oublier à chaque fois le nom du package), pour que l'interpréteur parvienne à trouver ces modules alors qu'ils se trouvent tous dans le même dossier que \textbf{\_\_main\_\_.py}.
 \end{itemize}
 
@@ -2594,15 +2625,15 @@ Une fois que le code a été testé bloc par bloc, que nous avons modifié le no
 
 Les tests de non-régression permettent de vérifier que les modifications apportées au programme durant chaque phase de test n'ont pas altéré le fonctionnement du package.
 
-Pour cela, lorsqu'un changement est effectué, les résultats obtenus sont comparés aux résultats pécédemment obtenus. Nous nous sommes donc exclusivement basé sur les deux commandes suivantes dont nous avons conservé les résultats en mémoire
+Pour cela, lorsqu'un changement est effectué, les nouveaux résultats sont comparés aux résultats pécédemment obtenus. Ainsi, après chaque modification du code, nous nous basons uniquement sur les deux commandes suivantes, dont nous avons préalablement conservé les résultats en mémoire,
 
 \begin{verbatim}  python -m crisprbuilder_tb --print 0\end{verbatim}
 
 et 
 
-\begin{verbatim}  python -m crisprbuilder_tb --collect ERR2704812\end{verbatim}
+\begin{verbatim}  python -m crisprbuilder_tb --collect ERR2704808\end{verbatim}
 
-pour procéder aux vérifications aprés modification de code.
+afin de procéder aux vérifications.
 
 
 
@@ -2638,9 +2669,9 @@ Pour éviter tout conflit entre les deux dossiers créés, il est nécessaire de
 
 Les tests de validation permettent de vérifier la conformité du package développé par rapport à l'objectif et aux fonctionnalités initiales. A partir des tests fonctionnels, nous n'utilisons plus l'environnement de développement, mais un environnement de test qui peut être soit une machine virtuelle, soit un environnement neutre dénué de toute spécification, mais capable d'installer le package.
 
-L'objectif initial était de fournir un package qui fournit des informations au \textit{SRA} dont la référence serait saisie en ligne de commande par un utilisateur. Ce dernier pourrait également fournir une liste de \textit{SRA} dans un fichier texte avec un \textit{SRA} par ligne. Il pourrait également consulter et modifier la base de données lineage.csv.
+L'objectif initial était de fournir un package qui fournit des informations au SRA dont la référence serait saisie en ligne de commande par un utilisateur. Ce dernier pourrait également fournir une liste de SRA dans un fichier texte avec un SRA par ligne. Il pourrait également consulter et modifier la base de données lineage.csv.
 
-Nous fournissons au package un fichier au format \textit{.txt} comprenant plus qu'un \textit{SRA} par ligne. RESULTATS  
+Nous fournissons au package un fichier au format \textit{.txt} comprenant plus qu'un SRA par ligne. RESULTATS  
 
 \begin{verbatim}
   python -m crisprbuilder_tb --collect ERR2704808 ne parvient pas à trouver les modules ...
