@@ -2609,11 +2609,20 @@ Notons que l'évaluation faite par \textit{pylint} s'appuie sur un test statique
 \subsection{Les premiers problèmes d'intégration}
 
 Une fois que le code a été testé bloc par bloc, que nous avons modifié le nom des variables, paramètres et fonctions en vue de l'intégration du code, les premiers problèmes que nous rencontrons sont les suivants :  
-\begin{itemize}
+\begin{enumerate}
 \item nous avons initialement installé le module \textit{subprocess.run} avec l'instruction \\\texttt{pip install subprocess.run} afin de pouvoir l'utiliser. Or, au moment de l'exécution du code, ce module s'avère défectueux et incompatible avec la version de \textit{subprocess} déjà présente sur l'ordinateur. Nous remarquons en revanche que la version native présente dans Python ne contrarie pas l'exécution du code, et nous choisissons donc de désinstaller \textit{subprocess.run} et de ne pas l'incorporer dans le fichier \textbf{pyproject.toml} de \textit{Poetry}.
 \item la gestion des exceptions avec des blocs \texttt{try ... except FileNotFoundError} ne permet pas au programme de déplacer un fichier vers un répertoire contenant déjà ce fichier. Ce problème est plus sensible au moment des tests car nous utilisons à plusieurs reprises la même valeur de SRA. Toutefois, il pourrait également advenir à un utilisateur qui aurait inscrit plusieurs fois sur une liste le même SRA. Il convient donc de rajouter dans le code un test de présence d'un fichier dans un répertoire avant de le déplacer.
 \item l'interpréteur Python ne parvient pas à trouver les modules \textbf{fonctions.py} et \textbf{bdd.py} à partir du module \textbf{\_\_main\_\_.py}. Il faut donc importer le package \textit{crisprbuilder\_tb}, puis importer les modules \textbf{crisprbuilder\_tb.fonctions.py} et \textbf{crisprbuilder\_tb.bdd.py} (sans oublier à chaque fois le nom du package), pour que l'interpréteur parvienne à trouver ces modules alors qu'ils se trouvent tous dans le même dossier que \textbf{\_\_main\_\_.py}.
-\end{itemize}
+\item l'incompatibilité des chemins d'accès entre les systèmes Posix et Windows nécessite la définition des chemins sans recourir aux caractères "/" ou "\textbackslash". Par ailleurs, comme le package va s'installer à des emplacements différents en fonction du système d'exploitation et des environnements de travail présents sur la machine (\textit{venv, anaconda, ...}), on ne peut pas définir d'adresse absolue mais privilégier plutôt des adresses relatives. Il est possible d'utiliser le module \textit{PurePath} associé au module \textit{pathlib} dont il dépend, ou encore \textit{\_\_file\_\_} associé au module \textit{os.path}. Ainsi, l'adresse  \textbf{crisprbuilder\_tb/REP/sequences} peut s'écrire
+\begin{verbatim}
+  pathlib.PurePath(crisprbuilder\_tb.\_\_path\_\_[0], 'REP', 'sequences')
+\end{verbatim}
+ou encore
+\begin{verbatim}
+  os.path.join(path.dirname(\_\_file\_\_), 'REP', 'sequences)
+\end{verbatim}
+Nous privilégions la seconde solution, où l'utilisation de  \textit{\_\_file\_\_} rends tous les chemins relatifs à l'emplacement du module courant, sachant que ce dernier est soit \textbf{\_\_main\_\_.py} soit \textbf{fonctions.py}.  
+\end{enumerate}
 
 
 
@@ -2634,6 +2643,7 @@ et
 \begin{verbatim}  python -m crisprbuilder_tb --collect ERR2704808\end{verbatim}
 
 afin de procéder aux vérifications.
+
 
 
 
@@ -2667,17 +2677,15 @@ Pour éviter tout conflit entre les deux dossiers créés, il est nécessaire de
 % LES TESTS DE VALIDATION ------------------------------------
 \section{Les tests de validation}
 
-Les tests de validation permettent de vérifier la conformité du package développé par rapport à l'objectif et aux fonctionnalités initiales. A partir des tests fonctionnels, nous n'utilisons plus l'environnement de développement, mais un environnement de test qui peut être soit une machine virtuelle, soit un environnement neutre dénué de toute spécification, mais capable d'installer le package.
+Les tests de validation permettent de vérifier la conformité du package développé par rapport à l'objectif et aux fonctionnalités initiales. Rappelons que le package doit fournir des informations relatives à un SRA dont la référence serait saisie en ligne de commande par l'utilisateur. Ce dernier peut également fournir une liste de SRAs dans un fichier texte avec un SRA par ligne. Il peut finalement consulter et modifier la base de données \textbf{lineage.csv}.
 
-L'objectif initial était de fournir un package qui fournit des informations au SRA dont la référence serait saisie en ligne de commande par un utilisateur. Ce dernier pourrait également fournir une liste de SRA dans un fichier texte avec un SRA par ligne. Il pourrait également consulter et modifier la base de données lineage.csv.
-
-Nous fournissons au package un fichier au format \textit{.txt} comprenant plus qu'un SRA par ligne. RESULTATS  
+Pour cela, nous fournissons au package un fichier \textit{essai.txt} comprenant plus qu'un SRA par ligne, afin que CRISPRbuilder\_TB affiche les résultats pour chaque SRA à la suite les uns des autres.   
 
 \begin{verbatim}
-  python -m crisprbuilder_tb --collect ERR2704808 ne parvient pas à trouver les modules ...
+  python -m crisprbuilder_tb --list essai.txt
 \end{verbatim}
 
-Les tests fonctionnels comprennent la validation de l'interface en ligne de commande. Il s'agit donc de vérifier que les lignes de commandes prévues pour l'exécution du code fournissent bien le résultat escompté. Pour cela, nous testons successivement les commandes
+Les tests de validation comprennent également la vérification du bon fonctionnement de l'interface en ligne de commande. Pour cela, nous testons successivement les commandes
 
 \begin{itemize}
 \item \texttt{python -m crisprbuilder\_tb \textemdash \textemdash help} qui fournit bien les informations relatives aux options du package,
@@ -2687,20 +2695,6 @@ Les tests fonctionnels comprennent la validation de l'interface en ligne de comm
 \item \texttt{python -m crisprbuilder\_tb \textemdash \textemdash remove 0}
 \end{itemize}
 \texttt{python -m crisprbuilder\_tb \textemdash \textemdash add 0}
-
-
-Nous considérons donc que l'utilisateur dispose déjà sur sa machine d'un SRA Toolkit fonctionnel, notamment des modules \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn} produisant les résultats escomptés avant d'installer de CRISPRbuilder\_TB.
-
-
-
-% LES PROBLEMES LIES AUX CHEMINS D'ACCES ----------------------
-\subsection{Les problèmes liés aux chemins d'accès}
-
-L'incompatibilité des chemins d'accès entre les systèmes Posix et Windows nécessite la définition des chemins sans recourir aux caractères "/" ou "\textbackslash". Par ailleurs, comme le package va s'installer à des emplacements différents en fonction du système d'exploitation et des environnements de travail installés sur la machine (\textit{venv, anaconda, ...}), on ne peut pas définir d'adresse absolue mais privilégier plutôt des adresses relatives. Il est possible d'utiliser le module pahtlib, le module PurePath qui dépend du premier ou encore \_\_file\_\_. Ainsi, l'adresse  \textbf{crisprbuilder\_tb/REP/sequences} s'écrit :
-\begin{itemize}
-\item \textbf{pathlib.PurePath(crisprbuilder\_tb.\_\_path\_\_[0], 'REP', 'sequences')}
-\item \textbf{os.path.join(path.dirname(\_\_file\_\_), 'REP', 'sequences)}
-\end{itemize}
 
 
 
@@ -2861,7 +2855,7 @@ permettant à l'utilisateur de conserver une version correctement paramétrée e
 Il persiste toutefois une difficulté liée à \textit{pip} plutôt qu'aux dépendances. En fonction de l'environnement de développement choisi par l'utilisateur pour installer \textit{parallel-fastq-dump} avec l'instruction \texttt{pip install parallel-fastq-dump}, le module \textit{parallel-fastq-dump} peut se retrouver à plusieurs emplacements différents, comme par exemple \textbf{$\sim$/.pyenv/shims/} ou \textbf{$\sim$/.local/bin/}. Lors de l'exécution de CRISPRbuilder\_TB, si l'environnement dans lequel travaille l'utilisateur est différent de celui qu'il a choisi pour installer \textit{parallel-fastq-dump}, le système pourra quand même trouver cette dépendance dès lors que la variable d'environnement a été correctement configurée, mais, si il en existe plusieurs versions, celles-ci peuvent entrer mutuellement en conflit. Dans le cadre de notre projet, cela a donné lieu à de nombreux dysfonctionnements et tentatives infructueuses. Notons que dans son dépôt \url{https://github.com/rvalieris/parallel-fastq-dump}, Renan Valieris recommande l'utilisation de \textit{bioconda} pour installer le package \textit{parallel-fastq-dump}. Nous décidons de suivre ce conseil et de privilégier \textit{Anaconda} dans tous les environnements de tests afin de résoudre le problème mentionné ci-dessus. Puis nous installons \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn} en utilisant \textit{conda} comme il est préconisé dans la littérature. Par souci de simplicité, nous conseillons également à l'utilisateur d'installer ces dépendances avec \textit{conda} et nous le mentionnons dans la documentation de CRISPRbuilder\_TB.
 
 
-
+Nous considérons donc que l'utilisateur dispose déjà sur sa machine d'un SRA Toolkit fonctionnel, notamment des modules \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn} produisant les résultats escomptés avant d'installer de CRISPRbuilder\_TB.
 
 
 WWWWW
@@ -2984,7 +2978,7 @@ Cette différence de quelques secondes pour une seule fonction entraîne de nomb
 
 \includegraphics[width=10cm]{comparaison_concat.png}
 
-Notons que les temps moyens d'exécution du programme complet de CRISPRbuilder\_TB pour différents systèmes d'exploitation sont relevés dans la rubrique \textit{Les tests de configuration}.
+%Notons que les temps moyens d'exécution du programme complet de CRISPRbuilder\_TB pour différents systèmes d'exploitation sont relevés dans la rubrique \textit{Les tests de configuration}.
 
 
 
