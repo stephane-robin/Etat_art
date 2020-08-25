@@ -1216,7 +1216,7 @@ Pour cela, l'auteur du package doit être enregistré sur PyPI avec un identifia
 
 On peut bien évidemment publier une nouvelle version du package sur PyPI ou encore le supprimer. En revanche, par mesure de sécurité, il n'est pas possible de modifier une version du package ou de re-créer un package du même nom que celui déjà supprimé. 
 
-On pourra retrouver un cas concret simple de publication de package avec \textit{Poetry} dans le tutoriel que nous avons publié à l'adresse suivante : \href{http://www.youtube.com}{http://www.youtube.com}
+%On pourra retrouver un cas concret simple de publication de package avec \textit{Poetry} dans le tutoriel que nous avons publié à l'adresse suivante : \href{http://www.youtube.com}{http://www.youtube.com}
 
 
 
@@ -2158,7 +2158,7 @@ Notre campagne de tests comporte les démarches suivantes :
 \item lors d'une modification de code, les \textbf{tests de non-régression} utilisent l'environnement de développement, et notre travail est facilité par l'utilisation de l'outil de versioning \textit{Git},
 \item lorsque le package est construit, les \textbf{tests de performance} et les \textbf{tests de validation} s'appuient également sur l'environnement de développement
 \item les \textbf{tests d'installation} dépendent de chaque système d'exploitation et nécessitent autant d'environnements de tests que de systèmes. Nous simulerons les différents systèmes à l'aide de l'application \textit{VirtualBox}.
-\item les \textbf{tests de configuration} pour déterminer les systèmes les mieux adaptés utilisent également un environnement de test.
+%\item les \textbf{tests de configuration} pour déterminer les systèmes les mieux adaptés utilisent également un environnement de test.
 \end{itemize}
 
 
@@ -2613,7 +2613,26 @@ Une fois que le code a été testé bloc par bloc, que nous avons modifié le no
 \item nous avons initialement installé le module \textit{subprocess.run} avec l'instruction \\\texttt{pip install subprocess.run} afin de pouvoir l'utiliser. Or, au moment de l'exécution du code, ce module s'avère défectueux et incompatible avec la version de \textit{subprocess} déjà présente sur l'ordinateur. Nous remarquons en revanche que la version native présente dans Python ne contrarie pas l'exécution du code, et nous choisissons donc de désinstaller \textit{subprocess.run} et de ne pas l'incorporer dans le fichier \textbf{pyproject.toml} de \textit{Poetry}.
 \item la gestion des exceptions avec des blocs \texttt{try ... except FileNotFoundError} ne permet pas au programme de déplacer un fichier vers un répertoire contenant déjà ce fichier. Ce problème est plus sensible au moment des tests car nous utilisons à plusieurs reprises la même valeur de SRA. Toutefois, il pourrait également advenir à un utilisateur qui aurait inscrit plusieurs fois sur une liste le même SRA. Il convient donc de rajouter dans le code un test de présence d'un fichier dans un répertoire avant de le déplacer.
 \item l'interpréteur Python ne parvient pas à trouver les modules \textbf{fonctions.py} et \textbf{bdd.py} à partir du module \textbf{\_\_main\_\_.py}. Il faut donc importer le package \textit{crisprbuilder\_tb}, puis importer les modules \textbf{crisprbuilder\_tb.fonctions.py} et \textbf{crisprbuilder\_tb.bdd.py} (sans oublier à chaque fois le nom du package), pour que l'interpréteur parvienne à trouver ces modules alors qu'ils se trouvent tous dans le même dossier que \textbf{\_\_main\_\_.py}.
-\item l'incompatibilité des chemins d'accès entre les systèmes Posix et Windows nécessite la définition des chemins sans recourir aux caractères "/" ou "\textbackslash". Par ailleurs, comme le package va s'installer à des emplacements différents en fonction du système d'exploitation et des environnements de travail présents sur la machine (\textit{venv, anaconda, ...}), on ne peut pas définir d'adresse absolue mais privilégier plutôt des adresses relatives. Il est possible d'utiliser le module \textit{PurePath} associé au module \textit{pathlib} dont il dépend, ou encore \textit{\_\_file\_\_} associé au module \textit{os.path}. Ainsi, l'adresse  \textbf{crisprbuilder\_tb/REP/sequences} peut s'écrire
+\item l'incompatibilité des chemins d'accès entre les systèmes Posix et Windows nécessite la définition des chemins sans recourir aux caractères "/" ou "\textbackslash". Par défaut, Python cherche ses modules et packages dans la variable d'environnement \$PYTHONPATH. On peut alors consulter les différents chemins connus par cette variable d'environnement en exécutant l'instruction
+\begin{verbatim}  python
+  >>> import sys
+  >>> print(sys.path)\end{verbatim}
+
+afin d'obtenir une réponse sous forme de liste du type
+\begin{verbatim}  ['',
+  '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python36.zip',
+  '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6',
+  '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6/lib-
+  dynload',    
+  '\raisebox{-1ex}{\textasciitilde}/.local/lib/python3.6/site-packages',
+  '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6/site-
+  packages']\end{verbatim}
+
+On pourrait donc utiliser \texttt{sys.path[3]} comme chemin permettant d'accéder au répertoire parent de \textbf{crisprbuilder\_tb}. Toutefois, en fonction du système d'exploitation,  le 4ème élément de cette liste ne correspond plus au chemin recherché. Nous n'utiliserons donc pas la référence au \texttt{sys.path[3]} comme solution.
+
+Par ailleurs, comme le package va s'installer à des emplacements différents en fonction du système d'exploitation et des environnements de travail présents sur la machine (\textit{venv, anaconda, ...}), on ne peut pas définir d'adresse absolue mais privilégier plutôt des adresses relatives. 
+
+Il est possible d'utiliser le module \textit{PurePath} associé au module \textit{pathlib} dont il dépend, ou encore \textit{\_\_file\_\_} associé au module \textit{os.path}. Ainsi, l'adresse  \textbf{crisprbuilder\_tb/REP/sequences} peut s'écrire
 \begin{verbatim}
   pathlib.PurePath(crisprbuilder\_tb.\_\_path\_\_[0], 'REP', 'sequences')
 \end{verbatim}
@@ -2790,6 +2809,8 @@ Nous commençons les tests en rajoutant dans la description de chaque système s
 % TESTS AVEC UBUNTU 18.04 ----------
 \subsection{Tests d'installation avec Ubuntu 18.04}
 
+Au moment de l'installation, que ce soit à partir de PyPI ou d'un autre index tel que testPyPI, l'utilisateur ne choisit pas l'emplacement d'installation. Celui-ci est défini automatiquement par le système en fonction des variables d'environnement. Par exemple, si on utilise une version particulière de Python avec \textit{pyenv}, alors le package pourra se trouver dans \textbf{\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6/}. Il est également fréquent de le retrouver dans \textbf{\raisebox{-1ex}{\textasciitilde}/.local/lib/python3.6/site-packages/} avec la plupart des différentes packages.
+
 L’installation du package par n'importe quel utilisateur se fait grâce à l’instruction
 \begin{verbatim}  pip install crisprbuilder_tb\end{verbatim}
 
@@ -2824,7 +2845,7 @@ Il semble au début qu'il faille installer le \textit{SRA Toolkit}. Pourtant, ap
 
 Un système vierge ne parvient pas à utiliser \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn}, même si ces dépendances ont été correctement installées par \textit{Poetry}, 
 
-Après avoir cherché du côté des chemins d'accès des différents fichiers support, il est apparu que le problème venait plutôt de la variable d'environnement \$PATH qui devaient être configurées correctement après une installation via \texttt{pip install}. Ainsi, il est nécessaire que l'utilisateur ait convenablement répertorié les chemins d'accès vers ses fichiers exécutables et dans le cas présent les modules \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn}. Il peut interroger la variable d'environnement \$PATH avec la commande
+Après avoir cherché du côté des chemins d'accès des différents fichiers support, il est apparu que le problème venait plutôt de la variable d'environnement \$PATH qui devait être configurée correctement après une installation via \texttt{pip install}. Ainsi, il est nécessaire que l'utilisateur ait convenablement répertorié les chemins d'accès vers ses fichiers exécutables et dans le cas présent les modules \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn}. On peut interroger la variable d'environnement \$PATH avec la commande
 
 \begin{verbatim}
   echo $PATH
@@ -2854,35 +2875,7 @@ permettant à l'utilisateur de conserver une version correctement paramétrée e
 
 Il persiste toutefois une difficulté liée à \textit{pip} plutôt qu'aux dépendances. En fonction de l'environnement de développement choisi par l'utilisateur pour installer \textit{parallel-fastq-dump} avec l'instruction \texttt{pip install parallel-fastq-dump}, le module \textit{parallel-fastq-dump} peut se retrouver à plusieurs emplacements différents, comme par exemple \textbf{$\sim$/.pyenv/shims/} ou \textbf{$\sim$/.local/bin/}. Lors de l'exécution de CRISPRbuilder\_TB, si l'environnement dans lequel travaille l'utilisateur est différent de celui qu'il a choisi pour installer \textit{parallel-fastq-dump}, le système pourra quand même trouver cette dépendance dès lors que la variable d'environnement a été correctement configurée, mais, si il en existe plusieurs versions, celles-ci peuvent entrer mutuellement en conflit. Dans le cadre de notre projet, cela a donné lieu à de nombreux dysfonctionnements et tentatives infructueuses. Notons que dans son dépôt \url{https://github.com/rvalieris/parallel-fastq-dump}, Renan Valieris recommande l'utilisation de \textit{bioconda} pour installer le package \textit{parallel-fastq-dump}. Nous décidons de suivre ce conseil et de privilégier \textit{Anaconda} dans tous les environnements de tests afin de résoudre le problème mentionné ci-dessus. Puis nous installons \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn} en utilisant \textit{conda} comme il est préconisé dans la littérature. Par souci de simplicité, nous conseillons également à l'utilisateur d'installer ces dépendances avec \textit{conda} et nous le mentionnons dans la documentation de CRISPRbuilder\_TB.
 
-
-Nous considérons donc que l'utilisateur dispose déjà sur sa machine d'un SRA Toolkit fonctionnel, notamment des modules \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn} produisant les résultats escomptés avant d'installer de CRISPRbuilder\_TB.
-
-
-WWWWW
-
-Au moment de l'installation, que ce soit à partir de PyPI ou d'un autre index tel que
-testPyPI, l'utilisateur ne choisit pas l'emplacement d'installation. Celui-ci est défini automatiquement par le système en fonction des variables d'environnement. Par exemple, si on utilise une version particulière de Python avec \textit{pyenv}, alors le package pourra se trouver dans \textbf{\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6/}. Il est également fréquent de le retrouver dans \textbf{\raisebox{-1ex}{\textasciitilde}/.local/lib/python3.6/site-packages/} avec la plupart des différentes packages. Comme on ne connaît pas avec certitude l'emplacement dans lequel le package va s'installer, il convient de définir une variable d'environnement qui pointe vers l'emplacement d'installation.
-
-Lors de l'exécution du package, il est nécessaire de l'appeler par son nom en utilisant l'indice "-m" signifiant "module".  En revanche, les chemins relatifs dans les modules du package ne devront pas utiliser le nom crisprbuilder\_tb car celui-ci ne sera pas reconnu, une fois à la racine du package. EXPLICATIONS A CHANGER
-
-Par défaut, Python cherche ses modules et packages dans la variable d'environnement \$PYTHONPATH. On peut alors consulter les différents chemins connus par cette variable d'environnement en exécutant l'instruction
-\begin{verbatim}  python
-  >>> import sys
-  >>> print(sys.path)\end{verbatim}
-
-afin d'obtenir une réponse sous forme de liste du type
-\begin{verbatim}  ['',
-  '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python36.zip',
-  '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6',
-  '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6/lib-dynload',    
-  '\raisebox{-1ex}{\textasciitilde}/.local/lib/python3.6/site-packages',
-  '\raisebox{-1ex}{\textasciitilde}/.pyenv/versions/3.6.5/lib/python3.6/site-packages']\end{verbatim}
-
-On pourrait donc utiliser \texttt{sys.path[3]} comme chemin permettant d'accéder au répertoire parent de \textbf{crisprbuilder\_tb}. Toutefois, en fonction du système d'exploitation,  le 4ème élément de cette liste pour
-
-
-
-
+Nous considérons donc que l'utilisateur dispose déjà sur sa machine d'un \textit{SRA Toolkit} fonctionnel, notamment des modules \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn} produisant les résultats escomptés avant d'installer de CRISPRbuilder\_TB.
 
 
 
@@ -2894,7 +2887,7 @@ On pourrait donc utiliser \texttt{sys.path[3]} comme chemin permettant d'accéde
 \subsection{Tests d'installation avec macOS 10.12 Sierra}
 
 
-
+TODO
 
 
 
@@ -2903,7 +2896,7 @@ On pourrait donc utiliser \texttt{sys.path[3]} comme chemin permettant d'accéde
 % TESTS AVEC WINDOWS 10 -------
 \subsection{Tests d'installation avec Windows 10}
 
-
+TODO
 
 
 
@@ -2990,7 +2983,7 @@ CRISPRbuilder\_TB utilise le module Python \textit{fastq-dump} de téléchargeme
 
 \textit{fastq-dump} est un module archaïque permettant de télécharger des données relatives à un SRA dans un format \textit{.fastq} ou \textit{.fasta}. Il est contenu dans le \textit{SRA Toolkit} du NCBI. Il peut s'avérer très lent en fonction de l'utilisation en temps réel du serveur de la base de données NCBI. 
 
-L'utilisation de plusieurs threads devrait permettre de diviser le travail en différentes tâches effectuées simultanément, et donc de gagner du temps. Malheureusement, Python n'accepte pas nativement le travail multi-threads, ce qui ne permet pas de tirer profit de systèmes multi-coeurs. C'est en fait une caractéristique de CPython. Le GIL\footnote{\index{GIL}\textbf{GIL:} Global Interpreter Lock} est un mutex qui n'autorise le travail que d'un unique thread à la fois. Il protège l'accès aux objets Python, pour empêcher de multiples threads d'exécuter du code Python simultanément. Ce verrou est rendu nécessaire parce que la gestion de la mémoire sous CPython n'est pas thread-safe. Le module \textit{parallel-fastq-dump} résout partiellement ce problème de multi-threading et utilise l'implémentation CPython en incorporant du langage C dans son contenu. Il semble être à l'heure actuelle un bon compromis gratuit pour optimiser le traitement des données vers un format \textit{.fastq} ou \textit{.fasta}. 
+L'utilisation de plusieurs threads devrait permettre de diviser le travail en différentes tâches effectuées simultanément, et donc de gagner du temps. Malheureusement, Python n'accepte pas nativement le travail multi-threads, ce qui ne permet pas de tirer profit de systèmes multi-coeurs. C'est en fait une caractéristique de CPython. Le GIL\footnote{\index{GIL}\textbf{GIL:} Global Interpreter Lock} est un mutex qui n'autorise le travail que d'un unique thread à la fois. Il protège l'accès aux objets Python, pour empêcher de multiples threads d'exécuter du code Python simultanément. Ce verrou est rendu nécessaire parce que la gestion de la mémoire sous CPython n'est pas \textit{thread-safe}. Le module \textit{parallel-fastq-dump} résout partiellement ce problème de multi-threading et utilise l'implémentation CPython en incorporant du langage C dans son contenu. Il semble être à l'heure actuelle un bon compromis gratuit pour optimiser le traitement des données vers un format \textit{.fastq} ou \textit{.fasta}. 
 
 CRISPRbuilder\_TB utilise le module \textit{parallel-fastq-dump} pour télécharger les données d'un SRA au format \textit{.fasta}.
 
@@ -2998,7 +2991,7 @@ Notons que le \textit{SRA Tookit} est installé automatiquement au moment de l'i
 
 
 
-REAL PYTHON ABOUT PYTHON THREADING
+%REAL PYTHON ABOUT PYTHON THREADING
 
 
 
@@ -3027,13 +3020,13 @@ Les performances de \textit{blast} sont optimisées avec la suite \textit{blast+
 
 
 % LES TESTS DE CONFIGURATION --------------------------------
-\section{Les tests de configuration}
+%\section{Les tests de configuration}
 
-Les tests de configuration cherchent à évaluer l'impact des différents systèmes d'exploitations et environnements matériels sur le fonctionnement d'une application.
+%Les tests de configuration cherchent à évaluer l'impact des différents systèmes d'exploitations et environnements matériels sur le fonctionnement d'une application.
 
-Nous cherchons donc à définir la configuration matériele minimale afin que le package fonctionne correctement, ainsi que l'utilisabilité des différents systèmes d'exploitation.
+%Nous cherchons donc à définir la configuration matériele minimale afin que le package fonctionne correctement, ainsi que l'utilisabilité des différents systèmes d'exploitation.
 
-TODO - CONFIG MINI
+%TODO - CONFIG MINI
 
 
 
@@ -3043,28 +3036,21 @@ TODO - CONFIG MINI
 % CONCLUSION ----------------------
 \chapter{Conclusion}
 
-Ce stage m'a ouvert l'esprit vers le domaine de la bio-informatique, domaine intéressant qui a constitué un support scientifique très concret, me permettant de développer des compétences pratiques dans les domaines du développement et du test. 
+Nous avons vu que le package CRISPRbuilder\_TB fournit des informations pratiques et utiles concernant des références de SRA. Il est amené à évoluer dans l'avenir, et son état actuel pourra être repris afin de proposer une reconstitution du CRISPR dans le cadre particulier de la tubercolose.
 
-Bien que, a priori peu attiré par le travail de validation et de test de logiciels, j'ai pu me rendre compte rapidement de son importance et en apprécier l'efficacité, vu que les tests étaient omniprésents tout au long du stage.   
+Ce stage m'a ouvert l'esprit vers le domaine de la bio-informatique, secteur intéressant qui a constitué un support scientifique très concret, me permettant de travailler des compétences pratiques en développement de programme et construction de tests. J'ai pu me rendre compte de l'importance du travail de validation et test logiciel, omniprésent tout au long du stage, et en apprécier l'efficacité en phase de développement.   
 
 Le temps passé à réfléchir aux nombreux dysfonctionnements de l'application, la frustration de comprendre tardivement que la solution provenait parfois d'éléments indépendants au code tels que l'environnement de développement ou la configuration de la variable \$PATH, le souhait de bien comprendre les rouages d'un package Python ont fortement contribué à l'amélioration de mes connaissances en informatique. 
 
 En particulier, ce stage a mis l'accent sur les trois domaines suivants :
 \begin{itemize}
 \item la création d'un package Python et la gestion des dépendances,
-\item la nécessité d'un campagne de tests et de validation du code,
-\item la connaissance de notions clés concernant le séquençage du génome. 
+\item la nécessité d'une campagne de tests et de validation du code durant la phase de développement,
+\item l'utilité de bien maîtriser le travail en lignes de commandes sur Linux. 
 \end{itemize}
 
-Ce package fournit des informations pratiques et utiles concernant des références de SRA. Il est amené à évoluer dans l'avenir, afin de propoer une reconstitution du CRISPR dans le cadre particulier de la tubercolose.
+%pickle permet aux objets d'être sérialisés en fichiers sur disque et désérialisés dans le programme au moment de l'exécution.
 
-	
-
-
-
-????
-pickle permet aux objets d'être sérialisés en fichiers sur disque et désérialisés dans le programme au moment de l'exécution.
-??????
 	
 
 
