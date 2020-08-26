@@ -270,7 +270,7 @@ Je tiens à exprimer mes plus sincères remerciements à Messieurs Christophe Gu
 
 Je voudrais souligner la patience dont ils ont fait preuve pour m'expliquer les notions de bioinformatique que j'ai été amené à découvrir durant ce projet. Il en ressort que j'ai particulièrement apprécié de travailler sous leur direction.
 
-%Je tiens également à remercier Jean Marc Gervais qui a eu la gentillesse de bien vouloir relire le présent rapport de stage et me proposer des commentaires pertinents à son sujet.
+
 
 
 
@@ -1087,7 +1087,10 @@ Il faut maintenant ajouter les dépendances suivantes au projet :
   poetry add xlrd 
   poetry add xmltodict 
   poetry add biopython
-  poetry add parallel-fastq-dump \end{verbatim}
+  poetry add parallel-fastq-dump 
+  poetry add blast
+  poetry add blastn
+\end{verbatim}
 
 Le fichier \textbf{pyproject.toml} comporte donc les versions suivantes
 
@@ -2726,7 +2729,7 @@ Les tests de validation comprennent également la vérification du bon fonctionn
 Les tests d'installation permettent de s'assurer que l'utilisateur sera en mesure d'installer le package, quel que soit son système d'exploitation Linux, macOS ou Windows. Pour simuler le fonctionnement de ces systèmes, nous choisissons de travailler sur les machines virtuelles suivantes créées par \textit{VirtualBox}, toutes fonctionnant en 64 bits : 
 \begin{itemize}
 \item Ubuntu 18.04 LTS, 
-\item macOS 10.12 Sierra, 
+\item macOS Mojave, 
 \item Windows 10.
 \end{itemize}
 
@@ -2796,7 +2799,7 @@ Afin d'effectuer les tests d'installation et de validation, nous créons artific
 Nous commençons par télécharger des images \textit{.iso} des différents systèmes d'exploitation, que nous clônons avant de commencer les tests, afin de conserver une version vierge pour pouvoir revenir en arrière en cas de besoin :
 \begin{itemize}
 \item pour Ubuntu 18.04 LTS, nous choisissons la version 64-bit Server Install Image, car nous n'avons pas besoin d'interface graphique pour réaliser nos tests. La version de Python par défaut de ce système est 2.7.17. Il existe également une version 3.6.9 de Python.
-\item pour macOS 10.12 Sierra, 
+\item pour macOS Mojave, 
 \item pour Windows 10, 
 \end{itemize}
 
@@ -2884,10 +2887,53 @@ Nous considérons donc que l'utilisateur dispose déjà sur sa machine d'un \tex
 
 
 % TESTS AVEC MACOS ----------
-\subsection{Tests d'installation avec macOS 10.12 Sierra}
+\subsection{Tests d'installation avec macOS Mojave}
 
 
-TODO
+Nous utilisons une version macOS Mojave 10.14.6 pour tester l'installation de CRISPRbuilder\_TB.
+
+Nous commençons par tester l'installation de \textit{pip} avec la commande \texttt{pip --version}.
+Nous téléchargeons et exécutons le package d'installation de \textit{Anaconda3}.
+Puis, nous installons les trois packages du \textit{SRA Toolkit} que nous allons utiliser, à l'aide des instructions
+\begin{verbatim}
+  conda install -c bioconda parallel-fastq-dump
+  conda install -c bioconda blast
+  conda install -c kantorlab blastn
+\end{verbatim}
+
+Le terminal renvoie alors l'erreur suivante
+\begin{verbatim}
+  PackagesNotFoundError: The following packages are not available from current 
+  channels:
+  - blastn
+\end{verbatim}
+
+Alors qu'il était possible d'installer \textit{blastn} à partir de \textit{kantorlab} sur une machine Ubuntu 18.04, nous ne parvenons pas à l'installer sur macOS Mojave. Par ailleurs, bien que la version la plus récente de \textit{blast} soit la 2.10.1, celle-ci n'est pas reconnue par le système et seule la version 2.6.0 s'installe. Nous décidons de modifier le fichier \textbf{pyproject.toml} en conséquence en forçant le choix de la version 2.6.0. Malheureusement cette version n'est pas compatible avec le reste du projet et nous recevons le message
+\begin{verbatim}
+  crisprbuilder-tb depends on blast (^2.6.0) which doesn't match any versions, 
+  version solving failed.
+\end{verbatim}
+
+Nous décidons dans ce cas de retirer \textit{blast} et \textit{blastn} du fichier \textbf{pyproject.toml} afin de permettre le fonctionnement du package sur les systèmes macOS, sachant que notre documentation précise déjà la nécessité pour l'utilisateur d'installer et de configurer \textit{blast} et \textit{blastn}. 
+
+Nous décidons finalement d'installer CRISPRbuilder\_TB sans être parvenu à installer \textit{blastn} sur le macOS. Nous allons remarquer que, dans ce cas, seule l'installation de \textit{blast} par \textit{conda} est nécessaire pour assurer le fonctionnement de notre package. Il semble que la dernière version de \textit{blast} utilise en fait le NCBI \textit{C++ Toolkit blast+} qui comprend \textit{blastn}.
+
+L'installation de CRISPRbuilder\_TB s'effectue maintenant avec succès avec la commande 
+\begin{verbatim}
+  pip install crisprbuilder_tb
+\end{verbatim}
+
+et nous pouvons lire le message
+\begin{verbatim}
+  Successfully installed crisprbuilder-tb-0.1.41
+\end{verbatim}
+
+Nous exécutons également avec succès les instructions
+\begin{verbatim}
+  python -m crisprbuilder_tb --print 0
+  python -m crisprbuilder_tb --collect ERR2704808
+\end{verbatim}
+pour obtenir le même résultat qu'avec le système Ubuntu 18.04 LTS.
 
 
 
