@@ -266,7 +266,7 @@ ntheorem=true]{lemma}{Lemme}
 	
 \section{Remerciements}
 	
-Je tiens à exprimer mes plus sincères remerciements à Messieurs Christophe Guyeux et Jean-Claude Charr, professeurs à l'université de Franche Comté pour m'avoir guidé, conseillé et soutenu durant le déroulement de ce stage. Leurs explcations et leur disponibilité malgré un emploi du temps chargé ont largement contribué à ma compréhension du sujet.
+Je tiens à exprimer mes plus sincères remerciements à Messieurs Christophe Guyeux et Jean-Claude Charr, professeurs à l'université de Franche Comté pour m'avoir guidé, conseillé et soutenu durant le déroulement de ce stage. Leurs explications et leur disponibilité malgré un emploi du temps chargé ont largement contribué à ma compréhension du sujet.
 
 Je voudrais souligner la patience dont ils ont fait preuve pour m'expliquer les notions de bioinformatique que j'ai été amené à découvrir durant ce projet. Il en ressort que j'ai particulièrement apprécié de travailler sous leur direction.
 
@@ -290,9 +290,9 @@ Ainsi, l'élaboration de ce package a nécessité de passer par différentes ét
 \item création d'un environnement de développement car il a fallu tester le code durant son élaboration,
 \item utilisation d'un environnement de développement intégré tel que \textit{PyCharm} pour faciliter l'écriture du code, le debuggage et travailler dans des conditions réelles de développement. Cela implique également la gestion des modules installés pour les rendre compatibles avec les interpréteurs Python sous \textit{PyCharm},
 \item utilisation de l'outil de versionnement Git, nécessaire pour sauvegarder le projet et pour revenir sur une version fonctionnelle après une modification erronée, 
-\item création d'une interface en ligne de commande, telle que souhaitée par le projet,
-\item choix de l'outil empaquetage et de gestion des dépendances. Création et publication d'un package sur PyPI, impliquant la bonne compréhension du fonctionnement des packages ainsi que des chemins d'accès aux différents fichiers, 
-\item création d'une campagne de tests du package (tests unitaires, d'intégration, de non-régression, de validation, de performance, de configuration),
+\item création d'une interface en ligne de commande à l'aide du module \textit{argparse}, telle que souhaitée par le projet,
+\item choix de l'outil d'empaquetage et de gestion des dépendances. Création et publication d'un package sur PyPI, impliquant la bonne compréhension du fonctionnement des packages ainsi que des chemins d'accès aux différents fichiers, 
+\item création d'une campagne de tests du package (tests unitaires, d'intégration, de non-régression, de validation, de performance),
 \item création de machines virtuelles pour effectuer des tests sur différents systèmes d'exploitation, et création d'un environnement de test sur ces machines virtuelles
 \item travail de compréhension des mots-clés en bio-informatique afin de pouvoir exercer dans ce cadre métier particulier. Ceci a conduit à une synthèse de l'état de l'art fortement orientée vers la biologie et plus particulièrement le CRISPR,
 \item amélioration des connaissances relatives aux commandes bash sous Linux.
@@ -489,7 +489,7 @@ La région DR du locus CRISPR-Cas présente un niveau de polymorphisme suffisant
 \caption{Les différentes étapes du spoligotypage d'après \textit{Etudes descriptive, épidémiologique,\\ moléculaire et spatiale des souches Mycobacterium tuberculosis circulant à Antananarivo, Madagascar}}
 \end{figure}
 
-La comparaison de ces motifs permet la différentiation des souches. Quarante-trois espaceurs les plus polymorphes ont été utilisés pour le typage des mycobactéries suivant Kamerbeek et al. La classification classique de MTBC utilise donc un groupe de 43 bits représentant la présence ou l'absence d'espaceurs dans le locus CRISPR, qu'on appelle spoligotype. Des études pour augmenter le niveau de discrimination du spoligotypage ont été faites en 2010 utilisant 68 espaceurs. A l'heure actuelle l'équipe AND de l'université de Franche Comté utilise 98 espaceurs pour ce génotypage.
+La comparaison de ces motifs permet la différentiation des souches. Quarante-trois espaceurs les plus polymorphes ont été utilisés pour le typage des mycobactéries suivant Kamerbeek et al. La classification classique de MTBC utilise donc un groupe de 43 bits représentant la présence ou l'absence d'espaceurs dans le locus CRISPR, qu'on appelle spoligotype. Des études pour augmenter le niveau de discrimination du spoligotypage ont été faites en 2010 utilisant 68 espaceurs. %A l'heure actuelle l'équipe AND de l'université de Franche Comté utilise 98 espaceurs pour ce génotypage.
 
 \begin{figure}[h!]
 \centering
@@ -601,7 +601,7 @@ Le packaging ou distribution de programmes pose traditionnellement plus de probl
 % COMPOSITION D'UN PACKAGE STANDARD ------------------
 \section{Composition d'un package standard}
 
-Un \index{package} permet de fournir une structure hiérarchisée du programme, pour en faciliter la compréhension et l'utilisation. Il s'agit en fait d'un ensemble de modules Python, de modules écrits en C, de métadonnées et de bases de données.
+Un package\index{package} permet de fournir une structure hiérarchisée du programme, pour en faciliter la compréhension et l'utilisation. Il s'agit en fait d'un ensemble de modules Python, de modules écrits en C, de métadonnées et de bases de données.
 
 Un package standard comporte traditionnellement un fichier \textbf{\_\_init\_\_.py} dans chaque répertoire, même si ce répertoire est vide. En particulier, le répertoire racine du package contient un fichier \textbf{\_\_init\_\_.py} qui peut définir la version du projet et le nom des modules à importer. Il est toutefois acceptable et parfois même recommandé de conserver ce fichier \textbf{\_\_init\_\_.py} vide.
 
@@ -3029,15 +3029,20 @@ CRISPRbuilder\_TB utilise le module Python \textit{fastq-dump} de téléchargeme
 
 \textit{fastq-dump} est un module archaïque permettant de télécharger des données relatives à un SRA dans un format \textit{.fastq} ou \textit{.fasta}. Il est contenu dans le \textit{SRA Toolkit} du NCBI. Il peut s'avérer très lent en fonction de l'utilisation en temps réel du serveur de la base de données NCBI. 
 
-L'utilisation de plusieurs threads devrait permettre de diviser le travail en différentes tâches effectuées simultanément, et donc de gagner du temps. Malheureusement, Python n'accepte pas nativement le travail multi-threads, ce qui ne permet pas de tirer profit de systèmes multi-coeurs. C'est en fait une caractéristique de CPython. Le GIL\footnote{\index{GIL}\textbf{GIL:} Global Interpreter Lock} est un mutex qui n'autorise le travail que d'un unique thread à la fois. Il protège l'accès aux objets Python, pour empêcher de multiples threads d'exécuter du code Python simultanément. Ce verrou est rendu nécessaire parce que la gestion de la mémoire sous CPython n'est pas \textit{thread-safe}. Le module \textit{parallel-fastq-dump} résout partiellement ce problème de multi-threading et utilise l'implémentation CPython en incorporant du langage C dans son contenu. Il semble être à l'heure actuelle un bon compromis gratuit pour optimiser le traitement des données vers un format \textit{.fastq} ou \textit{.fasta}. 
+L'utilisation de plusieurs threads devrait permettre de diviser le travail en différentes tâches effectuées simultanément, et donc de gagner du temps. Malheureusement, certaines versions de Python n'acceptent pas nativement le travail multi-threads en s'appuyant sur le GIL\footnote{\index{GIL}\textbf{GIL Global Interpreter Lock: } est un mutex qui n'autorise le travail que d'un unique thread à la fois.}, qui est un verrou auquel l'interpréteur Python fait appel pour protéger les objets qu'il manipule contre les accès concurrentiels. Le GIL rend donc impossible l'exécution de multiples threads simultanément, et ralentit considérablement l'exécution de tels programmes puisque chaque processus doit se terminer avant de lancer le suivant.
 
-CRISPRbuilder\_TB utilise le module \textit{parallel-fastq-dump} pour télécharger les données d'un SRA au format \textit{.fasta}.
+Il existe plusieurs implémentations de Python telles que CPython, RPython, ... Certaines de ces implémentations  ont un GIL comme CPython par exemple, ce qui améliore la vitesse des programmes à thread unique et intègre plus facilement les bibliothèques C, dont la gestion de mémoire n'est pas \textit{thread-safe}. Cette dernière caractéristique rend le verrou nécessaire et permet de rendre le parallélisme complet en utilisant des processus séparés où chaque processeur a son propre interprète. 
+
+Le module \textit{parallel-fastq-dump} résout partiellement ce problème de multi-threading en utilisant le NCBI \textit{C++ Toolkit} et en travaillant en dehors du GIL. Il semble être à l'heure actuelle un bon compromis gratuit pour optimiser le traitement des données vers un format \textit{.fastq} ou \textit{.fasta}. CRISPRbuilder\_TB utilise le module \textit{parallel-fastq-dump} pour télécharger les données d'un SRA au format \textit{.fasta}.
 
 Notons que le \textit{SRA Tookit} est installé automatiquement au moment de l'installation de \textit{parallel-fastq-dump}.
 
 
 
-%REAL PYTHON ABOUT PYTHON THREADING
+
+
+
+
 
 
 
