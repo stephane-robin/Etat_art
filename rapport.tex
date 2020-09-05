@@ -268,7 +268,7 @@ ntheorem=true]{lemma}{Lemme}
 	
 Je tiens à exprimer mes plus sincères remerciements à Messieurs Christophe Guyeux et Jean-Claude Charr, professeurs à l'université de Franche Comté pour m'avoir guidé, conseillé et soutenu durant le déroulement de ce stage. Leurs explications et leur disponibilité malgré un emploi du temps chargé ont largement contribué à ma compréhension du sujet.
 
-Je voudrais souligner la patience dont ils ont fait preuve pour m'expliquer les notions de bioinformatique que j'ai été amené à découvrir durant ce projet. Il en ressort que j'ai particulièrement apprécié de travailler sous leur direction.
+Je voudrais souligner la patience dont ils ont fait preuve pour m'expliquer les notions de bio-informatique que j'ai été amené à découvrir durant ce projet. Il en ressort que j'ai particulièrement apprécié de travailler sous leur direction.
 
 
 
@@ -278,18 +278,18 @@ Je voudrais souligner la patience dont ils ont fait preuve pour m'expliquer les 
 % PRESENTATION DU PROJET --------------------------------	
 \section{Présentation du projet}
 
-Dans le cadre d'un travail de recherche en bio-informatique, Christophe Guyeux, Jean-Claude Charr, Christophe Sola et Guislaine Refrégier ont créé du code brut leur permettant d'afficher et de stocker des données relatives à une SRA\footnote{\index{SRA}\textbf{SRA:} Sequence Read Archive} particulière. Ce code doit être rassemblé, réorganisé, nettoyé pour être conforme aux critères PEP\footnote{\index{PEP}\textbf{PEP:} Python Enhancement Proposals} et exécutable. Il doit donc être rendu fonctionnel et plus efficace si possible. Son exécution doit se réaliser en utilisant une interface en ligne de commande. L'application doit finalement être empaquetée pour qu'un utilisateur puisse l'exploiter quelque soit sa plateforme (Linux, macOS ou Windows), une fois installée. Pour cela, il est nécessaire de publier ce package sur PyPI\footnote{\index{PyPI}\textbf{PyPI:} Python Package Index} et de le documenter clairement en anglais pour en faciliter l'utilisation.
+Dans le cadre d'un travail de recherche en bio-informatique, Christophe Guyeux, Jean-Claude Charr, Christophe Sola et Guislaine Refrégier ont créé du code brut leur permettant d'afficher et de stocker des données relatives à une SRA\footnote{\index{SRA}\textbf{SRA:} Sequence Read Archive} particulière. Notre projet s'appuie sur ces lignes de code qui devront être rassemblées, réorganisées, nettoyées pour être conforme aux critères PEP\footnote{\index{PEP}\textbf{PEP:} Python Enhancement Proposals} et finalement être exécutables. Le code doit donc être rendu fonctionnel et plus efficace si possible. Son exécution doit se réaliser en utilisant une interface en ligne de commande. L'application doit finalement être empaquetée pour qu'un utilisateur puisse l'exploiter facilement après installation, en une seule ligne d'instruction. Il est souhaitable que plusieurs plateformes (Linux, macOS ou Windows) puissent utiliser ce package. Toutefois, l'utilisation de Linux est clairement privilégiée. 
 
-Lorsque nous avons défini les objectifs du stage, il est immédiatement ressorti l'importance de lui donner un caractère pratique, qui pourrait éventuellement être transposable dans le milieu professionnel.
+Pour cela, il est nécessaire de publier ce package sur PyPI\footnote{\index{PyPI}\textbf{PyPI:} Python Package Index} et de le documenter de façon détaillée en anglais pour en faciliter l'utilisation.
 
-Ainsi, l'élaboration de ce package a nécessité de passer par différentes étapes permettant de développer les compétences suivantes :
+Lorsque nous avons défini les objectifs du stage, il est immédiatement ressorti l'importance de lui donner un caractère pratique, qui pourrait éventuellement être transposable dans le milieu professionnel. Cet aspect pratique s'est traduit par l'élaboration d'un package, qui a nécessité de développer les compétences suivantes :
 \begin{itemize}
 \item amélioration des connaissances Python, car il a fallu reconstruire le programme à partir d'éléments de code, chercher à optimiser les performances de traitement, gérer les entrées/sorties vers des fichiers \textit{.csv}, \textit{.fasta}, \textit{.xls} et \textit{.txt} à l'aide de modules adaptés, 
 \item création d'un notebook de documentation en anglais et d'une docstring pour le package dans le respect des conventions du PEP-257,
 \item travail de portabilité du code en le modifiant en fonction des différents systèmes d'exploitation Posix ou Windows,
 \item création d'un environnement de développement car il a fallu tester le code durant son élaboration,
 \item utilisation d'un environnement de développement intégré tel que \textit{PyCharm} pour faciliter l'écriture du code, le debuggage et travailler dans des conditions réelles de développement. Cela implique également la gestion des modules installés pour les rendre compatibles avec les interpréteurs Python sous \textit{PyCharm},
-\item utilisation de l'outil de versionnement Git, nécessaire pour sauvegarder le projet et pour revenir sur une version fonctionnelle après une modification erronée, 
+\item utilisation de l'outil de versionnement \textit{Git}, nécessaire pour sauvegarder le projet et pour revenir sur une version fonctionnelle après une modification erronée, 
 \item création d'une interface en ligne de commande à l'aide du module \textit{argparse}, telle que souhaitée par le projet,
 \item choix de l'outil d'empaquetage et de gestion des dépendances. Création et publication d'un package sur PyPI, impliquant la bonne compréhension du fonctionnement des packages ainsi que des chemins d'accès aux différents fichiers, 
 \item création d'une campagne de tests du package (tests unitaires, d'intégration, de non-régression, de validation, de performance),
@@ -298,7 +298,7 @@ Ainsi, l'élaboration de ce package a nécessité de passer par différentes ét
 \item amélioration des connaissances relatives aux commandes bash sous Linux.
 \end{itemize}
 
-Il faut se confronter au moins une fois aux compétences pratiques énumérées ci-dessus afin d'en découvrir les dysfonctionnements et d'en appréhender les difficultés. Nous allons voir en détail dans ce rapport de stage les différentes étapes suivies, et nous allons expliquer en détail la construction et le fonctionnement d'un package en prenant bien évidemment l'exemple de CRISPRbuilder\_TB.
+Il faut se confronter au moins une fois aux compétences pratiques énumérées ci-dessus afin d'en découvrir les dysfonctionnements et d'en appréhender les difficultés. Nous allons voir en détail dans ce rapport de stage les différentes étapes suivies, et nous allons expliquer la construction et le fonctionnement d'un package en prenant l'exemple du package relatif à notre projet, appelé CRISPRbuilder\_TB.
 
 Le package CRISPRbuilder\_TB peut s'installer à partir de PyPI où il est répertorié sous le nom de crisprbuilder\_tb. Il est présent sous \textit{GitHub} à l'adresse suivante \\\url{https://github.com/stephane-robin/crisprbuilder_tb}.
 
@@ -308,7 +308,7 @@ Le package CRISPRbuilder\_TB peut s'installer à partir de PyPI où il est répe
 % PREALABLE -------------------------
 \section{Remarque préalable}
 
-Toutes les explications données dans ce rapport de stage ne concernent que les plateformes Linux. Celles-ci doivent être configurées pour exécuter par défaut une version récente de Python 3 (supérieure ou égale à 3.6) et une version de pip compatible avec Python 3.
+Toutes les explications données dans ce rapport de stage ne concernent que les plateformes Linux, à l'exception de la section où le système Windows est testé. Quelque soit le système Linux utilisé, celui-ci doit être configuré pour exécuter par défaut une version récente de Python 3 (supérieure ou égale à 3.6) et une version de \textit{pip} compatible avec Python 3.
 
 Définissons par ailleurs le vocabulaire que nous allons utiliser dans ce rapport de stage :
 \begin{itemize}
@@ -592,7 +592,7 @@ Un tableau comparatif de différents spoligotypes en fonction des lignées de \t
 % LA NOTION DE PACKAGE ---------------------------
 \chapter{La notion de package}
 
-Le packaging ou distribution de programmes pose traditionnellement plus de problèmes en Python que dans d'autres langages. En effet, les standards ont évolué de façon concurrentielle plutôt que collaborative. Par ailleurs, la documentation sur Internet est parfois obsolète et entraîne de nombreuses incompréhensions. Nous verrons que l'arrivée de l'outil \textit{Poetry} a grandement facilité la création et la gestion des packages. Des sites tels que \url{https://realpython.com/python-modules-packages/}, \url{https://realpython.com/pypi-publish-python-package/}, ~\url{https://python-poetry.org/} ou \\ \url{https://packaging.python.org/overview/} ont également contribué à rendre accessible le packaging au grand public.
+Le packaging ou distribution de programmes pose traditionnellement plus de problèmes en Python que dans d'autres langages. En effet, les standards ont évolué de façon concurrentielle plutôt que collaborative. Par ailleurs, la documentation sur Internet est parfois obsolète et entraîne de nombreuses incompréhensions. Nous verrons que l'arrivée de l'outil \textit{Poetry} a grandement facilité la création et la gestion des packages. Des sites tels que \url{https://realpython.com/python-modules-packages/}, \url{https://realpython.com/pypi-publish-python-package/}, ~\url{https://python-poetry.org/} ou \\ \url{https://packaging.python.org/overview/} ont également contribué à rendre accessible le packaging au grand public. 
 
 
 
@@ -618,17 +618,17 @@ pour commencer ces installations.
 \item \textbf{MANIFEST.in} permet d'inclure dans le package certains fichiers qui ne sont pas automatiquement intégrés. 
 \end{itemize}
 
-L'ensemble des modules nécessaires au fonctionnement du package sont regroupés dans un répertoire portant le même nom que celui du package. C'est ce répertoire qui sera archivé et distribué en mettant à jour le numéro de version dans les fichiers \textbf{\_\_init\_\_.py} et \textbf{setup.py}. Si au lieu de stocker les modules dans ce répertoire, on les place à la racine du package, alors la distribution du package se construit à vide, l'installation à partir de PyPI fonctionne quand même, mais l'exécution du package ne produit rien.
+L'ensemble des modules nécessaires au fonctionnement du package sont regroupés dans un répertoire portant le même nom que celui du package. C'est ce répertoire qui sera archivé et distribué en mettant à jour le numéro de version dans les fichiers \textbf{\_\_init\_\_.py} et \textbf{setup.py}. Si au lieu de stocker les modules dans ce répertoire, on les place à la racine du package, alors la distribution du package se construit à vide, l'installation à partir de PyPI fonctionne quand même, mais l'exécution du package ne produit rien. C'est d'ailleurs ce qui est arrivé lors de la toute première construction de CRISPRbuilder\_TB.
 
-Par ailleurs, les packages construits pour des systèmes Linux et macOS nécessitent l'incorporation de fichiers \textbf{build.sh} et \textbf{meta.yaml} alors que les packages construits pour les systèmes Windows nécessitent l'incorporation des fichiers \textbf{bld.bat} et \textbf{meta.yaml}.
+Notons que les packages construits pour des systèmes Linux et macOS nécessitent l'incorporation de fichiers \textbf{build.sh} et \textbf{meta.yaml} alors que les packages construits pour les systèmes Windows nécessitent l'incorporation des fichiers \textbf{bld.bat} et \textbf{meta.yaml}.
 
-Il faut également rajouter l'archive et la distribution compilée en vue de publier le package.
+Il faut finalement rajouter l'archive et la distribution compilée en vue de publier le package.
 
-Ainsi, lorsqu'un utilisateur télécharge l'archive d'un package à partir de PyPI, celui-ci présente la structure suivante 
+Ainsi, lorsqu'un utilisateur télécharge l'archive d'un package, appelé \textit{mon\_package}, à partir de PyPI, celui-ci présente la structure suivante 
 
 \includegraphics[width=5.5cm]{mon_package1.png}
 
-Nous ne rentrerons pas plus dans le détail de la création d'un package standard, car nous avons choisi de construire CRISPRbuilder\_TB avec l'outil \textit{Poetry}. En effet, nous avons commencé par construire manuellement notre package en incorporant les fichiers ci-dessus un par un, jusqu'à ce que les discordances rencontrées entre les contenus de ces fichiers orientent nos recherches vers un outil permettant l'automatisation du processus et la gestion des incompatibilités.
+Nous ne rentrerons pas plus dans le détail de la création d'un package standard, car nous avons choisi de construire CRISPRbuilder\_TB avec l'outil \textit{Poetry}. En effet, nous avons commencé par construire manuellement notre package en incorporant les fichiers ci-dessus un par un, jusqu'à ce que les discordances rencontrées entre les contenus de ces fichiers orientent nos recherches vers un outil permettant l'automatisation du processus et la gestion des dépendances.
 
 
 
@@ -645,37 +645,37 @@ Du point de vue du développeur, un package, appelé \textit{mon\_package}, pré
 \includegraphics[width=9cm]{mon_package_poetry_complet.png}
 
 \begin{itemize}
-\item le répertoire \textbf{dist} contient l'archive des sources du package \textbf{mon\_package-0.1.0.tar.gz} (ici la version 0.1.0), construite en compressant le répertoire \textbf{mon\_package}. Il contient également la distribution compilée \textbf{mon\_package-0.1.0-py3-none-any.whl} permettant d'installer l'archive sur le système de l'utilisateur et de rendre le package exécutable. 
+\item le répertoire \textbf{dist} contient l'archive des sources \textbf{mon\_package-0.1.0.tar.gz} (ici la version 0.1.0), construite en compressant le répertoire \textbf{mon\_package}. Il contient également la distribution compilée \textbf{mon\_package-0.1.0-py3-none-any.whl} permettant d'installer l'archive sur le système de l'utilisateur et de rendre le package exécutable. 
 \item la création du répertoire \textbf{mon\_package}, portant le même nom que celui du package, est automatique avec \textit{Poetry}, de même que celle des fichiers \textbf{\_\_init\_\_.py}. Le répertoire \\\textbf{mon\_package} contient tous les modules et bases de données nécessaires à l'exécution du programme ainsi que tous les éléments qui se retrouveront compressés dans l'archive \\\textbf{mon\_package-0.1.0.tar.gz}.
 \item le répertoire \textbf{mon\_package.egg-info} contient les ressources et les métadonnées du projet nécessaires à la création de la distribution compilée \textbf{mon\_package-0.1.0-py3-none-any.whl}. Le format \textit{.egg} facilite la désinstallation et la mise à niveau du code, car le projet est essentiellement autonome dans un unique répertoire. Il autorise aussi l'installation de plusieurs versions d'un même projet simultanément. Il s'agit d'un format adapté à la distribution de plugins pour des applications extensibles et des frameworks, similaire au format \textit{.jar} en Java. Il permet également de distribuer les gros packages en entités séparées. Il est fréquent, en revanche, que \textit{pip} ne parvienne pas à installer les fichiers au format \textit{.egg} qui ne sont pas standardisés et ne tiennent pas compte des différents interpréteurs CPython, jython, pypy, ... 
 \item le fichier \textbf{poetry.lock} empêche les dépendances de télécharger la dernière version au moment de leur installation, en fixant la version utilisable par le package.
 \item le fichier \textbf{pyproject.toml} précise les métadonnées du package telles que son nom, sa version, sa description, l’emplacement de son dépôt (par exemple sur GitHub), l’adresse email de l’auteur du package, et la version des dépendances. Il sert à la construction du package et crée automatiquement le fichier \textbf{setup.py} qui, dans le cas de \textit{Poetry}, sert à la création de \textbf{mon\_package.egg-info}. Le fichier \textbf{pyproject.toml} remplace donc les fichiers \textbf{setup.py}, \textbf{setup.cfg} et\textbf{MANIFEST.in}. Il incorpore également les différents formats \textbf{build.sh}, \textbf{meta.yaml}, \textbf{bld.bat}. Il gère finalement l'installation des dépendances et remplace donc le fichier \textbf{requirements.txt}. 
-\item le fichier \textbf{README.rst} reste au niveau de la racine du package afin de compléter la rubrique "Project description" de PyPI au moment de la publication du package. \textbf{README.rst} sera par ailleurs automatiquement incorporé à l'archive au moment de sa création.
+\item le fichier \textbf{README.rst} reste au niveau de la racine du package afin de compléter la rubrique \textit{Project description} de PyPI au moment de la publication du package. \textbf{README.rst} sera par ailleurs automatiquement incorporé à l'archive au moment de sa création.
 \item le répertoire \textbf{tests} permet de valider la conformité de la distribution dont le numéro de version apparaît dans le fichier \textbf{\_\_init\_\_.py} qu'il contient.
 \end{itemize}
 
-Une fois que le package est publié dans l'index PyPI, sa distribution est en fait une copie du dossier \textbf{dist}, qu'on peut installer ou télécharger. Dans le premier cas, le package s'installe à l'emplacement prévu pour les packages sur le système de l'utilisateur grâce à l'outil \textit{pip}, et il est exécutable directement à partir du répertoire courant. Dans le second cas, les deux fichiers \textbf{mon\_package-0.1.0.tar.gz} et \textbf{mon\_package-0.1.0-py3-none-any.whl} s'enregistrent par défaut dans le dossier \textbf{Téléchargements}.
+Une fois que le package est publié dans l'index PyPI, sa distribution est en fait une copie du dossier \textbf{dist}, qu'on peut installer ou télécharger. Dans le premier cas, le package s'installe, grâce à l'outil \textit{pip}, à l'emplacement prévu pour les packages sur le système de l'utilisateur, et il est exécutable directement à partir du répertoire courant. Dans le second cas, les deux fichiers \textbf{mon\_package-0.1.0.tar.gz} et \textbf{mon\_package-0.1.0-py3-none-any.whl} s'enregistrent par défaut dans le dossier \textbf{Téléchargements}.
 
 \begin{itemize}
-\item Lorsque l'utilisateur installe le package avec l'instruction \texttt{pip install mon\_package} et qu'il se déplace dans le dossier du package à l'emplacement prévu pour les packages, il constate la structure suivante
+\item Lorsque l'utilisateur installe le package avec l'instruction \texttt{pip install mon\_package} et qu'il se déplace dans le dossier \textbf{mon\_package} à l'emplacement prévu pour les packages, il constate la structure suivante
 
 \includegraphics[width=4.5cm]{mon_package_poetry.png}
 
-qui correspond en fait au dossier \textbf{mon\_package} dans l'arborescence du package.
+qui correspond en fait au dossier initialement créé \textbf{mon\_package} dans l'arborescence du package.
 
 \item Lorsque l'utilisateur télécharge l'archive du package à partir de PyPI, sa structure est la suivante 
 
 \includegraphics[width=4.5cm]{mon_package_poetry_archive.png}
 
-On remarque que le dossier \textbf{dist} relatif à la création de la distribution a bien évidemment disparu, ainsi que le dossier \textbf{tests} et le fichier \textbf{poetry.lock} qui a servi à fixer la version des dépendances. A partir du répertoire d'installation \textbf{mon\_package.egg-info}, seul le fichier \textbf{PKG-INFO} a été conservé.
+On remarque ainsi que, dans le dossier \textbf{mon\_package-0.1.0.tar.gz}, le dossier \textbf{dist} relatif à la création de la distribution a bien évidemment disparu, ainsi que le dossier \textbf{tests} et le fichier \textbf{poetry.lock} qui a servi à fixer la version des dépendances. A partir du répertoire d'installation \textbf{mon\_package.egg-info}, seul le fichier \textbf{PKG-INFO} a été conservé.
 
-L'archive du package ne sera, dans ce cas, pas installée. Elle sera, en revanche, présente par défaut dans le dossier \textbf{Téléchargements} de l'ordinateur. Cela signifie que l'exécution du package par l'instruction standard
+Il faut comprendre que, dans ce cas, l'archive du package sera bien téléchargée mais ne sera pas installée. Elle sera présente uniquement dans le dossier \textbf{Téléchargements} de l'ordinateur. Cela signifie que l'exécution du package par l'instruction standard
 
 \begin{verbatim}
   python -m  mon_package
 \end{verbatim} 
 
-ne fonctionne pas car le système n'est pas en mesure de trouver le package à l'emplacement prévu des packages.
+ne fonctionnera pas car le système n'est pas en mesure de trouver le package à l'emplacement prévu des packages.
 
 A partir du dossier \textbf{Téléchargements}, l'utilisation de l'instruction 
 
@@ -683,7 +683,7 @@ A partir du dossier \textbf{Téléchargements}, l'utilisation de l'instruction
   python mon_package
 \end{verbatim}
 
-sans le "-m" ne fonctionne pas non plus, car l'interpréteur qui ne considère pas \texttt{mon\_package} comme un package et ne cherche pas le fichier \textbf{\_\_main\_\_.py} pour l'exécuter.
+sans le "-m" ne fonctionne pas non plus, car l'interpréteur ne considère pas \texttt{mon\_package} comme un package et ne cherche pas le fichier \textbf{\_\_main\_\_.py} pour l'exécuter.
 
 En revanche, si on se place à l'intérieur de l'archive, l'utilisation de l'instruction
 
@@ -691,7 +691,7 @@ En revanche, si on se place à l'intérieur de l'archive, l'utilisation de l'ins
   python __main__.py
 \end{verbatim}
 
-exécute le package en tant que programme. Cela n'a que peu d'intérêt vu qu'on attend d'un package qu'il s'exécute simplement sans qu'on ait à chercher préalablement son emplacement.
+exécute le package en tant que programme. Cela n'a que peu d'intérêt, vu qu'on attend d'un package qu'il s'exécute simplement, sans qu'on ait à chercher préalablement son emplacement dans le système.
 
 \end{itemize}
 
@@ -720,26 +720,26 @@ Au moment de la construction du package
 Il est possible d'utiliser les packages de différentes manières. 
 \begin{itemize}
 \item certains packages peuvent \textit{s'importer} (partiellement ou en totalité) en début de code afin d'en appeler les méthodes dans un module. On parle de \textit{import packages}.
-\item d'autres packages sont \textit{exécutables} suivant une interface graphique ou suivant une interface en lignes de commandes. On parle de \textit{distribution packages}. C'est le cas de CRISPRbuilder\_TB qui s'installe et s'exécute en lignes de commandes à partir du répertoire courant. Ainsi, c'est à partir du répertoire courant qu'on appelle les modules et fichiers se trouvant à l'intérieur du package, lui-même installé à l'emplacement prévu pour les packages. Ce processus est transparent pour l'utilisateur qui n'a nul besoin de connaître l'emplacement de téléchargement de ses packages. Il est toutefois essentiel pour le développeur de connaître les chemins d'accès vers les modules d'un package, qui sont différentes des chemins d'accès vers les modules d'un programme local. On peut commencer par développer et tester le package en utilisant des chemins locaux, mais dès que celui-ci est prêt à être installé, il faut modifier ces chemins pour que n'importe quel ordinateur puisse exécuter le package convenablement.
+\item d'autres packages sont \textit{exécutables} suivant une interface graphique ou suivant une interface en ligne de commande. On parle de \textit{distribution packages}. C'est le cas de CRISPRbuilder\_TB qui s'installe et s'exécute en ligne de commande. Ainsi, c'est à partir du répertoire courant qu'on appelle les modules et fichiers se trouvant à l'intérieur du package, lui-même installé à l'emplacement prévu pour les packages. Ce processus est transparent pour l'utilisateur qui n'a nul besoin de connaître l'emplacement de téléchargement de ses packages. Il est toutefois essentiel pour le développeur de connaître les chemins d'accès vers les modules d'un package, qui sont différentes des chemins d'accès vers les modules d'un programme local. On peut commencer par développer et tester un programme en utilisant des chemins locaux, mais dès que celui-ci est prêt à être installé en tant que package, il faut modifier ces chemins pour que n'importe quel ordinateur puisse exécuter le package convenablement.
 \end{itemize}
 
-Dans un programme local, le code s'exécute dans un répertoire courant et accède aux différents modules et fichiers support en utilisant un chemin relatif à ce répertoire courant ou encore en utilisant un chemin absolu. Les différentes dépendances sont importées en début de code, sans référence à un chemin d'accès car elles ont préalablement été installées dans l'environnement de développement de l'interpréteur Python. Dans le cas où on utilise un environnement de développement intégré tel que PyCharm, Spyder, Pydev, Wing, ..., il faut en plus les installer dans cet environnement.
+Dans un programme local, le code s'exécute dans un répertoire courant, et accède aux différents modules et fichiers support en utilisant un chemin relatif à ce répertoire courant ou encore en utilisant un chemin absolu. Les différentes dépendances sont importées en début de code, sans référence à un chemin d'accès car elles ont préalablement été installées dans l'environnement de développement de l'interpréteur Python. Dans le cas où on utilise un environnement de développement intégré tel que \textit{PyCharm, Spyder, Pydev, Wing}, ..., il faut en plus installer ces dépendances dans l'environnement de cette application.
 
 Dans un package en revanche, c'est le module \textbf{\_\_main\_\_.py} qui est cherché par l'interpréteur et exécuté prioritairement. Prenons l'exemple concret du package CRISPRbuilder\_TB. Le module \textbf{\_\_main\_\_.py} se trouve dans le dossier \textbf{crisprbuilder\_tb} à l'emplacement prévu pour les pakages, indépendamment du répertoire courant. Il s'agit la plupart du temps de \\\textbf{$\sim$/.local/lib/python3.8/site-packages} ou encore \textbf{$\sim$/.local/lib/python3.8/dist-packages}. \\Lorsque \textit{Anaconda} est installé et que son environnement est activé par défaut au démarrage de la machine, cet emplacement devient \textbf{$\sim$/anaconda3/bin}. L'utilisateur ne trouvera aucun dossier du nom de \textbf{crisprbuilder\_tb} dans le répertoire courant après installation du package, bien qu'il l'ait installé à partir du répertoire courant. On peut chercher l'emplacement exact du package et le déplacer ensuite, mais ceci n'a aucun intérêt vu que le système mémorise l'emplacement de ses packages.
 
-Afin d'expliquer le fonctionnement interne d'un package, nous conservons l'exemple de CRISPRbuilder\_TB. L'utilisateur se place dans son répertoire courant, exécute 
+Rentrons plus en détail dans le fonctionnement interne d'un package. Nous conservons pour cela l'exemple de CRISPRbuilder\_TB. L'utilisateur se place dans son répertoire courant et exécute 
 
 \begin{verbatim}
   python -m crisprbuilder_tb --collect ERR2704808
 \end{verbatim}
 
-qui va chercher le package CRISPRbuilder\_TB à son emplacement de stockage \textbf{$\sim$/anaconda3/bin} et l'exécute comme si celui-ci se trouvait dans le répertoire courant. Ainsi le module \textbf{\_\_main\_\_.py} s'exécute et appelle les modules \textbf{fonctions.py}, \textbf{bdd.py} et les fichiers du répertoire \textbf{data}. On pourrait définir des chemins d'accès absolus vers ces modules et fichiers, mais ces chemins seraient différents pour chaque système d'exploitation. On définit plutôt des chemins relatifs au module \textbf{\_\_main\_\_.py}, qui sert de référence pour les chemins d'accès. Ainsi, tous les fichiers et modules sont atteignables grâce à une adresse relative commençant par une variable d'environnement qui ne contient pas le nom du package \texttt{crisprbuilder\_tb}, car l'exécution du code se trouve déjà dans le package lors de la lecture du fichier \textbf{\_\_main\_\_.py}. Par exemple le chemin
+qui va chercher le package CRISPRbuilder\_TB à son emplacement de stockage \textbf{$\sim$/anaconda3/bin} et l'exécute comme si celui-ci se trouvait dans le répertoire courant. Ainsi le module \textbf{\_\_main\_\_.py} s'exécute et appelle les modules \textbf{fonctions.py}, \textbf{bdd.py} et les fichiers du répertoire \textbf{data}. On pourrait définir des chemins d'accès absolus vers ces modules et fichiers, mais ces chemins seraient différents pour chaque système d'exploitation. On définit plutôt des chemins relatifs au module \textbf{\_\_main\_\_.py}, qui sert de référence pour tous les chemins d'accès. Ainsi, tous les fichiers et modules sont atteignables grâce à une adresse relative commençant par une variable d'environnement qui ne contient pas le nom du package \texttt{crisprbuilder\_tb}, car l'exécution du code se trouve déjà dans le package lors de la lecture du fichier \textbf{\_\_main\_\_.py}. Par exemple le chemin
 
 \begin{verbatim}
   P_REP = path.join(path.dirname(__file__), 'REP')
 \end{verbatim}
 
-utilise la variable d'environnement \_\_file\_\_ qui définit un chemin relatif au fichier courant (le fichier \textbf{\_\_main\_\_.py}) suivi du dossier \textbf{REP}.
+utilise la variable d'environnement \texttt{\_\_file\_\_} qui définit un chemin relatif au fichier courant (le fichier \textbf{\_\_main\_\_.py}) suivi du dossier \textbf{REP}.
 
 En revanche, l'importation des modules et fichiers du package en début de code doit tenir compte du nom du package. On trouve ainsi dans les premières lignes du module \textbf{\_\_main\_\_.py}
 
@@ -761,7 +761,7 @@ Bien évidemment, l'importation des dépendances en début de code reste indépe
   from shutil import rmtree, move
 \end{verbatim}
 
-Em conclusion, il est important de comprendre que l'exécution du package :
+En conclusion, il est important de comprendre que l'exécution du package :
 \begin{itemize}
 \item \textbf{ne se fait pas} depuis l'intérieur du package avec l'instruction \texttt{python \_\_main\_\_.py}, qui ne permet pas d'utiliser les options du package.
 \item \textbf{ne se fait pas} depuis le répertoire parent du package avec l'instruction \\\texttt{python crisprbuilder\_tb \textemdash \textemdash collect ERR2704808} sans le "-m". Dans ce cas, l'interpréteur ne va pas considérer \texttt{crisprbuilder\_tb} comme un package et ne va pas chercher le fichier \textbf{\_\_main\_\_.py} pour l'exécuter.
@@ -800,7 +800,7 @@ Dans le cadre de ce projet, aucune spécification restrictive n'étant requise, 
 	Le PyPA recommande l'utilisation de :
 \begin{itemize}
 \item \textit{setuptools} pour définir des projets et créer des sources de distribution. Il gère les formats \textit{.egg} et les dépendances.
-\item \textit{pip} pour l'installation de distributions à partir de PyPI, en tenant compte des dépendances. Certains packages sont référencés sur l'index sans que les distributions ne soient disponibles sur PyPI, et il est également possible de télécharger les distributions à partir d'URL définies dans un fichier \textbf{setup.py}.
+\item \textit{pip} pour l'installation de distributions à partir de PyPI, en tenant compte des dépendances. Attention, certains packages sont référencés sur l'index sans que les distributions ne soient disponibles sur PyPI. Il est dans ce cas possible de télécharger les distributions à partir d'URL définies dans un fichier \textbf{setup.py}.
 \item \textit{pipenv} pour la gestion des dépendances de packages lors du développement d'applications,
 \item \textit{venv} pour isoler les dépendances particulières d'une application et créer un environnement de développement.
 \item \textit{pyenv} pour la gestion des versions de Python.
@@ -809,15 +809,15 @@ Dans le cadre de ce projet, aucune spécification restrictive n'étant requise, 
 \item \textit{poetry} pour un besoin particulier non couvert par \textit{pipenv}. \textit{Poetry} constitue en fait le nouveau standard de création de packages.
 \end{itemize}
 
-Au regard de ces recommandations, nous avons testé les outils préceédents dans le but de définir un environnement de développement et de construire un package incorporant les dépendances requises.
+Au regard de ces recommandations, nous avons testé les outils précédents dans le but de définir un environnement de développement et de construire un package incorporant les dépendances requises.
 
 \textit{pipenv} est un gestionnaire de haut niveau pour les environnements, les dépendances et les packages Python. Contrairement à \textit{virtualenv}, \textit{pipenv} distingue les dépendances du projet et les dépendances des dépendances du projet. Par ailleurs, \textit{pipenv} différencie le mode développement du mode production. Il offre l'avantage de bien fonctionner sur Windows. Toutefois, la communauté Python l'a peu mis à jour depuis 2018.
 
-\textit{Anaconda} est une distribution de logiciels multiplateformes (Windows, Linux, macOS) qui comprend une version de Python et facilite l'installation des librairies scientifiques \textit{Numpy, Pandas, Matplotlib} et \textit{Scipy}, ce qui est particulièrement intéressant dans le cas des plateformes Windows où ce processus est plus complexe. \textit{Anaconda} incorpore une librairie open-source appelée \textit{conda} permettant la gestion des dépendances, de l'environnement de travail ainsi que la création de packages. \textit{Anaconda} évite les problèmes d'installation de packages et de dépendances qui sont gérées de façon plus individualisée avec \textit{pip}. \textit{Anaconda} semble donc être appropriée au projet, mais c'est une distribution trop lourde pour être intégrée à notre package. \textit{Miniconda} est une distribution plus légère, qui comporte essentiellement Python et \textit{conda}, mais ne permet pas toujours d'installer toutes les dépendances d'un package comme nous le verrons ultérieurement. L'utilité d\textit{Anaconda} est avérée dans le cadre de la création de l'environnement de développement et durant les tests d'installation, comme nous le verrons ultérieurement. Toutefois, en raison de son poids important, nous ne pouvons pas l'intégrer au package.
+\textit{Anaconda} est une distribution de logiciels multiplateformes (Windows, Linux, macOS) qui comprend une version de Python et facilite l'installation des librairies scientifiques \textit{Numpy, Pandas, Matplotlib} et \textit{Scipy}, ce qui est particulièrement intéressant dans le cas des plateformes Windows où ce processus est plus complexe. \textit{Anaconda} incorpore une librairie open-source appelée \textit{conda} permettant la gestion des dépendances, de l'environnement de travail ainsi que la création de packages. \textit{Anaconda} évite les problèmes d'installation de packages et de dépendances qui sont gérées de façon moins cloisonnée qu'avec \textit{pip}. \textit{Anaconda} semble donc être appropriée au projet, mais c'est une distribution trop lourde pour être intégrée à notre package. L'utilité d'\textit{Anaconda} est toutefois avérée dans le cadre de la création d'un environnement de développement et durant les tests d'installation, comme nous le verrons ultérieurement. \textit{Miniconda} est une distribution plus légère qu'\textit{Anaconda}. Elle comporte essentiellement Python et \textit{conda}, mais ne permet pas toujours d'installer toutes les dépendances d'un package, comme nous le verrons ultérieurement. 
 
 Nous avons tout d'abord cherché à construire le package manuellement, à partir de \textit{pipenv} associé à \textit{pip}, puis de \textit{conda} qui dispose d'une riche bibliothèque. Cet effort s'est avéré laborieux et a révélé des incompatibilités lors du \textit{build} qui n'ont pas permis de valider les exigences de la plateforme \textit{testPyPI}.
 
-Nous avons donc décidé de construire notre package en utilisant \textit{Poetry}, comme cela est maintenant recommandé sur Internet. \textit{Poetry} est un outil complet multiplateformes autour duquel la communauté Python reste très active. Il propose à la fois la gestion des dépendances, le \index{packaging}packaging\footnote{\textbf{packaging:} il s'agit de la création d'une structure pour un projet, de la génération de fichiers de configuration et de manifestes} et la publication. \textit{Poetry} automatise ces différents processus et facilite grandement le travail. Nous étudions en détail l'utilisation de cet outil dans le chapitre suivant.
+Nous avons donc décidé de construire notre package en utilisant \textit{Poetry}, comme cela est maintenant recommandé sur Internet. \textit{Poetry} est un outil complet, multiplateformes, autour duquel la communauté Python reste très active. Il propose à la fois la gestion des dépendances, le \index{packaging}packaging\footnote{\textbf{packaging:} il s'agit de la création d'une structure pour un projet, de la génération de fichiers de configuration et de manifestes} et la publication. \textit{Poetry} automatise ces différents processus et facilite grandement le travail. Nous étudions en détail l'utilisation de cet outil dans le chapitre suivant.
 
 
 
@@ -826,7 +826,7 @@ Nous avons donc décidé de construire notre package en utilisant \textit{Poetry
 % L'ENVIRONNEMENT DE DEVELOPPEMENT -----------------------------
 \section{L'environnement de développement}
 
-Les packages s'installent par défaut à l'adresse \textbf{$\sim$/.local/lib/python3.8/site-packages}, et différentes versions d'un même package peuvent donc se retrouver dans le même dossier. Ce qui peut conduire à utiliser la mauvaise version d'une dépendance et entraîner le dysfonctionnement d'un projet. Pour résoudre ce problème, les environnements de développement permettent d'installer les dépendances de projets différents à des adresses différentes tenant compte de chaque environnement. Ainsi plus aucune confusion n'est possible concernant la version d'une dépendance.
+Les packages s'installent par défaut à l'adresse \textbf{$\sim$/.local/lib/python3.8/site-packages}, et différentes versions d'un même package peuvent donc se retrouver dans le même dossier. Ce qui peut conduire à utiliser la mauvaise version d'une dépendance et entraîner le dysfonctionnement d'un projet. Pour résoudre ce problème, les environnements de développement permettent d'installer les dépendances de projets différents à des adresses différentes tenant compte de chaque environnement. Ainsi, plus aucune confusion n'est possible concernant la version d'une dépendance.
 
 Avant de créer le package CRISPSbuilder\_TB, il faut commencer par construire un programme qui fonctionne localement sur une machine correctement paramétrée. Pour cela, nous définissons un \index{environnement de développement}environnement de développement, qui nous sert à exécuter le code et à le tester au fur et à mesure de son élaboration. Cet environnement contient tous les modules et packages nécessaires à son bon fonctionnement, c'est à dire les dépendances du projet.
  
@@ -837,11 +837,11 @@ Dans le cadre de notre étude, nous créons un répertoire \textbf{biologie}, no
   python -m venv env_bio\end{verbatim}
 
 Dans cet environnement vient d'être créé le répertoire \textbf{bin} comprenant notamment le fichier\textbf{ activate}, qui permet d'activer les fonctionnalités de notre environnement.
-Cette activation ne peut se faire qu'à partir du répertoire parent \textbf{biologie}. Il faut ensuite se placer à l'intérieur de \textbf{env\_bio} pour définir les modules utiles à l'environnement. Ceci se traduit par l'instruction
+Cette activation ne peut se faire qu'à partir du répertoire parent \textbf{biologie}. Il faut ensuite se placer à l'intérieur de \textbf{env\_bio} pour incorporer les modules utiles à l'environnement. Ceci se traduit par l'instruction
  \begin{verbatim}  source env_bio/bin/activate
   (env_bio)  cd env_bio\end{verbatim}
 
-De nombreux systèmes d'exploitation incorporent Python 2.7 par défaut. Il convient donc de définir une version 3 de Python dans cet environnement de développement, et dans le cadre de notre projet une version 3.7 ou supérieure. Pour cela, le module \textit{pyenv} \index{pyenv} nous permet de définir une version de Python comme version locale de travail dans l'environnement. 
+De nombreux systèmes d'exploitation incorporent Python 2.7 par défaut. Il convient donc de définir une version 3 de Python dans cet environnement de développement, et dans le cadre de notre projet une version 3.6 ou supérieure. Pour cela, le module \textit{pyenv} \index{pyenv} nous permet de définir une version de Python comme version locale de travail dans l'environnement. 
 
 On peut choisir parmi les versions disponibles, grâce à l'instruction
 \begin{verbatim}  pyenv install --list\end{verbatim}
@@ -853,15 +853,21 @@ L'installation de la version 3.8.0 par exemple se fait grâce à l'instruction
 
 La version 3.8.0 de Python se trouve maintenant installée dans \textbf{$\sim$/.pyenv/versions/}
 
-Pour connaître toutes les versions de Python installées par pyenv, il suffit d'exécuter l'instruction suivante qui fournit une liste de résultats
+Pour connaître toutes les versions de Python installées par pyenv, il suffit d'exécuter l'instruction suivante 
 \begin{verbatim}    pyenv versions
+\end{verbatim}
+
+qui fournit une liste de résultats
+
+\begin{verbatim}
   * system
     2.7.10
     3.6.2
     3.8.0\end{verbatim}
-où le caractère "*" indique la version active dans le répertoire courant.
 
-On peut alors choisir la version 3.8.0 pour notre environnement de travail. Il suffit de se placer dans cet environnement et d'exécuter l'instruction
+où le caractère * indique la version active dans le répertoire courant.
+
+On peut alors choisir la version 3.8.0 pour notre environnement de travail. Il suffit de se placer dans cet environnement et d'exécuter
 \begin{verbatim}  cd env_bio
   pyenv local 3.8.0\end{verbatim}
 
@@ -903,15 +909,16 @@ Finalement, nous installons dans notre environnement de développement les dépe
 \item \begin{verbatim}  pip install xmltodict\end{verbatim}
 le module \textit{xmltodict} permet de lire du code XML comme si il s'agissait de code JSON. Il permet donc une lecture plus rapide des fichiers.
 \item  \begin{verbatim}  pip install openpyxl\end{verbatim}
-le package \textit{openpyxl} permet de lire et d'écrire dans des fichiers Excel au format \textit{xlsx, xlsm, xltx} ou \textit{xltm}. Il comprend les modules \textit{et-xmlfile} et \textit{jdcal}. Il sera utile pour lire et transformer des fichier Excel mais ne sera pas nécessaire pour le fonctionnement du package.
+le package \textit{openpyxl} permet de lire et d'écrire dans des fichiers Excel au format \textit{xlsx, xlsm, xltx} ou \textit{xltm}. Il comprend les modules \textit{et-xmlfile} et \textit{jdcal}. Il sera utile pour lire et transformer des fichiers Excel qui serviront de base de données, mais ne sera pas nécessaire pour le fonctionnement du package.
 \item  \begin{verbatim}  pip install xlrd\end{verbatim}
-le module \textit{xlrd} extrait des données d'un tableur Excel à partir de la version 2.0 et avant de les formatter.
+le module \textit{xlrd} extrait des données d'un tableur Excel à partir de la version 2.0 afin de pouvoir les exploiter.
 \item  \begin{verbatim}  pip install biopython\end{verbatim}
-le package \textit{biopython} regroupe un ensemble d'outils Python pour le traitement informatique de la biologie moléculaire et comprend le module numpy.
+le package \textit{biopython} regroupe un ensemble d'outils Python pour le traitement informatique de la biologie moléculaire et comprend le module \textit{numpy}.
 \item \begin{verbatim}  pip install parallel-fastq-dump\end{verbatim}
-le package \textit{parallel-fastq-dump} permet de téléchargement de fichiers fasta en utilisant plusieurs threads simultanément. Il procure donc un gain de temps à l'application. Le dépôt \url{https://github.com/rvalieris/parallel-fastq-dump} préconise l'installation de \textit{parallel-fastq-dump} via l'outil \textit{conda}.
-\item \begin{verbatim}  pip install blastn+\end{verbatim}
-le package \textit{blast} permet de trouver des régions similaires entre plusieurs séquences biologiques. Le programme compare en fait des séquences de protéines ou de nucléotides à une base de données du NCBI afin d'en calculer la signification statistique.
+le package \textit{parallel-fastq-dump} permet le téléchargement de fichiers \textit{.fasta} en utilisant plusieurs threads simultanément. Il procure donc un gain de temps à l'application. Le dépôt \url{https://github.com/rvalieris/parallel-fastq-dump} préconise l'installation de \textit{parallel-fastq-dump} via l'outil \textit{conda}.
+\item \begin{verbatim}  pip install blast
+  pip install blastn\end{verbatim}
+le package \textit{blast+}, qui contient notamment les modules \textit{blast} et \textit{blast+}, permet de trouver des régions similaires entre plusieurs séquences biologiques. Ces programmes comparent en fait des séquences de protéines ou de nucléotides à une base de données du NCBI afin d'en calculer la signification statistique.
 \end{itemize}
 
 Pour connaître l'emplacement où ces packages se sont installés, il est possible d'utiliser le script Python en lignes de commande
@@ -957,15 +964,15 @@ qui renvoie comme réponse
 
 On remarque, en plus de l'emplacement, la dépendance \textit{numpy} ainsi que le package \textit{crisprbuilder\_tb} dont \textit{biopython} constitue une dépendance.
 
-Notons que certains modules utilisés dans CRISPRbuilder\_TB sont nativement présents dans la librairie standard Python 3, et il n'est donc pas nécessaire de les installer séparément. Ils sont installés en tant que \textit{system packages} et non pas \textit{site packages}. C'est le cas par exemple de
+Notons que certains modules utilisés dans CRISPRbuilder\_TB sont nativement présents dans la librairie standard Python 3, et il n'est donc pas nécessaire de les installer séparément. Ils sont dans ce cas installés en tant que \textit{system packages} et non pas \textit{site packages}. Par exemple
 \begin{itemize}
-\item du module \textit{os} qui fournit une manière portable d'utiliser les fonctionnalités dépendantes du système d'exploitation,
-\item du module \textit{pickle} qui permet de sérialiser et désérialiser une structure d'objet Python. Il remplace le module primitif \textit{marshal},
-\item du module \textit{csv} qui implémente des classes pour lire et écrire des données liées à des feuilles de calcul ou des bases de données au format \textit{.csv},
-\item du module \textit{shutil} qui propose des opérations sur les fichiers et collections de fichiers, notamment la copie et suppression de fichiers,
-\item du module \textit{subprocess.run} qui permet de gérer de nouveaux processus, de se connecter à leurs flux d'input/output/erreurs. Il remplace plusieurs modules dépréciés : \textit{os.system, os.spawn*, os.popen*, popen2.*, commands.* },
-\item du module \textit{pathlib} qui fournit des classes de chemins purs indépendants du système d'exploitation, ce qui permet au code de manipuler des chemins sans accéder au système d'exploitation,
-\item du module \textit{argparse} qui gère la création et l'utilisation d'interfaces en ligne de commande.
+\item le module \textit{os} qui fournit une manière portable d'utiliser les fonctionnalités dépendantes du système d'exploitation,
+\item le module \textit{pickle} qui permet de sérialiser et désérialiser une structure d'objet Python. Il remplace le module primitif \textit{marshal},
+\item le module \textit{csv} qui implémente des classes pour lire et écrire des données liées à des feuilles de calcul ou des bases de données au format \textit{.csv},
+\item le module \textit{shutil} qui propose des opérations sur les fichiers et collections de fichiers, notamment la copie et suppression de fichiers,
+\item le module \textit{subprocess.run} qui permet de gérer de nouveaux processus, de se connecter à leurs flux d'input/output/erreurs. Il remplace plusieurs modules dépréciés : \textit{os.system, os.spawn*, os.popen*, popen2.*, commands.* },
+\item le module \textit{pathlib} qui fournit des classes de chemins purs indépendants du système d'exploitation, ce qui permet au code de manipuler des chemins sans accéder au système d'exploitation,
+\item le module \textit{argparse} qui gère la création et l'utilisation d'interfaces en ligne de commande.
 \end{itemize}
 
 Le package CRISPRbuilder\_TB, une fois installé par l'utilisateur, devra fournir un environnement de travail similaire à celui que nous venons de construire, c'est à dire que les dépendances nécessaires à son bon fonctionnement devront également être installées. 
@@ -978,7 +985,7 @@ L'utilisateur pourrait alors installer ces modules à l'identique en utilisant l
 
 Cette méthode fonctionne bien pour construire un environnement de développement à partir d'un répertoire courant où se trouve le fichier \textbf{requirements.txt}. C'est d'ailleurs la technique que nous avons utilisée pour construire notre environnement. Toutefois, elle n'est pas adaptée à l'installation des dépendances de CRISPRbuilder\_TB par un utilisateur,  car celui-ci devrait trouver l'emplacement du package, s'y rendre pour ensuite exécuter \texttt{pip install -r requirements.txt}.
 
-Ce processus d'installation devrait rester transparent pour l'utilisateur. C'est pourquoi, il devrait être pris en charge par un gestionnaire de package tel que \textit{Poetry} regroupant les versions des dépendances dans un fichier \textbf{pyproject.toml} qui remplace \textbf{requirements.txt}. Nous verrons au cours des tests d'installation que les dépendances ne sont pas toujours reconnues à partir de \textit{Poetry} et qu'il est quand même nécessaire pour l'utilisateur d'avoir préalablement installé et paramétré sur sa machine les outils du SRA Toolkit \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn}. CRISPRbuilder\_TB étant destiné à un public de bio-informaticiens, ce prérequis devrait déjà être installé sur l'ordinateur des utilisateurs du package. Il convient toutefois de le préciser dans la documentation d'installation \textbf{crisprbuilder\_tb.ipynb}.
+Ce processus d'installation devrait rester transparent pour l'utilisateur. C'est pourquoi, il devrait être pris en charge par un gestionnaire de package tel que \textit{Poetry} regroupant les versions des dépendances dans un fichier \textbf{pyproject.toml} qui remplace \textbf{requirements.txt}. Nous verrons au cours des tests d'installation que les dépendances ne sont pas toujours reconnues à partir de \textit{Poetry} et qu'il est quand même nécessaire pour l'utilisateur d'avoir préalablement installé et paramétré sur sa machine les outils du \textit{SRA Toolkit} : \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn}. CRISPRbuilder\_TB étant destiné à un public de bio-informaticiens, ce prérequis devrait déjà être installé sur l'ordinateur des utilisateurs du package. Il convient toutefois de le préciser dans la documentation d'installation \textbf{crisprbuilder\_tb.ipynb}.
 
 
 
@@ -1003,7 +1010,7 @@ ou selon le chemin d'accès choisi
 
 Il existe une alternative plus simple qui a retenu notre attention seulement à la fin du projet. Cela consiste à installer le package \textit{Anaconda}, qui comprend notamment l'outil \texttt{conda} et le module \textit{bioconda} dont nous aurons besoin. Il faut ensuite installer toutes les dépendances du projet à l'aide de \texttt{conda}. Ces dépendances s'installent systématiquement dans \textbf{$\sim$/anaconda3/bin} et la variable d'environnement \$PATH se met automatiquement à jour. Le package CRISPRbuilder\_TB étant destiné à un public de bio-informaticiens, il est fort probable que ces derniers aient déjà installé \textit{Anaconda} sur leur machine, car il s'agit d'un outil classique de travail dans un environnement scientifique.  
 
-Attention toutefois de ne pas installer conjointement \textit{Anaconda} avec \textit{Miniconda}. En effet, dans ce cas certaines dépendances s'installent dans \textbf{$\sim$/anaconda3/bin} et d'autres dans \textbf{$\sim$/miniconda/bin}. C'est tentant au début, car \textit{Miniconda} est une distribution légère qui donne accès à l'outil \texttt{conda} et au module \textit{bioconda}. Toutefois, ce dernier utilise le Cloud d'\textit{Anaconda} pour installer certaines dépendances de notre projet, ce qui rend l'installation d'\textit{Anaconda} nécessaire. Pour éviter tout problème de chemin d'accès, il faut alors désinstaller \textit{Miniconda} avant d'installer \textit{Anaconda}. 
+Attention toutefois à ne pas installer conjointement \textit{Anaconda} avec \textit{Miniconda}. En effet, dans ce cas certaines dépendances s'installent dans \textbf{$\sim$/anaconda3/bin} et d'autres dans \textbf{$\sim$/miniconda/bin}. C'est tentant au début, car \textit{Miniconda} est une distribution légère qui donne accès à l'outil \texttt{conda} et au module \textit{bioconda}. Toutefois, ce dernier utilise le Cloud d'\textit{Anaconda} pour installer certaines dépendances de notre projet, ce qui rend l'installation d'\textit{Anaconda} nécessaire. Pour éviter tout problème de chemin d'accès, il faut alors désinstaller \textit{Miniconda} avant d'installer \textit{Anaconda}. 
 
 L'installation de \textit{Anaconda} est décrite sur le site \url{https://docs.anaconda.com/anaconda/install/linux/}. Il faut penser à ordonner les priorités des différents \textit{channels}, dont notamment \textit{bioconda} en ajoutant dans l'ordre
 
@@ -1049,11 +1056,11 @@ qui permet de générer le squelette de l'application contenant les éléments s
 \includegraphics[width=6cm]{nom_package_tree.png}
 
 \begin{itemize}
-\item le répertoire \textbf{crisprbuilder\_tb} contient initialement le fichier \textbf{\_\_init\_\_.py} et c'est dans ce répertoire que nous allons rajouter tous les composants principaux du code, à savoir \\\textbf{\_\_main\_\_.py}, \textbf{fonctions.py}, \textbf{bdd.py} et les répertoires \textbf{data}, \textbf{doc}, \textbf{REP}, \textbf{sequences} et \textbf{tmp} avec leurs contenus. En effet, la création de l'archive va compresser ce répertoire \textbf{crisprbuilder\_tb} afin de le publier. Nous rajoutons également dans le répertoire \textbf{doc} une \textbf{LICENSE} qui pourra être consultée par l'utilisateur. Par ailleurs, la version 3.3 de Python a introduit la notion de \textit{Implicit Namespace Packages}, qui permet la création de packages sans la présence de fichiers \textbf{\_\_init\_\_.py}. Nous supprimons donc le fichier \textbf{\_\_init\_\_.py} du répertoire \textbf{crisprbuilder\_tb}.  %Nous choisissons d'insérer des fichiers \textbf{\_\_init\_\_.py} vides dans CRISPRbuilder\_TB, car nous verrons qu'ils sont créés automatiquement lors de la construction du package. Pour éviter tout conflit de version avec le fichier \textbf{pyproject.toml}, nous vidons le fichier \textbf{\_\_init\_\_.py} du répertoire \textbf{crisprbuilder\_tb}. Lors de sa création, le fichier\textbf{\_\_init\_\_.py} contenait uniquement la version du package.
+\item le répertoire \textbf{crisprbuilder\_tb} contient initialement le fichier \textbf{\_\_init\_\_.py} mentionnant la version du package, et c'est dans ce répertoire que nous allons rajouter tous les composants principaux du code, à savoir \textbf{\_\_main\_\_.py}, \textbf{fonctions.py}, \textbf{bdd.py} et les répertoires \textbf{data}, \textbf{doc}, \textbf{REP}, \textbf{sequences} et \textbf{tmp} avec leurs contenus. En effet, la création de l'archive va compresser ce répertoire \textbf{crisprbuilder\_tb} afin de le publier. Nous rajoutons également dans le répertoire \textbf{doc} une \textbf{LICENSE} qui pourra être consultée par l'utilisateur. Par ailleurs, la version 3.3 de Python a introduit la notion de \textit{Implicit Namespace Packages}, qui permet la création de packages sans la présence de fichiers \textbf{\_\_init\_\_.py}. Nous supprimons donc dans un premier temps le fichier \textbf{\_\_init\_\_.py} du répertoire \textbf{crisprbuilder\_tb}. Au moment de la création de l'archive, nous nous rendons compte que les dossiers vides qui ne contiennent pas de fichier \textbf{\_\_init\_\_.py} ne sont pas incorporés dans l'archive. Nous décidons alors d'insérer des fichiers \textbf{\_\_init\_\_.py} dans chaque dossier du répertoire \textbf{crisprbuilder\_tb}. Pour éviter tout conflit de version avec le fichier \textbf{pyproject.toml}, nous vidons chaque fichier \textbf{\_\_init\_\_.py}.
 \item le fichier \textbf{pyproject.toml} se trouve à la racine du package. 
 \item le fichier \textbf{README.rst} fournit une brève description du package, et nous le modifions au format markdown \textbf{README.md} pour des raisons pratiques.  
 \item nous rajoutons à la racine du package un fichier \textbf{.gitignore} pour la gestion des versions avec l'outil \textit{Git}.
-\item nous supprimons le fichier \textbf{\_\_init\_\_.py} du répertoire \textbf{tests}. %Nous précisons dans le fichier \textbf{\_\_init\_\_.py} le bon numéro de version
+%\item nous supprimons le fichier \textbf{\_\_init\_\_.py} du répertoire \textbf{tests}. %Nous précisons dans le fichier \textbf{\_\_init\_\_.py} le bon numéro de version
 \end{itemize}
 
 Notons qu'il est préférable de choisir un nom de package en minuscules pour éviter toute confusion car, bien que les majuscules soient conservées sur PyPI, l'appel du package en ligne de commande devra s'effectuer en minuscules. En outre, par convention il faut éviter le symbole '-' qui est automatiquement remplacé par '\_' lors de la création du package.
@@ -1079,7 +1086,7 @@ Pour chaque dépendance, \textit{Poetry} va choisir la version la plus récente 
   poetry add nom_dependance
 \end{verbatim}
 
-après s'être placé dans le répertoire \textbf{crisprbuilder\_tb}. La dépendance \texttt{nom\_dependance} avec sa version est alors incorporée dans le fichier \textbf{pyproject.toml}, le fichier \textbf{poetry.lock} est créé, afin de fixer la version de cette dépendance. Il est également possible d’imposer certaines contraintes sur les versions des dépendances en les incorporant manuellement dans le fichier \textbf{pyproject.toml}.
+après s'être placé dans le répertoire \textbf{crisprbuilder\_tb}. La dépendance \texttt{nom\_dependance}, avec sa version, est alors incorporée dans le fichier \textbf{pyproject.toml}, le fichier \textbf{poetry.lock} est créé, afin de fixer la version de cette dépendance. Il est également possible d’imposer certaines contraintes sur les versions des dépendances en les incorporant manuellement dans le fichier \textbf{pyproject.toml}.
 
 %\begin{tcolorbox} \end{tcolorbox}
 Il faut maintenant ajouter les dépendances suivantes au projet :
@@ -1118,7 +1125,7 @@ Notons que la version de Python se complète automatiquement d'après celle util
   repository = "https://github.com/stephane-robin/crisprbuilder_tb.git"
   keywords = ["tuberculosis", "CRISPR"]\end{verbatim}
 
-La rubrique [tool.poetry.dev-dependencies] définit le module qui procèdera aux tests concernant le fonctionnement du package.
+La rubrique [tool.poetry.dev-dependencies] définit le module qui procèdera aux tests relatifs au fonctionnement du package.
 
 La rubrique [build-system] définit les versions de \textit{Poetry} et \textit{poetry.masonry.api} nécessaires à la construction du package.
 
@@ -1134,7 +1141,7 @@ Pour installer ensuite les dépendances du projet au sein du package, il est né
 
 qui crée le fichier \textbf{setup.py} à partir de \textbf{pyproject.toml}. Ce fichier \textbf{setup.py} va servir à créer automatiquement le répertoire \textbf{crisprbuilder\_tb.egg-info}, comprenant le code, les ressources et les métadonnées du projet.
 
-Lors de l'exécution du code \texttt{poetry install}, on constate également que \textit{Poetry} crée en fait un environnement virtuel dans lequel il va installer les dépendances et le package
+Lors de l'exécution du code \texttt{poetry install}, on constate que \textit{Poetry} crée en fait un environnement virtuel dans lequel il va installer les dépendances et le package, comme indiqué ci-dessous
 
 \begin{verbatim}  poetry install
   Creating virtualenv crisprbuilder-tb-oJzk4q3N-py3.8 in ~/.cache/pypoetry/virtualenvs
@@ -1162,7 +1169,7 @@ Lors de l'exécution du code \texttt{poetry install}, on constate également que
   - Installing blastn (2.7.1)
 \end{verbatim}
 
-Notons qu'on peut s'assurer à ce moment-là de la version de Python utilisée pour tout le travail de construction, à savoir dans cet exemple Python 3.8 qui apparaît à la fin de \\\texttt{crisprbuilder-tb-oJzk4q3N-py3.8}.
+Notons qu'on peut s'assurer à ce moment-là de la version de Python utilisée pour tout le travail de construction, à savoir dans cet exemple Python 3.8 qui apparaît à la fin de la séquence \texttt{crisprbuilder-tb-oJzk4q3N-py3.8}.
 
 Notre projet dispose maintenant de la structure suivante
 
@@ -1234,13 +1241,14 @@ Le fichier \textbf{crisprbuilder\_tb-0.1.2.tar.gz} est une archive qui, une fois
 
 On constate une arborescence assez semblable à celle obtenue lors de la création du package. Toutefois, les dossiers \textbf{crisprbuilder\_tb.egg-info}, \textbf{dist}, \textbf{tests} et le fichier \textbf{poetry.lock}, nécessaires à la construction et l'installation du package, ont bien évidemment disparu. Du répertoire \textbf{crisprbuilder\_tb.egg-info} a été uniquement conservé le fichier \textbf{PKG.INFO}. Le fichier \textbf{setup.py} est également archivé.
 
+On constate que le dossier \textbf{crisprbuilder\_tb} contient les éléments suivants :
 \begin{itemize}
 \item un répertoire \textbf{doc} comprenant la documentation nécessaire pour comprendre et utiliser convenablement le package,
-\item un répertoire \textbf{\_\_pycache\_\_} comprenant les fichiers compilés correspondant aux fichiers \textbf{\_\_main\_\_.py}, \textbf{fonctions.py} et \textbf{bdd.py},
 \item un répertoire \textbf{data} comprenant les bases de données utiles au programme,
 \item un répertoire \textbf{REP} comprenant un répertoire \textbf{sequences} qui contiendra les résultats de recherche concernant les différents SRA,
-\item un répertoire \textbf{tmp} qui contiendra, entre autres, un fichier \textbf{nb.txt}, différent pour chaque SRA
-\item les fichiers \textbf{\_\_main\_\_.py}, \textbf{fonctions.py} et \textbf{bdd.py}, immédiatement accessibles.
+\item un répertoire \textbf{tmp} qui contiendra les fichiers temporaires, dont un fichier \textbf{nb.txt} différent pour chaque SRA
+\item les fichiers \textbf{\_\_main\_\_.py}, \textbf{fonctions.py} et \textbf{bdd.py}, immédiatement accessibles,
+\item éventuellement un répertoire \textbf{\_\_pycache\_\_} comprenant les fichiers compilés relatifs aux fichiers \textbf{\_\_main\_\_.py}, \textbf{fonctions.py} et \textbf{bdd.py}.
 \end{itemize}
 
 
@@ -1250,9 +1258,9 @@ On constate une arborescence assez semblable à celle obtenue lors de la créati
 %  LA STRUCTURE DU PACKAGE INSTALLE ----
 \section{La structure du package installé}
 
-Une \textit{built distribution} est une distribution pré-construite contenant des fichiers et méta-données qui ne nécessite pas d'étape supplémentaire pour s'installer dès lors qu'on l'enregistre au bon emplacement. Il ne s'agit pourtant pas d'une distribution pré-compilée. Les formats \textit{egg} et \textit{wheel} sont des \textit{built distributions}.
+Une \textit{built distribution} est une distribution pré-construite contenant des fichiers et méta-données qui ne nécessite pas d'étape supplémentaire pour s'installer, dès lors qu'on l'enregistre au bon emplacement. Les formats \textit{egg} et \textit{wheel} sont des \textit{built distributions}. Il ne s'agit pas pour autant d'une distribution pré-compilée. 
 
-Une \textit{source distribution} est une distribution au format \textit{sdist} contenant des fichiers et méta-données qui génère une \textit{built distribution} au moment de l'installer avec \textit{pip}.
+Une \textit{source distribution} est une distribution au format \textit{sdist} contenant des fichiers et méta-données, qui génère une \textit{built distribution} au moment de l'installer avec \textit{pip}.
 
 Ainsi, \textit{pip} va installer CRISPRbuilder\_TB en cherchant préférentiellement un fichier au format \textit{wheel}, c'est à dire dans le cas présent \textbf{crisprbuilder\_tb-0.1.2-py3-none-any.whl}. Si un tel fichier n'existait pas, \textit{pip} en construirait un à partir d'une \textit{source distribution} puis le conserverait en mémoire en vue d'une prochaine installation, pour éviter d'avoir à le reconstruire. Les fichiers au format \textit{wheel} permettent donc une installation plus rapide du package.
 
@@ -1260,7 +1268,7 @@ Afin de connaître la structure de CRISPRbuilder\_TB une fois installé, et bien
 
 \includegraphics[width=7cm]{crispr_installe.png}
 
-Nous remarquons, par rapport à l'archive \textbf{crisprbuilder\_tb-0.1.2.tar.gz}, que seul le contenu du répertoire \textbf{crisprbuilder\_tb} a été conservé. Ainsi, les fichiers de construction \textbf{PKG-INFO}, \textbf{pyproject.toml} et \textbf{setup.py} ont naturellement disparu. Le fichier \textbf{README.md} a également disparu. Il a servi uniquement à compléter la section \textit{Project description} sur PyPI. On pourrait l'inclure dans le répertoire \textbf{crisprbuilder\_tb} afin que l'utilisateur puisse le consulter. Toutefois, cela ne semble pas utile, vu qu'il est déjà présent en ligne sur PyPI et qu'une documentation plus exhaustive existe déjà dans l'archive du package, à savoir \textbf{crisprbuilder\_tb.ipynb}.
+Nous remarquons, par rapport à l'archive \textbf{crisprbuilder\_tb-0.1.2.tar.gz}, que seul le contenu du répertoire \textbf{crisprbuilder\_tb} a été conservé. Ainsi, les fichiers de construction \textbf{PKG-INFO}, \textbf{pyproject.toml} et \textbf{setup.py} ont naturellement disparu. Le fichier \textbf{README.md} a également disparu. Il a servi uniquement à compléter la section \textit{Project description} sur PyPI. On pourrait l'inclure dans le répertoire \textbf{crisprbuilder\_tb} afin que l'utilisateur puisse le consulter. Toutefois, cela ne semble pas utile, vu qu'il est déjà présent en ligne sur PyPI et qu'une documentation plus exhaustive existe également dans l'archive du package, à savoir \textbf{crisprbuilder\_tb.ipynb}.
 
 
 
@@ -1283,8 +1291,9 @@ Nous remarquons, par rapport à l'archive \textbf{crisprbuilder\_tb-0.1.2.tar.gz
 & création du répertoire \textbf{crisprbuilder\_tb.egg-info}  et de \\
 & ses méta-données à partir du fichier \textbf{setup.py}\\
 \hline
-\texttt{poetry build} & création du répertoire \textbf{dist}, des fichiers \\
-& \textbf{crisprbuilder\_tb-0.1.2.tar.gz} et \\
+\texttt{poetry build} & création du répertoire \textbf{dist}, du fichier \\
+& \textbf{crisprbuilder\_tb-0.1.2.tar.gz} à partir des sources de \\
+& \textbf{crisprbuilder\_tb} et \\
 & \textbf{crisprbuilder\_tb-0.1.2-py3-none-any.whl} à partir des\\
 & méta-données du répertoire  \textbf{crisprbuilder\_tb.egg-info}\\
 \hline

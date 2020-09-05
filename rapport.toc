@@ -31,7 +31,7 @@
 \contentsline {section}{\numberline {1.}Cr\IeC {\'e}ation du package}{36}{section.5.1}
 \contentsline {section}{\numberline {2.}Gestion des d\IeC {\'e}pendances}{37}{section.5.2}
 \contentsline {section}{\numberline {3.}Construction du package}{40}{section.5.3}
-\contentsline {section}{\numberline {4.}Publication du package}{40}{section.5.4}
+\contentsline {section}{\numberline {4.}Publication du package}{41}{section.5.4}
 \contentsline {section}{\numberline {5.}La structure de l'archive du package}{41}{section.5.5}
 \contentsline {section}{\numberline {6.}La structure du package install\IeC {\'e}}{42}{section.5.6}
 \contentsline {section}{\numberline {7.}R\IeC {\'e}sum\IeC {\'e} des instructions Poetry}{43}{section.5.7}
