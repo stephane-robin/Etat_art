@@ -2161,14 +2161,14 @@ directly from NCBI, using the code:
 
 Les tests font partie du processus de développement et sont effectués dans chacune des phases de création du code afin de pouvoir continuer à l'étape suivante.
 
-Plusieurs niveaux de tests doivent être effectués pour valider le package avant publication. Ils nécessitent un environnement de développement dont nous avons déjà parlé et un environnement de test. Celui-ci est re-créé pour chaque système d'exploitation faisant partie de la campagne de tests. Il ne doit pas contenir les dépendances de CRISPRbuilder\_TB, à l'exception de \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn} que nous installons à partir de \textit{Anaconda} par souci de simplicité. L'environnement de test intègre ainsi Python 3.7 qui est installé en même temps que \textit{Anaconda}.
+Plusieurs niveaux de tests doivent être effectués pour valider le package avant publication. Ils nécessitent un environnement de développement dont nous avons déjà parlé et un environnement de test. Celui-ci est re-créé pour chaque système d'exploitation participant à la campagne de tests. Il ne doit pas contenir les dépendances de CRISPRbuilder\_TB, à l'exception de \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn} que nous installons indépendemment à partir de \textit{Anaconda}, pour les raisons que nous allons évoquer dans cette partie du rapport. L'environnement de test intègre ainsi, dans notre cas, Python 3.7 qui est installé en même temps que \textit{Anaconda}.
 
 Notre campagne de tests comporte les démarches suivantes :
 \begin{itemize}
 \item durant la création de chaque fonction, les \textbf{tests unitaires} sont effectués à l'aide de l'environnement de développement et du module \textit{Unittest},
-\item au moment du regroupement du code et des différents modules, les \textbf{tests d'intégration} utilisent l'environnement de développement et la notation fournie par le module \textit{pylint},
+\item au moment du regroupement du code et des différents modules, les \textbf{tests d'intégration} utilisent l'environnement de développement, et la notation fournie par le module \textit{pylint} pour essayer d'améliorer le code au regard du PEP,
 \item lors d'une modification de code, les \textbf{tests de non-régression} utilisent l'environnement de développement, et notre travail est facilité par l'utilisation de l'outil de versioning \textit{Git},
-\item lorsque le package est construit, les \textbf{tests de performance} et les \textbf{tests de validation} s'appuient également sur l'environnement de développement
+\item lorsque le package est construit, les \textbf{tests de validation} et les \textbf{tests de performance} s'appuient également sur l'environnement de développement. Les tests de performance montrent la plus grande efficacité du code avec les systèmes Linux et macOS par rapport à Windows.
 \item les \textbf{tests d'installation} dépendent de chaque système d'exploitation et nécessitent autant d'environnements de tests que de systèmes. Nous simulerons les différents systèmes à l'aide de l'application \textit{VirtualBox}.
 %\item les \textbf{tests de configuration} pour déterminer les systèmes les mieux adaptés utilisent également un environnement de test.
 \end{itemize}
@@ -2186,9 +2186,9 @@ Les tests unitaires consistent à évaluer individuellement les composants de l'
 
 Il faut donc comprendre le fonctionnement, puis tester chaque portion de code et chaque fonction individuellement avec des paramètres choisis avant de l'incorporer dans le module \textbf{\_\_main\_\_.py}. 
 
-Ce projet est également l'occasion de mieux comprendre la gestion des entrées/sorties en Python à partir de fichiers aux formats \textit{.fasta}, \textit{.xls}, \textit{.csv} et \textit{txt}. Avant de pouvoir traiter les données du répertoire \textbf{data}, il est nécessaire d'en changer le format de stockage, de les regrouper en un unique fichier, de les télécharger en vue d'écrire sur un fichier ou de lire ce fichier. Les tests unitaires se font souvent à partir de bases de données de tests temporaires pour éviter d'endommager les bases de données du package. 
+Ce projet est également l'occasion de mieux comprendre la gestion des entrées/sorties en Python à partir de fichiers aux formats \textit{.fasta}, \textit{.xls}, \textit{.csv} et \textit{txt}. Avant de pouvoir traiter les données du répertoire \textbf{data}, il est nécessaire d'en changer le format de stockage, de les regrouper en un unique fichier, de les télécharger en vue d'écrire sur un fichier ou de lire ce fichier. Les tests unitaires ne se font pourtant pas à partir des bases de données du package, pour éviter de les endommager. Ainsi, on crée des bases de données temporaires, contenant peu d'éléments, à partir des bases de données originales, avant de les tester. 
 
-Pour effectuer ces tests, nous utilisons le module \index{unittest}\textit{unittest} intégré dans la distribution standard de Python 3 qui fournit des outils pour construire et lancer les tests.
+Pour effectuer ces tests, nous utilisons le module \index{unittest}\textit{unittest} intégré dans la distribution standard de Python 3, qui fournit des outils pour construire et lancer les tests.
 
 
 
@@ -2200,10 +2200,10 @@ Pour effectuer ces tests, nous utilisons le module \index{unittest}\textit{unitt
 Le module \textit{unittest} utilise une approche orientée objet et propose les caractéristiques suivantes :
 
 \begin{itemize}
-\item gère l'automatisation et l'aménagement des tests, c'est à dire la création de bases de données temporaires, de répertoires, le démarrage de serveurs, le nettoyage des processus.
-\item crée des scenari de tests, qui attendent des réponses spécifiques pour certaines entrées. La classe \textit{TestCase} permet de créer ces scenari.
-\item organise les tests en collections de scenari de tests, et gère le partage de code pour la finalisation des tests.
-\item utilise des lanceurs de tests sous forme d'interface graphique ou d'interface en lignes de commandes. Ces lanceurs de tests dirigent l'exécution des tests et fournissent les résultats.
+\item il gère l'automatisation et l'aménagement des tests, c'est à dire la création de bases de données temporaires, de répertoires, le démarrage de serveurs, le nettoyage des processus.
+\item il crée des scenari de tests, qui attendent des réponses spécifiques pour certaines entrées. La classe \textit{TestCase} permet de créer ces scenari.
+\item il organise les tests en collections de scenari de tests, et gère le partage de code pour la finalisation des tests.
+\item il utilise des lanceurs de tests sous forme d'interface graphique ou d'interface en lignes de commandes. Ces lanceurs de tests dirigent l'exécution des tests et fournissent les résultats.
 \end{itemize}
 
 Le module \textit{unittest} fonctionne essentiellement avec des méthodes d'assertion du type :
@@ -2218,7 +2218,7 @@ Le module \textit{unittest} fonctionne essentiellement avec des méthodes d'asse
 \item \texttt{assertRaises(excp, fonct, arg)} qui vérifie que \texttt{fonct(arg)} lève bien l'exception \texttt{excp}.
 \end{itemize}
 
-Un scénario de tests est une classe fille de \texttt{unittest.TestCase}. On définit pour cela une classe \texttt{CrisprMethods(unittest.TestCase)} contenant des méthodes dont le nom commence par \texttt{test}, qui permettent de valider le comportement de chacune des fonctions utilisées dans le package CRISPRbuilder\_TB. Pour cela, on peut recopier les différentes fonctions de CRISPRbuilder\_TB dans un module \textbf{main.py} à l'intérieur d'un nouveau projet \textbf{crisprunittest}, ou alors intégrer les tests dans les modules \textbf{\_\_main\_\_.py} et \textbf{fonctions.py} de CRISPRbuilder\_TB. Nous avons choisi de séparer les tests du code de production dans le cadre de notre étude. 
+Un scénario de tests est une classe fille de \texttt{unittest.TestCase}. On définit pour cela une classe \texttt{CrisprMethods(unittest.TestCase)} contenant des méthodes dont le nom commence par \texttt{test}, qui permettent de valider le comportement de chacune des fonctions utilisées dans le package CRISPRbuilder\_TB. Pour cela, on peut recopier les différentes fonctions de CRISPRbuilder\_TB dans un module \textbf{unittestmain.py}, ou alors intégrer les tests directement dans les modules \textbf{\_\_main\_\_.py} et \textbf{fonctions.py} de CRISPRbuilder\_TB. Cette deuxième solution est préférable car il est pertinent d'effectuer les tests unitaires au fur à mesure de la construction du code. Pourtant, nous avons choisi de séparer les tests unitaires du code de production par souci de lisibilité. 
 
 Nous choisissons de placer tous nos tests dans un unique scénario qui regroupe les modules  \textbf{fonctions.py} et \textbf{\_\_main\_\_.py}, car les fonctions du package sont bien souvent interdépendantes.
 
@@ -2318,7 +2318,7 @@ De même, le téléchargement des fichiers \textit{.fasta} est déjà testé dan
     self.assertEqual(['ligne 1\n', 'ligne 2\n', 'ligne 3\n', 'ligne 4\n'],
                       lignes)
 \end{verbatim}
-\item nous comptons le nombre de signes ">" dans le fichier \textbf{f\_greater.txt} et nous vérifions que le nombre de reads vaut 2, en utlisant le code test
+\item nous comptons le nombre de signes ">" dans le fichier \textbf{f\_greater.txt} et nous vérifions que le nombre de reads vaut 2, en utilisant le code test
 \begin{verbatim}
   def test_count_greater(self):
     """
@@ -2389,7 +2389,7 @@ De même, le téléchargement des fichiers \textit{.fasta} est déjà testé dan
         print(f"{item} is not in the database Origines")
     self.assertEqual(booleen_origines, True)
 \end{verbatim}
-\item \textit{test du nombre de reads :}
+\item \textit{test du nombre de reads :} nous vérifions que le nombre de reads obtenus dans \texttt{dico\_afr} pour la référence ERR2704808 est 108, en utilisant le code test
 \begin{verbatim}
   def test_len_reads(self):
     """
@@ -2407,7 +2407,7 @@ De même, le téléchargement des fichiers \textit{.fasta} est déjà testé dan
         dico_afr[item]['len_reads'] = nb_len
         self.assertEqual(dico_afr[item]['len_reads'], 108)
 \end{verbatim}
-\item \textit{test de la fonction change :}
+\item \textit{test de la fonction change() :} nous vérifions que A est modifié en T et inversement, C est modifié en G et inversement, après exécution de la fonction \texttt{change()}, en utilisant le code test 
 \begin{verbatim}
   def test_change(self):
     """
@@ -2419,7 +2419,7 @@ De même, le téléchargement des fichiers \textit{.fasta} est déjà testé dan
     self.assertEqual(change("C"), "G")
     self.assertEqual(change("G"), "C")
 \end{verbatim}
-\item \textit{test de la fonction to\_spol\_sit :} nous vérifions que '1' et '13' sont des valeurs du dictionnaire renvoyé par la fonction \texttt{to\_spol\_sit} alors que '3' n'en est pas une, en utilisant le code test
+\item \textit{test de la fonction to\_spol\_sit() :} nous vérifions que '1' et '13' sont des valeurs du dictionnaire renvoyé par la fonction \texttt{to\_spol\_sit} alors que '3' n'en est pas une, en utilisant le code test
 \begin{verbatim}
   def test_to_spol_sit(self):
     """
@@ -2430,7 +2430,7 @@ De même, le téléchargement des fichiers \textit{.fasta} est déjà testé dan
     self.assertIn('13', to_spol_sit().values())
     self.assertNotIn('3', to_spol_sit().values())
 \end{verbatim}
-\item \textit{test de la fonction add\_spoligo\_dico :} nous vérifions que la valeur de \texttt{dico\_afr[\\'ERR2704808']['SIT']} est 'X' après exécution de \texttt{add\_spoligo\_dico}, en utilisant le code test
+\item \textit{test de la fonction add\_spoligo\_dico() :} nous vérifions que la valeur de \texttt{dico\_afr[\\'ERR2704808']['SIT']} est 'X' après exécution de \texttt{add\_spoligo\_dico}, en utilisant le code test
 \begin{verbatim}
   def test_add_spoligo_dico(self):
     """
@@ -2446,7 +2446,7 @@ De même, le téléchargement des fichiers \textit{.fasta} est déjà testé dan
     add_spoligo_dico("SIT", dico_afr, "ERR2704808", to_spol_sit())
     self.assertEqual(dico_afr['ERR2704808']['SIT'], 'X')
 \end{verbatim}
-\item \textit{test de la fonction to\_formatted\_results :}
+\item \textit{test de la fonction to\_formatted\_results() :} nous vérifions que le résultat obtenu est bien 'ACGTCGATGGTCGCGACCTCCGCGGCATAGTCGAA' dans un cas particulier, en utilisant le code test
 \begin{verbatim}
   def test_to_formatted_results(self):
     """
@@ -2457,7 +2457,7 @@ De même, le téléchargement des fichiers \textit{.fasta} est déjà testé dan
     self.assertEqual(to_formatted_results(seq, 'REP/sequences/ERR2704808/
     ERR2704808', '12')[2], 'ACGTCGATGGTCGCGACCTCCGCGGCATAGTCGAA')
 \end{verbatim}
-\item \textit{test de la fonction to\_nb\_seq :}
+\item \textit{test de la fonction to\_nb\_seq() :} nous vérifions que le résultat obtenu est bien 616 dans un cas particulier, en utilisant le code test
 \begin{verbatim}
   def test_to_nb_seq(self):
     """
@@ -2484,7 +2484,7 @@ L'instruction \texttt{python -m crisprbuilder\_tb --collect ERR2704808} sera plu
 En exécutant le scénario de tests avec l'instruction
 
 \begin{verbatim}
-  python -m unittest main_unittest.py
+  python -m unittest unittestmain.py
 \end{verbatim}
 
 nous obtenons la réponse
@@ -2504,7 +2504,7 @@ Les tests d'intégration permettent de valider l'inter-utilisabilité des diffé
 
 Avant de procéder à ces tests, nous adaptons les fonctions déjà écrites à l'ensemble du programme, nous les documentons en anglais, nous créons de nouvelles fonctions pour éviter la répétition du code, nous cherchons à accroître la performance en utilisant des compréhensions de listes, nous rajoutons des blocs \texttt{try ... except}, des méthodes \texttt{.setdefault} et \texttt{.get} pour éviter les erreurs potentielles.
 
-Nous effectuons les tests en assignant la valeur "ERR2704808" à la variable "item", puis nous nous plaçons à la racine du package et nous exécutons directement le code du module \textbf{\_\_main\_\_.py} avec la commande 
+Nous effectuons les tests en assignant la valeur \texttt{ERR2704808} à la variable \texttt{item}, puis nous nous plaçons à la racine du package et nous exécutons directement le code du module \textbf{\_\_main\_\_.py} avec la commande 
 
 \begin{verbatim}
   cd crisprbuilder_tb
@@ -2556,7 +2556,7 @@ Nous exécutons ensuite l'instruction
   python crisprbuilder_tb --collect ERR2704808
 \end{verbatim}
 
-qui doit produire le même résultat que lorsque nous exécutons le traitement directement sur le module \textbf{\_\_main\_\_.py}.
+qui doit produire le même résultat que lorsque nous exécutons le traitement directement sur le module \textbf{\_\_main\_\_.py}. C'est effectivement le cas.
 
 
 
@@ -2566,7 +2566,14 @@ qui doit produire le même résultat que lorsque nous exécutons le traitement d
 % PYLINT --------------
 \subsection{Le respect des règles du PEP avec pylint}
 
-\index{pylint}\textit{pylint} fournit une note entre 0 et 10 qui reflète le respect des règles du PEP-8\footnote{\index{PEP-8}\textbf{PEP-8:} style guide for Python code} et du PEP-257\footnote{\index{PEP-257}\textbf{PEP-257:} docstring conventions}, notamment en ce qui concerne la lisibilité du code en terme d'espaces entre les signes, de longueur maximale pour chaque ligne (80 caractères), d'indentation pour assurer la compréhension lors d'un retour à la ligne, de documentation des méthodes et des modules. \textit{pylint} reprend également les erreurs de structure de code, les manques de définition de variables ou les ambiguïtés dans l'utilisation de variables locales portant le même nom. Ces dernières fonctionnalités sont également assurées par le correcteur statique de code intégré dans \textit{PyCharm}.
+\index{pylint}\textit{pylint} fournit une note entre 0 et 10 qui reflète le respect des règles du PEP-8\footnote{\index{PEP-8}\textbf{PEP-8:} style guide for Python code} et du PEP-257\footnote{\index{PEP-257}\textbf{PEP-257:} docstring conventions}, notamment en ce qui concerne
+\begin{itemize}
+\item la lisibilité du code en terme d'espaces entre les signes, 
+\item le respect de la longueur maximale pour chaque ligne (80 caractères), 
+\item l'indentation pour assurer la cohérence des blocs et la compréhension lors d'un retour à la ligne, 
+\item la documentation des méthodes et des modules.
+\end{itemize}
+\textit{pylint} reprend également les erreurs de structure de code, les manques de définition de variables ou les ambiguïtés dans l'utilisation de variables locales portant le même nom. Ces dernières fonctionnalités sont également assurées par le correcteur statique de code intégré dans \textit{PyCharm}.
 
 \textit{pylint} permet donc de clarifier et nettoyer le code pour en faciliter la lecture. Toutefois, il comprend mal l'utilisation des compréhensions de listes et des méthodes telles que \textit{.setdefault} pour récupérer la valeur d'une variable dans un dictionnaire. 
 
@@ -2620,7 +2627,7 @@ Notons que l'évaluation faite par \textit{pylint} s'appuie sur un test statique
 % LES PROBLEMES RENCONTRES -----------------------
 \subsection{Les premiers problèmes d'intégration}
 
-Une fois que le code a été testé bloc par bloc, que nous avons modifié le nom des variables, paramètres et fonctions en vue de l'intégration du code, les premiers problèmes que nous rencontrons sont les suivants :  
+Une fois que le code a été testé bloc par bloc, que nous avons modifié le nom des variables, paramètres et fonctions en vue de l'intégration du code, les premiers problèmes que nous avons rencontré sont les suivants :  
 \begin{enumerate}
 \item nous avons initialement installé le module \textit{subprocess.run} avec l'instruction \\\texttt{pip install subprocess.run} afin de pouvoir l'utiliser. Or, au moment de l'exécution du code, ce module s'avère défectueux et incompatible avec la version de \textit{subprocess} déjà présente sur l'ordinateur. Nous remarquons en revanche que la version native présente dans Python ne contrarie pas l'exécution du code, et nous choisissons donc de désinstaller \textit{subprocess.run} et de ne pas l'incorporer dans le fichier \textbf{pyproject.toml} de \textit{Poetry}.
 \item la gestion des exceptions avec des blocs \texttt{try ... except FileNotFoundError} ne permet pas au programme de déplacer un fichier vers un répertoire contenant déjà ce fichier. Ce problème est plus sensible au moment des tests car nous utilisons à plusieurs reprises la même valeur de SRA. Toutefois, il pourrait également advenir à un utilisateur qui aurait inscrit plusieurs fois sur une liste le même SRA. Il convient donc de rajouter dans le code un test de présence d'un fichier dans un répertoire avant de le déplacer.
@@ -2646,11 +2653,11 @@ Par ailleurs, comme le package va s'installer à des emplacements différents en
 
 Il est possible d'utiliser le module \textit{PurePath} associé au module \textit{pathlib} dont il dépend, ou encore \textit{\_\_file\_\_} associé au module \textit{os.path}. Ainsi, l'adresse  \textbf{crisprbuilder\_tb/REP/sequences} peut s'écrire
 \begin{verbatim}
-  pathlib.PurePath(crisprbuilder\_tb.\_\_path\_\_[0], 'REP', 'sequences')
+  pathlib.PurePath(crisprbuilder_tb.__path__[0], 'REP', 'sequences')
 \end{verbatim}
 ou encore
 \begin{verbatim}
-  os.path.join(path.dirname(\_\_file\_\_), 'REP', 'sequences)
+  os.path.join(path.dirname(__file__), 'REP', 'sequences)
 \end{verbatim}
 Nous privilégions la seconde solution, où l'utilisation de  \textit{\_\_file\_\_} rends tous les chemins relatifs à l'emplacement du module courant, sachant que ce dernier est soit \textbf{\_\_main\_\_.py} soit \textbf{fonctions.py}.  
 \end{enumerate}
@@ -2708,9 +2715,9 @@ Pour éviter tout conflit entre les deux dossiers créés, il est nécessaire de
 % LES TESTS DE VALIDATION ------------------------------------
 \section{Les tests de validation}
 
-Les tests de validation permettent de vérifier la conformité du package développé par rapport à l'objectif et aux fonctionnalités initiales. Rappelons que le package doit fournir des informations relatives à un SRA dont la référence serait saisie en ligne de commande par l'utilisateur. Ce dernier peut également fournir une liste de SRAs dans un fichier texte avec un SRA par ligne. Il peut finalement consulter et modifier la base de données \textbf{lineage.csv}.
+Les tests de validation permettent de vérifier la conformité du package développé par rapport à l'objectif et aux fonctionnalités initiales. Rappelons que le package doit fournir des informations relatives à un SRA dont la référence est saisie en ligne de commande par l'utilisateur. Ce dernier peut également fournir une liste de SRAs dans un fichier texte, avec un SRA par ligne. Il peut finalement consulter et modifier la base de données \textbf{lineage.csv}.
 
-Pour cela, nous fournissons au package un fichier \textit{essai.txt} comprenant plus qu'un SRA par ligne, afin que CRISPRbuilder\_TB affiche les résultats pour chaque SRA à la suite les uns des autres.   
+Pour cela, nous fournissons au package un fichier \textit{essai.txt} comprenant un SRA par ligne sur plusieurs lignes, afin que CRISPRbuilder\_TB affiche les résultats pour chaque SRA à la suite les uns des autres.   
 
 \begin{verbatim}
   python -m crisprbuilder_tb --list essai.txt
@@ -2720,12 +2727,12 @@ Les tests de validation comprennent également la vérification du bon fonctionn
 
 \begin{itemize}
 \item \texttt{python -m crisprbuilder\_tb \textemdash \textemdash help} qui fournit bien les informations relatives aux options du package,
-\texttt{python -m crisprbuilder\_tb \textemdash \textemdash print 0} qui affiche bien la liste demandée,
+\item \texttt{python -m crisprbuilder\_tb \textemdash \textemdash print 0} qui affiche bien la liste demandée,
 \item \texttt{python -m crisprbuilder\_tb \textemdash \textemdash collect ERR2704808}
 \item \texttt{python -m crisprbuilder\_tb \textemdash \textemdash change 0}
 \item \texttt{python -m crisprbuilder\_tb \textemdash \textemdash remove 0}
+\item \texttt{python -m crisprbuilder\_tb \textemdash \textemdash add 0}
 \end{itemize}
-\texttt{python -m crisprbuilder\_tb \textemdash \textemdash add 0}
 
 
 
@@ -2739,18 +2746,18 @@ Les tests d'installation permettent de s'assurer que l'utilisateur sera en mesur
 \begin{itemize}
 \item Ubuntu 18.04 LTS, 
 \item macOS Mojave, 
-\item Windows 10.
+\item Windows 7.
 \end{itemize}
 
 Afin de tester le comportement du package à l'installation, il est possible de le publier officieusement sur la plateforme testPyPI. Il faut alors se placer à la racine du package et lancer en ligne de commande l'instruction
 \begin{verbatim}  twine upload --repository testpypi dist/*\end{verbatim}
 
-On peut ainsi télécharger un package à partir d'autres index que PyPI, comme par exemple testPyPI. Toutefois, toutes les dépendances du package ne sont pas nécessairement répertoriées dans l'index testPyPI. Cela induit dans ce cas une erreur au téléchargement et interdit l'installation du package. Il faut donc faire référence à PyPI pour le téléchargement des dépendances. Par exemple, l'installation de CRISPRbuilder\_TB à partir de testPyPI se fait à l'aide de l'instruction suivante
+On peut ainsi télécharger un package à partir d'autres index que PyPI, comme par exemple testPyPI. Toutefois, toutes les dépendances du package ne sont pas nécessairement répertoriées dans l'index testPyPI. Cela induit dans ce cas une erreur au téléchargement et interdit l'installation du package. Il faut donc faire référence à PyPI pour le téléchargement des dépendances. Par exemple, l'installation de CRISPRbuilder\_TB à partir de testPyPI se fait réellement à l'aide de l'instruction suivante
 
 \begin{verbatim}  pip install --index-url https://test.pypi.org/simple/ --extra-index-url 
   https://pypi.org/simple/ crisprbuilder_tb\end{verbatim} 
 
-où l'instruction \texttt{\textemdash \textemdash index\textemdash url} permet l'installation du package à partir de testPyPI alors que l'instruction \texttt{\textemdash \textemdash extra\textemdash index\textemdash url} permet l'installation des dépendances à partir de PyPI, si celles-ci n'ont pas été trouvées dans testPyPI. Attention à bien respecter l'espace entre \texttt{simple/} et \texttt{crisprbuilder\_tb}.
+où l'instruction \texttt{\textemdash \textemdash index\textemdash url} permet l'installation du package à partir de testPyPI alors que l'instruction \texttt{\textemdash \textemdash extra\textemdash index\textemdash url} permet l'installation des dépendances à partir de PyPI, si celles-ci n'ont pas été trouvées dans testPyPI. Attention à bien respecter l'espace entre \texttt{simple/} et \texttt{crisprbuilder\_tb}, car dans cette instruction \texttt{crisprbuilder\_tb} ne fait pas partie de l'adresse mentionnée.
 
 Il peut arriver que testPyPI n'installe pas la dernière version du package. Dans ce cas, il convient de préciser la version souhaitée. Par exemple pour la version 0.1.2, il faut écrire
 
@@ -2767,11 +2774,13 @@ Il est fréquent qu'il s'affiche à ce moment-là le message d'erreur suivant
 
 Dans ce cas, la répétition de l'instruction précédente résout le problème, sans aucune raison apparente.
 
-Une fois que l'installation est validée à partir de testPyPI et que les modifications nécessaires ont été effectuées dans le code du package, on peut publier le package sur PyPI et procéder aux tests sur la version proposée aux utilisateurs avec la commande
+Une fois que l'installation est validée à partir de testPyPI et que les modifications nécessaires ont été effectuées dans le code du package, on peut publier le package sur PyPI avec la commande
 
 \begin{verbatim}
   pip install crisprbuilder_tb
 \end{verbatim}
+
+afin de procéder aux tests sur la version proposée aux utilisateurs.
 
 Lorsqu'une version antérieure de CRISPRbuilder\_TB existe déjà sur l'ordinateur, il peut arriver que l'installation d'une version plus récente échoue. Il est possible de la mettre à niveau de la façon suivante
 \begin{verbatim}
@@ -2808,11 +2817,11 @@ Afin d'effectuer les tests d'installation et de validation, nous créons artific
 Nous commençons par télécharger des images \textit{.iso} des différents systèmes d'exploitation, que nous clônons avant de commencer les tests, afin de conserver une version vierge pour pouvoir revenir en arrière en cas de besoin :
 \begin{itemize}
 \item pour Ubuntu 18.04 LTS, nous choisissons la version 64-bit Server Install Image, car nous n'avons pas besoin d'interface graphique pour réaliser nos tests. La version de Python par défaut de ce système est 2.7.17. Il existe également une version 3.6.9 de Python.
-\item pour macOS Mojave, 
-\item pour Windows 10, 
+\item pour macOS Mojave, nous disposons d'une version avec interface graphique. Nous installons la version 3.8.0 de Python.
+\item pour Windows 7, nous récupérons une version contrefaite d'une image \textit{.iso} avec interface graphique. Aucune version de Python ne semble installée. Nous utilisons la version 3.7.0 qui s'installe en même temps que \textit{Anaconda}. 
 \end{itemize}
 
-Nous commençons les tests en rajoutant dans la description de chaque système sur \textit{VirtualBox} toutes les installations effectuées afin que le package fonctionne correctement.
+Nous commençons les tests, en rajoutant dans la description de chaque système sur \textit{VirtualBox}, toutes les installations effectuées afin que le package fonctionne correctement.
 
 
 
