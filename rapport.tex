@@ -2817,7 +2817,7 @@ Afin d'effectuer les tests d'installation et de validation, nous créons artific
 Nous commençons par télécharger des images \textit{.iso} des différents systèmes d'exploitation, que nous clônons avant de commencer les tests, afin de conserver une version vierge pour pouvoir revenir en arrière en cas de besoin :
 \begin{itemize}
 \item pour Ubuntu 18.04 LTS, nous choisissons la version 64-bit Server Install Image, car nous n'avons pas besoin d'interface graphique pour réaliser nos tests. La version de Python par défaut de ce système est 2.7.17. Il existe également une version 3.6.9 de Python.
-\item pour macOS Mojave, nous disposons d'une version avec interface graphique. Nous installons la version 3.8.0 de Python.
+\item pour macOS Mojave 10.14.6, nous disposons d'une version avec interface graphique. Nous installons la version 3.8.0 de Python.
 \item pour Windows 7, nous récupérons une version contrefaite d'une image \textit{.iso} avec interface graphique. Aucune version de Python ne semble installée. Nous utilisons la version 3.7.0 qui s'installe en même temps que \textit{Anaconda}. 
 \end{itemize}
 
@@ -2837,7 +2837,7 @@ L’installation du package par n'importe quel utilisateur se fait grâce à l�
 
 Les premiers tests d'installation avec Ubuntu 18.04 LTS s'avèrent défaillants, car nous avons uniquement donné l'adresse de testPyPI dans l'instruction \texttt{pip install -i https://test.pypi.org/\\simple/ crisprbuilder\_tb}, et nous ne savions pas que les dépendances n'étaient pas présentes sur l'index testPyPI. Cela a entraîné des difficultés d'installation des modules au regard des contraintes imposées par le fichier \textbf{poetry.lock}, mais n'a imposé aucun correctif de code dès lors que nous avons rajouté l'adresse de PyPi pour installer les dépendances.
 
-Une fois l'installation de CRISPRbuilder\_TB et de ses dépendances effectuée, nous cherchons à vérifier qu'elle soit bien réussie. Le premier test avec l'instruction
+Une fois l'installation de CRISPRbuilder\_TB et de ses dépendances effectuée, nous cherchons à vérifier qu'elle soit effective. Le premier test avec l'instruction
 
 \begin{verbatim}
   python -m crisprbuilder_tb --print 0
@@ -2866,7 +2866,7 @@ Il semble au début qu'il faille installer le \textit{SRA Toolkit}. Pourtant, ap
 
 Un système vierge ne parvient pas à utiliser \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn}, même si ces dépendances ont été correctement installées par \textit{Poetry}, 
 
-Après avoir cherché du côté des chemins d'accès des différents fichiers support, il est apparu que le problème venait plutôt de la variable d'environnement \$PATH qui devait être configurée correctement après une installation via \texttt{pip install}. Ainsi, il est nécessaire que l'utilisateur ait convenablement répertorié les chemins d'accès vers ses fichiers exécutables et dans le cas présent les modules \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn}. On peut interroger la variable d'environnement \$PATH avec la commande
+Après avoir cherché du côté des chemins d'accès des différents fichiers support, il est apparu que le problème venait plutôt de la variable d'environnement \$PATH, qui devait être configurée correctement après une installation via \texttt{pip install}. Ainsi, il est nécessaire que l'utilisateur ait convenablement répertorié les chemins d'accès vers ses fichiers exécutables, et dans le cas présent les modules \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn}. On peut interroger la variable d'environnement \$PATH avec la commande
 
 \begin{verbatim}
   echo $PATH
@@ -2879,7 +2879,7 @@ qui doit fournir un résultat du type
   /usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 \end{verbatim}
 
-Pour que l'installation fonctionne correctement, il faut donc s'assurer que l'utilisateur dispose d'un version fonctionnelle de \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn} avant l'installation de CRISPRbuilder\_TB. On peut par exemple tester le bon fonctionnement de \textit{parallel-fastq-dump} avec la commande 
+Pour que l'installation fonctionne correctement, il faut donc s'assurer que l'utilisateur dispose d'une version fonctionnelle de \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn} avant l'installation de CRISPRbuilder\_TB. On peut par exemple tester le bon fonctionnement de \textit{parallel-fastq-dump} avec la commande 
 
 \begin{verbatim}
   parallel-fastq-dump --sra-id SRR1219899 --threads 4 --outdir out/ --split-files 
@@ -2894,9 +2894,9 @@ Dans le cas où une version de \textit{parallel-fastq-dump} existe déjà dans l
 
 permettant à l'utilisateur de conserver une version correctement paramétrée et fonctionnelle.
 
-Il persiste toutefois une difficulté liée à \textit{pip} plutôt qu'aux dépendances. En fonction de l'environnement de développement choisi par l'utilisateur pour installer \textit{parallel-fastq-dump} avec l'instruction \texttt{pip install parallel-fastq-dump}, le module \textit{parallel-fastq-dump} peut se retrouver à plusieurs emplacements différents, comme par exemple \textbf{$\sim$/.pyenv/shims/} ou \textbf{$\sim$/.local/bin/}. Lors de l'exécution de CRISPRbuilder\_TB, si l'environnement dans lequel travaille l'utilisateur est différent de celui qu'il a choisi pour installer \textit{parallel-fastq-dump}, le système pourra quand même trouver cette dépendance dès lors que la variable d'environnement a été correctement configurée, mais, si il en existe plusieurs versions, celles-ci peuvent entrer mutuellement en conflit. Dans le cadre de notre projet, cela a donné lieu à de nombreux dysfonctionnements et tentatives infructueuses. Notons que dans son dépôt \url{https://github.com/rvalieris/parallel-fastq-dump}, Renan Valieris recommande l'utilisation de \textit{bioconda} pour installer le package \textit{parallel-fastq-dump}. Nous décidons de suivre ce conseil et de privilégier \textit{Anaconda} dans tous les environnements de tests afin de résoudre le problème mentionné ci-dessus. Puis nous installons \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn} en utilisant \textit{conda} comme il est préconisé dans la littérature. Par souci de simplicité, nous conseillons également à l'utilisateur d'installer ces dépendances avec \textit{conda} et nous le mentionnons dans la documentation de CRISPRbuilder\_TB.
+Il persiste toutefois une difficulté liée à \textit{pip} plutôt qu'aux dépendances. En fonction de l'environnement de développement choisi par l'utilisateur pour installer \textit{parallel-fastq-dump} avec l'instruction \texttt{pip install parallel-fastq-dump}, le module \textit{parallel-fastq-dump} peut se retrouver à plusieurs emplacements différents, comme par exemple \textbf{$\sim$/.pyenv/shims/} ou \textbf{$\sim$/.local/bin/}. Lors de l'exécution de CRISPRbuilder\_TB, si l'environnement dans lequel travaille l'utilisateur est différent de celui qu'il a choisi pour installer \textit{parallel-fastq-dump}, le système pourra quand même trouver cette dépendance dès lors que la variable d'environnement a été correctement configurée, mais, si il en existe plusieurs versions, celles-ci peuvent entrer mutuellement en conflit. Dans le cadre de notre projet, cela a donné lieu à de nombreux dysfonctionnements et tentatives infructueuses. Notons que dans son dépôt \url{https://github.com/rvalieris/parallel-fastq-dump}, Renan Valieris recommande l'utilisation de \textit{bioconda} pour installer le package \textit{parallel-fastq-dump}. Nous décidons de suivre ce conseil et de privilégier \textit{Anaconda} dans tous les environnements de tests afin de résoudre le problème mentionné ci-dessus. Puis nous installons \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn} en utilisant \textit{conda} comme il est préconisé dans la littérature. Par souci de simplicité, nous conseillons également à l'utilisateur d'installer ces dépendances avec \textit{conda} et nous le mentionnons dans la documentation \textbf{crisprbuilder\_tb.ipynb}.
 
-Nous considérons donc que l'utilisateur dispose déjà sur sa machine d'un \textit{SRA Toolkit} fonctionnel, notamment des modules \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn} produisant les résultats escomptés avant d'installer de CRISPRbuilder\_TB.
+Nous considérons donc que l'utilisateur dispose déjà sur sa machine d'un \textit{SRA Toolkit} fonctionnel, notamment des modules \textit{parallel-fastq-dump}, \textit{blast} et \textit{blastn} produisant les résultats escomptés, avant d'installer CRISPRbuilder\_TB.
 
 
 
@@ -2910,7 +2910,7 @@ Nous considérons donc que l'utilisateur dispose déjà sur sa machine d'un \tex
 
 Nous utilisons une version macOS Mojave 10.14.6 pour tester l'installation de CRISPRbuilder\_TB.
 
-Nous commençons par tester l'installation de \textit{pip} avec la commande \texttt{pip --version}.
+Nous commençons par tester l'installation de \textit{pip} avec la commande \texttt{pip -\textemdash version}.
 Nous téléchargeons et exécutons le package d'installation de \textit{Anaconda3}.
 Puis, nous installons les trois packages du \textit{SRA Toolkit} que nous allons utiliser, à l'aide des instructions
 \begin{verbatim}
@@ -2926,17 +2926,17 @@ Le terminal renvoie alors l'erreur suivante
   - blastn
 \end{verbatim}
 
-Alors qu'il était possible d'installer \textit{blastn} à partir de \textit{kantorlab} sur une machine Ubuntu 18.04, nous ne parvenons pas à l'installer sur macOS Mojave. Par ailleurs, bien que la version la plus récente de \textit{blast} soit la 2.10.1, celle-ci n'est pas reconnue par le système et seule la version 2.6.0 s'installe. Nous décidons de modifier le fichier \textbf{pyproject.toml} en conséquence en forçant le choix de la version 2.6.0. Malheureusement cette version n'est pas compatible avec le reste du projet et nous recevons le message
+Alors qu'il était possible d'installer \textit{blastn} à partir de \textit{kantorlab} sur une machine Ubuntu 18.04, nous ne parvenons pas à l'installer sur macOS Mojave. Par ailleurs, bien que la version la plus récente de \textit{blast} soit la 2.10.1, celle-ci n'est pas reconnue par le système et seule la version 2.6.0 s'installe. Nous décidons de modifier le fichier \textbf{pyproject.toml} en conséquence en forçant manuellement le choix de la version 2.6.0. Malheureusement cette version n'est pas compatible avec le reste du projet selon \textit{Poetry}, et nous recevons le message
 \begin{verbatim}
   crisprbuilder-tb depends on blast (^2.6.0) which doesn't match any versions, 
   version solving failed.
 \end{verbatim}
 
-Nous décidons dans ce cas de retirer \textit{blast} et \textit{blastn} du fichier \textbf{pyproject.toml} afin de permettre le fonctionnement du package sur les systèmes macOS, sachant que notre documentation précise déjà la nécessité pour l'utilisateur d'installer et de configurer \textit{blast} et \textit{blastn}. 
+Nous décidons dans ce cas de retirer \textit{blast} et \textit{blastn} du fichier \textbf{pyproject.toml} afin de permettre le fonctionnement du package sur les systèmes macOS, sachant que notre documentation précise déjà la nécessité pour l'utilisateur d'installer et de configurer préalablement \textit{blast} et \textit{blastn}. 
 
-Nous décidons finalement d'installer CRISPRbuilder\_TB sans être parvenu à installer \textit{blastn} sur le macOS. Nous allons remarquer que, dans ce cas, seule l'installation de \textit{blast} par \textit{conda} est nécessaire pour assurer le fonctionnement de notre package. Il semble que la dernière version de \textit{blast} utilise en fait le NCBI \textit{C++ Toolkit blast+} qui comprend \textit{blastn}.
+Nous décidons finalement d'installer CRISPRbuilder\_TB sans avoir installé \textit{blastn} sur le système macOS. Nous remarquons alors que dans ce cas, seule l'installation de \textit{blast} par \textit{conda} est nécessaire pour assurer le fonctionnement de notre package. Il semble que la dernière version de \textit{blast} utilise en fait le NCBI \textit{C++ Toolkit blast+} qui comprend \textit{blastn}.
 
-L'installation de CRISPRbuilder\_TB s'effectue maintenant avec succès avec la commande 
+L'installation de CRISPRbuilder\_TB s'effectue maintenant avec succès suivant la commande 
 \begin{verbatim}
   pip install crisprbuilder_tb
 \end{verbatim}
@@ -2958,7 +2958,7 @@ pour obtenir le même résultat qu'avec le système Ubuntu 18.04 LTS.
 
 
 % TESTS AVEC WINDOWS 10 -------
-\subsection{Tests d'installation avec Windows 10}
+\subsection{Tests d'installation avec Windows 7}
 
 TODO
 
@@ -2972,16 +2972,16 @@ TODO
 % LES TESTS DE PERFORMANCE ------------------------------------
 \section{Les tests de performance}
 
-L'objectif des tests de performance serait de valider la capacité des serveurs et réseaux pour supporter les charges d'accès importantes. Ceci ne s'applique pas à notre package, qui utilise uniquement lors de ses requêtes \textit{fastq} et \textit{blast} les serveurs du \index{NCBI}NCBI\footnote{\textbf{NCBI:} National Center for Biotechnology Information} et ne dispose pas de ses propres serveurs. Si les serveurs de NCBI sont occupés, les réponses obtenues n'en seront que différées. CRISPRbuilder\_TB n'est pas une application Web, l'utilisation simultanée de plusieurs ordinateurs exécutant le package n'a pas d'incidence sur celui-ci.
+L'objectif des tests de performance serait de valider la capacité des serveurs et réseaux pour supporter les charges d'accès importantes. Ceci ne s'applique pas à notre package, qui utilise uniquement lors de ses requêtes \textit{fastq} et \textit{blast}, les serveurs du \index{NCBI}NCBI\footnote{\textbf{NCBI:} National Center for Biotechnology Information} et ne dispose pas de ses propres serveurs. Si les serveurs de NCBI sont occupés, les réponses obtenues n'en seront que différées. CRISPRbuilder\_TB n'est pas une application Web, l'utilisation simultanée de plusieurs ordinateurs exécutant le package n'a pas d'incidence sur celui-ci.
 
-En revanche, l'optimisation des performances de traitement des données doit être pris en compte car les fichiers de type \textit{.fasta} ont une taille comprise entre 1 et 3 Go, ce qui génère des délais importants lors de l'exécution du package.
+En revanche, l'optimisation des performances de traitement des données doit être pris en compte, car les fichiers de type \textit{.fasta} ont une taille comprise entre 1 Go et 3 Go, ce qui génère des délais importants lors de l'exécution du package.
 
 
 
 % SUBPROCESS RUN-------------
 \subsection{subprocess.run et os.system}
 
-Au début de notre travail sur le code, nous avons transformé les lignes de commande Linux appelées par les méthodes Python \textit{subprocess.run} et \textit{os.system} en fonctions entièrement écrites en Python, afin d'améliorer la portabilité de l'application au-delà des aux systèmes Linux. Nous avons constaté lors des premiers tests d'intégration un fort ralentissement du programme lorsque ces modifications étaient appliquées à l'ensemble du code. Nous avons donc décidé de revenir à l'utilisation de \textit{subprocess.run} et \textit{os.system} au vu de la taille importante des fichiers à lire par l'interpréteur. Si cette démarche n'a aucune incidence pour la plateforme macOS, elle impose en revanche un changement de lignes de commandes pour la plateforme Windows. Or, en fonction des versions du systéme Windows, l'utilisateur dispose d'une invite de commandes ou d'un PowerShell dont les instructions diffèrent. Nous choisissons dans un premier temps de tester dans le programme si le système est Posix ou Windows, puis ensuite de conserver les lignes de commande pour les système Posix et d'utiliser des fonctions Python pour les systèmes Windows. Cela entraîne, de ce fait, un réel manque de performance dans le traitement des données pour les plateformes Windows. 
+Au début de notre travail sur le code, nous avons transformé les lignes de commande Linux appelées par les méthodes Python \textit{subprocess.run} et \textit{os.system} en fonctions entièrement écrites en Python, afin d'améliorer la portabilité de l'application en dehors des systèmes Linux. Nous avons constaté, lors des premiers tests d'intégration, un fort ralentissement du programme lorsque ces modifications étaient appliquées à l'ensemble du code. Nous avons donc décidé de revenir à l'utilisation de \textit{subprocess.run} et \textit{os.system} au vu de la taille importante des fichiers à lire par l'interpréteur. Si cette démarche n'a aucune incidence pour la plateforme macOS, elle impose en revanche un changement de lignes de commandes pour la plateforme Windows. Or, en fonction des versions du systéme Windows, l'utilisateur dispose d'une invite de commandes ou d'un PowerShell dont les instructions diffèrent. Nous choisissons donc plutôt de tester dans le programme si le système est Posix ou Windows, puis ensuite de conserver les lignes de commande pour les système Posix et d'utiliser des fonctions Python pour les systèmes Windows. Cela entraîne, de ce fait, un réel manque de performance dans le traitement des données pour les plateformes Windows, lors de l'exécution de notre package.
 
 Pour mieux comprendre ce ralentissement, prenons un exemple sur un traitement simple consistant à concaténer deux fichiers \textit{.fasta}. L'instruction suivante
 
@@ -3021,7 +3021,7 @@ Pour cela, nous exécutons 10 fois le code suivant sur un système Ubuntu 18.04 
   print(temps_system)
 \end{verbatim}
 
-Nous constatons alors un temps moyen pour chaque exécution de l'instruction \textit{os.system} de 19,3 secondes, alors qu'il est de 26,7 secondes lorsqu'on exécute la fonction \textit{concat}, comme indiqué ci-dessous
+Nous constatons alors un temps moyen pour chaque exécution de l'instruction \textit{os.system} (représentative du bash Linux) de 19,3 secondes, alors qu'il est de 26,7 secondes lorsqu'on exécute la fonction \textit{concat} (représentative du code Python sur Windows), comme indiqué ci-dessous
 
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
 \hline
@@ -3047,9 +3047,9 @@ CRISPRbuilder\_TB utilise le module Python \textit{fastq-dump} de téléchargeme
 
 \textit{fastq-dump} est un module archaïque permettant de télécharger des données relatives à un SRA dans un format \textit{.fastq} ou \textit{.fasta}. Il est contenu dans le \textit{SRA Toolkit} du NCBI. Il peut s'avérer très lent en fonction de l'utilisation en temps réel du serveur de la base de données NCBI. 
 
-L'utilisation de plusieurs threads devrait permettre de diviser le travail en différentes tâches effectuées simultanément, et donc de gagner du temps. Malheureusement, certaines versions de Python n'acceptent pas nativement le travail multi-threads en s'appuyant sur le GIL\footnote{\index{GIL}\textbf{GIL Global Interpreter Lock: } est un mutex qui n'autorise le travail que d'un unique thread à la fois.}, qui est un verrou auquel l'interpréteur Python fait appel pour protéger les objets qu'il manipule contre les accès concurrentiels. Le GIL rend donc impossible l'exécution de multiples threads simultanément, et ralentit considérablement l'exécution de tels programmes puisque chaque processus doit se terminer avant de lancer le suivant.
+L'utilisation de plusieurs threads devrait permettre de diviser le travail en différentes tâches effectuées simultanément, et donc de gagner du temps. Malheureusement, certaines versions de Python n'acceptent pas nativement le travail multi-threads en s'appuyant sur le GIL\footnote{\index{GIL}\textbf{GIL Global Interpreter Lock: } mutex qui n'autorise le travail que d'un unique thread à la fois.}, qui est un verrou auquel l'interpréteur Python fait appel pour protéger les objets qu'il manipule contre les accès concurrentiels. Le GIL rend donc impossible l'exécution de multiples threads simultanément, et ralentit considérablement l'exécution de tels programmes puisque chaque processus doit se terminer avant de lancer le suivant.
 
-Il existe plusieurs implémentations de Python telles que CPython, RPython, ... Certaines de ces implémentations  ont un GIL comme CPython par exemple, ce qui améliore la vitesse des programmes à thread unique et intègre plus facilement les bibliothèques C, dont la gestion de mémoire n'est pas \textit{thread-safe}. Cette dernière caractéristique rend le verrou nécessaire et permet de rendre le parallélisme complet en utilisant des processus séparés où chaque processeur a son propre interprète. 
+Il existe plusieurs implémentations de Python telles que CPython, RPython, ... Certaines de ces implémentations  ont un GIL comme CPython par exemple, ce qui améliore la vitesse des programmes à thread unique et intègre plus facilement les bibliothèques C, dont la gestion de mémoire n'est pas \textit{thread-safe}. Cette dernière caractéristique rend le verrou nécessaire, et permet de rendre le parallélisme complet en utilisant des processus séparés où chaque processeur a son propre interprète, en contrepartie d'une certaine lenteur d'exécution. 
 
 Le module \textit{parallel-fastq-dump} résout partiellement ce problème de multi-threading en utilisant le NCBI \textit{C++ Toolkit} et en travaillant en dehors du GIL. Il semble être à l'heure actuelle un bon compromis gratuit pour optimiser le traitement des données vers un format \textit{.fastq} ou \textit{.fasta}. CRISPRbuilder\_TB utilise le module \textit{parallel-fastq-dump} pour télécharger les données d'un SRA au format \textit{.fasta}.
 
@@ -3068,9 +3068,9 @@ Notons que le \textit{SRA Tookit} est installé automatiquement au moment de l'i
 % BLAST -------------
 \subsection{blast+}
 
-CRISPRbuilder\_TB utilise également le module Python de téléchargement et traitement de données provenant du NCBI \textit{blast}.
+CRISPRbuilder\_TB utilise également le module Python \textit{blast} de téléchargement et traitement de données provenant du NCBI.
 
-\textit{blast} permet de trouver des régions similaires entre plusieurs séquences génomiques.  Il compare des séquences de nucléotides ou de protéines à des séquences déjà présentes dans la base de données NCBI, puis calcule la signification statistique. Il traite donc une quantité importante de données et ralentit de façon significative l'exécution du programme. \textit{blast} propose différents outils et existe sous plusieurs formes \textit{blastx, tblastn, blastn, Primer-blast, smartblast, igblast, moleblast, ...}.
+\textit{blast} permet de trouver des régions similaires entre plusieurs séquences génomiques.  Il compare des séquences de nucléotides ou de protéines à des séquences déjà présentes dans la base de données NCBI, puis calcule la signification statistique. Il traite donc une quantité importante de données et ralentit de ce fait de façon significative l'exécution du programme. \textit{blast} propose différents outils et existe sous plusieurs formes \textit{blastx, tblastn, blastn, Primer-blast, smartblast, igblast, moleblast, ...}.
 
 Notre package effectue des comparaisons entre nucléotides. Il utilise \textit{blastn} et l'outil \texttt{makeblastdb} qui appartient à \textit{blast}. 
 
@@ -3109,7 +3109,7 @@ Nous avons vu que le package CRISPRbuilder\_TB fournit des informations pratique
 
 Ce stage m'a ouvert l'esprit vers le domaine de la bio-informatique, secteur intéressant qui a constitué un support scientifique très concret, me permettant de travailler des compétences pratiques en développement de programme et construction de tests. J'ai pu me rendre compte de l'importance du travail de validation et test logiciel, omniprésent tout au long du stage, et en apprécier l'efficacité en phase de développement.   
 
-Le temps passé à réfléchir aux nombreux dysfonctionnements de l'application, la frustration de comprendre tardivement que la solution provenait parfois d'éléments indépendants au code tels que l'environnement de développement ou la configuration de la variable \$PATH, le souhait de bien comprendre les rouages d'un package Python ont fortement contribué à l'amélioration de mes connaissances en informatique. 
+Le temps passé à réfléchir aux nombreux dysfonctionnements de l'application, la frustration de comprendre tardivement que la solution provenait parfois d'éléments indépendants du code tels que l'environnement de développement ou la configuration de la variable \$PATH, le souhait de bien comprendre les rouages d'un package Python, ont fortement contribué à l'amélioration de mes connaissances en informatique. 
 
 En particulier, ce stage a mis l'accent sur les trois domaines suivants :
 \begin{itemize}
