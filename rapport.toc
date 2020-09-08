@@ -56,14 +56,14 @@
 \contentsline {section}{\numberline {4.}Les tests de non-r\IeC {\'e}gression}{70}{section.7.4}
 \contentsline {subsection}{\numberline {4.1.}Le versioning avec Git}{71}{subsection.7.4.1}
 \contentsline {section}{\numberline {5.}Les tests de validation}{71}{section.7.5}
-\contentsline {section}{\numberline {6.}Les tests d'installation}{72}{section.7.6}
-\contentsline {subsection}{\numberline {6.1.}L'utilisation de VirtualBox}{73}{subsection.7.6.1}
-\contentsline {subsection}{\numberline {6.2.}Tests d'installation avec Ubuntu 18.04}{73}{subsection.7.6.2}
-\contentsline {subsection}{\numberline {6.3.}Tests d'installation avec macOS Mojave}{75}{subsection.7.6.3}
-\contentsline {subsection}{\numberline {6.4.}Tests d'installation avec Windows 7}{76}{subsection.7.6.4}
-\contentsline {section}{\numberline {7.}Les tests de performance}{76}{section.7.7}
-\contentsline {subsection}{\numberline {7.1.}subprocess.run et os.system}{77}{subsection.7.7.1}
-\contentsline {subsection}{\numberline {7.2.}parallel-fastq-dump}{78}{subsection.7.7.2}
-\contentsline {subsection}{\numberline {7.3.}blast+}{79}{subsection.7.7.3}
-\contentsline {chapter}{\numberline {8}Conclusion}{80}{chapter.8}
+\contentsline {section}{\numberline {6.}Les tests de performance}{72}{section.7.6}
+\contentsline {subsection}{\numberline {6.1.}subprocess.run et os.system}{72}{subsection.7.6.1}
+\contentsline {subsection}{\numberline {6.2.}parallel-fastq-dump}{73}{subsection.7.6.2}
+\contentsline {subsection}{\numberline {6.3.}blast+}{74}{subsection.7.6.3}
+\contentsline {section}{\numberline {7.}Les tests d'installation}{75}{section.7.7}
+\contentsline {subsection}{\numberline {7.1.}L'utilisation de VirtualBox}{76}{subsection.7.7.1}
+\contentsline {subsection}{\numberline {7.2.}Tests d'installation avec Ubuntu 18.04}{76}{subsection.7.7.2}
+\contentsline {subsection}{\numberline {7.3.}Tests d'installation avec macOS Mojave}{78}{subsection.7.7.3}
+\contentsline {subsection}{\numberline {7.4.}Tests d'installation avec Windows 7}{79}{subsection.7.7.4}
+\contentsline {chapter}{\numberline {8}Conclusion}{81}{chapter.8}
 \contentsfinish 
